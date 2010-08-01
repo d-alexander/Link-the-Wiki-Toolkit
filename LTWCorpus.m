@@ -49,10 +49,12 @@
 			nextLevel = [[NSMutableDictionary alloc] init];
 			[curLevel setObject:nextLevel forKey:component];
 			[curLevel setObject:nextLevel forKey:[NSNumber numberWithInt:count]];
-		}
+            curLevel = nextLevel;
+            [nextLevel release];
+		}else{
+            curLevel = nextLevel;
+        }
 		
-		curLevel = nextLevel;
-		[nextLevel release];
 	}
 	NSUInteger count = [curLevel count] / 2;
 	[curLevel setObject:article forKey:[articleInfo objectForKey:@"articleTitle"]];
