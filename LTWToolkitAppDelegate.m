@@ -23,6 +23,8 @@
 	return self;
 }
 
+// Testing the version editor...
+
 -(void)applicationDidFinishLaunching:(NSNotification *)notification {
 	NSArray *openPythonFilenames = [[NSUserDefaults standardUserDefaults] objectForKey:@"openPythonFilenames"];
 	for (NSString *filename in openPythonFilenames) {
