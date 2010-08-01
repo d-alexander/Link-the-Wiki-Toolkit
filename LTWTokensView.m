@@ -44,7 +44,6 @@
 	[self _addTagsForTokens:theTokens toAttributedString:attributedString];
 	
 	[[self textStorage] setAttributedString:attributedString];
-	[attributedString release];
 }
 
 @end

@@ -63,8 +63,10 @@
 	// Temporary code for testing the LTWTokensView with some tags.
 	NSRange bodyTokens = [[articleInfo objectForKey:@"bodyTokens"] rangeValue];
 	[[articleTokens tokensFromIndex:bodyTokens.location toIndex:NSMaxRange(bodyTokens)-1 propagateTags:YES] addTag:[[LTWTokenTag alloc] initWithName:@"This is a test" value:@"ASDF"]];
-	LTWArticleDocument *doc = [[NSDocumentController sharedDocumentController] makeUntitledDocumentOfType:@"nz.ac.otago.inex.ltw-toolkit.article"];
+	LTWArticleDocument *doc = [[NSDocumentController sharedDocumentController] makeUntitledDocumentOfType:@"nz.ac.otago.inex.ltw-toolkit.article" error:NULL];
 	[doc setArticle:article];
+    [doc makeWindowControllers];
+    [doc showWindows];
 	
 	return article;
 }
