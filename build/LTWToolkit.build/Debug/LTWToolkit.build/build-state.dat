@@ -1,0 +1,760 @@
+TLTWToolkit
+v7
+r0
+t302358309.107794
+cCheck dependencies
+cProcessInfoPlistFile /Users/david/Dropbox/phd/code/LTWToolkit/build/Debug/LTWToolkit.app/Contents/Info.plist LTWToolkit-Info.plist
+cCopyStringsFile /Users/david/Dropbox/phd/code/LTWToolkit/build/Debug/LTWToolkit.app/Contents/Resources/English.lproj/InfoPlist.strings English.lproj/InfoPlist.strings
+cCompileXIB /Users/david/Dropbox/phd/code/LTWToolkit/English.lproj/MainMenu.xib
+cCompileXIB /Users/david/Dropbox/phd/code/LTWToolkit/LTWPythonDocument.xib
+cCompileXIB /Users/david/Dropbox/phd/code/LTWToolkit/LTWArticleDocument.xib
+cProcessPCH /var/folders/pI/pI7AtQJkG5yp3XtPcBRb9k+++TM/-Caches-/com.apple.Xcode.502/SharedPrecompiledHeaders/LTWToolkit_Prefix-bejutuklwwhxuxeacvzkpofjckya/LTWToolkit_Prefix.pch.gch LTWToolkit_Prefix.pch normal x86_64 objective-c com.apple.compilers.gcc.4_2
+cCompileC build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/main.o /Users/david/Dropbox/phd/code/LTWToolkit/main.m normal x86_64 objective-c com.apple.compilers.gcc.4_2
+cCompileC build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWToolkitAppDelegate.o /Users/david/Dropbox/phd/code/LTWToolkit/LTWToolkitAppDelegate.m normal x86_64 objective-c com.apple.compilers.gcc.4_2
+cCompileC build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWCorpus.o /Users/david/Dropbox/phd/code/LTWToolkit/LTWCorpus.m normal x86_64 objective-c com.apple.compilers.gcc.4_2
+cCompileC build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWTokens.o /Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m normal x86_64 objective-c com.apple.compilers.gcc.4_2
+cCompileC build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWPythonUtils.o /Users/david/Dropbox/phd/code/LTWToolkit/LTWPythonUtils.m normal x86_64 objective-c com.apple.compilers.gcc.4_2
+cCompileC build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWParser.o /Users/david/Dropbox/phd/code/LTWToolkit/LTWParser.m normal x86_64 objective-c com.apple.compilers.gcc.4_2
+cCompileC build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWPythonDocument.o /Users/david/Dropbox/phd/code/LTWToolkit/LTWPythonDocument.m normal x86_64 objective-c com.apple.compilers.gcc.4_2
+cCompileC build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWArticle.o /Users/david/Dropbox/phd/code/LTWToolkit/LTWArticle.m normal x86_64 objective-c com.apple.compilers.gcc.4_2
+cCompileC build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWConcreteTokens.o /Users/david/Dropbox/phd/code/LTWToolkit/LTWConcreteTokens.m normal x86_64 objective-c com.apple.compilers.gcc.4_2
+cCompileC build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWConcreteSubTokens.o /Users/david/Dropbox/phd/code/LTWToolkit/LTWConcreteSubTokens.m normal x86_64 objective-c com.apple.compilers.gcc.4_2
+cCompileC build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWTokensView.o /Users/david/Dropbox/phd/code/LTWToolkit/LTWTokensView.m normal x86_64 objective-c com.apple.compilers.gcc.4_2
+cCompileC build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWTokenTag.o /Users/david/Dropbox/phd/code/LTWToolkit/LTWTokenTag.m normal x86_64 objective-c com.apple.compilers.gcc.4_2
+cCompileC build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWArticleDocument.o /Users/david/Dropbox/phd/code/LTWToolkit/LTWArticleDocument.m normal x86_64 objective-c com.apple.compilers.gcc.4_2
+cLd /Users/david/Dropbox/phd/code/LTWToolkit/build/Debug/LTWToolkit.app/Contents/MacOS/LTWToolkit normal x86_64
+cTouch /Users/david/Dropbox/phd/code/LTWToolkit/build/Debug/LTWToolkit.app
+
+N/Developer/SDKs/MacOSX10.6.sdk
+c000000004A769DAB00000000000000EE
+t1249287595
+s238
+
+N/Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/Cocoa.framework/Headers/Cocoa.h
+c0000000040C4AA6800000000000001E5
+t1086630504
+s485
+
+N/Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/Python.framework/Headers/Python.h
+c000000004A5443200000000000001120
+t1247036192
+s4384
+
+N/Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/Python.framework/Python
+c000000004BAC505B0000000000040984
+t1269583963
+s264580
+
+N/System/Library/Frameworks/Cocoa.framework/Cocoa
+c000000004A1F2D63000000000000A5E0
+t1243557219
+s42464
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/English.lproj/InfoPlist.strings
+c000000004C4CF4FE000000000000002D
+t1280111870
+s45
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/English.lproj/MainMenu.xib
+c000000004C50D703000000000001D299
+t1280366339
+s119449
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/LTWArticle.h
+c000000004C5564130000000000000185
+t1280664595
+s389
+i<Cocoa/Cocoa.h>
+i"LTWTokens.h"
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/LTWArticle.m
+c000000004C55641A00000000000001B7
+t1280664602
+s439
+i"LTWArticle.h"
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/LTWArticleDocument.h
+c000000004C556256000000000000017F
+t1280664150
+s383
+i<Cocoa/Cocoa.h>
+i"LTWArticle.h"
+i"LTWTokensView.h"
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/LTWArticleDocument.m
+c000000004C5566E90000000000000787
+t1280665321
+s1927
+i"LTWArticleDocument.h"
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/LTWArticleDocument.xib
+c000000004C55627B0000000000006F85
+t1280664187
+s28549
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/LTWConcreteSubTokens.h
+c000000004C554F290000000000000259
+t1280659241
+s601
+i<Cocoa/Cocoa.h>
+i"LTWTokens.h"
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/LTWConcreteSubTokens.m
+c000000004C5560C70000000000000B80
+t1280663751
+s2944
+i"LTWConcreteSubTokens.h"
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/LTWConcreteTokens.h
+c000000004C554C0000000000000002CD
+t1280658432
+s717
+i<Cocoa/Cocoa.h>
+i"LTWTokens.h"
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/LTWConcreteTokens.m
+c000000004C5560F10000000000000D88
+t1280663793
+s3464
+i"LTWConcreteTokens.h"
+i"LTWParser.h"
+i"LTWConcreteSubTokens.h"
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/LTWCorpus.h
+c000000004C50D4090000000000000292
+t1280365577
+s658
+i<Cocoa/Cocoa.h>
+i"LTWPythonUtils.h"
+i"LTWArticle.h"
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/LTWCorpus.m
+c000000004C55679F0000000000000B03
+t1280665503
+s2819
+i"LTWCorpus.h"
+i"LTWTokens.h"
+i"LTWArticleDocument.h"
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/LTWParser.h
+c000000004C55670A000000000000032B
+t1280665354
+s811
+i<Cocoa/Cocoa.h>
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/LTWParser.m
+c000000004C54F7510000000000002B50
+t1280636753
+s11088
+i"LTWParser.h"
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/LTWPythonDocument.h
+c000000004C4FE4D300000000000001B8
+t1280304339
+s440
+i<Cocoa/Cocoa.h>
+i"LTWPythonUtils.h"
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/LTWPythonDocument.m
+c000000004C4FF3080000000000000BC0
+t1280307976
+s3008
+i"LTWPythonDocument.h"
+i"LTWToolkitAppDelegate.h"
+i"LTWCorpus.h"
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/LTWPythonDocument.xib
+c000000004C4FE729000000000000B19B
+t1280304937
+s45467
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/LTWPythonUtils.h
+c000000004C5020770000000000000257
+t1280319607
+s599
+i<Cocoa/Cocoa.h>
+i<Python/Python.h>
+i"LTWTokens.h"
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/LTWPythonUtils.m
+c000000004C5561190000000000002E6F
+t1280663833
+s11887
+i"LTWPythonUtils.h"
+i"LTWParser.h"
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/LTWPythonView.h
+c000000004C4EDAD50000000000000151
+t1280236245
+s337
+i<Cocoa/Cocoa.h>
+i"LTWPythonUtils.h"
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/LTWPythonView.m
+c000000004C4EDEAD00000000000002EE
+t1280237229
+s750
+i"LTWPythonView.h"
+i"LTWCorpus.h"
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokenTag.h
+c000000004C55597400000000000004F0
+t1280661876
+s1264
+i<Cocoa/Cocoa.h>
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokenTag.m
+c000000004C55598900000000000004AF
+t1280661897
+s1199
+i"LTWTokenTag.h"
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokenType.h
+c000000004C553C4900000000000000DA
+t1280654409
+s218
+i<Cocoa/Cocoa.h>
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokenType.m
+c000000004C553C4900000000000000D0
+t1280654409
+s208
+i"LTWTokenType.h"
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.h
+c000000004C555D01000000000000068E
+t1280662785
+s1678
+i<Cocoa/Cocoa.h>
+i"LTWTokenTag.h"
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m
+c000000004C5560F60000000000000654
+t1280663798
+s1620
+i"LTWTokens.h"
+i"LTWConcreteTokens.h"
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokensView.h
+c000000004C5564390000000000000130
+t1280664633
+s304
+i<Cocoa/Cocoa.h>
+i"LTWTokens.h"
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokensView.m
+c000000004C5559D80000000000000748
+t1280661976
+s1864
+i"LTWTokensView.h"
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/LTWToolkitAppDelegate.h
+c000000004C5562A90000000000000244
+t1280664233
+s580
+i<Cocoa/Cocoa.h>
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/LTWToolkitAppDelegate.m
+c000000004C5562B50000000000000D94
+t1280664245
+s3476
+i"LTWToolkitAppDelegate.h"
+i"LTWCorpus.h"
+i"LTWPythonDocument.h"
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/LTWToolkit_Prefix.pch
+c000000004C4CF4FF0000000000000097
+t1280111871
+s151
+i<Cocoa/Cocoa.h>
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug/LTWToolkit.app
+t1280665505
+s102
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug/LTWToolkit.app/Contents/Info.plist
+t1280665428
+s1884
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug/LTWToolkit.app/Contents/MacOS/LTWToolkit
+t1280665505
+s103912
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug/LTWToolkit.app/Contents/PkgInfo
+t1280665428
+s8
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug/LTWToolkit.app/Contents/Resources/English.lproj/InfoPlist.strings
+t1280663811
+s92
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug/LTWToolkit.app/Contents/Resources/English.lproj/MainMenu.nib
+t1280663813
+s22668
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug/LTWToolkit.app/Contents/Resources/LTWArticleDocument.nib
+t1280664202
+s2250
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug/LTWToolkit.app/Contents/Resources/LTWPythonDocument.nib
+t1280663814
+s8392
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWArticle.o
+t1280664604
+s8520
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWArticleDocument.o
+t1280665429
+s19420
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWConcreteSubTokens.o
+t1280663825
+s25144
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWConcreteTokens.o
+t1280665429
+s27528
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWCorpus.o
+t1280665503
+s33700
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWParser.o
+t1280665429
+s35628
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWPythonDocument.o
+t1280664603
+s49188
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWPythonUtils.o
+t1280665429
+s38224
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWPythonView.o
+t1280237235
+s23176
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWTokenTag.o
+t1280663825
+s13856
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWTokenType.o
+t2
+s0
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWTokens.o
+t1280663824
+s17104
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWTokensView.o
+t1280664634
+s23908
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWToolkit.LinkFileList
+c000000004C556239000000000000065C
+t1280664121
+s1628
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWToolkitAppDelegate.o
+t1280664603
+s62228
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/main.o
+t1280663823
+s4992
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/StaticAnalyzer/normal/x86_64/LTWCorpus.plist
+t1280220811
+s5723
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/StaticAnalyzer/normal/x86_64/LTWParser.plist
+t1280220811
+s275
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/StaticAnalyzer/normal/x86_64/LTWPythonUtils.plist
+t1280220811
+s275
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/StaticAnalyzer/normal/x86_64/LTWTokens.plist
+t1280220811
+s16126
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/StaticAnalyzer/normal/x86_64/LTWToolkitAppDelegate.plist
+t1280220810
+s5695
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/StaticAnalyzer/normal/x86_64/main.plist
+t1280220810
+s275
+
+N/Users/david/Dropbox/phd/code/LTWToolkit/main.m
+c000000004C4CF5000000000000000104
+t1280111872
+s260
+i<Cocoa/Cocoa.h>
+
+N/var/folders/pI/pI7AtQJkG5yp3XtPcBRb9k+++TM/-Caches-/com.apple.Xcode.502/SharedPrecompiledHeaders/LTWToolkit_Prefix-bejutuklwwhxuxeacvzkpofjckya/LTWToolkit_Prefix.pch.gch
+t1280663823
+s54265616
+
+N/var/folders/pI/pI7AtQJkG5yp3XtPcBRb9k+++TM/-Caches-/com.apple.Xcode.502/SharedPrecompiledHeaders/LTWToolkit_Prefix-bxphgfcfnsztfzdjfscdpgcnpbvq/LTWToolkit_Prefix.pch.pth
+t1280220810
+s7481164
+
+NLTWToolkit-Info.plist
+c000000004C55674A00000000000007C7
+t1280665418
+s1991
+
+CAnalyze /Users/david/Dropbox/phd/code/LTWToolkit/LTWCorpus.m
+s301913610.819904
+e301913611.061518
+r1
+xAnalyze
+x/Users/david/Dropbox/phd/code/LTWToolkit/LTWCorpus.m
+o/Users/david/Dropbox/phd/code/LTWToolkit/LTWCorpus.m:24:19: warning: 'stringWithContentsOfURL:' is deprecated [-Wdeprecated-declarations]
+o         NSString *xml = [NSString stringWithContentsOfURL:url];
+o                          ^
+o/Users/david/Dropbox/phd/code/LTWToolkit/LTWCorpus.m:25:29: warning: Potential leak of an object allocated on line 25 and stored into 'articleTokens'
+o         LTWTokens *articleTokens = [[LTWTokens alloc] initWithXML:xml];
+o                                    ^
+o2 diagnostics generated.
+lSLF07#2@60"Analyze /Users/david/Dropbox/phd/code/LTWToolkit/LTWCorpus.m301913610#301913611#0(517"/Users/david/Dropbox/phd/code/LTWToolkit/LTWCorpus.m:24:19: warning: 'stringWithContentsOfURL:' is deprecated [-Wdeprecated-declarations]         NSString *xml = [NSString stringWithContentsOfURL:url];                          ^/Users/david/Dropbox/phd/code/LTWToolkit/LTWCorpus.m:25:29: warning: Potential leak of an object allocated on line 25 and stored into 'articleTokens'         LTWTokens *articleTokens = [[LTWTokens alloc] initWithXML:xml];                                    ^2 diagnostics generated.1(0@80"Potential leak of an object allocated on line 25 and stored into 'articleTokens'301913611#18446744073709551615#0#5(17@0"301913611#18446744073709551615#0#0(6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWCorpus.m301839596#0#0#0#0#0"0(6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWCorpus.m301839596#0#0#0#0#1(3@6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWCorpus.m301839596#24#2#24#2#6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWCorpus.m301839596#25#2#25#2#17@0"301913611#18446744073709551615#0#0(6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWCorpus.m301839596#0#0#0#0#0"0(6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWCorpus.m301839596#0#0#0#0#1(3@6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWCorpus.m301839596#25#2#25#2#6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWCorpus.m301839596#25#29#25#63#21@78"Method returns an Objective-C object with a +1 retain count (owning reference)301913611#18446744073709551615#0#0(6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWCorpus.m301839596#25#29#0#0#0"1(6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWCorpus.m301839596#25#29#25#63#78"Method returns an Objective-C object with a +1 retain count (owning reference)17@0"301913611#18446744073709551615#0#0(6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWCorpus.m301839596#0#0#0#0#0"0(6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWCorpus.m301839596#0#0#0#0#1(3@6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWCorpus.m301839596#25#29#25#63#6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWCorpus.m301839596#27#1#27#1#21@145"Object allocated on line 25 and stored into 'articleTokens' is no longer referenced after this point and has a retain count of +1 (object leaked)301913611#18446744073709551615#0#0(6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWCorpus.m301839596#27#1#0#0#0"1(6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWCorpus.m301839596#27#1#27#1#145"Object allocated on line 25 and stored into 'articleTokens' is no longer referenced after this point and has a retain count of +1 (object leaked)6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWCorpus.m301839596#27#1#0#0#36"Memory (Core Foundation/Objective-C)0(23"Leak of returned object0#0#52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWCorpus.m4300911832#1596"    cd /Users/david/Dropbox/phd/code/LTWToolkit    setenv LANG en_US.US-ASCII    /Developer/usr/bin/clang -x objective-c -arch x86_64 -fmessage-length=0 -pipe -fdiagnostics-print-source-range-info -std=gnu99 -Wno-trigraphs -fpascal-strings -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -fasm-blocks -mfix-and-continue -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-generated-files.hmap -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-own-target-headers.hmap -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-all-target-headers.hmap -iquote /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-project-headers.hmap -F/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug -I/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug/include -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/DerivedSources/x86_64 -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/DerivedSources -include /var/folders/pI/pI7AtQJkG5yp3XtPcBRb9k+++TM/-Caches-/com.apple.Xcode.502/SharedPrecompiledHeaders/LTWToolkit_Prefix-bxphgfcfnsztfzdjfscdpgcnpbvq/LTWToolkit_Prefix.pch --analyze /Users/david/Dropbox/phd/code/LTWToolkit/LTWCorpus.m -o /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/StaticAnalyzer/normal/x86_64/LTWCorpus.plist0#
+
+CAnalyze /Users/david/Dropbox/phd/code/LTWToolkit/LTWParser.m
+s301913611.141850
+e301913611.340588
+r1
+xAnalyze
+x/Users/david/Dropbox/phd/code/LTWToolkit/LTWParser.m
+lSLF07#2@60"Analyze /Users/david/Dropbox/phd/code/LTWToolkit/LTWParser.m301913611#301913611#0(0"0(0#0#52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWParser.m4300911832#1596"    cd /Users/david/Dropbox/phd/code/LTWToolkit    setenv LANG en_US.US-ASCII    /Developer/usr/bin/clang -x objective-c -arch x86_64 -fmessage-length=0 -pipe -fdiagnostics-print-source-range-info -std=gnu99 -Wno-trigraphs -fpascal-strings -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -fasm-blocks -mfix-and-continue -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-generated-files.hmap -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-own-target-headers.hmap -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-all-target-headers.hmap -iquote /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-project-headers.hmap -F/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug -I/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug/include -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/DerivedSources/x86_64 -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/DerivedSources -include /var/folders/pI/pI7AtQJkG5yp3XtPcBRb9k+++TM/-Caches-/com.apple.Xcode.502/SharedPrecompiledHeaders/LTWToolkit_Prefix-bxphgfcfnsztfzdjfscdpgcnpbvq/LTWToolkit_Prefix.pch --analyze /Users/david/Dropbox/phd/code/LTWToolkit/LTWParser.m -o /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/StaticAnalyzer/normal/x86_64/LTWParser.plist0#
+
+CAnalyze /Users/david/Dropbox/phd/code/LTWToolkit/LTWPythonUtils.m
+s301913611.061615
+e301913611.283915
+r1
+xAnalyze
+x/Users/david/Dropbox/phd/code/LTWToolkit/LTWPythonUtils.m
+o/Users/david/Dropbox/phd/code/LTWToolkit/LTWPythonUtils.m:297:26: warning: conflicting parameter types in implementation of 'callMethod:onPythonObject:withTokens:': 'char const *' vs 'char *'
+o +(void)callMethod:(char*)methodName onPythonObject:(PyObject*)pythonObject withTokens:(LTWTokens*)tokens {
+o                          ^
+oIn file included from /Users/david/Dropbox/phd/code/LTWToolkit/LTWPythonUtils.m:9:
+o/Users/david/Dropbox/phd/code/LTWToolkit/LTWPythonUtils.h:19:32: note: previous definition is here
+o +(void)callMethod:(const char*)methodName onPythonObject:(PyObject*)pythonObject withTokens:(LTWTokens*)tokens;
+o                                ^
+o2 diagnostics generated.
+lSLF07#2@65"Analyze /Users/david/Dropbox/phd/code/LTWToolkit/LTWPythonUtils.m301913611#301913611#0(682"/Users/david/Dropbox/phd/code/LTWToolkit/LTWPythonUtils.m:297:26: warning: conflicting parameter types in implementation of 'callMethod:onPythonObject:withTokens:': 'char const *' vs 'char *' +(void)callMethod:(char*)methodName onPythonObject:(PyObject*)pythonObject withTokens:(LTWTokens*)tokens {                          ^In file included from /Users/david/Dropbox/phd/code/LTWToolkit/LTWPythonUtils.m:9:/Users/david/Dropbox/phd/code/LTWToolkit/LTWPythonUtils.h:19:32: note: previous definition is here +(void)callMethod:(const char*)methodName onPythonObject:(PyObject*)pythonObject withTokens:(LTWTokens*)tokens;                                ^2 diagnostics generated.0(0#0#57"/Users/david/Dropbox/phd/code/LTWToolkit/LTWPythonUtils.m4300911832#1606"    cd /Users/david/Dropbox/phd/code/LTWToolkit    setenv LANG en_US.US-ASCII    /Developer/usr/bin/clang -x objective-c -arch x86_64 -fmessage-length=0 -pipe -fdiagnostics-print-source-range-info -std=gnu99 -Wno-trigraphs -fpascal-strings -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -fasm-blocks -mfix-and-continue -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-generated-files.hmap -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-own-target-headers.hmap -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-all-target-headers.hmap -iquote /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-project-headers.hmap -F/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug -I/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug/include -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/DerivedSources/x86_64 -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/DerivedSources -include /var/folders/pI/pI7AtQJkG5yp3XtPcBRb9k+++TM/-Caches-/com.apple.Xcode.502/SharedPrecompiledHeaders/LTWToolkit_Prefix-bxphgfcfnsztfzdjfscdpgcnpbvq/LTWToolkit_Prefix.pch --analyze /Users/david/Dropbox/phd/code/LTWToolkit/LTWPythonUtils.m -o /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/StaticAnalyzer/normal/x86_64/LTWPythonUtils.plist0#
+
+CAnalyze /Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m
+s301913610.967978
+e301913611.141760
+r1
+xAnalyze
+x/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m
+o/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m:29:38: warning: Potential leak of an object allocated on line 29
+o                         [mutableTokenExtraInfos addObject:[extraInfo copy]];
+o                                                           ^
+o1 diagnostic generated.
+lSLF07#2@60"Analyze /Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301913610#301913611#0(281"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m:29:38: warning: Potential leak of an object allocated on line 29                         [mutableTokenExtraInfos addObject:[extraInfo copy]];                                                           ^1 diagnostic generated.1(0@48"Potential leak of an object allocated on line 29301913611#18446744073709551615#0#16(17@0"301913611#18446744073709551615#0#0(6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#0#0#0#0#0"0(6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#0#0#0#0#1(3@6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#16#2#16#2#6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#17#2#17#2#17@0"301913611#18446744073709551615#0#0(6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#0#0#0#0#0"0(6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#0#0#0#0#1(3@6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#17#2#17#2#6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#17#15#17#15#17@0"301913611#18446744073709551615#0#0(6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#0#0#0#0#0"0(6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#0#0#0#0#1(3@6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#17#15#17#15#6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#19#2#19#2#17@0"301913611#18446744073709551615#0#0(6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#0#0#0#0#0"0(6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#0#0#0#0#1(3@6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#19#2#19#2#6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#20#3#20#3#17@0"301913611#18446744073709551615#0#0(6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#0#0#0#0#0"0(6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#0#0#0#0#1(3@6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#20#3#20#3#6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#27#3#27#3#17@0"301913611#18446744073709551615#0#0(6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#0#0#0#0#0"0(6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#0#0#0#0#1(3@6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#27#3#27#3#6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#28#4#28#4#17@0"301913611#18446744073709551615#0#0(6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#0#0#0#0#0"0(6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#0#0#0#0#1(3@6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#28#4#28#4#6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#29#4#29#4#17@0"301913611#18446744073709551615#0#0(6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#0#0#0#0#0"0(6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#0#0#0#0#1(3@6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#29#4#29#4#6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#29#38#29#53#21@78"Method returns an Objective-C object with a +1 retain count (owning reference)301913611#18446744073709551615#0#0(6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#29#38#0#0#0"1(6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#29#38#29#53#78"Method returns an Objective-C object with a +1 retain count (owning reference)17@0"301913611#18446744073709551615#0#0(6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#0#0#0#0#0"0(6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#0#0#0#0#1(3@6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#29#38#29#53#6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#30#3#30#3#17@0"301913611#18446744073709551615#0#0(6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#0#0#0#0#0"0(6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#0#0#0#0#1(3@6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#30#3#30#3#6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#27#3#27#7#21@36"Looping back to the head of the loop301913611#18446744073709551615#0#0(6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#27#3#0#0#0"1(6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#27#3#27#7#36"Looping back to the head of the loop17@0"301913611#18446744073709551615#0#0(6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#0#0#0#0#0"0(6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#0#0#0#0#1(3@6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#27#3#27#7#6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#32#3#32#3#17@0"301913611#18446744073709551615#0#0(6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#0#0#0#0#0"0(6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#0#0#0#0#1(3@6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#32#3#32#3#6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#36#2#36#2#17@0"301913611#18446744073709551615#0#0(6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#0#0#0#0#0"0(6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#0#0#0#0#1(3@6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#36#2#36#2#6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#37#1#37#1#21@113"Object allocated on line 29 is no longer referenced after this point and has a retain count of +1 (object leaked)301913611#18446744073709551615#0#0(6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#37#1#0#0#0"1(6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#37#1#37#1#113"Object allocated on line 29 is no longer referenced after this point and has a retain count of +1 (object leaked)6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m301908810#37#1#0#0#36"Memory (Core Foundation/Objective-C)0(23"Leak of returned object0#0#52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m4300911832#1596"    cd /Users/david/Dropbox/phd/code/LTWToolkit    setenv LANG en_US.US-ASCII    /Developer/usr/bin/clang -x objective-c -arch x86_64 -fmessage-length=0 -pipe -fdiagnostics-print-source-range-info -std=gnu99 -Wno-trigraphs -fpascal-strings -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -fasm-blocks -mfix-and-continue -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-generated-files.hmap -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-own-target-headers.hmap -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-all-target-headers.hmap -iquote /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-project-headers.hmap -F/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug -I/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug/include -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/DerivedSources/x86_64 -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/DerivedSources -include /var/folders/pI/pI7AtQJkG5yp3XtPcBRb9k+++TM/-Caches-/com.apple.Xcode.502/SharedPrecompiledHeaders/LTWToolkit_Prefix-bxphgfcfnsztfzdjfscdpgcnpbvq/LTWToolkit_Prefix.pch --analyze /Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m -o /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/StaticAnalyzer/normal/x86_64/LTWTokens.plist0#
+
+CAnalyze /Users/david/Dropbox/phd/code/LTWToolkit/LTWToolkitAppDelegate.m
+s301913610.469887
+e301913610.967764
+r1
+xAnalyze
+x/Users/david/Dropbox/phd/code/LTWToolkit/LTWToolkitAppDelegate.m
+o/Users/david/Dropbox/phd/code/LTWToolkit/LTWToolkitAppDelegate.m:35:22: warning: Potential leak of an object allocated on line 35 and stored into 'corpus'
+o         LTWCorpus *corpus = [[LTWCorpus alloc] initWithImplementationCode:pythonCode];
+o                             ^
+o1 diagnostic generated.
+lSLF07#2@72"Analyze /Users/david/Dropbox/phd/code/LTWToolkit/LTWToolkitAppDelegate.m301913610#301913610#0(298"/Users/david/Dropbox/phd/code/LTWToolkit/LTWToolkitAppDelegate.m:35:22: warning: Potential leak of an object allocated on line 35 and stored into 'corpus'         LTWCorpus *corpus = [[LTWCorpus alloc] initWithImplementationCode:pythonCode];                             ^1 diagnostic generated.1(0@73"Potential leak of an object allocated on line 35 and stored into 'corpus'301913610#18446744073709551615#0#5(17@0"301913610#18446744073709551615#0#0(6@64"/Users/david/Dropbox/phd/code/LTWToolkit/LTWToolkitAppDelegate.m301904748#0#0#0#0#0"0(6@64"/Users/david/Dropbox/phd/code/LTWToolkit/LTWToolkitAppDelegate.m301904748#0#0#0#0#1(3@6@64"/Users/david/Dropbox/phd/code/LTWToolkit/LTWToolkitAppDelegate.m301904748#18#2#18#2#6@64"/Users/david/Dropbox/phd/code/LTWToolkit/LTWToolkitAppDelegate.m301904748#35#2#35#2#17@0"301913610#18446744073709551615#0#0(6@64"/Users/david/Dropbox/phd/code/LTWToolkit/LTWToolkitAppDelegate.m301904748#0#0#0#0#0"0(6@64"/Users/david/Dropbox/phd/code/LTWToolkit/LTWToolkitAppDelegate.m301904748#0#0#0#0#1(3@6@64"/Users/david/Dropbox/phd/code/LTWToolkit/LTWToolkitAppDelegate.m301904748#35#2#35#2#6@64"/Users/david/Dropbox/phd/code/LTWToolkit/LTWToolkitAppDelegate.m301904748#35#22#35#78#21@78"Method returns an Objective-C object with a +1 retain count (owning reference)301913610#18446744073709551615#0#0(6@64"/Users/david/Dropbox/phd/code/LTWToolkit/LTWToolkitAppDelegate.m301904748#35#22#0#0#0"1(6@64"/Users/david/Dropbox/phd/code/LTWToolkit/LTWToolkitAppDelegate.m301904748#35#22#35#78#78"Method returns an Objective-C object with a +1 retain count (owning reference)17@0"301913610#18446744073709551615#0#0(6@64"/Users/david/Dropbox/phd/code/LTWToolkit/LTWToolkitAppDelegate.m301904748#0#0#0#0#0"0(6@64"/Users/david/Dropbox/phd/code/LTWToolkit/LTWToolkitAppDelegate.m301904748#0#0#0#0#1(3@6@64"/Users/david/Dropbox/phd/code/LTWToolkit/LTWToolkitAppDelegate.m301904748#35#22#35#78#6@64"/Users/david/Dropbox/phd/code/LTWToolkit/LTWToolkitAppDelegate.m301904748#37#2#37#6#21@138"Object allocated on line 35 and stored into 'corpus' is no longer referenced after this point and has a retain count of +1 (object leaked)301913610#18446744073709551615#0#0(6@64"/Users/david/Dropbox/phd/code/LTWToolkit/LTWToolkitAppDelegate.m301904748#37#2#0#0#0"1(6@64"/Users/david/Dropbox/phd/code/LTWToolkit/LTWToolkitAppDelegate.m301904748#37#2#37#6#138"Object allocated on line 35 and stored into 'corpus' is no longer referenced after this point and has a retain count of +1 (object leaked)6@64"/Users/david/Dropbox/phd/code/LTWToolkit/LTWToolkitAppDelegate.m301904748#37#2#0#0#36"Memory (Core Foundation/Objective-C)0(4"Leak0#0#64"/Users/david/Dropbox/phd/code/LTWToolkit/LTWToolkitAppDelegate.m4300911832#1620"    cd /Users/david/Dropbox/phd/code/LTWToolkit    setenv LANG en_US.US-ASCII    /Developer/usr/bin/clang -x objective-c -arch x86_64 -fmessage-length=0 -pipe -fdiagnostics-print-source-range-info -std=gnu99 -Wno-trigraphs -fpascal-strings -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -fasm-blocks -mfix-and-continue -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-generated-files.hmap -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-own-target-headers.hmap -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-all-target-headers.hmap -iquote /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-project-headers.hmap -F/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug -I/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug/include -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/DerivedSources/x86_64 -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/DerivedSources -include /var/folders/pI/pI7AtQJkG5yp3XtPcBRb9k+++TM/-Caches-/com.apple.Xcode.502/SharedPrecompiledHeaders/LTWToolkit_Prefix-bxphgfcfnsztfzdjfscdpgcnpbvq/LTWToolkit_Prefix.pch --analyze /Users/david/Dropbox/phd/code/LTWToolkit/LTWToolkitAppDelegate.m -o /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/StaticAnalyzer/normal/x86_64/LTWToolkitAppDelegate.plist0#
+
+CAnalyze /Users/david/Dropbox/phd/code/LTWToolkit/main.m
+s301913610.468612
+e301913610.819805
+r1
+xAnalyze
+x/Users/david/Dropbox/phd/code/LTWToolkit/main.m
+lSLF07#2@55"Analyze /Users/david/Dropbox/phd/code/LTWToolkit/main.m301913610#301913610#0(0"0(0#0#47"/Users/david/Dropbox/phd/code/LTWToolkit/main.m4300911832#1586"    cd /Users/david/Dropbox/phd/code/LTWToolkit    setenv LANG en_US.US-ASCII    /Developer/usr/bin/clang -x objective-c -arch x86_64 -fmessage-length=0 -pipe -fdiagnostics-print-source-range-info -std=gnu99 -Wno-trigraphs -fpascal-strings -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -fasm-blocks -mfix-and-continue -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-generated-files.hmap -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-own-target-headers.hmap -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-all-target-headers.hmap -iquote /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-project-headers.hmap -F/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug -I/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug/include -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/DerivedSources/x86_64 -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/DerivedSources -include /var/folders/pI/pI7AtQJkG5yp3XtPcBRb9k+++TM/-Caches-/com.apple.Xcode.502/SharedPrecompiledHeaders/LTWToolkit_Prefix-bxphgfcfnsztfzdjfscdpgcnpbvq/LTWToolkit_Prefix.pch --analyze /Users/david/Dropbox/phd/code/LTWToolkit/main.m -o /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/StaticAnalyzer/normal/x86_64/main.plist0#
+
+CCheck dependencies
+r0
+lSLF07#2@18"Check dependencies302358309#302358309#0(0"0(0#1#0"4300911832#0"0#
+
+CCompileC build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWArticle.o /Users/david/Dropbox/phd/code/LTWToolkit/LTWArticle.m normal x86_64 objective-c com.apple.compilers.gcc.4_2
+s302357403.413671
+e302357404.196255
+r1
+xCompileC
+xbuild/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWArticle.o
+x/Users/david/Dropbox/phd/code/LTWToolkit/LTWArticle.m
+xnormal
+xx86_64
+xobjective-c
+xcom.apple.compilers.gcc.4_2
+lSLF07#2@61"Compile /Users/david/Dropbox/phd/code/LTWToolkit/LTWArticle.m302357403#302357404#0(0"0(0#0#53"/Users/david/Dropbox/phd/code/LTWToolkit/LTWArticle.m4300911832#1544"    cd /Users/david/Dropbox/phd/code/LTWToolkit    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x objective-c -arch x86_64 -fmessage-length=0 -pipe -std=gnu99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -mfix-and-continue -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-generated-files.hmap -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-own-target-headers.hmap -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-all-target-headers.hmap -iquote /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-project-headers.hmap -F/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug -I/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug/include -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/DerivedSources/x86_64 -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/DerivedSources -include /var/folders/pI/pI7AtQJkG5yp3XtPcBRb9k+++TM/-Caches-/com.apple.Xcode.502/SharedPrecompiledHeaders/LTWToolkit_Prefix-bejutuklwwhxuxeacvzkpofjckya/LTWToolkit_Prefix.pch -c /Users/david/Dropbox/phd/code/LTWToolkit/LTWArticle.m -o /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWArticle.o0#
+
+CCompileC build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWArticleDocument.o /Users/david/Dropbox/phd/code/LTWToolkit/LTWArticleDocument.m normal x86_64 objective-c com.apple.compilers.gcc.4_2
+s302358229.690202
+e302358230.067321
+r1
+xCompileC
+xbuild/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWArticleDocument.o
+x/Users/david/Dropbox/phd/code/LTWToolkit/LTWArticleDocument.m
+xnormal
+xx86_64
+xobjective-c
+xcom.apple.compilers.gcc.4_2
+lSLF07#2@69"Compile /Users/david/Dropbox/phd/code/LTWToolkit/LTWArticleDocument.m302358229#302358230#0(0"0(0#0#61"/Users/david/Dropbox/phd/code/LTWToolkit/LTWArticleDocument.m4300911832#1560"    cd /Users/david/Dropbox/phd/code/LTWToolkit    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x objective-c -arch x86_64 -fmessage-length=0 -pipe -std=gnu99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -mfix-and-continue -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-generated-files.hmap -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-own-target-headers.hmap -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-all-target-headers.hmap -iquote /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-project-headers.hmap -F/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug -I/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug/include -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/DerivedSources/x86_64 -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/DerivedSources -include /var/folders/pI/pI7AtQJkG5yp3XtPcBRb9k+++TM/-Caches-/com.apple.Xcode.502/SharedPrecompiledHeaders/LTWToolkit_Prefix-bejutuklwwhxuxeacvzkpofjckya/LTWToolkit_Prefix.pch -c /Users/david/Dropbox/phd/code/LTWToolkit/LTWArticleDocument.m -o /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWArticleDocument.o0#
+
+CCompileC build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWConcreteSubTokens.o /Users/david/Dropbox/phd/code/LTWToolkit/LTWConcreteSubTokens.m normal x86_64 objective-c com.apple.compilers.gcc.4_2
+s302356625.125089
+e302356625.368327
+r1
+xCompileC
+xbuild/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWConcreteSubTokens.o
+x/Users/david/Dropbox/phd/code/LTWToolkit/LTWConcreteSubTokens.m
+xnormal
+xx86_64
+xobjective-c
+xcom.apple.compilers.gcc.4_2
+lSLF07#2@71"Compile /Users/david/Dropbox/phd/code/LTWToolkit/LTWConcreteSubTokens.m302356625#302356625#0(0"0(0#0#63"/Users/david/Dropbox/phd/code/LTWToolkit/LTWConcreteSubTokens.m4300911832#1564"    cd /Users/david/Dropbox/phd/code/LTWToolkit    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x objective-c -arch x86_64 -fmessage-length=0 -pipe -std=gnu99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -mfix-and-continue -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-generated-files.hmap -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-own-target-headers.hmap -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-all-target-headers.hmap -iquote /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-project-headers.hmap -F/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug -I/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug/include -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/DerivedSources/x86_64 -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/DerivedSources -include /var/folders/pI/pI7AtQJkG5yp3XtPcBRb9k+++TM/-Caches-/com.apple.Xcode.502/SharedPrecompiledHeaders/LTWToolkit_Prefix-bejutuklwwhxuxeacvzkpofjckya/LTWToolkit_Prefix.pch -c /Users/david/Dropbox/phd/code/LTWToolkit/LTWConcreteSubTokens.m -o /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWConcreteSubTokens.o0#
+
+CCompileC build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWConcreteTokens.o /Users/david/Dropbox/phd/code/LTWToolkit/LTWConcreteTokens.m normal x86_64 objective-c com.apple.compilers.gcc.4_2
+s302358229.537730
+e302358229.939090
+r1
+xCompileC
+xbuild/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWConcreteTokens.o
+x/Users/david/Dropbox/phd/code/LTWToolkit/LTWConcreteTokens.m
+xnormal
+xx86_64
+xobjective-c
+xcom.apple.compilers.gcc.4_2
+lSLF07#2@68"Compile /Users/david/Dropbox/phd/code/LTWToolkit/LTWConcreteTokens.m302358229#302358229#0(0"0(0#0#60"/Users/david/Dropbox/phd/code/LTWToolkit/LTWConcreteTokens.m4300911832#1558"    cd /Users/david/Dropbox/phd/code/LTWToolkit    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x objective-c -arch x86_64 -fmessage-length=0 -pipe -std=gnu99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -mfix-and-continue -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-generated-files.hmap -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-own-target-headers.hmap -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-all-target-headers.hmap -iquote /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-project-headers.hmap -F/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug -I/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug/include -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/DerivedSources/x86_64 -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/DerivedSources -include /var/folders/pI/pI7AtQJkG5yp3XtPcBRb9k+++TM/-Caches-/com.apple.Xcode.502/SharedPrecompiledHeaders/LTWToolkit_Prefix-bejutuklwwhxuxeacvzkpofjckya/LTWToolkit_Prefix.pch -c /Users/david/Dropbox/phd/code/LTWToolkit/LTWConcreteTokens.m -o /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWConcreteTokens.o0#
+
+CCompileC build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWCorpus.o /Users/david/Dropbox/phd/code/LTWToolkit/LTWCorpus.m normal x86_64 objective-c com.apple.compilers.gcc.4_2
+s302358303.669671
+e302358303.988695
+r1
+xCompileC
+xbuild/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWCorpus.o
+x/Users/david/Dropbox/phd/code/LTWToolkit/LTWCorpus.m
+xnormal
+xx86_64
+xobjective-c
+xcom.apple.compilers.gcc.4_2
+o/Users/david/Dropbox/phd/code/LTWToolkit/LTWCorpus.m: In function '-[LTWCorpus loadArticleWithURL:]':
+o/Users/david/Dropbox/phd/code/LTWToolkit/LTWCorpus.m:37: warning: 'stringWithContentsOfURL:' is deprecated (declared at /Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/Foundation.framework/Headers/NSString.h:380)
+lSLF07#2@60"Compile /Users/david/Dropbox/phd/code/LTWToolkit/LTWCorpus.m302358303#302358303#0(324"/Users/david/Dropbox/phd/code/LTWToolkit/LTWCorpus.m: In function '-[LTWCorpus loadArticleWithURL:]':/Users/david/Dropbox/phd/code/LTWToolkit/LTWCorpus.m:37: warning: 'stringWithContentsOfURL:' is deprecated (declared at /Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/Foundation.framework/Headers/NSString.h:380)1(22@155"'stringWithContentsOfURL:' is deprecated (declared at /Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/Foundation.framework/Headers/NSString.h:380)302358303#102#222#0(6@52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWCorpus.m302358303#37#0#37#0#33"'*' is deprecated (declared at *)0(0#0#52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWCorpus.m4300911832#1542"    cd /Users/david/Dropbox/phd/code/LTWToolkit    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x objective-c -arch x86_64 -fmessage-length=0 -pipe -std=gnu99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -mfix-and-continue -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-generated-files.hmap -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-own-target-headers.hmap -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-all-target-headers.hmap -iquote /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-project-headers.hmap -F/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug -I/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug/include -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/DerivedSources/x86_64 -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/DerivedSources -include /var/folders/pI/pI7AtQJkG5yp3XtPcBRb9k+++TM/-Caches-/com.apple.Xcode.502/SharedPrecompiledHeaders/LTWToolkit_Prefix-bejutuklwwhxuxeacvzkpofjckya/LTWToolkit_Prefix.pch -c /Users/david/Dropbox/phd/code/LTWToolkit/LTWCorpus.m -o /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWCorpus.o0#
+
+CCompileC build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWParser.o /Users/david/Dropbox/phd/code/LTWToolkit/LTWParser.m normal x86_64 objective-c com.apple.compilers.gcc.4_2
+s302358229.192058
+e302358229.537404
+r1
+xCompileC
+xbuild/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWParser.o
+x/Users/david/Dropbox/phd/code/LTWToolkit/LTWParser.m
+xnormal
+xx86_64
+xobjective-c
+xcom.apple.compilers.gcc.4_2
+lSLF07#2@60"Compile /Users/david/Dropbox/phd/code/LTWToolkit/LTWParser.m302358229#302358229#0(0"0(0#0#52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWParser.m4300911832#1542"    cd /Users/david/Dropbox/phd/code/LTWToolkit    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x objective-c -arch x86_64 -fmessage-length=0 -pipe -std=gnu99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -mfix-and-continue -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-generated-files.hmap -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-own-target-headers.hmap -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-all-target-headers.hmap -iquote /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-project-headers.hmap -F/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug -I/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug/include -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/DerivedSources/x86_64 -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/DerivedSources -include /var/folders/pI/pI7AtQJkG5yp3XtPcBRb9k+++TM/-Caches-/com.apple.Xcode.502/SharedPrecompiledHeaders/LTWToolkit_Prefix-bejutuklwwhxuxeacvzkpofjckya/LTWToolkit_Prefix.pch -c /Users/david/Dropbox/phd/code/LTWToolkit/LTWParser.m -o /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWParser.o0#
+
+CCompileC build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWPythonDocument.o /Users/david/Dropbox/phd/code/LTWToolkit/LTWPythonDocument.m normal x86_64 objective-c com.apple.compilers.gcc.4_2
+s302357403.412342
+e302357403.820956
+r1
+xCompileC
+xbuild/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWPythonDocument.o
+x/Users/david/Dropbox/phd/code/LTWToolkit/LTWPythonDocument.m
+xnormal
+xx86_64
+xobjective-c
+xcom.apple.compilers.gcc.4_2
+lSLF07#2@68"Compile /Users/david/Dropbox/phd/code/LTWToolkit/LTWPythonDocument.m302357403#302357403#0(0"0(0#0#60"/Users/david/Dropbox/phd/code/LTWToolkit/LTWPythonDocument.m4300911832#1558"    cd /Users/david/Dropbox/phd/code/LTWToolkit    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x objective-c -arch x86_64 -fmessage-length=0 -pipe -std=gnu99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -mfix-and-continue -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-generated-files.hmap -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-own-target-headers.hmap -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-all-target-headers.hmap -iquote /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-project-headers.hmap -F/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug -I/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug/include -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/DerivedSources/x86_64 -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/DerivedSources -include /var/folders/pI/pI7AtQJkG5yp3XtPcBRb9k+++TM/-Caches-/com.apple.Xcode.502/SharedPrecompiledHeaders/LTWToolkit_Prefix-bejutuklwwhxuxeacvzkpofjckya/LTWToolkit_Prefix.pch -c /Users/david/Dropbox/phd/code/LTWToolkit/LTWPythonDocument.m -o /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWPythonDocument.o0#
+
+CCompileC build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWPythonUtils.o /Users/david/Dropbox/phd/code/LTWToolkit/LTWPythonUtils.m normal x86_64 objective-c com.apple.compilers.gcc.4_2
+s302358228.914723
+e302358229.689789
+r1
+xCompileC
+xbuild/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWPythonUtils.o
+x/Users/david/Dropbox/phd/code/LTWToolkit/LTWPythonUtils.m
+xnormal
+xx86_64
+xobjective-c
+xcom.apple.compilers.gcc.4_2
+lSLF07#2@65"Compile /Users/david/Dropbox/phd/code/LTWToolkit/LTWPythonUtils.m302358228#302358229#0(0"0(0#0#57"/Users/david/Dropbox/phd/code/LTWToolkit/LTWPythonUtils.m4300911832#1552"    cd /Users/david/Dropbox/phd/code/LTWToolkit    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x objective-c -arch x86_64 -fmessage-length=0 -pipe -std=gnu99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -mfix-and-continue -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-generated-files.hmap -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-own-target-headers.hmap -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-all-target-headers.hmap -iquote /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-project-headers.hmap -F/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug -I/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug/include -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/DerivedSources/x86_64 -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/DerivedSources -include /var/folders/pI/pI7AtQJkG5yp3XtPcBRb9k+++TM/-Caches-/com.apple.Xcode.502/SharedPrecompiledHeaders/LTWToolkit_Prefix-bejutuklwwhxuxeacvzkpofjckya/LTWToolkit_Prefix.pch -c /Users/david/Dropbox/phd/code/LTWToolkit/LTWPythonUtils.m -o /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWPythonUtils.o0#
+
+CCompileC build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWPythonView.o /Users/david/Dropbox/phd/code/LTWToolkit/LTWPythonView.m normal x86_64 objective-c com.apple.compilers.gcc.4_2
+s301930034.878417
+e301930035.174997
+r1
+xCompileC
+xbuild/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWPythonView.o
+x/Users/david/Dropbox/phd/code/LTWToolkit/LTWPythonView.m
+xnormal
+xx86_64
+xobjective-c
+xcom.apple.compilers.gcc.4_2
+lSLF07#2@64"Compile /Users/david/Dropbox/phd/code/LTWToolkit/LTWPythonView.m301930034#301930035#0(0"0(0#0#56"/Users/david/Dropbox/phd/code/LTWToolkit/LTWPythonView.m4300911832#1550"    cd /Users/david/Dropbox/phd/code/LTWToolkit    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x objective-c -arch x86_64 -fmessage-length=0 -pipe -std=gnu99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -mfix-and-continue -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-generated-files.hmap -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-own-target-headers.hmap -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-all-target-headers.hmap -iquote /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-project-headers.hmap -F/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug -I/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug/include -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/DerivedSources/x86_64 -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/DerivedSources -include /var/folders/pI/pI7AtQJkG5yp3XtPcBRb9k+++TM/-Caches-/com.apple.Xcode.502/SharedPrecompiledHeaders/LTWToolkit_Prefix-bejutuklwwhxuxeacvzkpofjckya/LTWToolkit_Prefix.pch -c /Users/david/Dropbox/phd/code/LTWToolkit/LTWPythonView.m -o /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWPythonView.o0#
+
+CCompileC build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWTokenTag.o /Users/david/Dropbox/phd/code/LTWToolkit/LTWTokenTag.m normal x86_64 objective-c com.apple.compilers.gcc.4_2
+s302356625.368444
+e302356625.618762
+r1
+xCompileC
+xbuild/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWTokenTag.o
+x/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokenTag.m
+xnormal
+xx86_64
+xobjective-c
+xcom.apple.compilers.gcc.4_2
+lSLF07#2@62"Compile /Users/david/Dropbox/phd/code/LTWToolkit/LTWTokenTag.m302356625#302356625#0(0"0(0#0#54"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokenTag.m4300911832#1546"    cd /Users/david/Dropbox/phd/code/LTWToolkit    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x objective-c -arch x86_64 -fmessage-length=0 -pipe -std=gnu99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -mfix-and-continue -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-generated-files.hmap -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-own-target-headers.hmap -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-all-target-headers.hmap -iquote /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-project-headers.hmap -F/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug -I/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug/include -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/DerivedSources/x86_64 -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/DerivedSources -include /var/folders/pI/pI7AtQJkG5yp3XtPcBRb9k+++TM/-Caches-/com.apple.Xcode.502/SharedPrecompiledHeaders/LTWToolkit_Prefix-bejutuklwwhxuxeacvzkpofjckya/LTWToolkit_Prefix.pch -c /Users/david/Dropbox/phd/code/LTWToolkit/LTWTokenTag.m -o /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWTokenTag.o0#
+
+CCompileC build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWTokenType.o /Users/david/Dropbox/phd/code/LTWToolkit/LTWTokenType.m normal x86_64 objective-c com.apple.compilers.gcc.4_2
+r0
+
+CCompileC build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWTokens.o /Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m normal x86_64 objective-c com.apple.compilers.gcc.4_2
+s302356624.142321
+e302356624.445022
+r1
+xCompileC
+xbuild/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWTokens.o
+x/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m
+xnormal
+xx86_64
+xobjective-c
+xcom.apple.compilers.gcc.4_2
+lSLF07#2@60"Compile /Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m302356624#302356624#0(0"0(0#0#52"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m4300911832#1542"    cd /Users/david/Dropbox/phd/code/LTWToolkit    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x objective-c -arch x86_64 -fmessage-length=0 -pipe -std=gnu99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -mfix-and-continue -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-generated-files.hmap -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-own-target-headers.hmap -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-all-target-headers.hmap -iquote /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-project-headers.hmap -F/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug -I/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug/include -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/DerivedSources/x86_64 -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/DerivedSources -include /var/folders/pI/pI7AtQJkG5yp3XtPcBRb9k+++TM/-Caches-/com.apple.Xcode.502/SharedPrecompiledHeaders/LTWToolkit_Prefix-bejutuklwwhxuxeacvzkpofjckya/LTWToolkit_Prefix.pch -c /Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m -o /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWTokens.o0#
+
+CCompileC build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWTokensView.o /Users/david/Dropbox/phd/code/LTWToolkit/LTWTokensView.m normal x86_64 objective-c com.apple.compilers.gcc.4_2
+s302357434.030760
+e302357434.456357
+r1
+xCompileC
+xbuild/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWTokensView.o
+x/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokensView.m
+xnormal
+xx86_64
+xobjective-c
+xcom.apple.compilers.gcc.4_2
+lSLF07#2@64"Compile /Users/david/Dropbox/phd/code/LTWToolkit/LTWTokensView.m302357434#302357434#0(0"0(0#0#56"/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokensView.m4300911832#1550"    cd /Users/david/Dropbox/phd/code/LTWToolkit    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x objective-c -arch x86_64 -fmessage-length=0 -pipe -std=gnu99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -mfix-and-continue -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-generated-files.hmap -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-own-target-headers.hmap -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-all-target-headers.hmap -iquote /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-project-headers.hmap -F/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug -I/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug/include -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/DerivedSources/x86_64 -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/DerivedSources -include /var/folders/pI/pI7AtQJkG5yp3XtPcBRb9k+++TM/-Caches-/com.apple.Xcode.502/SharedPrecompiledHeaders/LTWToolkit_Prefix-bejutuklwwhxuxeacvzkpofjckya/LTWToolkit_Prefix.pch -c /Users/david/Dropbox/phd/code/LTWToolkit/LTWTokensView.m -o /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWTokensView.o0#
+
+CCompileC build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWToolkitAppDelegate.o /Users/david/Dropbox/phd/code/LTWToolkit/LTWToolkitAppDelegate.m normal x86_64 objective-c com.apple.compilers.gcc.4_2
+s302357403.043337
+e302357403.411915
+r1
+xCompileC
+xbuild/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWToolkitAppDelegate.o
+x/Users/david/Dropbox/phd/code/LTWToolkit/LTWToolkitAppDelegate.m
+xnormal
+xx86_64
+xobjective-c
+xcom.apple.compilers.gcc.4_2
+o/Users/david/Dropbox/phd/code/LTWToolkit/LTWToolkitAppDelegate.m: In function '-[LTWToolkitAppDelegate loadArticle:]':
+o/Users/david/Dropbox/phd/code/LTWToolkit/LTWToolkitAppDelegate.m:53: warning: unused variable 'article'
+lSLF07#2@72"Compile /Users/david/Dropbox/phd/code/LTWToolkit/LTWToolkitAppDelegate.m302357403#302357403#0(223"/Users/david/Dropbox/phd/code/LTWToolkit/LTWToolkitAppDelegate.m: In function '-[LTWToolkitAppDelegate loadArticle:]':/Users/david/Dropbox/phd/code/LTWToolkit/LTWToolkitAppDelegate.m:53: warning: unused variable 'article'1(22@25"Unused variable 'article'302357403#119#104#0(6@64"/Users/david/Dropbox/phd/code/LTWToolkit/LTWToolkitAppDelegate.m302357045#53#0#53#0#19"unused variable '*'0(0#0#64"/Users/david/Dropbox/phd/code/LTWToolkit/LTWToolkitAppDelegate.m4300911832#1566"    cd /Users/david/Dropbox/phd/code/LTWToolkit    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x objective-c -arch x86_64 -fmessage-length=0 -pipe -std=gnu99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -mfix-and-continue -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-generated-files.hmap -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-own-target-headers.hmap -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-all-target-headers.hmap -iquote /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-project-headers.hmap -F/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug -I/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug/include -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/DerivedSources/x86_64 -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/DerivedSources -include /var/folders/pI/pI7AtQJkG5yp3XtPcBRb9k+++TM/-Caches-/com.apple.Xcode.502/SharedPrecompiledHeaders/LTWToolkit_Prefix-bejutuklwwhxuxeacvzkpofjckya/LTWToolkit_Prefix.pch -c /Users/david/Dropbox/phd/code/LTWToolkit/LTWToolkitAppDelegate.m -o /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWToolkitAppDelegate.o0#
+
+CCompileC build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/main.o /Users/david/Dropbox/phd/code/LTWToolkit/main.m normal x86_64 objective-c com.apple.compilers.gcc.4_2
+s302356623.536693
+e302356623.765433
+r1
+xCompileC
+xbuild/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/main.o
+x/Users/david/Dropbox/phd/code/LTWToolkit/main.m
+xnormal
+xx86_64
+xobjective-c
+xcom.apple.compilers.gcc.4_2
+lSLF07#2@55"Compile /Users/david/Dropbox/phd/code/LTWToolkit/main.m302356623#302356623#0(0"0(0#0#47"/Users/david/Dropbox/phd/code/LTWToolkit/main.m4300911832#1532"    cd /Users/david/Dropbox/phd/code/LTWToolkit    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x objective-c -arch x86_64 -fmessage-length=0 -pipe -std=gnu99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -mfix-and-continue -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-generated-files.hmap -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-own-target-headers.hmap -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-all-target-headers.hmap -iquote /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-project-headers.hmap -F/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug -I/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug/include -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/DerivedSources/x86_64 -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/DerivedSources -include /var/folders/pI/pI7AtQJkG5yp3XtPcBRb9k+++TM/-Caches-/com.apple.Xcode.502/SharedPrecompiledHeaders/LTWToolkit_Prefix-bejutuklwwhxuxeacvzkpofjckya/LTWToolkit_Prefix.pch -c /Users/david/Dropbox/phd/code/LTWToolkit/main.m -o /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/main.o0#
+
+CCompileXIB /Users/david/Dropbox/phd/code/LTWToolkit/English.lproj/MainMenu.xib
+s302356611.248007
+e302356614.463165
+r1
+xCompileXIB
+x/Users/david/Dropbox/phd/code/LTWToolkit/English.lproj/MainMenu.xib
+lSLF07#2@37"CompileXIB English.lproj/MainMenu.xib302356611#302356614#0(0"0(0#0#67"/Users/david/Dropbox/phd/code/LTWToolkit/English.lproj/MainMenu.xib4300911832#336"    cd /Users/david/Dropbox/phd/code/LTWToolkit    /Developer/usr/bin/ibtool --errors --warnings --notices --output-format human-readable-text --compile /Users/david/Dropbox/phd/code/LTWToolkit/build/Debug/LTWToolkit.app/Contents/Resources/English.lproj/MainMenu.nib /Users/david/Dropbox/phd/code/LTWToolkit/English.lproj/MainMenu.xib0#
+
+CCompileXIB /Users/david/Dropbox/phd/code/LTWToolkit/LTWArticleDocument.xib
+s302357001.909362
+e302357002.672480
+r1
+xCompileXIB
+x/Users/david/Dropbox/phd/code/LTWToolkit/LTWArticleDocument.xib
+lSLF07#2@33"CompileXIB LTWArticleDocument.xib302357001#302357002#0(0"0(0#0#63"/Users/david/Dropbox/phd/code/LTWToolkit/LTWArticleDocument.xib4300911832#328"    cd /Users/david/Dropbox/phd/code/LTWToolkit    /Developer/usr/bin/ibtool --errors --warnings --notices --output-format human-readable-text --compile /Users/david/Dropbox/phd/code/LTWToolkit/build/Debug/LTWToolkit.app/Contents/Resources/LTWArticleDocument.nib /Users/david/Dropbox/phd/code/LTWToolkit/LTWArticleDocument.xib0#
+
+CCompileXIB /Users/david/Dropbox/phd/code/LTWToolkit/LTWPythonDocument.xib
+s302356611.974608
+e302356614.469864
+r1
+xCompileXIB
+x/Users/david/Dropbox/phd/code/LTWToolkit/LTWPythonDocument.xib
+lSLF07#2@32"CompileXIB LTWPythonDocument.xib302356611#302356614#0(0"0(0#0#62"/Users/david/Dropbox/phd/code/LTWToolkit/LTWPythonDocument.xib4300911832#326"    cd /Users/david/Dropbox/phd/code/LTWToolkit    /Developer/usr/bin/ibtool --errors --warnings --notices --output-format human-readable-text --compile /Users/david/Dropbox/phd/code/LTWToolkit/build/Debug/LTWToolkit.app/Contents/Resources/LTWPythonDocument.nib /Users/david/Dropbox/phd/code/LTWToolkit/LTWPythonDocument.xib0#
+
+CCopyStringsFile /Users/david/Dropbox/phd/code/LTWToolkit/build/Debug/LTWToolkit.app/Contents/Resources/English.lproj/InfoPlist.strings English.lproj/InfoPlist.strings
+s302356611.247035
+e302356611.974502
+r1
+xCopyStringsFile
+x/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug/LTWToolkit.app/Contents/Resources/English.lproj/InfoPlist.strings
+xEnglish.lproj/InfoPlist.strings
+lSLF07#2@36"Copy English.lproj/InfoPlist.strings302356611#302356611#0(0"0(0#0#72"/Users/david/Dropbox/phd/code/LTWToolkit/English.lproj/InfoPlist.strings4300911832#372"    cd /Users/david/Dropbox/phd/code/LTWToolkit    setenv ICONV /usr/bin/iconv    /Developer/Library/Xcode/Plug-ins/CoreBuildTasks.xcplugin/Contents/Resources/copystrings --validate --inputencoding utf-8 --outputencoding UTF-16 English.lproj/InfoPlist.strings --outdir /Users/david/Dropbox/phd/code/LTWToolkit/build/Debug/LTWToolkit.app/Contents/Resources/English.lproj0#
+
+CLd /Users/david/Dropbox/phd/code/LTWToolkit/build/Debug/LTWToolkit.app/Contents/MacOS/LTWToolkit normal x86_64
+s302358303.989000
+e302358305.109803
+r1
+xLd
+x/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug/LTWToolkit.app/Contents/MacOS/LTWToolkit
+xnormal
+xx86_64
+lSLF07#2@98"Link /Users/david/Dropbox/phd/code/LTWToolkit/build/Debug/LTWToolkit.app/Contents/MacOS/LTWToolkit302358303#302358305#0(0"0(0#0#0"4300911832#585"    cd /Users/david/Dropbox/phd/code/LTWToolkit    setenv MACOSX_DEPLOYMENT_TARGET 10.6    /Developer/usr/bin/gcc-4.2 -arch x86_64 -isysroot /Developer/SDKs/MacOSX10.6.sdk -L/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug -F/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug -filelist /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/Objects-normal/x86_64/LTWToolkit.LinkFileList -mmacosx-version-min=10.6 -framework Cocoa -framework Python -o /Users/david/Dropbox/phd/code/LTWToolkit/build/Debug/LTWToolkit.app/Contents/MacOS/LTWToolkit0#
+
+CProcessInfoPlistFile /Users/david/Dropbox/phd/code/LTWToolkit/build/Debug/LTWToolkit.app/Contents/Info.plist LTWToolkit-Info.plist
+s302358228.809080
+e302358228.910911
+r1
+xProcessInfoPlistFile
+x/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug/LTWToolkit.app/Contents/Info.plist
+xLTWToolkit-Info.plist
+lSLF07#2@29"Process LTWToolkit-Info.plist302358228#302358228#0(0"0(0#0#62"/Users/david/Dropbox/phd/code/LTWToolkit/LTWToolkit-Info.plist4300911832#325"    cd /Users/david/Dropbox/phd/code/LTWToolkit    builtin-infoPlistUtility LTWToolkit-Info.plist -genpkginfo /Users/david/Dropbox/phd/code/LTWToolkit/build/Debug/LTWToolkit.app/Contents/PkgInfo -expandbuildsettings -platform macosx -o /Users/david/Dropbox/phd/code/LTWToolkit/build/Debug/LTWToolkit.app/Contents/Info.plist0#
+
+CProcessPCH /var/folders/pI/pI7AtQJkG5yp3XtPcBRb9k+++TM/-Caches-/com.apple.Xcode.502/SharedPrecompiledHeaders/LTWToolkit_Prefix-bejutuklwwhxuxeacvzkpofjckya/LTWToolkit_Prefix.pch.gch LTWToolkit_Prefix.pch normal x86_64 objective-c com.apple.compilers.gcc.4_2
+s302356614.469972
+e302356623.536515
+r1
+xProcessPCH
+x/var/folders/pI/pI7AtQJkG5yp3XtPcBRb9k+++TM/-Caches-/com.apple.Xcode.502/SharedPrecompiledHeaders/LTWToolkit_Prefix-bejutuklwwhxuxeacvzkpofjckya/LTWToolkit_Prefix.pch.gch
+xLTWToolkit_Prefix.pch
+xnormal
+xx86_64
+xobjective-c
+xcom.apple.compilers.gcc.4_2
+lSLF07#2@32"Precompile LTWToolkit_Prefix.pch302356614#302356623#0(0"0(0#0#62"/Users/david/Dropbox/phd/code/LTWToolkit/LTWToolkit_Prefix.pch4300911832#1433"    cd /Users/david/Dropbox/phd/code/LTWToolkit    setenv LANG en_US.US-ASCII    /Developer/usr/bin/gcc-4.2 -x objective-c-header -arch x86_64 -fmessage-length=0 -pipe -std=gnu99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -mfix-and-continue -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-generated-files.hmap -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-own-target-headers.hmap -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-all-target-headers.hmap -iquote /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-project-headers.hmap -F/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug -I/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug/include -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/DerivedSources/x86_64 -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/DerivedSources -c /Users/david/Dropbox/phd/code/LTWToolkit/LTWToolkit_Prefix.pch -o /var/folders/pI/pI7AtQJkG5yp3XtPcBRb9k+++TM/-Caches-/com.apple.Xcode.502/SharedPrecompiledHeaders/LTWToolkit_Prefix-bejutuklwwhxuxeacvzkpofjckya/LTWToolkit_Prefix.pch.gch0#
+
+CProcessPCH /var/folders/pI/pI7AtQJkG5yp3XtPcBRb9k+++TM/-Caches-/com.apple.Xcode.502/SharedPrecompiledHeaders/LTWToolkit_Prefix-bxphgfcfnsztfzdjfscdpgcnpbvq/LTWToolkit_Prefix.pch.pth LTWToolkit_Prefix.pch normal x86_64 objective-c com.apple.compilers.llvm.clang.1_0.analyzer
+s301913609.339459
+e301913610.467655
+r1
+xProcessPCH
+x/var/folders/pI/pI7AtQJkG5yp3XtPcBRb9k+++TM/-Caches-/com.apple.Xcode.502/SharedPrecompiledHeaders/LTWToolkit_Prefix-bxphgfcfnsztfzdjfscdpgcnpbvq/LTWToolkit_Prefix.pch.pth
+xLTWToolkit_Prefix.pch
+xnormal
+xx86_64
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.analyzer
+lSLF07#2@32"Precompile LTWToolkit_Prefix.pch301913609#301913610#0(0"0(0#0#62"/Users/david/Dropbox/phd/code/LTWToolkit/LTWToolkit_Prefix.pch4300911832#1469"    cd /Users/david/Dropbox/phd/code/LTWToolkit    setenv LANG en_US.US-ASCII    /Developer/usr/bin/clang -x objective-c-header -arch x86_64 -fmessage-length=0 -pipe -fdiagnostics-print-source-range-info -std=gnu99 -Wno-trigraphs -fpascal-strings -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/SDKs/MacOSX10.6.sdk -fasm-blocks -mfix-and-continue -mmacosx-version-min=10.6 -gdwarf-2 -iquote /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-generated-files.hmap -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-own-target-headers.hmap -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-all-target-headers.hmap -iquote /Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/LTWToolkit-project-headers.hmap -F/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug -I/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug/include -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/DerivedSources/x86_64 -I/Users/david/Dropbox/phd/code/LTWToolkit/build/LTWToolkit.build/Debug/LTWToolkit.build/DerivedSources -c /Users/david/Dropbox/phd/code/LTWToolkit/LTWToolkit_Prefix.pch -o /var/folders/pI/pI7AtQJkG5yp3XtPcBRb9k+++TM/-Caches-/com.apple.Xcode.502/SharedPrecompiledHeaders/LTWToolkit_Prefix-bxphgfcfnsztfzdjfscdpgcnpbvq/LTWToolkit_Prefix.pch.pth0#
+
+CTouch /Users/david/Dropbox/phd/code/LTWToolkit/build/Debug/LTWToolkit.app
+s302358305.109910
+e302358305.160678
+r1
+xTouch
+x/Users/david/Dropbox/phd/code/LTWToolkit/build/Debug/LTWToolkit.app
+lSLF07#2@73"Touch /Users/david/Dropbox/phd/code/LTWToolkit/build/Debug/LTWToolkit.app302358305#302358305#0(0"0(0#0#0"4300911832#138"    cd /Users/david/Dropbox/phd/code/LTWToolkit    /usr/bin/touch -c /Users/david/Dropbox/phd/code/LTWToolkit/build/Debug/LTWToolkit.app0#
+

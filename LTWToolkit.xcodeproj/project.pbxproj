@@ -1,0 +1,424 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
+		256AC3DA0F4B6AC300CF3369 /* LTWToolkitAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* LTWToolkitAppDelegate.m */; };
+		631C6A561202A60600E821BD /* LTWConcreteTokens.m in Sources */ = {isa = PBXBuildFile; fileRef = 631C6A551202A60600E821BD /* LTWConcreteTokens.m */; };
+		631C6A591202A61600E821BD /* LTWConcreteSubTokens.m in Sources */ = {isa = PBXBuildFile; fileRef = 631C6A581202A61600E821BD /* LTWConcreteSubTokens.m */; };
+		632240C5120573460023CD84 /* LTWTokensView.m in Sources */ = {isa = PBXBuildFile; fileRef = 632240C4120573460023CD84 /* LTWTokensView.m */; };
+		632240CD120573E80023CD84 /* LTWTokenTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 632240CC120573E80023CD84 /* LTWTokenTag.m */; };
+		632241C2120598BA0023CD84 /* LTWArticleDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 632241C1120598BA0023CD84 /* LTWArticleDocument.m */; };
+		632241C4120598CD0023CD84 /* LTWArticleDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 632241C3120598CD0023CD84 /* LTWArticleDocument.xib */; };
+		636D47A711FD2CC60099153C /* LTWCorpus.m in Sources */ = {isa = PBXBuildFile; fileRef = 636D47A611FD2CC60099153C /* LTWCorpus.m */; };
+		636D47AA11FD2CD70099153C /* LTWTokens.m in Sources */ = {isa = PBXBuildFile; fileRef = 636D47A911FD2CD70099153C /* LTWTokens.m */; };
+		636D47AE11FD2D140099153C /* Python.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 636D47AD11FD2D140099153C /* Python.framework */; };
+		636D47B411FD2EAB0099153C /* LTWPythonUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 636D47B311FD2EAB0099153C /* LTWPythonUtils.m */; };
+		63C24E0E11FFAC0B002609A9 /* LTWPythonDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C24E0D11FFAC0B002609A9 /* LTWPythonDocument.m */; };
+		63C24E1011FFAC4F002609A9 /* LTWPythonDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63C24E0F11FFAC4F002609A9 /* LTWPythonDocument.xib */; };
+		63FA735B120047BE00A80269 /* LTWArticle.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FA735A120047BE00A80269 /* LTWArticle.m */; };
+		63FE49E011FD697700088F16 /* LTWParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FE49DF11FD697700088F16 /* LTWParser.m */; };
+		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
+		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
+		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
+		1DDD58150DA1D0A300B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		256AC3D80F4B6AC300CF3369 /* LTWToolkitAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTWToolkitAppDelegate.h; sourceTree = "<group>"; };
+		256AC3D90F4B6AC300CF3369 /* LTWToolkitAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTWToolkitAppDelegate.m; sourceTree = "<group>"; };
+		256AC3F00F4B6AF500CF3369 /* LTWToolkit_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTWToolkit_Prefix.pch; sourceTree = "<group>"; };
+		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		631C6A541202A60600E821BD /* LTWConcreteTokens.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTWConcreteTokens.h; sourceTree = "<group>"; };
+		631C6A551202A60600E821BD /* LTWConcreteTokens.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTWConcreteTokens.m; sourceTree = "<group>"; };
+		631C6A571202A61600E821BD /* LTWConcreteSubTokens.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTWConcreteSubTokens.h; sourceTree = "<group>"; };
+		631C6A581202A61600E821BD /* LTWConcreteSubTokens.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTWConcreteSubTokens.m; sourceTree = "<group>"; };
+		632240C3120573460023CD84 /* LTWTokensView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTWTokensView.h; sourceTree = "<group>"; };
+		632240C4120573460023CD84 /* LTWTokensView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTWTokensView.m; sourceTree = "<group>"; };
+		632240CB120573E80023CD84 /* LTWTokenTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTWTokenTag.h; sourceTree = "<group>"; };
+		632240CC120573E80023CD84 /* LTWTokenTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTWTokenTag.m; sourceTree = "<group>"; };
+		632241C0120598BA0023CD84 /* LTWArticleDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTWArticleDocument.h; sourceTree = "<group>"; };
+		632241C1120598BA0023CD84 /* LTWArticleDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTWArticleDocument.m; sourceTree = "<group>"; };
+		632241C3120598CD0023CD84 /* LTWArticleDocument.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LTWArticleDocument.xib; sourceTree = "<group>"; };
+		636D47A511FD2CC60099153C /* LTWCorpus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTWCorpus.h; sourceTree = "<group>"; };
+		636D47A611FD2CC60099153C /* LTWCorpus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTWCorpus.m; sourceTree = "<group>"; };
+		636D47A811FD2CD70099153C /* LTWTokens.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTWTokens.h; sourceTree = "<group>"; };
+		636D47A911FD2CD70099153C /* LTWTokens.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTWTokens.m; sourceTree = "<group>"; };
+		636D47AD11FD2D140099153C /* Python.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Python.framework; path = System/Library/Frameworks/Python.framework; sourceTree = SDKROOT; };
+		636D47B211FD2EAB0099153C /* LTWPythonUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTWPythonUtils.h; sourceTree = "<group>"; };
+		636D47B311FD2EAB0099153C /* LTWPythonUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTWPythonUtils.m; sourceTree = "<group>"; };
+		63C24E0C11FFAC0B002609A9 /* LTWPythonDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTWPythonDocument.h; sourceTree = "<group>"; };
+		63C24E0D11FFAC0B002609A9 /* LTWPythonDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTWPythonDocument.m; sourceTree = "<group>"; };
+		63C24E0F11FFAC4F002609A9 /* LTWPythonDocument.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LTWPythonDocument.xib; sourceTree = "<group>"; };
+		63FA7359120047BE00A80269 /* LTWArticle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTWArticle.h; sourceTree = "<group>"; };
+		63FA735A120047BE00A80269 /* LTWArticle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTWArticle.m; sourceTree = "<group>"; };
+		63FE49DE11FD697700088F16 /* LTWParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTWParser.h; sourceTree = "<group>"; };
+		63FE49DF11FD697700088F16 /* LTWParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTWParser.m; sourceTree = "<group>"; };
+		8D1107310486CEB800E47090 /* LTWToolkit-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "LTWToolkit-Info.plist"; sourceTree = "<group>"; };
+		8D1107320486CEB800E47090 /* LTWToolkit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LTWToolkit.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8D11072E0486CEB800E47090 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
+				636D47AE11FD2D140099153C /* Python.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		080E96DDFE201D6D7F000001 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				636D47A111FD2C930099153C /* GUI */,
+				636D47A411FD2CA60099153C /* Backend */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
+			);
+			name = "Linked Frameworks";
+			sourceTree = "<group>";
+		};
+		1058C7A2FEA54F0111CA2CBB /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				29B97324FDCFA39411CA2CEA /* AppKit.framework */,
+				13E42FB307B3F0F600E4EEF1 /* CoreData.framework */,
+				29B97325FDCFA39411CA2CEA /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D1107320486CEB800E47090 /* LTWToolkit.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* LTWToolkit */ = {
+			isa = PBXGroup;
+			children = (
+				080E96DDFE201D6D7F000001 /* Classes */,
+				29B97315FDCFA39411CA2CEA /* Other Sources */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+				636D47AD11FD2D140099153C /* Python.framework */,
+			);
+			name = LTWToolkit;
+			sourceTree = "<group>";
+		};
+		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				256AC3F00F4B6AF500CF3369 /* LTWToolkit_Prefix.pch */,
+				29B97316FDCFA39411CA2CEA /* main.m */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				8D1107310486CEB800E47090 /* LTWToolkit-Info.plist */,
+				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
+				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
+				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		631C6A531202A5DE00E821BD /* LTWTokens cluster */ = {
+			isa = PBXGroup;
+			children = (
+				632240C7120573B70023CD84 /* Token Tags */,
+				636D47A811FD2CD70099153C /* LTWTokens.h */,
+				636D47A911FD2CD70099153C /* LTWTokens.m */,
+				631C6A541202A60600E821BD /* LTWConcreteTokens.h */,
+				631C6A551202A60600E821BD /* LTWConcreteTokens.m */,
+				631C6A571202A61600E821BD /* LTWConcreteSubTokens.h */,
+				631C6A581202A61600E821BD /* LTWConcreteSubTokens.m */,
+			);
+			name = "LTWTokens cluster";
+			sourceTree = "<group>";
+		};
+		632240C61205734B0023CD84 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				632240C3120573460023CD84 /* LTWTokensView.h */,
+				632240C4120573460023CD84 /* LTWTokensView.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		632240C7120573B70023CD84 /* Token Tags */ = {
+			isa = PBXGroup;
+			children = (
+				632240CB120573E80023CD84 /* LTWTokenTag.h */,
+				632240CC120573E80023CD84 /* LTWTokenTag.m */,
+			);
+			name = "Token Tags";
+			sourceTree = "<group>";
+		};
+		636D47A111FD2C930099153C /* GUI */ = {
+			isa = PBXGroup;
+			children = (
+				632240C61205734B0023CD84 /* Views */,
+				63C24DD611FF1047002609A9 /* Document Classes */,
+				256AC3D80F4B6AC300CF3369 /* LTWToolkitAppDelegate.h */,
+				256AC3D90F4B6AC300CF3369 /* LTWToolkitAppDelegate.m */,
+			);
+			name = GUI;
+			sourceTree = "<group>";
+		};
+		636D47A411FD2CA60099153C /* Backend */ = {
+			isa = PBXGroup;
+			children = (
+				631C6A531202A5DE00E821BD /* LTWTokens cluster */,
+				636D47B111FD2E9C0099153C /* Utilities */,
+				636D47AB11FD2CDB0099153C /* Python-supplied */,
+				63FE49DE11FD697700088F16 /* LTWParser.h */,
+				63FE49DF11FD697700088F16 /* LTWParser.m */,
+				63FA7359120047BE00A80269 /* LTWArticle.h */,
+				63FA735A120047BE00A80269 /* LTWArticle.m */,
+			);
+			name = Backend;
+			sourceTree = "<group>";
+		};
+		636D47AB11FD2CDB0099153C /* Python-supplied */ = {
+			isa = PBXGroup;
+			children = (
+				636D47A511FD2CC60099153C /* LTWCorpus.h */,
+				636D47A611FD2CC60099153C /* LTWCorpus.m */,
+			);
+			name = "Python-supplied";
+			sourceTree = "<group>";
+		};
+		636D47B111FD2E9C0099153C /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				636D47B211FD2EAB0099153C /* LTWPythonUtils.h */,
+				636D47B311FD2EAB0099153C /* LTWPythonUtils.m */,
+			);
+			name = Utilities;
+			sourceTree = "<group>";
+		};
+		63C24DD611FF1047002609A9 /* Document Classes */ = {
+			isa = PBXGroup;
+			children = (
+				63C24E0F11FFAC4F002609A9 /* LTWPythonDocument.xib */,
+				63C24E0C11FFAC0B002609A9 /* LTWPythonDocument.h */,
+				63C24E0D11FFAC0B002609A9 /* LTWPythonDocument.m */,
+				632241C3120598CD0023CD84 /* LTWArticleDocument.xib */,
+				632241C0120598BA0023CD84 /* LTWArticleDocument.h */,
+				632241C1120598BA0023CD84 /* LTWArticleDocument.m */,
+			);
+			name = "Document Classes";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8D1107260486CEB800E47090 /* LTWToolkit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "LTWToolkit" */;
+			buildPhases = (
+				8D1107290486CEB800E47090 /* Resources */,
+				8D11072C0486CEB800E47090 /* Sources */,
+				8D11072E0486CEB800E47090 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LTWToolkit;
+			productInstallPath = "$(HOME)/Applications";
+			productName = LTWToolkit;
+			productReference = 8D1107320486CEB800E47090 /* LTWToolkit.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "LTWToolkit" */;
+			compatibilityVersion = "Xcode 3.1";
+			hasScannedForEncodings = 1;
+			mainGroup = 29B97314FDCFA39411CA2CEA /* LTWToolkit */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8D1107260486CEB800E47090 /* LTWToolkit */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8D1107290486CEB800E47090 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
+				1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */,
+				63C24E1011FFAC4F002609A9 /* LTWPythonDocument.xib in Resources */,
+				632241C4120598CD0023CD84 /* LTWArticleDocument.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8D11072C0486CEB800E47090 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D11072D0486CEB800E47090 /* main.m in Sources */,
+				256AC3DA0F4B6AC300CF3369 /* LTWToolkitAppDelegate.m in Sources */,
+				636D47A711FD2CC60099153C /* LTWCorpus.m in Sources */,
+				636D47AA11FD2CD70099153C /* LTWTokens.m in Sources */,
+				636D47B411FD2EAB0099153C /* LTWPythonUtils.m in Sources */,
+				63FE49E011FD697700088F16 /* LTWParser.m in Sources */,
+				63C24E0E11FFAC0B002609A9 /* LTWPythonDocument.m in Sources */,
+				63FA735B120047BE00A80269 /* LTWArticle.m in Sources */,
+				631C6A561202A60600E821BD /* LTWConcreteTokens.m in Sources */,
+				631C6A591202A61600E821BD /* LTWConcreteSubTokens.m in Sources */,
+				632240C5120573460023CD84 /* LTWTokensView.m in Sources */,
+				632240CD120573E80023CD84 /* LTWTokenTag.m in Sources */,
+				632241C2120598BA0023CD84 /* LTWArticleDocument.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		089C165CFE840E0CC02AAC07 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				089C165DFE840E0CC02AAC07 /* English */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		1DDD58140DA1D0A300B32029 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1DDD58150DA1D0A300B32029 /* English */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C01FCF4B08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = LTWToolkit_Prefix.pch;
+				INFOPLIST_FILE = "LTWToolkit-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = LTWToolkit;
+			};
+			name = Debug;
+		};
+		C01FCF4C08A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = LTWToolkit_Prefix.pch;
+				INFOPLIST_FILE = "LTWToolkit-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = LTWToolkit;
+			};
+			name = Release;
+		};
+		C01FCF4F08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.6;
+			};
+			name = Debug;
+		};
+		C01FCF5008A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				PREBINDING = NO;
+				SDKROOT = macosx10.6;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "LTWToolkit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4B08A954540054247B /* Debug */,
+				C01FCF4C08A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "LTWToolkit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4F08A954540054247B /* Debug */,
+				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}

@@ -1,0 +1,142 @@
+// !$*UTF8*$!
+{
+	0731BEC611FE5529007BF44D /* LTWToolkit */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 0;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		dataTipCustomDataFormattersEnabled = 1;
+		dataTipShowTypeColumn = 1;
+		dataTipSortType = 0;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = LTWToolkit;
+		showTypeColumn = 0;
+		sourceDirectories = (
+		);
+	};
+	0731BED311FE5542007BF44D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 636D47A611FD2CC60099153C /* LTWCorpus.m */;
+		name = "LTWCorpus.m: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 706;
+		vrLoc = 0;
+	};
+	0731BED411FE5542007BF44D /* PBXBookmark */ = {
+		isa = PBXBookmark;
+		fRef = 636D47B311FD2EAB0099153C /* LTWPythonUtils.m */;
+	};
+	0731BED511FE5542007BF44D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 636D47B311FD2EAB0099153C /* LTWPythonUtils.m */;
+		name = "LTWPythonUtils.m: 50";
+		rLen = 0;
+		rLoc = 1323;
+		rType = 0;
+		vrLen = 711;
+		vrLoc = 86;
+	};
+	0731BEDB11FE5542007BF44D /* Source Control */ = {
+		isa = PBXSourceControlManager;
+		fallbackIsa = XCSourceControlManager;
+		isSCMEnabled = 0;
+		scmConfiguration = {
+			repositoryNamesForRoots = {
+				"" = "";
+			};
+		};
+	};
+	0731BEDC11FE5542007BF44D /* Code sense */ = {
+		isa = PBXCodeSenseManager;
+		indexTemplatePath = "";
+	};
+	0731BEDD11FE56B4007BF44D /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 636D47B311FD2EAB0099153C /* LTWPythonUtils.m */;
+		name = "LTWPythonUtils.m: 20";
+		rLen = 0;
+		rLoc = 402;
+		rType = 0;
+		vrLen = 884;
+		vrLoc = 39;
+	};
+	29B97313FDCFA39411CA2CEA /* Project object */ = {
+		activeBuildConfigurationName = Debug;
+		activeExecutable = 0731BEC611FE5529007BF44D /* LTWToolkit */;
+		activeTarget = 8D1107260486CEB800E47090 /* LTWToolkit */;
+		codeSenseManager = 0731BEDC11FE5542007BF44D /* Code sense */;
+		executables = (
+			0731BEC611FE5529007BF44D /* LTWToolkit */,
+		);
+		perUserDictionary = {
+			PBXConfiguration.PBXFileTableDataSource3.PBXFileTableDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					745,
+					20,
+					48.16259765625,
+					43,
+					43,
+					20,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+					PBXFileDataSource_Target_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 301880617;
+			PBXWorkspaceStateSaveDate = 301880617;
+		};
+		perUserProjectItems = {
+			0731BED311FE5542007BF44D /* PBXTextBookmark */ = 0731BED311FE5542007BF44D /* PBXTextBookmark */;
+			0731BED411FE5542007BF44D /* PBXBookmark */ = 0731BED411FE5542007BF44D /* PBXBookmark */;
+			0731BED511FE5542007BF44D /* PBXTextBookmark */ = 0731BED511FE5542007BF44D /* PBXTextBookmark */;
+			0731BEDD11FE56B4007BF44D /* PBXTextBookmark */ = 0731BEDD11FE56B4007BF44D /* PBXTextBookmark */;
+		};
+		sourceControlManager = 0731BEDB11FE5542007BF44D /* Source Control */;
+		userBuildSettings = {
+		};
+	};
+	636D47A611FD2CC60099153C /* LTWCorpus.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1078, 465}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 706}";
+		};
+	};
+	636D47B311FD2EAB0099153C /* LTWPythonUtils.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {923, 2223}}";
+			sepNavSelRange = "{402, 0}";
+			sepNavVisRange = "{39, 884}";
+		};
+	};
+	8D1107260486CEB800E47090 /* LTWToolkit */ = {
+		activeExec = 0;
+		executables = (
+			0731BEC611FE5529007BF44D /* LTWToolkit */,
+		);
+	};
+}
