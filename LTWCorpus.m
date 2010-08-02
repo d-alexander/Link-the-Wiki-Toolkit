@@ -36,13 +36,19 @@
 -(LTWArticle*)loadArticleWithURL:(NSURL*)url {
 	NSString *xml = [NSString stringWithContentsOfURL:url];
 	LTWTokens *articleTokens = [[LTWTokens alloc] initWithXML:xml];
-	NSDictionary *articleInfo = [LTWPythonUtils callMethod:"load_article" onPythonObject:self->implementation withTokens:articleTokens];
+    
+    NSArray *pathInHierarchy = nil;
+    NSString *articleTitle = nil;
+    LTWTokenRange *bodyTokens;
+    
+	[LTWPythonUtils callMethod:"load_article" onPythonObject:self->implementation withArgument:(PyObject*)[LTWPythonUtils pythonIteratorForTokens:articleTokens] returnFormat:"OOO", &pathInHierarchy, &articleTitle, &bodyTokens, NULL];
+    
 	LTWArticle *article = [[[LTWArticle alloc] initWithTokens:articleTokens corpus:self] autorelease];
 	
 	// NOTE: Currently this doesn't allow articles and hierarchy-nodes to have identical names if they're siblings.
 	// NOTE: So that we can look objects up by their indices (required for NSOutlineViewDataSource), we store each item's index as a separate NSNumber key. This means that if we want the *real* number of items we need to divide the count by 2. This is a horrible hack and it should be fixed as soon as possible!
 	NSMutableDictionary *curLevel = self->hierarchy;
-	for (NSString *component in [articleInfo objectForKey:@"pathInHierarchy"]) {
+	for (NSString *component in pathInHierarchy) {
 		NSMutableDictionary *nextLevel = [curLevel objectForKey:component];
 		if (!nextLevel) {
 			NSUInteger count = [curLevel count] / 2;
@@ -57,12 +63,11 @@
 		
 	}
 	NSUInteger count = [curLevel count] / 2;
-	[curLevel setObject:article forKey:[articleInfo objectForKey:@"articleTitle"]];
+	[curLevel setObject:article forKey:articleTitle];
 	[curLevel setObject:article forKey:[NSNumber numberWithInt:count]];
 	
-	// Temporary code for testing the LTWTokensView with some tags.
-	NSRange bodyTokens = [[articleInfo objectForKey:@"bodyTokens"] rangeValue];
-	[[articleTokens tokensFromIndex:bodyTokens.location toIndex:NSMaxRange(bodyTokens)-1 propagateTags:YES] addTag:[[LTWTokenTag alloc] initWithName:@"This is a test" value:@"ASDF"]];
+    [[bodyTokens->tokens tokensFromIndex:bodyTokens->firstToken toIndex:bodyTokens->lastToken propagateTags:YES] addTag:[[LTWTokenTag alloc] initWithName:@"This is a test" value:@"ASDF"]];
+    
 	LTWArticleDocument *doc = [[NSDocumentController sharedDocumentController] makeUntitledDocumentOfType:@"nz.ac.otago.inex.ltw-toolkit.article" error:NULL];
     [[NSDocumentController sharedDocumentController] addDocument:doc];
 	[doc setArticle:article];

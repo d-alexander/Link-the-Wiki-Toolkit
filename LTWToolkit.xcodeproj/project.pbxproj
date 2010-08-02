@@ -15,6 +15,7 @@
 		632240CD120573E80023CD84 /* LTWTokenTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 632240CC120573E80023CD84 /* LTWTokenTag.m */; };
 		632241C2120598BA0023CD84 /* LTWArticleDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 632241C1120598BA0023CD84 /* LTWArticleDocument.m */; };
 		632241C4120598CD0023CD84 /* LTWArticleDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 632241C3120598CD0023CD84 /* LTWArticleDocument.xib */; };
+		6364ACE5120653A00042F942 /* LTWTokenProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 6364ACE4120653A00042F942 /* LTWTokenProcessor.m */; };
 		636D47A711FD2CC60099153C /* LTWCorpus.m in Sources */ = {isa = PBXBuildFile; fileRef = 636D47A611FD2CC60099153C /* LTWCorpus.m */; };
 		636D47AA11FD2CD70099153C /* LTWTokens.m in Sources */ = {isa = PBXBuildFile; fileRef = 636D47A911FD2CD70099153C /* LTWTokens.m */; };
 		636D47AE11FD2D140099153C /* Python.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 636D47AD11FD2D140099153C /* Python.framework */; };
@@ -50,6 +51,8 @@
 		632241C0120598BA0023CD84 /* LTWArticleDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTWArticleDocument.h; sourceTree = "<group>"; };
 		632241C1120598BA0023CD84 /* LTWArticleDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTWArticleDocument.m; sourceTree = "<group>"; };
 		632241C3120598CD0023CD84 /* LTWArticleDocument.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LTWArticleDocument.xib; sourceTree = "<group>"; };
+		6364ACE3120653A00042F942 /* LTWTokenProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTWTokenProcessor.h; sourceTree = "<group>"; };
+		6364ACE4120653A00042F942 /* LTWTokenProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTWTokenProcessor.m; sourceTree = "<group>"; };
 		636D47A511FD2CC60099153C /* LTWCorpus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTWCorpus.h; sourceTree = "<group>"; };
 		636D47A611FD2CC60099153C /* LTWCorpus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTWCorpus.m; sourceTree = "<group>"; };
 		636D47A811FD2CD70099153C /* LTWTokens.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTWTokens.h; sourceTree = "<group>"; };
@@ -219,6 +222,8 @@
 			children = (
 				636D47A511FD2CC60099153C /* LTWCorpus.h */,
 				636D47A611FD2CC60099153C /* LTWCorpus.m */,
+				6364ACE3120653A00042F942 /* LTWTokenProcessor.h */,
+				6364ACE4120653A00042F942 /* LTWTokenProcessor.m */,
 			);
 			name = "Python-supplied";
 			sourceTree = "<group>";
@@ -319,6 +324,7 @@
 				632240C5120573460023CD84 /* LTWTokensView.m in Sources */,
 				632240CD120573E80023CD84 /* LTWTokenTag.m in Sources */,
 				632241C2120598BA0023CD84 /* LTWArticleDocument.m in Sources */,
+				6364ACE5120653A00042F942 /* LTWTokenProcessor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

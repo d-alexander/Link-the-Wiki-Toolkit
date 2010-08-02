@@ -13,7 +13,7 @@
 
 @implementation LTWPythonUtils
 
-/////////////////////////////
+#pragma mark LTWPyToken
 
 /*
  NOTE: A list of string methods is here: http://docs.python.org/release/2.5.2/lib/string-methods.html
@@ -32,13 +32,14 @@
 	XML tokens should be comparable with ordinary Python strings in a smart way -- a Python string representing an XML tag with some or all of its attributes specified should match a token which has the same tagname and at least those attributes. Attribute values may or may not be specified in the string, but if they are, they should be considered restrictive. Tagnames and attribute names are case-insensitive. (Note that this is not *all* you might want to do with an XML tag -- you might want to get the value of an attribute -- but this seems like the most useful thing for parsing documents where XML tags are not a primary feature but rather serve as delimiters.)
  */
 
-typedef struct {
+struct LTWPyToken {
 	PyObject_HEAD
 	NSString *string;
+    LTWTokens *tokens;
 	NSDictionary *extraInfo;
 	NSRange range;
 	NSUInteger index;
-} LTWPyToken;
+};
 
 static PyTypeObject LTWPyTokenType; // forward declaration.
 
@@ -187,13 +188,13 @@ static PySequenceMethods LTWPyTokenSequenceMethods = {
 	0,0,0,0,0,0,0,0,0,0
 };
 
-/////////////////////////////
+#pragma mark LTWPyTokenIterator
 
-typedef struct {
+struct LTWPyTokenIterator {
 	PyObject_HEAD
 	LTWTokens *tokens;
 	NSUInteger currentTokenIndex;
-} LTWPyTokenIterator;
+};
 
 LTWPyTokenIterator *LTWPyTokenIterator_GetIter(LTWPyTokenIterator *obj) {
 	Py_INCREF(obj);
@@ -207,6 +208,7 @@ PyObject *LTWPyTokenIterator_Next(LTWPyTokenIterator *obj) {
 	token->string = [obj->tokens _text];
 	token->extraInfo = [obj->tokens extraInfoForTokenAtIndex:obj->currentTokenIndex];
 	token->index = obj->currentTokenIndex;
+    token->tokens = obj->tokens;
 	
 	if (token->range.location == NSNotFound) {
 		PyErr_SetNone(PyExc_StopIteration);
@@ -242,7 +244,7 @@ static PyTypeObject LTWPyTokenIteratorType = {
 	LTWPyTokenIteratorMethods,
 };
 
-/////////////////////////////
+#pragma mark LTWPyModule
 
 static PyMethodDef LTWPyModuleMethods[] = {
 	{NULL}
@@ -282,6 +284,8 @@ PyMODINIT_FUNC LTWPyModuleInit() {
 	PyModule_AddObject(module, "TokenIterator", (PyObject*)&LTWPyTokenIteratorType);
 }
 
+#pragma mark Objective-C
+
 +(LTWPyTokenIterator*)pythonIteratorForTokens:(LTWTokens*)tokens {
 	LTWPyTokenIterator *iterator = (LTWPyTokenIterator*)_PyObject_New(&LTWPyTokenIteratorType);
 
@@ -311,41 +315,61 @@ PyMODINIT_FUNC LTWPyModuleInit() {
 	return result;
 }
 
-+(NSDictionary*)callMethod:(char*)methodName onPythonObject:(PyObject*)pythonObject withTokens:(LTWTokens*)tokens {
-	char *str;
-	
-	PyObject *result = PyObject_CallMethod(pythonObject, methodName, "O", [self pythonIteratorForTokens:tokens]);
-	if (!result) return nil;
-	
-	// This code is specific to the load_article method's return value, so it'll have to be generalised later.
-	// NOTE: PyArg_VaParse could be useful when generalising this.
-	PyObject *pathInHierarchy;
-	LTWPyToken *startToken, *endToken;
-	if (!PyArg_ParseTuple(result, "OsO!O!", &pathInHierarchy, &str, &LTWPyTokenType, (PyObject**)&startToken, &LTWPyTokenType, (PyObject**)&endToken)) return nil;
-	
-	NSMutableDictionary *dict = [[[NSMutableDictionary alloc] init] autorelease];
-	
-	NSMutableArray *pathInHierarchyArray = [[NSMutableArray alloc] init];
-	
-	[dict setObject:[NSString stringWithUTF8String:str] forKey:@"articleTitle"];
-	[dict setObject:[NSValue valueWithRange:NSMakeRange(startToken->index, endToken->index - startToken->index + 1)] forKey:@"bodyTokens"];
-	
-	
-	PyObject *i = PyObject_GetIter(pathInHierarchy);
-	PyObject *item;
-	while (item = PyIter_Next(i)) {
-		if (!PyArg_Parse(item, "s", &str)) continue;
-		[pathInHierarchyArray addObject:[NSString stringWithUTF8String:str]];
-		Py_DECREF(item);
-	}
-	Py_DECREF(i);
-	
-	
-	[dict setObject:pathInHierarchyArray forKey:@"pathInHierarchy"];
++(void)depythoniseObject:(PyObject*)object intoPointer:(void**)pointer {
+    LTWPyToken *firstToken = NULL, *lastToken = NULL;
+    char *str;
+    
+    if (PyArg_ParseTuple(object, "O!O!", &LTWPyTokenType, (PyObject**)&firstToken, &LTWPyTokenType, (PyObject**)&lastToken) && firstToken->tokens == lastToken->tokens) {
+        if (firstToken->index > lastToken->index) {
+            LTWPyToken *temp = firstToken;
+            firstToken = lastToken;
+            lastToken = temp;
+        }
+        
+        LTWTokenRange *range = malloc(sizeof *range);
+        range->tokens = firstToken->tokens;
+        range->firstToken = firstToken->index;
+        range->lastToken = lastToken->index;
+        
+        *pointer = range;
+    }else if (PyArg_Parse(object, "s", &str)) {
+        *pointer = [NSString stringWithUTF8String:str];
+    }else if (PySequence_Check(object)) {
+        NSUInteger sequenceLength = PySequence_Length(object);
+        NSMutableArray *array = [[NSMutableArray alloc] initWithCapacity:sequenceLength];
+        for (NSUInteger i=0; i<sequenceLength; i++) {
+            PyObject *item = PySequence_GetItem(object, i);
+            id depythonisedItem = nil;
+            if (item == object) continue; // For some reason, trying to get the first "item" of a string returns the string itself.
+            [LTWPythonUtils depythoniseObject:item intoPointer:(void**)&depythonisedItem];
+            [array addObject:depythonisedItem];
+        }
+        *pointer = [array autorelease];
+    }
+}
 
-	[pathInHierarchyArray release];
-	
-	return dict;
++(void)callMethod:(char*)methodName onPythonObject:(PyObject*)pythonObject withArgument:(PyObject*)argument returnFormat:(const char*)returnFormat,... {
+    
+    // TODO: Make this method accept a variable argument list. PyArg_VaParse should then be able to put the return values straight into the right places, which should save us from having to put them in an NSDictionary. (However, we might want to somehow abstract away some of the messier stuff, like converting LTWPyTokenType to proper indices.
+    
+    if (!argument) argument = Py_None;
+    
+    PyObject *result = PyObject_CallMethod(pythonObject, methodName, "O", argument);
+    if (!result) return;
+    
+    va_list vl, vl2;
+    va_start(vl2, returnFormat);
+    va_copy(vl, vl2);
+    if (!PyArg_VaParse(result, returnFormat, vl2)) goto cleanup;
+    
+    for (void *p = va_arg(vl, void*); p != NULL; p = va_arg(vl, void*)) {
+        [LTWPythonUtils depythoniseObject:*(PyObject**)p intoPointer:(void**)p];
+    }
+    
+cleanup:
+    va_end(vl2);
+    va_end(vl);
+    
 }
 
 @end

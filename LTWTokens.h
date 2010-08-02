@@ -12,6 +12,13 @@
 
 extern NSString *LTWTokenTagsChangedNotification;
 
+@class LTWTokens;
+typedef struct {
+    LTWTokens *tokens;
+    NSUInteger firstToken;
+    NSUInteger lastToken;
+} LTWTokenRange;
+
 /*
  This is the abstract base class of a class cluster that handles the storage of sequences of tagged tokens.
  In a sequence of tokens, the tokens themselves are immutable but the tags are mutable. However, when creating a subsequence of a given sequence, the caller can choose whether or not tags should be inherited from the supersequence (and whether tags added to the subsequence should be propagated up to the supersequence).

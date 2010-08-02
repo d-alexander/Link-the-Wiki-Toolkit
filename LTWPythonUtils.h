@@ -15,6 +15,7 @@
 
 -(id)initWithImplementationCode:(NSString*)pythonCode;
 -(void)setImplementationCode:(NSString*)pythonCode;
+-(NSString*)displayName;
 
 @end
 
@@ -22,7 +23,11 @@
 
 }
 
+typedef struct LTWPyToken LTWPyToken;
+typedef struct LTWPyTokenIterator LTWPyTokenIterator;
+
++(LTWPyTokenIterator*)pythonIteratorForTokens:(LTWTokens*)tokens;
 +(PyObject*)compilePythonObjectFromCode:(NSString*)code;
-+(NSDictionary*)callMethod:(const char*)methodName onPythonObject:(PyObject*)pythonObject withTokens:(LTWTokens*)tokens;
++(void)callMethod:(char*)methodName onPythonObject:(PyObject*)pythonObject withArgument:(PyObject*)argument returnFormat:(const char*)returnFormat,...;
 
 @end
