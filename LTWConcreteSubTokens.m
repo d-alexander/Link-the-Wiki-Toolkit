@@ -33,6 +33,10 @@
 	return [superTokens extraInfoForTokenAtIndex:startIndex + index];
 }
 
+-(BOOL)matches:(LTWTokens*)theTokens fromIndex:(NSUInteger)theStartIndex toIndex:(NSUInteger)theEndIndex {
+    return [superTokens matches:theTokens fromIndex:startIndex+theStartIndex toIndex:startIndex+theEndIndex];
+}
+
 // This method is private because tags should always be added to an entire range. Tags can then be propagated up to the superranges of that range.
 -(void)_addTag:(LTWTokenTag*)tag fromIndex:(NSUInteger)theStartIndex toIndex:(NSUInteger)theEndIndex {
 	[[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:LTWTokenTagsChangedNotification object:self]];

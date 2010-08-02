@@ -9,6 +9,7 @@
 #import "LTWTokens.h"
 
 #import "LTWConcreteTokens.h"
+#import "LTWConcreteSubTokens.h"
 
 @implementation LTWTokens
 
@@ -43,7 +44,11 @@ NSString *LTWTokenTagsChangedNotification = @"LTWTokenTagsChangedNotification";
 }
 
 -(LTWTokens*)tokensFromIndex:(NSUInteger)startIndex toIndex:(NSUInteger)endIndex propagateTags:(BOOL)shouldPropagateTags {
-	return nil;
+	return [[[LTWConcreteSubTokens alloc] initWithTokens:self fromIndex:startIndex toIndex:endIndex propagateTags:shouldPropagateTags] autorelease];
+}
+
+-(BOOL)matches:(LTWTokens*)tokens fromIndex:(NSUInteger)theStartIndex toIndex:(NSUInteger)theEndIndex {
+    return NO;
 }
 
 -(void)_addTag:(LTWTokenTag*)tag fromIndex:(NSUInteger)theStartIndex toIndex:(NSUInteger)theEndIndex {

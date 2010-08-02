@@ -33,6 +33,7 @@ typedef struct {
 -(NSDictionary*)extraInfoForTokenAtIndex:(NSUInteger)index;
 
 -(LTWTokens*)tokensFromIndex:(NSUInteger)startIndex toIndex:(NSUInteger)endIndex propagateTags:(BOOL)shouldPropagateTags;
+-(BOOL)matches:(LTWTokens*)tokens fromIndex:(NSUInteger)theStartIndex toIndex:(NSUInteger)theEndIndex;
 
 -(void)addTag:(LTWTokenTag*)tag;
 -(void)_addTag:(LTWTokenTag*)tag fromIndex:(NSUInteger)theStartIndex toIndex:(NSUInteger)theEndIndex;

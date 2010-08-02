@@ -49,8 +49,16 @@
 	return [tokenExtraInfos objectAtIndex:index];
 }
 
--(LTWTokens*)tokensFromIndex:(NSUInteger)startIndex toIndex:(NSUInteger)endIndex propagateTags:(BOOL)shouldPropagateTags {
-	return [[[LTWConcreteSubTokens alloc] initWithTokens:self fromIndex:startIndex toIndex:endIndex propagateTags:shouldPropagateTags] autorelease];
+-(BOOL)matches:(LTWTokens*)theTokens fromIndex:(NSUInteger)theStartIndex toIndex:(NSUInteger)theEndIndex {
+    for (NSUInteger currentIndex = theStartIndex; currentIndex <= theEndIndex; currentIndex++) {
+        NSRange charRange = [self rangeOfTokenAtIndex:currentIndex];
+        NSRange otherCharRange = [theTokens rangeOfTokenAtIndex:currentIndex-theStartIndex];
+        NSString *temp = [[theTokens _text] substringWithRange:otherCharRange];
+        if (![temp compare:text options:NSCaseInsensitiveSearch range:charRange]) {
+            return NO;
+        }
+    }
+    return YES;
 }
 
 // This method is private because tags should always be added to an entire range. Tags can then be propagated up to the superranges of that range.
