@@ -18,5 +18,6 @@
 
 -(id)initWithTokens:(LTWTokens*)theTokens;
 -(id)initWithString:(NSString*)theString;
+-(BOOL)tryOnTokenIndex:(NSUInteger)index ofTokens:(LTWTokens*)theTokens newSearches:(NSMutableArray*)newSearches;
 
 @end

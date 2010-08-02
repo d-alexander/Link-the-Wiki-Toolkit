@@ -43,6 +43,10 @@ NSString *LTWTokenTagsChangedNotification = @"LTWTokenTagsChangedNotification";
 	return nil;
 }
 
+-(NSUInteger)count {
+    return 0;
+}
+
 -(LTWTokens*)tokensFromIndex:(NSUInteger)startIndex toIndex:(NSUInteger)endIndex propagateTags:(BOOL)shouldPropagateTags {
 	return [[[LTWConcreteSubTokens alloc] initWithTokens:self fromIndex:startIndex toIndex:endIndex propagateTags:shouldPropagateTags] autorelease];
 }
@@ -69,6 +73,15 @@ NSString *LTWTokenTagsChangedNotification = @"LTWTokenTagsChangedNotification";
 	return nil;
 }
 
+-(NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState*)state objects:(id*)stackbuf count:(NSUInteger)len {
+    for (NSUInteger i = 0; i < len; i++) {
+        if (state->state >= [self count]) return i;
+        stackbuf[i] = [NSValue valueWithRange:[self rangeOfTokenAtIndex:state->state]];
+        state->state++;
+    }
+    return len;
+}
+                                           
 -(void)enumerateTagsWithBlock:(void (^)(NSRange tagTokenRange, LTWTokenTag *tag))block {
 	
 }

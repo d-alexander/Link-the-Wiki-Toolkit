@@ -12,12 +12,15 @@
     NSWindow *window;
 	IBOutlet NSTextField *articleURLField;
 	NSMutableArray *corpora;
+    NSMutableArray *tokenProcessors;
+    NSMutableArray *articles;
 	IBOutlet NSOutlineView *articleSelectionView;
 }
 
 -(IBAction)loadArticle:(id)sender;
 
 @property (assign) IBOutlet NSWindow *window;
-@property (readonly) IBOutlet NSMutableArray *corpora;
+@property (readonly) NSMutableArray *corpora;
+@property (readonly) NSMutableArray *tokenProcessors;
 
 @end

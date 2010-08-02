@@ -17,5 +17,6 @@
 }
 
 -(IBAction)compileAsCorpus:(id)sender;
+-(IBAction)compileAsTokenProcessor:(id)sender;
 
 @end

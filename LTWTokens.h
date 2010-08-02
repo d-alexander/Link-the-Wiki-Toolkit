@@ -24,7 +24,7 @@ typedef struct {
  In a sequence of tokens, the tokens themselves are immutable but the tags are mutable. However, when creating a subsequence of a given sequence, the caller can choose whether or not tags should be inherited from the supersequence (and whether tags added to the subsequence should be propagated up to the supersequence).
  A common use-case of subsequences is to specify a range over which a tag is to be added. To do this, the caller acquires the appropriate subsequence (with token-propagation enabled), adds the tag by sending a message to the newly-created subsequence, and then releases the subsequence. The supersequence now has the tag, but only over the appropriate range.
  */
-@interface LTWTokens : NSObject {
+@interface LTWTokens : NSObject <NSFastEnumeration> {
 	
 }
 
@@ -40,6 +40,7 @@ typedef struct {
 -(NSSet*)_tagsFromIndex:(NSUInteger)theStartIndex toIndex:(NSUInteger)theEndIndex;
 
 -(void)enumerateTagsWithBlock:(void (^)(NSRange tagTokenRange, LTWTokenTag *tag))block;
+-(NSUInteger)count;
 
 -(NSString*)_text;
 

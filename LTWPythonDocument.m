@@ -11,6 +11,7 @@
 // So that we can set up the right Python component.
 #import "LTWToolkitAppDelegate.h"
 #import "LTWCorpus.h"
+#import "LTWTokenProcessor.h"
 
 
 @implementation LTWPythonDocument
@@ -30,6 +31,11 @@
 	// NOTE: Ideally, we should recognise if the component is already a corpus, and avoid creating a new LTWCorpus if so.
 	self->pythonComponent = [[LTWCorpus alloc] initWithImplementationCode:[[self->codeView textStorage] string]];
 	[[(LTWToolkitAppDelegate*)[NSApp delegate] corpora] addObject:self->pythonComponent];
+}
+
+-(IBAction)compileAsTokenProcessor:(id)sender {
+    self->pythonComponent = [[LTWTokenProcessor alloc] initWithImplementationCode:[[self->codeView textStorage] string]];
+    [[(LTWToolkitAppDelegate*)[NSApp delegate] tokenProcessors] addObject:self->pythonComponent];
 }
 
 - (NSString *)windowNibName {

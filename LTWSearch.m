@@ -25,9 +25,13 @@
     return self;
 }
 
--(void)tryOnTokenRange:(LTWTokenRange)range {
-    if ([range.tokens matches:tokens fromIndex:range.firstToken toIndex:range.lastToken]) {
-        [requester handleSearchResult:[range.tokens tokensFromIndex:range.firstToken toIndex:range.lastToken propagateTags:YES] forSearch:self];
+-(BOOL)tryOnTokenIndex:(NSUInteger)index ofTokens:(LTWTokens*)theTokens newSearches:(NSMutableArray*)newSearches {
+    if ([theTokens matches:tokens fromIndex:index toIndex:index+[tokens count]-1]) {
+        NSArray *searches = [requester handleSearchResult:[theTokens tokensFromIndex:index toIndex:index+[tokens count]-1 propagateTags:YES] forSearch:self];
+        [newSearches addObjectsFromArray:searches];
+        return YES;
+    }else{
+        return NO;
     }
 }
 

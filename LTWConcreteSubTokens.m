@@ -37,6 +37,10 @@
     return [superTokens matches:theTokens fromIndex:startIndex+theStartIndex toIndex:startIndex+theEndIndex];
 }
 
+-(NSUInteger)count {
+    return endIndex - startIndex + 1;
+}
+
 // This method is private because tags should always be added to an entire range. Tags can then be propagated up to the superranges of that range.
 -(void)_addTag:(LTWTokenTag*)tag fromIndex:(NSUInteger)theStartIndex toIndex:(NSUInteger)theEndIndex {
 	[[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:LTWTokenTagsChangedNotification object:self]];

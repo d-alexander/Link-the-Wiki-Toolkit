@@ -10,15 +10,19 @@
 
 #import "LTWCorpus.h"
 #import "LTWPythonDocument.h"
+#import "LTWSearch.h"
 
 @implementation LTWToolkitAppDelegate
 
 @synthesize window;
 @synthesize corpora;
+@synthesize tokenProcessors;
 
 -(id)init {
 	if (self = [super init]) {
 		self->corpora = [[NSMutableArray alloc] init];
+        self->tokenProcessors = [[NSMutableArray alloc] init];
+        self->articles = [[NSMutableArray alloc] init];
 	}
 	return self;
 }
@@ -46,13 +50,40 @@
 
 
 -(IBAction)loadArticle:(id)sender {
-	if ([self->corpora count] > 0) {
-		LTWCorpus *corpus = [self->corpora lastObject];
-		NSURL *url = [NSURL URLWithString:[self->articleURLField stringValue]];
+	if ([corpora count] > 0) {
+		LTWCorpus *corpus = [corpora lastObject];
+		NSURL *url = [NSURL URLWithString:[articleURLField stringValue]];
 		if (!url) return;
 		LTWArticle *article = [corpus loadArticleWithURL:url];
-		[self->articleSelectionView reloadItem:nil reloadChildren:YES];
+		[articleSelectionView reloadItem:nil reloadChildren:YES];
+        [articles addObject:article];
 	}
+}
+
+// Processes all of the currently-loaded articles using all of the currently-loaded token processors.
+// NOTE: This is for testing; article re-processing will hopefully be co-ordinated in a much better way later.
+-(IBAction)processArticles:(id)sender {
+    NSMutableArray *searches = [NSMutableArray array];
+    
+    BOOL keepGoing;
+    do {
+        keepGoing = NO;
+        for (LTWArticle *article in articles) {
+            LTWTokens *articleTokens = [article tokens];
+            
+            NSUInteger tokenIndex = 0;
+            for (NSValue *tokenRangeValue in articleTokens) {
+                NSMutableArray *newSearches = [[NSMutableArray alloc] init];
+                for (LTWSearch *search in searches) {
+                    if ([search tryOnTokenIndex:tokenIndex ofTokens:articleTokens newSearches:newSearches]) keepGoing = YES;
+                }
+                [searches addObjectsFromArray:newSearches];
+                [newSearches release];
+                
+                tokenIndex++;
+            }
+        }
+    } while (keepGoing);
 }
 
 - (NSInteger)outlineView:(NSOutlineView*)outlineView numberOfChildrenOfItem:(id)item {
