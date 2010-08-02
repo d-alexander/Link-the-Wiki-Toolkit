@@ -74,9 +74,11 @@ NSString *LTWTokenTagsChangedNotification = @"LTWTokenTagsChangedNotification";
 }
 
 -(NSUInteger)countByEnumeratingWithState:(NSFastEnumerationState*)state objects:(id*)stackbuf count:(NSUInteger)len {
+    state->itemsPtr = stackbuf;
+    state->mutationsPtr = (unsigned long*)self;
     for (NSUInteger i = 0; i < len; i++) {
         if (state->state >= [self count]) return i;
-        stackbuf[i] = [NSValue valueWithRange:[self rangeOfTokenAtIndex:state->state]];
+        stackbuf[i] = [[NSValue valueWithRange:[self rangeOfTokenAtIndex:state->state]] retain];
         state->state++;
     }
     return len;
