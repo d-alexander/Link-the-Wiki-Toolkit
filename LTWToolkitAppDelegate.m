@@ -65,6 +65,10 @@
 -(IBAction)processArticles:(id)sender {
     NSMutableArray *searches = [NSMutableArray array];
     
+    for (LTWTokenProcessor *tokenProcessor in tokenProcessors) {
+        [searches addObjectsFromArray:[tokenProcessor initialSearches]];
+    }
+    
     BOOL keepGoing;
     do {
         keepGoing = NO;

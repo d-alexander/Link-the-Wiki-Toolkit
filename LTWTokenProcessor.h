@@ -9,9 +9,10 @@
 #import <Foundation/Foundation.h>
 
 #import "LTWPythonUtils.h"
+#import "LTWSearch.h"
 
 
-@interface LTWTokenProcessor : NSObject <LTWPythonImplementation> {
+@interface LTWTokenProcessor : NSObject <LTWPythonImplementation, LTWSearchRequester> {
 	PyObject *implementation;
     NSString *displayName;
 }

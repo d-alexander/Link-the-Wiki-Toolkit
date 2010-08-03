@@ -202,7 +202,7 @@ LTWPyTokenIterator *LTWPyTokenIterator_GetIter(LTWPyTokenIterator *obj) {
 }
 
 PyObject *LTWPyTokenIterator_Next(LTWPyTokenIterator *obj) {
-	LTWPyToken *token = (LTWPyToken*)_PyObject_New(&LTWPyTokenType);
+	LTWPyToken *token = PyObject_New(LTWPyToken, &LTWPyTokenType);
 	
 	token->range = [obj->tokens rangeOfTokenAtIndex:obj->currentTokenIndex];
 	token->string = [obj->tokens _text];
@@ -246,7 +246,31 @@ static PyTypeObject LTWPyTokenIteratorType = {
 
 #pragma mark LTWPyModule
 
+PyObject* LTWPyModuleTokensFromString(PyObject *self, PyObject *args) {
+    char *str;    
+    if (!PyArg_ParseTuple(args, "s", &str)) Py_RETURN_NONE;
+
+    LTWTokens *tokens = [[LTWTokens alloc] initWithXML:[NSString stringWithUTF8String:str]];
+    
+    LTWPyToken *firstToken = PyObject_New(LTWPyToken, &LTWPyTokenType), *lastToken = PyObject_New(LTWPyToken, &LTWPyTokenType);
+    firstToken->range = [tokens rangeOfTokenAtIndex:0];
+	firstToken->string = [tokens _text];
+	firstToken->extraInfo = [tokens extraInfoForTokenAtIndex:0];
+	firstToken->index = 0;
+    firstToken->tokens = tokens;
+    
+    lastToken->range = [tokens rangeOfTokenAtIndex:[tokens count]-1];
+	lastToken->string = [tokens _text];
+	lastToken->extraInfo = [tokens extraInfoForTokenAtIndex:[tokens count]-1];
+	lastToken->index = [tokens count]-1;
+    lastToken->tokens = tokens;
+    
+    return Py_BuildValue("OO", firstToken, lastToken);
+}
+
 static PyMethodDef LTWPyModuleMethods[] = {
+    {"tokens_from_string", (PyCFunction)LTWPyModuleTokensFromString, METH_VARARGS,
+        "Convert a string to a sequence of tokens, and returns a tuple consisting of the first and last token in the sequence."},
 	{NULL}
 };
 
@@ -315,7 +339,9 @@ PyMODINIT_FUNC LTWPyModuleInit() {
 	return result;
 }
 
-+(void)depythoniseObject:(PyObject*)object intoPointer:(void**)pointer {
+// Returns true if the depythonised object is an Objective-C object, and therefore doesn't need to be wrapped in NSValue before inserting into a collection.
+// NOTE: If the object is an Objective-C object, an owning reference will not be returned. The caller should either retain it directly or insert it into a collection.
++(BOOL)depythoniseObject:(PyObject*)object intoPointer:(void**)pointer {
     LTWPyToken *firstToken = NULL, *lastToken = NULL;
     char *str;
     
@@ -332,43 +358,58 @@ PyMODINIT_FUNC LTWPyModuleInit() {
         range->lastToken = lastToken->index;
         
         *pointer = range;
+        return NO;
     }else if (PyArg_Parse(object, "s", &str)) {
         *pointer = [NSString stringWithUTF8String:str];
+        return YES;
     }else if (PySequence_Check(object)) {
         NSUInteger sequenceLength = PySequence_Length(object);
         NSMutableArray *array = [[NSMutableArray alloc] initWithCapacity:sequenceLength];
         for (NSUInteger i=0; i<sequenceLength; i++) {
             PyObject *item = PySequence_GetItem(object, i);
-            id depythonisedItem = nil;
+            void *depythonisedItem = nil;
             if (item == object) continue; // For some reason, trying to get the first "item" of a string returns the string itself.
-            [LTWPythonUtils depythoniseObject:item intoPointer:(void**)&depythonisedItem];
-            [array addObject:depythonisedItem];
+            BOOL isObjC = [LTWPythonUtils depythoniseObject:item intoPointer:&depythonisedItem];
+            if (!isObjC) depythonisedItem = [NSValue valueWithPointer:depythonisedItem];
+            [array addObject:(id)depythonisedItem];
         }
         *pointer = [array autorelease];
+        return YES;
     }
+    
+    return NO;
 }
 
+// Calls the method given by methodName on the Python object given by pythonObject.
+// The argument parameter should be either a single Python object or a tuple of Python objects to be passed to the method.
+// The returnFormat parameter is a Python format string describing the expected return value(s).
+// The arguments following returnFormat should be pointers to variables of the appropriate types to hold references to the returned objects. However, some Python types are automatically converted into Objective-C objects: strings are converted to NSStrings, other sequence types are converted to NSArrays, and a tuple of tokens (where both tokens are within the same LTWTokens object) is converted to LTWTokenRanges.
+// When an Objective-C object is returned, the caller receives an owning reference to it.
 +(void)callMethod:(char*)methodName onPythonObject:(PyObject*)pythonObject withArgument:(PyObject*)argument returnFormat:(const char*)returnFormat,... {
-    
-    // TODO: Make this method accept a variable argument list. PyArg_VaParse should then be able to put the return values straight into the right places, which should save us from having to put them in an NSDictionary. (However, we might want to somehow abstract away some of the messier stuff, like converting LTWPyTokenType to proper indices.
     
     if (!argument) argument = Py_None;
     
     PyObject *result = PyObject_CallMethod(pythonObject, methodName, "O", argument);
     if (!result) return;
     
-    va_list vl, vl2;
-    va_start(vl2, returnFormat);
-    va_copy(vl, vl2);
-    if (!PyArg_VaParse(result, returnFormat, vl2)) goto cleanup;
+    va_list vlParse, vlDepythonise;
+    va_start(vlDepythonise, returnFormat);
+    va_copy(vlParse, vlDepythonise);
+    if (!PyArg_VaParse(result, returnFormat, vlParse)) {
+        va_end(vlParse);
+        va_copy(vlParse, vlDepythonise);
+        result = Py_BuildValue("(O)", result);
+        if (!PyArg_VaParse(result, returnFormat, vlParse)) goto cleanup;
+    }
     
-    for (void *p = va_arg(vl, void*); p != NULL; p = va_arg(vl, void*)) {
-        [LTWPythonUtils depythoniseObject:*(PyObject**)p intoPointer:(void**)p];
+    for (void *p = va_arg(vlDepythonise, void*); p != NULL; p = va_arg(vlDepythonise, void*)) {
+        BOOL isObjC = [LTWPythonUtils depythoniseObject:*(PyObject**)p intoPointer:(void**)p];
+        if (isObjC) [*(id*)p retain];
     }
     
 cleanup:
-    va_end(vl2);
-    va_end(vl);
+    va_end(vlParse);
+    va_end(vlDepythonise);
     
 }
 

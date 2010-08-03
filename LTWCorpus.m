@@ -39,7 +39,7 @@
     
     NSArray *pathInHierarchy = nil;
     NSString *articleTitle = nil;
-    LTWTokenRange *bodyTokens;
+    LTWTokenRange *bodyTokens = NULL;
     
 	[LTWPythonUtils callMethod:"load_article" onPythonObject:self->implementation withArgument:(PyObject*)[LTWPythonUtils pythonIteratorForTokens:articleTokens] returnFormat:"OOO", &pathInHierarchy, &articleTitle, &bodyTokens, NULL];
     

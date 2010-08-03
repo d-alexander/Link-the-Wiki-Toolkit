@@ -11,24 +11,30 @@
 
 @implementation LTWSearch
 
--(id)initWithTokens:(LTWTokens*)theTokens {
+-(id)initWithTokens:(LTWTokens*)theTokens requester:(id <LTWSearchRequester>)theRequester {
     if (self = [super init]) {
         tokens = [theTokens retain];
+        requester = theRequester;
     }
     return self;
 }
 
--(id)initWithString:(NSString*)theString {
+-(id)initWithString:(NSString*)theString requester:(id <LTWSearchRequester>)theRequester {
     LTWTokens *theTokens = [[LTWTokens alloc] initWithXML:theString];
-    self = [self initWithTokens:theTokens];
+    self = [self initWithTokens:theTokens requester:theRequester];
     [theTokens release];
+    requester = theRequester;
     return self;
 }
 
 -(BOOL)tryOnTokenIndex:(NSUInteger)index ofTokens:(LTWTokens*)theTokens newSearches:(NSMutableArray*)newSearches {
     if ([theTokens matches:tokens fromIndex:index toIndex:index+[tokens count]-1]) {
-        NSArray *searches = [requester handleSearchResult:[theTokens tokensFromIndex:index toIndex:index+[tokens count]-1 propagateTags:YES] forSearch:self];
-        [newSearches addObjectsFromArray:searches];
+        if (requester) {
+            NSArray *searches = [requester handleSearchResult:[theTokens tokensFromIndex:index toIndex:index+[tokens count]-1 propagateTags:YES] forSearch:self];
+            if (searches) {
+                [newSearches addObjectsFromArray:searches];
+            }
+        }
         return YES;
     }else{
         return NO;
