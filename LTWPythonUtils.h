@@ -29,5 +29,6 @@ typedef struct LTWPyTokenIterator LTWPyTokenIterator;
 +(LTWPyTokenIterator*)pythonIteratorForTokens:(LTWTokens*)tokens;
 +(PyObject*)compilePythonObjectFromCode:(NSString*)code;
 +(void)callMethod:(char*)methodName onPythonObject:(PyObject*)pythonObject withArgument:(PyObject*)argument returnFormat:(const char*)returnFormat,...;
++(PyObject*)pythonTupleWithObjects:(id)firstObject,...;
 
 @end

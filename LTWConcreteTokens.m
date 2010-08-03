@@ -54,7 +54,7 @@
         NSRange charRange = [self rangeOfTokenAtIndex:currentIndex];
         NSRange otherCharRange = [theTokens rangeOfTokenAtIndex:currentIndex-theStartIndex];
         NSString *temp = [[theTokens _text] substringWithRange:otherCharRange];
-        if (![temp compare:text options:NSCaseInsensitiveSearch range:charRange]) {
+        if ([text compare:temp options:NSCaseInsensitiveSearch range:charRange] != NSOrderedSame) {
             return NO;
         }
     }

@@ -10,6 +10,7 @@
 
 #import "LTWCorpus.h"
 #import "LTWPythonDocument.h"
+#import "LTWTokenProcessor.h"
 #import "LTWSearch.h"
 
 @implementation LTWToolkitAppDelegate

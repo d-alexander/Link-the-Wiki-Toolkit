@@ -380,6 +380,21 @@ PyMODINIT_FUNC LTWPyModuleInit() {
     return NO;
 }
 
++(PyObject*)pythoniseObject:(id)object {
+    if (!object) {
+        Py_RETURN_NONE;
+    }else if ([object isKindOfClass:[LTWTokens class]]) {
+        return (PyObject*)[LTWPythonUtils pythonIteratorForTokens:(LTWTokens*)object];
+    }else{
+        NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+        const char *descriptionCStr = [[object description] UTF8String];
+        PyObject *descriptionPythonString = Py_BuildValue("s", descriptionCStr);
+        [pool drain];
+        return descriptionPythonString;
+    }
+    return NULL;
+}
+
 // Calls the method given by methodName on the Python object given by pythonObject.
 // The argument parameter should be either a single Python object or a tuple of Python objects to be passed to the method.
 // The returnFormat parameter is a Python format string describing the expected return value(s).
@@ -387,9 +402,13 @@ PyMODINIT_FUNC LTWPyModuleInit() {
 // When an Objective-C object is returned, the caller receives an owning reference to it.
 +(void)callMethod:(char*)methodName onPythonObject:(PyObject*)pythonObject withArgument:(PyObject*)argument returnFormat:(const char*)returnFormat,... {
     
-    if (!argument) argument = Py_None;
+    PyObject *result;
+    if (!argument) {
+        result = PyObject_CallMethod(pythonObject, methodName, NULL);
+    }else{
+        result = PyObject_CallMethod(pythonObject, methodName, "O", argument);
+    }
     
-    PyObject *result = PyObject_CallMethod(pythonObject, methodName, "O", argument);
     if (!result) return;
     
     va_list vlParse, vlDepythonise;
@@ -411,6 +430,35 @@ cleanup:
     va_end(vlParse);
     va_end(vlDepythonise);
     
+}
+
+// This method takes a list of Objective-C objects, turns them into the appropriate Python objects (returning NULL and printing an error if this is not possible) and puts the objects into a tuple.
+// The list of objects should be terminated by nil. For an empty tuple, make nil the first object in the list.
++(PyObject*)pythonTupleWithObjects:(id)firstObject,... {
+    va_list vlCountObjects, vlPythoniseObjects;
+    
+    if (!firstObject) {
+        // Do we need this, or will PyTuple_New accept 0 as a size?
+        return Py_BuildValue("()");
+    }
+    
+    va_start(vlCountObjects, firstObject);
+    va_copy(vlPythoniseObjects, vlCountObjects);
+    
+    NSUInteger numObjects = 0;
+    for (id obj = firstObject; obj != nil; obj = va_arg(vlCountObjects, id)) numObjects++;
+    va_end(vlCountObjects);
+    
+    PyObject *tuple = PyTuple_New(numObjects);
+    int pos = 0;
+    for (id obj = firstObject; obj != nil; obj = va_arg(vlPythoniseObjects, id), pos++) {
+        PyObject *pythonisedObject = [LTWPythonUtils pythoniseObject:obj];
+        if (!pythonisedObject) return NULL; // NOTE: Should release held references here.
+        PyTuple_SET_ITEM(tuple, pos, pythonisedObject);
+    }
+    va_end(vlPythoniseObjects);
+    
+    return tuple;
 }
 
 @end
