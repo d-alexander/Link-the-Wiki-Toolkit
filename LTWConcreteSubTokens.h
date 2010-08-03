@@ -21,4 +21,6 @@
 
 -(id)initWithTokens:(LTWTokens*)theTokens fromIndex:(NSUInteger)theStartIndex toIndex:(NSUInteger)theEndIndex propagateTags:(BOOL)shouldPropagateTags;
 
+-(void)_becomeIndependentOfSuperTokens;
+
 @end

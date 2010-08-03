@@ -23,6 +23,7 @@
 		636D47B411FD2EAB0099153C /* LTWPythonUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 636D47B311FD2EAB0099153C /* LTWPythonUtils.m */; };
 		63C24E0E11FFAC0B002609A9 /* LTWPythonDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C24E0D11FFAC0B002609A9 /* LTWPythonDocument.m */; };
 		63C24E1011FFAC4F002609A9 /* LTWPythonDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63C24E0F11FFAC4F002609A9 /* LTWPythonDocument.xib */; };
+		63D99AC912083B8500CEE18B /* LTWDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D99AC812083B8400CEE18B /* LTWDatabase.m */; };
 		63FA735B120047BE00A80269 /* LTWArticle.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FA735A120047BE00A80269 /* LTWArticle.m */; };
 		63FE49E011FD697700088F16 /* LTWParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FE49DF11FD697700088F16 /* LTWParser.m */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
@@ -66,6 +67,8 @@
 		63C24E0C11FFAC0B002609A9 /* LTWPythonDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTWPythonDocument.h; sourceTree = "<group>"; };
 		63C24E0D11FFAC0B002609A9 /* LTWPythonDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTWPythonDocument.m; sourceTree = "<group>"; };
 		63C24E0F11FFAC4F002609A9 /* LTWPythonDocument.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LTWPythonDocument.xib; sourceTree = "<group>"; };
+		63D99AC712083B8400CEE18B /* LTWDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTWDatabase.h; sourceTree = "<group>"; };
+		63D99AC812083B8400CEE18B /* LTWDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTWDatabase.m; sourceTree = "<group>"; };
 		63FA7359120047BE00A80269 /* LTWArticle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTWArticle.h; sourceTree = "<group>"; };
 		63FA735A120047BE00A80269 /* LTWArticle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTWArticle.m; sourceTree = "<group>"; };
 		63FE49DE11FD697700088F16 /* LTWParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTWParser.h; sourceTree = "<group>"; };
@@ -218,6 +221,7 @@
 		636D47A411FD2CA60099153C /* Backend */ = {
 			isa = PBXGroup;
 			children = (
+				63D99AC612083B7500CEE18B /* Persistence */,
 				6353EF211206C3F30097FFF3 /* LTWSearch cluster */,
 				631C6A531202A5DE00E821BD /* LTWTokens cluster */,
 				636D47B111FD2E9C0099153C /* Utilities */,
@@ -261,6 +265,15 @@
 				632241C1120598BA0023CD84 /* LTWArticleDocument.m */,
 			);
 			name = "Document Classes";
+			sourceTree = "<group>";
+		};
+		63D99AC612083B7500CEE18B /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				63D99AC712083B8400CEE18B /* LTWDatabase.h */,
+				63D99AC812083B8400CEE18B /* LTWDatabase.m */,
+			);
+			name = Persistence;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -339,6 +352,7 @@
 				632241C2120598BA0023CD84 /* LTWArticleDocument.m in Sources */,
 				6364ACE5120653A00042F942 /* LTWTokenProcessor.m in Sources */,
 				6353EF241206C4180097FFF3 /* LTWSearch.m in Sources */,
+				63D99AC912083B8500CEE18B /* LTWDatabase.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

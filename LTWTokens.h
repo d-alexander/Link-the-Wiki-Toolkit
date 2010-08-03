@@ -25,12 +25,14 @@ typedef struct {
  A common use-case of subsequences is to specify a range over which a tag is to be added. To do this, the caller acquires the appropriate subsequence (with token-propagation enabled), adds the tag by sending a message to the newly-created subsequence, and then releases the subsequence. The supersequence now has the tag, but only over the appropriate range.
  */
 @interface LTWTokens : NSObject <NSFastEnumeration> {
-	
+    
 }
 
 -(id)initWithXML:(NSString*)xml;
 -(NSRange)rangeOfTokenAtIndex:(NSUInteger)index;
 -(NSDictionary*)extraInfoForTokenAtIndex:(NSUInteger)index;
+
+
 
 -(LTWTokens*)tokensFromIndex:(NSUInteger)startIndex toIndex:(NSUInteger)endIndex propagateTags:(BOOL)shouldPropagateTags;
 -(BOOL)matches:(LTWTokens*)tokens fromIndex:(NSUInteger)theStartIndex toIndex:(NSUInteger)theEndIndex;
@@ -41,6 +43,8 @@ typedef struct {
 
 -(void)enumerateTagsWithBlock:(void (^)(NSRange tagTokenRange, LTWTokenTag *tag))block;
 -(NSUInteger)count;
+
+-(void)saveToDatabase;
 
 -(NSString*)_text;
 

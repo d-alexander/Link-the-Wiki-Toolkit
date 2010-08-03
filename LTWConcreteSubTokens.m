@@ -97,4 +97,12 @@
 	}
 }
 
+-(void)saveToDatabase {
+    [superTokens saveToDatabase];
+}
+
+-(void)_becomeIndependentOfSuperTokens {
+    
+}
+
 @end

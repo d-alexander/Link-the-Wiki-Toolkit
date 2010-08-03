@@ -88,4 +88,8 @@ NSString *LTWTokenTagsChangedNotification = @"LTWTokenTagsChangedNotification";
 	
 }
 
+-(void)saveToDatabase {
+    
+}
+
 @end
