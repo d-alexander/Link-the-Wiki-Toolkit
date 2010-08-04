@@ -49,4 +49,6 @@ typedef struct {
 
 -(NSString*)_text;
 
+-(NSString*)stringValue;
+
 @end

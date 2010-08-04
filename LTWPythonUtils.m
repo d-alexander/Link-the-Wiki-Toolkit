@@ -362,6 +362,25 @@ PyMODINIT_FUNC LTWPyModuleInit() {
     }else if (PyArg_Parse(object, "s", &str)) {
         *pointer = [NSString stringWithUTF8String:str];
         return YES;
+    }else if (PyMapping_Check(object)) {
+        NSUInteger dictionarySize = PyMapping_Size(object);
+        NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] initWithCapacity:dictionarySize]; 
+        PyObject *dictionaryItems = PyMapping_Items(object);
+        for (NSUInteger i=0; i<dictionarySize; i++) {
+            PyObject *keyValueTuple = PySequence_GetItem(dictionaryItems, i);
+            PyObject *key = NULL, *value = NULL;
+            PyArg_ParseTuple(keyValueTuple, "OO", &key, &value);
+            
+            void *depythonisedKey = NULL, *depythonisedValue = NULL;
+            BOOL isObjC = [LTWPythonUtils depythoniseObject:key intoPointer:&depythonisedKey];
+            if (!isObjC) depythonisedKey = [NSValue valueWithPointer:depythonisedKey];
+            isObjC = [LTWPythonUtils depythoniseObject:value intoPointer:&depythonisedValue];
+            if (!isObjC) depythonisedValue = [NSValue valueWithPointer:depythonisedValue];
+            
+            [dictionary setObject:depythonisedValue forKey:depythonisedKey];
+        }
+        *pointer = [dictionary autorelease];
+        return YES;
     }else if (PySequence_Check(object)) {
         NSUInteger sequenceLength = PySequence_Length(object);
         NSMutableArray *array = [[NSMutableArray alloc] initWithCapacity:sequenceLength];

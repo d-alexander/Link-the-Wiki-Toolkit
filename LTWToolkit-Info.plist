@@ -27,6 +27,10 @@
 			<string>XML</string>
 		</dict>
 		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>xml</string>
+			</array>
 			<key>CFBundleTypeName</key>
 			<string>LTWArticleDocument</string>
 			<key>CFBundleTypeRole</key>
@@ -72,7 +76,16 @@
 	<key>NSServices</key>
 	<array/>
 	<key>UTExportedTypeDeclarations</key>
-	<array/>
+	<array>
+		<dict>
+			<key>UTTypeDescription</key>
+			<string>LTW Article</string>
+			<key>UTTypeIdentifier</key>
+			<string>nz.ac.otago.inex.ltw-toolkit.article</string>
+			<key>UTTypeTagSpecification</key>
+			<dict/>
+		</dict>
+	</array>
 	<key>UTImportedTypeDeclarations</key>
 	<array/>
 </dict>

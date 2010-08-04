@@ -16,6 +16,8 @@
 		632241C2120598BA0023CD84 /* LTWArticleDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 632241C1120598BA0023CD84 /* LTWArticleDocument.m */; };
 		632241C4120598CD0023CD84 /* LTWArticleDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 632241C3120598CD0023CD84 /* LTWArticleDocument.xib */; };
 		6353EF241206C4180097FFF3 /* LTWSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 6353EF231206C4180097FFF3 /* LTWSearch.m */; };
+		6356FAB112097A9A0072FF20 /* WPTAMapping.py in Resources */ = {isa = PBXBuildFile; fileRef = 6356FAB012097A9A0072FF20 /* WPTAMapping.py */; };
+		6356FAB412097B2F0072FF20 /* Guardian.py in Resources */ = {isa = PBXBuildFile; fileRef = 6356FAB312097B2F0072FF20 /* Guardian.py */; };
 		6364ACE5120653A00042F942 /* LTWTokenProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 6364ACE4120653A00042F942 /* LTWTokenProcessor.m */; };
 		636D47A711FD2CC60099153C /* LTWCorpus.m in Sources */ = {isa = PBXBuildFile; fileRef = 636D47A611FD2CC60099153C /* LTWCorpus.m */; };
 		636D47AA11FD2CD70099153C /* LTWTokens.m in Sources */ = {isa = PBXBuildFile; fileRef = 636D47A911FD2CD70099153C /* LTWTokens.m */; };
@@ -55,6 +57,8 @@
 		632241C3120598CD0023CD84 /* LTWArticleDocument.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LTWArticleDocument.xib; sourceTree = "<group>"; };
 		6353EF221206C4180097FFF3 /* LTWSearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTWSearch.h; sourceTree = "<group>"; };
 		6353EF231206C4180097FFF3 /* LTWSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTWSearch.m; sourceTree = "<group>"; };
+		6356FAB012097A9A0072FF20 /* WPTAMapping.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = WPTAMapping.py; sourceTree = "<group>"; };
+		6356FAB312097B2F0072FF20 /* Guardian.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = Guardian.py; sourceTree = "<group>"; };
 		6364ACE3120653A00042F942 /* LTWTokenProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTWTokenProcessor.h; sourceTree = "<group>"; };
 		6364ACE4120653A00042F942 /* LTWTokenProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTWTokenProcessor.m; sourceTree = "<group>"; };
 		636D47A511FD2CC60099153C /* LTWCorpus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTWCorpus.h; sourceTree = "<group>"; };
@@ -90,13 +94,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		080E96DDFE201D6D7F000001 /* Classes */ = {
+		080E96DDFE201D6D7F000001 /* Objective-C */ = {
 			isa = PBXGroup;
 			children = (
 				636D47A111FD2C930099153C /* GUI */,
 				636D47A411FD2CA60099153C /* Backend */,
 			);
-			name = Classes;
+			name = "Objective-C";
 			sourceTree = "<group>";
 		};
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
@@ -129,7 +133,8 @@
 		29B97314FDCFA39411CA2CEA /* LTWToolkit */ = {
 			isa = PBXGroup;
 			children = (
-				080E96DDFE201D6D7F000001 /* Classes */,
+				6356FAAA120979740072FF20 /* Python */,
+				080E96DDFE201D6D7F000001 /* Objective-C */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
@@ -204,6 +209,31 @@
 				6353EF231206C4180097FFF3 /* LTWSearch.m */,
 			);
 			name = "LTWSearch cluster";
+			sourceTree = "<group>";
+		};
+		6356FAAA120979740072FF20 /* Python */ = {
+			isa = PBXGroup;
+			children = (
+				6356FAAE120979B50072FF20 /* Corpora */,
+				6356FAAD120979980072FF20 /* Token Processors */,
+			);
+			name = Python;
+			sourceTree = "<group>";
+		};
+		6356FAAD120979980072FF20 /* Token Processors */ = {
+			isa = PBXGroup;
+			children = (
+				6356FAB012097A9A0072FF20 /* WPTAMapping.py */,
+			);
+			name = "Token Processors";
+			sourceTree = "<group>";
+		};
+		6356FAAE120979B50072FF20 /* Corpora */ = {
+			isa = PBXGroup;
+			children = (
+				6356FAB312097B2F0072FF20 /* Guardian.py */,
+			);
+			name = Corpora;
 			sourceTree = "<group>";
 		};
 		636D47A111FD2C930099153C /* GUI */ = {
@@ -327,6 +357,8 @@
 				1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */,
 				63C24E1011FFAC4F002609A9 /* LTWPythonDocument.xib in Resources */,
 				632241C4120598CD0023CD84 /* LTWArticleDocument.xib in Resources */,
+				6356FAB112097A9A0072FF20 /* WPTAMapping.py in Resources */,
+				6356FAB412097B2F0072FF20 /* Guardian.py in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
