@@ -159,6 +159,8 @@ invalid_search:
             [newSearches addObjectsFromArray:searches];
         }
     }
+    
+    // Should actually only be returning YES if the requester either tags some tokens or starts some new searches.
     return YES;
 }
 
