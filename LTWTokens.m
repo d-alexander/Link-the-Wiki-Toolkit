@@ -55,6 +55,10 @@ NSString *LTWTokenTagsChangedNotification = @"LTWTokenTagsChangedNotification";
     return NO;
 }
 
+-(BOOL)matches:(LTWTokens*)theTokens fromIndex:(NSUInteger)theStartIndex {
+    return [self matches:theTokens fromIndex:theStartIndex toIndex:theStartIndex+[theTokens count]-1];
+}
+
 -(void)_addTag:(LTWTokenTag*)tag fromIndex:(NSUInteger)theStartIndex toIndex:(NSUInteger)theEndIndex {
 
 }

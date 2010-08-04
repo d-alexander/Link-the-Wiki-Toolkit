@@ -74,19 +74,24 @@
     do {
         keepGoing = NO;
         for (LTWArticle *article in articles) {
-            LTWTokens *articleTokens = [article tokens];
-            
-            NSUInteger tokenIndex = 0;
-            for (NSValue *tokenRangeValue in articleTokens) {
-                NSMutableArray *newSearches = [[NSMutableArray alloc] init];
-                for (LTWSearch *search in searches) {
-                    if ([search tryOnTokenIndex:tokenIndex ofTokens:articleTokens newSearches:newSearches]) keepGoing = YES;
-                }
-                [searches addObjectsFromArray:newSearches];
-                [newSearches release];
+            for (NSString *fieldName in [article fieldNames]) {
+                LTWTokens *fieldTokens = [article tokensForField:fieldName];
                 
-                tokenIndex++;
+                NSUInteger tokenIndex = 0;
+                for (NSValue *tokenRangeValue in fieldTokens) {
+                    NSMutableArray *newSearches = [[NSMutableArray alloc] init];
+                    for (LTWSearch *search in searches) {
+                        if ([search tryOnTokenIndex:tokenIndex ofTokens:fieldTokens fieldName:fieldName corpusName:[[article corpus] displayName] articleURL:[article URL] newSearches:newSearches]) keepGoing = YES;
+                    }
+                    [searches addObjectsFromArray:newSearches];
+                    [newSearches release];
+                    
+                    tokenIndex++;
+                }
             }
+            
+            
+
         }
     } while (keepGoing);
 }

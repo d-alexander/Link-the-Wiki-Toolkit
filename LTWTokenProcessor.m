@@ -36,21 +36,23 @@
 -(NSArray*)initialSearches {
     // This gets an array of "searches" that the Token Processor wants to get the results of. It should only be called once, as the Token Processor may use it for other initialisation tasks.
     
-    NSArray *ranges = nil;
-    [LTWPythonUtils callMethod:"get_initial_searches" onPythonObject:self->implementation withArgument:NULL returnFormat:"O", &ranges, NULL];
-    NSMutableArray *searches = [NSMutableArray arrayWithCapacity:[ranges count]];
-    for (NSValue *rangeValue in ranges) {
-        LTWTokenRange *range = [rangeValue pointerValue];
-        [searches addObject:[[LTWSearch alloc] initWithTokens:[range->tokens tokensFromIndex:range->firstToken toIndex:range->lastToken propagateTags:YES] requester:self]];
-    }
+    PyObject *obj = NULL;
+    [LTWPythonUtils callMethod:"get_initial_searches" onPythonObject:self->implementation withArgument:NULL depythonise:NO returnFormat:"O", &obj, NULL];
+    
+    NSArray *searches = [LTWSearch parsePythonSearchArray:obj requester:self];
+    
     return searches;
 }
 
 -(NSArray*)handleSearchResult:(LTWTokens*)result forSearch:(LTWSearch*)search {
     PyObject *arg = [LTWPythonUtils pythonTupleWithObjects:result, search, nil];
     
-    NSArray *newSearches = nil;
-    [LTWPythonUtils callMethod:"handle_search_result" onPythonObject:self->implementation withArgument:arg returnFormat:"O", &newSearches];
+    PyObject *obj = NULL;
+    [LTWPythonUtils callMethod:"handle_search_result" onPythonObject:self->implementation withArgument:arg depythonise:NO returnFormat:"O", &obj];
+    
+    NSArray *newSearches = [LTWSearch parsePythonSearchArray:obj requester:self];
+    
+    // NOTE: Should also handle any newly-created tags here.
     
     return newSearches;
 }

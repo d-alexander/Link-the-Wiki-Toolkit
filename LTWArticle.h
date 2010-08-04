@@ -13,11 +13,18 @@
 @class LTWCorpus;
 
 @interface LTWArticle : NSObject {
-	LTWTokens *tokens;
+	NSMutableDictionary *fields;
 	LTWCorpus *corpus;
+    NSString *URL;
 }
 
--(id)initWithTokens:(LTWTokens*)theTokens corpus:(LTWCorpus*)theCorpus;
--(LTWTokens*)tokens;
+-(id)initWithBodyTokens:(LTWTokens*)theTokens corpus:(LTWCorpus*)theCorpus URL:(NSString*)theURL;
+-(NSArray*)fieldNames;
+-(LTWTokens*)tokensForField:(NSString*)fieldName;
+-(void)addTokens:(LTWTokens*)theTokens forField:(NSString*)fieldName;
+
+
+@property (readonly) LTWCorpus *corpus;
+@property (readonly) NSString *URL;
 
 @end

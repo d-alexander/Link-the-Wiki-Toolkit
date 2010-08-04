@@ -400,7 +400,7 @@ PyMODINIT_FUNC LTWPyModuleInit() {
 // The returnFormat parameter is a Python format string describing the expected return value(s).
 // The arguments following returnFormat should be pointers to variables of the appropriate types to hold references to the returned objects. However, some Python types are automatically converted into Objective-C objects: strings are converted to NSStrings, other sequence types are converted to NSArrays, and a tuple of tokens (where both tokens are within the same LTWTokens object) is converted to LTWTokenRanges.
 // When an Objective-C object is returned, the caller receives an owning reference to it.
-+(void)callMethod:(char*)methodName onPythonObject:(PyObject*)pythonObject withArgument:(PyObject*)argument returnFormat:(const char*)returnFormat,... {
++(void)callMethod:(char*)methodName onPythonObject:(PyObject*)pythonObject withArgument:(PyObject*)argument depythonise:(BOOL)depythonise returnFormat:(const char*)returnFormat,... {
     
     PyObject *result;
     if (!argument) {
@@ -421,9 +421,11 @@ PyMODINIT_FUNC LTWPyModuleInit() {
         if (!PyArg_VaParse(result, returnFormat, vlParse)) goto cleanup;
     }
     
-    for (void *p = va_arg(vlDepythonise, void*); p != NULL; p = va_arg(vlDepythonise, void*)) {
-        BOOL isObjC = [LTWPythonUtils depythoniseObject:*(PyObject**)p intoPointer:(void**)p];
-        if (isObjC) [*(id*)p retain];
+    if (!depythonise) {
+        for (void *p = va_arg(vlDepythonise, void*); p != NULL; p = va_arg(vlDepythonise, void*)) {
+            BOOL isObjC = [LTWPythonUtils depythoniseObject:*(PyObject**)p intoPointer:(void**)p];
+            if (isObjC) [*(id*)p retain];
+        }
     }
     
 cleanup:

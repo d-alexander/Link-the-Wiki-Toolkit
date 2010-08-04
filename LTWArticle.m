@@ -11,16 +11,29 @@
 
 @implementation LTWArticle
 
--(id)initWithTokens:(LTWTokens*)theTokens corpus:(LTWCorpus*)theCorpus {
+@synthesize corpus;
+@synthesize URL;
+
+-(id)initWithBodyTokens:(LTWTokens*)theTokens corpus:(LTWCorpus*)theCorpus URL:(NSString*)theURL; {
 	if (self = [super init]) {
-		self->tokens = [theTokens retain];
-		self->corpus = [theCorpus retain];
+        fields = [[NSMutableDictionary alloc] init];
+        [fields setObject:theTokens forKey:@"body"];
+		corpus = [theCorpus retain];
+        URL = [theURL retain];
 	}
 	return self;
 }
 
--(LTWTokens*)tokens {
-	return tokens;
+-(NSArray*)fieldNames {
+    return [fields allKeys];
+}
+
+-(LTWTokens*)tokensForField:(NSString*)fieldName {
+	return [fields objectForKey:fieldName];
+}
+
+-(void)addTokens:(LTWTokens*)theTokens forField:(NSString*)fieldName {
+    [fields setObject:theTokens forKey:fieldName];
 }
 
 @end

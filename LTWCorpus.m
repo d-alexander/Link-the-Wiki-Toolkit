@@ -41,9 +41,9 @@
     NSString *articleTitle = nil;
     LTWTokenRange *bodyTokens = NULL;
     
-	[LTWPythonUtils callMethod:"load_article" onPythonObject:self->implementation withArgument:(PyObject*)[LTWPythonUtils pythonIteratorForTokens:articleTokens] returnFormat:"OOO", &pathInHierarchy, &articleTitle, &bodyTokens, NULL];
+	[LTWPythonUtils callMethod:"load_article" onPythonObject:self->implementation withArgument:(PyObject*)[LTWPythonUtils pythonIteratorForTokens:articleTokens] depythonise:YES returnFormat:"OOO", &pathInHierarchy, &articleTitle, &bodyTokens, NULL];
     
-	LTWArticle *article = [[[LTWArticle alloc] initWithTokens:articleTokens corpus:self] autorelease];
+	LTWArticle *article = [[[LTWArticle alloc] initWithBodyTokens:articleTokens corpus:self URL:[url absoluteString]] autorelease];
 	
 	// NOTE: Currently this doesn't allow articles and hierarchy-nodes to have identical names if they're siblings.
 	// NOTE: So that we can look objects up by their indices (required for NSOutlineViewDataSource), we store each item's index as a separate NSNumber key. This means that if we want the *real* number of items we need to divide the count by 2. This is a horrible hack and it should be fixed as soon as possible!

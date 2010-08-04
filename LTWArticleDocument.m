@@ -17,7 +17,7 @@
 }
 
 -(void)windowControllerDidLoadNib:(NSWindowController*)windowController {
-	[tokensView setTokens:[article tokens]];
+	[tokensView setTokens:[article tokensForField:@"body"]];
 }
 
 - (NSData *)dataOfType:(NSString *)typeName error:(NSError **)outError

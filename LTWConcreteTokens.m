@@ -60,6 +60,7 @@
 	return [tokenExtraInfos objectAtIndex:index];
 }
 
+// Why do we even need an end-index? We'll (almost?) always be comparing part of self against the entirety of theTokens.
 -(BOOL)matches:(LTWTokens*)theTokens fromIndex:(NSUInteger)theStartIndex toIndex:(NSUInteger)theEndIndex {
     if (!inMemory) [self loadFromDatabase];
     for (NSUInteger currentIndex = theStartIndex; currentIndex <= theEndIndex; currentIndex++) {

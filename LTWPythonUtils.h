@@ -11,7 +11,7 @@
 
 #import "LTWTokens.h"
 
-@protocol LTWPythonImplementation
+@protocol LTWPythonImplementation <NSObject>
 
 -(id)initWithImplementationCode:(NSString*)pythonCode;
 -(void)setImplementationCode:(NSString*)pythonCode;
@@ -28,7 +28,10 @@ typedef struct LTWPyTokenIterator LTWPyTokenIterator;
 
 +(LTWPyTokenIterator*)pythonIteratorForTokens:(LTWTokens*)tokens;
 +(PyObject*)compilePythonObjectFromCode:(NSString*)code;
-+(void)callMethod:(char*)methodName onPythonObject:(PyObject*)pythonObject withArgument:(PyObject*)argument returnFormat:(const char*)returnFormat,...;
++(void)callMethod:(char*)methodName onPythonObject:(PyObject*)pythonObject withArgument:(PyObject*)argument depythonise:(BOOL)depythonise returnFormat:(const char*)returnFormat,...;
 +(PyObject*)pythonTupleWithObjects:(id)firstObject,...;
+
++(BOOL)depythoniseObject:(PyObject*)object intoPointer:(void**)pointer;
++(PyObject*)pythoniseObject:(id)object;
 
 @end
