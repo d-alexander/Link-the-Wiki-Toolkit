@@ -1,4 +1,7 @@
-class a:
+class Guardian:
+    def get_article_urls(self):
+        return ["http://www.guardian.co.uk/world/2010/jul/11/srebrenica-massacre-anniversary-killings"]
+    
     def load_article(self, tokens):
 
         byline_state = 0
@@ -56,4 +59,4 @@ class a:
         # return value: (path_in_hierarchy, dictionary_of_fields)
         return (["authors", byline], { "body":(body_start, body_end), "title":(title_start, title_end), "byline":(byline_start, byline_end) })
 
-the_corpus = a()
+the_corpus = Guardian()

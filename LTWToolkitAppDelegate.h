@@ -22,5 +22,6 @@
 @property (assign) IBOutlet NSWindow *window;
 @property (readonly) NSMutableArray *corpora;
 @property (readonly) NSMutableArray *tokenProcessors;
+@property (readonly) NSTextField *articleURLField; // TEMP -- So that LTWCorpus can add new articles on its own.
 
 @end

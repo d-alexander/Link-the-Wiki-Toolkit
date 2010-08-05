@@ -201,6 +201,8 @@ enum LTWXMLParserCharType {
 
 -(NSRange)getXMLTokenWithExtraInfo:(NSMutableDictionary*)extraInfo tokenType:(LTWTokenType*)tokenType {
 	BOOL isXMLStart;
+    
+    NSUInteger realTagStart = current; // the position of the < or &
 	
 	if ([self charAt:current] == '&') {
 		NSUInteger start = current;
@@ -261,7 +263,8 @@ enum LTWXMLParserCharType {
 		current++;
 		
 		[extraInfo setObject:[NSNumber numberWithInt:(current - tagRemanderStart)] forKey:@"tagRemainderLength"];
-		
+		[extraInfo setObject:[NSValue valueWithRange:NSMakeRange(realTagStart, current - realTagStart)] forKey:@"tagRange"];
+        
 		return xml_token;
 	}
 	

@@ -18,6 +18,7 @@
 @synthesize window;
 @synthesize corpora;
 @synthesize tokenProcessors;
+@synthesize articleURLField;
 
 -(id)init {
 	if (self = [super init]) {

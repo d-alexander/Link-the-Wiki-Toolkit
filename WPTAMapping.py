@@ -29,3 +29,5 @@ class WPTAMapping:
         destination_ta_article = destination_wp_article.tag_value("mapped_from")
         link_tag = ltw.tag_range(source_ta_article, "linked_to", destination_ta_article)
         return []
+
+the_corpus = WPTAMapping()

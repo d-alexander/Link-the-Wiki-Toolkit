@@ -268,9 +268,28 @@ PyObject* LTWPyModuleTokensFromString(PyObject *self, PyObject *args) {
     return Py_BuildValue("OO", firstToken, lastToken);
 }
 
+PyObject* LTWPyModuleTagRange(PyObject *self, PyObject *args) {
+    PyObject *pyTokens = NULL, *pyTagName = NULL, *pyTagValue = NULL;
+    
+    if (!PyArg_ParseTuple(args, "OOO", &pyTokens, &pyTagName, &pyTagValue)) Py_RETURN_NONE;
+    
+    LTWTokens *tokens = nil;
+    NSString *tagName = nil;
+    id tagValue = nil;
+    
+    if (![LTWPythonUtils depythoniseObject:pyTokens intoPointer:(void**)&tokens]) return nil;
+    if (![LTWPythonUtils depythoniseObject:pyTagName intoPointer:(void**)&tagName]) return nil;
+    if (![LTWPythonUtils depythoniseObject:pyTagValue intoPointer:(void**)&tagValue]) return nil;
+    
+    [tokens addTag:[[LTWTokenTag alloc] initWithName:tagName value:tagValue]];
+    
+    return Py_BuildValue("i", 0);
+}
+
 static PyMethodDef LTWPyModuleMethods[] = {
     {"tokens_from_string", (PyCFunction)LTWPyModuleTokensFromString, METH_VARARGS,
         "Convert a string to a sequence of tokens, and returns a tuple consisting of the first and last token in the sequence."},
+    {"tag_range", (PyCFunction)LTWPyModuleTagRange, METH_VARARGS, "Tag the given token-range (either a token iterator or a pair of tokens) with the given tagname and value."},
 	{NULL}
 };
 
@@ -352,13 +371,10 @@ PyMODINIT_FUNC LTWPyModuleInit() {
             lastToken = temp;
         }
         
-        LTWTokenRange *range = malloc(sizeof *range);
-        range->tokens = firstToken->tokens;
-        range->firstToken = firstToken->index;
-        range->lastToken = lastToken->index;
+        LTWTokens *tokens = [firstToken->tokens tokensFromIndex:firstToken->index toIndex:lastToken->index propagateTags:YES];
         
-        *pointer = range;
-        return NO;
+        *pointer = tokens;
+        return YES;
     }else if (PyArg_Parse(object, "s", &str)) {
         *pointer = [NSString stringWithUTF8String:str];
         return YES;
@@ -440,7 +456,7 @@ PyMODINIT_FUNC LTWPyModuleInit() {
         if (!PyArg_VaParse(result, returnFormat, vlParse)) goto cleanup;
     }
     
-    if (!depythonise) {
+    if (depythonise) {
         for (void *p = va_arg(vlDepythonise, void*); p != NULL; p = va_arg(vlDepythonise, void*)) {
             BOOL isObjC = [LTWPythonUtils depythoniseObject:*(PyObject**)p intoPointer:(void**)p];
             if (isObjC) [*(id*)p retain];

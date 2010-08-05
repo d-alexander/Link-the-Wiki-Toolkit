@@ -22,7 +22,9 @@
 @property (readonly) NSDictionary *hierarchy;
 
 -(id)initWithImplementationCode:(NSString*)pythonCode;
--(LTWArticle*)loadArticleWithURL:(NSURL*)url;
 -(void)setImplementationCode:(NSString*)pythonCode;
+
+-(NSArray*)getArticleURLs;
+-(LTWArticle*)loadArticleWithURL:(NSURL*)url;
 
 @end
