@@ -10,7 +10,11 @@
 
 #import "LTWPythonUtils.h"
 
+#ifdef __COCOTRON__
+@interface LTWPythonDocument : NSDocument {
+#else
 @interface LTWPythonDocument : NSDocument <NSTextViewDelegate> {
+#endif
 	IBOutlet NSTextView *codeView;
 	id <LTWPythonImplementation> pythonComponent;
 	NSAttributedString *codeAttributedString;

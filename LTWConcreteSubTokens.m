@@ -68,6 +68,7 @@
 	return [superTokens _text];
 }
 
+#ifndef __COCOTRON__
 -(void)enumerateTagsWithBlock:(void (^)(NSRange tagTokenRange, LTWTokenTag *tag))block {
 	if (propagateTags) {
 		[superTokens enumerateTagsWithBlock:^(NSRange tagTokenRange, LTWTokenTag *tag) {
@@ -95,6 +96,39 @@
 			}
 		}];
 	}
+}
+#endif
+
+-(NSArray*)tagRanges {
+    NSArray *superTokensRanges = [superTokens tagRanges];
+    NSMutableArray *tagRanges = [NSMutableArray array];
+    
+    for (NSValue *value in superTokensRanges) {
+        NSRange tagTokenRange = [value rangeValue];
+        
+        if (tagTokenRange.location <= endIndex && NSMaxRange(tagTokenRange) > startIndex) {
+            if (tagTokenRange.location < startIndex) {
+                tagTokenRange.length -= (startIndex - tagTokenRange.location);
+                tagTokenRange.location = startIndex;
+            }
+            
+            if (NSMaxRange(tagTokenRange) >= endIndex) {
+                tagTokenRange.length -= (NSMaxRange(tagTokenRange) - endIndex);
+            }
+            
+            // Bring the range into our "token-index-space".
+            tagTokenRange.location -= startIndex;
+            
+            [tagRanges addObject:[NSValue valueWithRange:tagTokenRange]];
+        }
+    }
+    
+    return tagRanges;
+}
+
+-(NSArray*)tagsWithRange:(NSRange)range {
+    range.location += startIndex;
+    return [super tagsWithRange:range];
 }
 
 -(void)saveToDatabase {

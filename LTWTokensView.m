@@ -20,15 +20,19 @@
 }
 
 -(void)_addTagsForTokens:(LTWTokens*)theTokens toAttributedString:(NSMutableAttributedString*)attributedString {
-	[theTokens enumerateTagsWithBlock:^(NSRange tagTokenRange, LTWTokenTag *tag) {
-		NSRange firstTokenCharRange = [theTokens rangeOfTokenAtIndex:tagTokenRange.location];
-		NSRange lastTokenCharRange = [theTokens rangeOfTokenAtIndex:NSMaxRange(tagTokenRange)-1];
-		NSRange tagCharRange = NSMakeRange(firstTokenCharRange.location, NSMaxRange(lastTokenCharRange) - firstTokenCharRange.location);
-		
-		[attributedString addAttribute:NSToolTipAttributeName value:[NSString stringWithFormat:@"%@ = %@", [tag tagName], [tag tagValue]] range:tagCharRange];
-        
-        [attributedString addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInt:NSUnderlinePatternDot] range:tagCharRange];
-	}];
+    
+    for (NSValue *value in [theTokens tagRanges]) {
+        NSRange tagTokenRange = [value rangeValue];
+        for (LTWTokenTag *tag in [theTokens tagsWithRange:tagTokenRange]) {
+            NSRange firstTokenCharRange = [theTokens rangeOfTokenAtIndex:tagTokenRange.location];
+            NSRange lastTokenCharRange = [theTokens rangeOfTokenAtIndex:NSMaxRange(tagTokenRange)-1];
+            NSRange tagCharRange = NSMakeRange(firstTokenCharRange.location, NSMaxRange(lastTokenCharRange) - firstTokenCharRange.location);
+            
+            [attributedString addAttribute:NSToolTipAttributeName value:[NSString stringWithFormat:@"%@ = %@", [tag tagName], [tag tagValue]] range:tagCharRange];
+            
+            [attributedString addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInt:NSUnderlinePatternDot] range:tagCharRange];
+        }
+    }
 }
 
 -(void)tokenTagsChanged:(NSNotification*)notification {

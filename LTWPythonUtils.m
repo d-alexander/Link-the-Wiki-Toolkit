@@ -25,7 +25,7 @@
 	join/partition
 	lower
 	(There should also be a method to convert tokens to "real" Python strings -- perhaps implicitly on assignment.)
-	In fact, perhaps Token should just be a "Sequence type" (see http://docs.python.org/c-api/sequence.html)
+	In fact, perhaps Token should just be a "Sequence type" (see http://docs.python.org/c-api/sequence.html )
  
  Also:
 	Regardless of the internal implementation, an iterator to a token should always be reconstructable from the token itself. That way, the Python code never has to explicitly care about iterators at all -- it can return tokens instead.
@@ -63,31 +63,31 @@ static PyObject *LTWPyToken_repr(LTWPyToken *obj) {
 	return str;
 }
 
+BOOL LTWPyToken_simpleCompare(PyObject *o1, PyObject *o2) {
+    PyObject *s1 = PyObject_Str(o1);
+    PyObject *s2 = PyObject_Str(o2);
+    int result = PyObject_RichCompareBool(s1, s2, Py_LE);
+    Py_DECREF(s1);
+    Py_DECREF(s2);
+    return result == 1;
+}
+
+NSInteger LTWPyToken_stringRangeCompare(NSString *s1, NSRange r1, NSString *s2, NSRange r2) {
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    NSString *subS2 = [s2 substringWithRange:r2];
+    NSComparisonResult result = [s1 compare:subS2 options:0 range:r1];
+    [pool drain];
+    return (NSInteger)((result == NSOrderedSame) ? 0 : (result == NSOrderedAscending) ? -1 : 1);
+}
+                                        
 static BOOL LTWPyToken_lessorequal(PyObject *left, PyObject *right) {
 	static LTWParser *parser = nil;
 	if (!parser) parser = [[LTWParser alloc] init];
 	static NSMutableDictionary *otherExtraInfo = nil;
 	if (!otherExtraInfo) otherExtraInfo = [[NSMutableDictionary alloc] init];
 	
-	BOOL (^simpleCompare)(PyObject *o1, PyObject *o2) = ^(PyObject *o1, PyObject *o2) {
-		PyObject *s1 = PyObject_Str(o1);
-		PyObject *s2 = PyObject_Str(o2);
-		int result = PyObject_RichCompareBool(s1, s2, Py_LE);
-		Py_DECREF(s1);
-		Py_DECREF(s2);
-		return (BOOL)(result == 1);
-	};
-	
-	NSInteger (^stringRangeCompare)(NSString *s1, NSRange r1, NSString *s2, NSRange r2) = ^(NSString *s1, NSRange r1, NSString *s2, NSRange r2) {
-		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-		NSString *subS2 = [s2 substringWithRange:r2];
-		NSComparisonResult result = [s1 compare:subS2 options:0 range:r1];
-		[pool drain];
-		return (NSInteger)((result == NSOrderedSame) ? 0 : (result == NSOrderedAscending) ? -1 : 1);
-	};
-	
 	if (PyObject_IsInstance(left, (PyObject*)&LTWPyTokenType) && PyObject_IsInstance(right, (PyObject*)&LTWPyTokenType)) {
-		return simpleCompare(left, right);
+		return LTWPyToken_simpleCompare(left, right);
 	}else{
 		LTWPyToken *token = PyObject_IsInstance(left, (PyObject*)&LTWPyTokenType) ? (LTWPyToken*)left : (LTWPyToken*)right;
 		if (!PyObject_IsInstance((PyObject*)token, (PyObject*)&LTWPyTokenType)) return NO; // this shouldn't happen!
@@ -99,9 +99,9 @@ static BOOL LTWPyToken_lessorequal(PyObject *left, PyObject *right) {
 		[parser setDocumentText:otherNSString];
 		NSRange otherRange = [parser getNextTokenWithExtraInfo:otherExtraInfo];
 		
-		if (otherRange.location == NSNotFound) return simpleCompare(left, right);
+		if (otherRange.location == NSNotFound) return LTWPyToken_simpleCompare(left, right);
 		
-		NSInteger result = stringRangeCompare(token->string, token->range, otherNSString, otherRange);
+		NSInteger result = LTWPyToken_stringRangeCompare(token->string, token->range, otherNSString, otherRange);
 		if ((PyObject*)token == right) result = -result;
 		if (result != 0) return (result < 0);
 		

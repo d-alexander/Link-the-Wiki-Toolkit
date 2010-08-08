@@ -22,6 +22,6 @@
 -(id)initWithImplementationCode:(NSString*)pythonCode;
 -(void)setImplementationCode:(NSString*)pythonCode;
 -(NSArray*)initialSearches;
--(NSArray*)handleSearchResult:(LTWTokens*)result forSearch:(id/*should be LTWSearch*/)search;
+-(NSArray*)handleSearchResult:(LTWTokens*)result forSearch:(LTWSearch*)search;
 
 @end

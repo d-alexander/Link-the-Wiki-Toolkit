@@ -41,8 +41,11 @@ typedef struct {
 -(void)addTag:(LTWTokenTag*)tag;
 -(void)_addTag:(LTWTokenTag*)tag fromIndex:(NSUInteger)theStartIndex toIndex:(NSUInteger)theEndIndex;
 -(NSSet*)_tagsFromIndex:(NSUInteger)theStartIndex toIndex:(NSUInteger)theEndIndex;
-
+#ifndef __COCOTRON__
 -(void)enumerateTagsWithBlock:(void (^)(NSRange tagTokenRange, LTWTokenTag *tag))block;
+#endif
+-(NSArray*)tagRanges;
+-(NSArray*)tagsWithRange:(NSRange)range;
 -(NSUInteger)count;
 
 -(void)saveToDatabase;

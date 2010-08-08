@@ -99,11 +99,13 @@
 -(NSSet*)_tagsFromIndex:(NSUInteger)theStartIndex toIndex:(NSUInteger)theEndIndex {
     if (!inMemory) [self loadFromDatabase];
 	NSMutableSet *tags = [NSMutableSet set];
-	for (id key in [tokenTags keysOfEntriesPassingTest:^(id key, id obj, BOOL *stop) {
-		return (BOOL)([key rangeValue].location <= theStartIndex && NSMaxRange([key rangeValue]) > theEndIndex);
-	}]) {
-		[tags addObjectsFromArray:[tokenTags objectForKey:key]];
+    
+	for (id key in [tokenTags allKeys]) {
+        if ([key rangeValue].location <= theStartIndex && NSMaxRange([key rangeValue]) > theEndIndex) {
+            [tags addObjectsFromArray:[tokenTags objectForKey:key]];
+        }
 	}
+    
 	return tags;
 }
 
@@ -117,6 +119,7 @@
 	return text;
 }
 
+#ifndef __COCOTRON__
 -(void)enumerateTagsWithBlock:(void (^)(NSRange tagTokenRange, LTWTokenTag *tag))block {
     if (!inMemory) [self loadFromDatabase];
     
@@ -126,6 +129,15 @@
 			block(range, tag);
 		}
 	}];
+}
+#endif
+
+-(NSArray*)tagRanges {
+    return [tokenTags allKeys];
+}
+
+-(NSArray*)tagsWithRange:(NSRange)range {
+    return [tokenTags objectForKey:[NSValue valueWithRange:range]];
 }
 
 -(void)saveToDatabase {
@@ -146,6 +158,9 @@
     
     // NOTE: The insertTag method will somehow have to know when a tag already exists so as not to replace it.
     // (Should tags be immutable once added?)
+    
+    // NOTE: The following #ifndef means that saveToDatabase doesn't yet have an implementation for Cocotron. Fix this before starting to use the database code!
+#ifndef __COCOTRON__
     [self enumerateTagsWithBlock:^(NSRange tagTokenRange, LTWTokenTag *tag) {
         [database insertTag:tag fromTokenIndex:tagTokenRange.location toTokenIndex:NSMaxRange(tagTokenRange)-1 tokensID:databaseID]; 
     }];
@@ -153,6 +168,7 @@
     [tokenExtraInfos enumerateObjectsUsingBlock:^(id obj, NSUInteger index, BOOL *stop) {
         [database insertExtraInfo:obj forTokenIndex:index tokensID:databaseID];
     }];
+#endif
     
     if (NO) { // Remove this if-statement when the LTWDatabase class actually works.
         [text release];

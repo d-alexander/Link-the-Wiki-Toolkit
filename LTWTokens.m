@@ -87,9 +87,18 @@ NSString *LTWTokenTagsChangedNotification = @"LTWTokenTagsChangedNotification";
     }
     return len;
 }
-                                           
+#ifndef __COCOTRON__
 -(void)enumerateTagsWithBlock:(void (^)(NSRange tagTokenRange, LTWTokenTag *tag))block {
 	
+}
+#endif
+
+-(NSArray*)tagRanges {
+    return nil;
+}
+
+-(NSArray*)tagsWithRange:(NSRange)range {
+    return nil;
 }
 
 -(void)saveToDatabase {

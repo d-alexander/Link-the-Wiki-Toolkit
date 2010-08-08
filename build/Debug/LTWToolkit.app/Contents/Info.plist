@@ -27,6 +27,10 @@
 			<string>XML</string>
 		</dict>
 		<dict>
+			<key>CFBundleTypeExtensions</key>
+			<array>
+				<string>xml</string>
+			</array>
 			<key>CFBundleTypeName</key>
 			<string>LTWArticleDocument</string>
 			<key>CFBundleTypeRole</key>
@@ -46,24 +50,43 @@
 	<key>CFBundleExecutable</key>
 	<string>LTWToolkit</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.yourcompany.LTWToolkit</string>
+	<string>nz.ac.otago.inex.LTWToolkit</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>LTWToolkit</string>
+	<string>Link-the-Wiki Toolkit</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>0.1a</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array/>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string></string>
 	<key>LSMinimumSystemVersion</key>
-	<string>10.6</string>
+	<string></string>
+	<key>NSHumanReadableCopyright</key>
+	<string>by David Alexander, Department of Computer Science, University of Otago</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>NSServices</key>
+	<array/>
+	<key>UTExportedTypeDeclarations</key>
+	<array>
+		<dict>
+			<key>UTTypeDescription</key>
+			<string>LTW Article</string>
+			<key>UTTypeIdentifier</key>
+			<string>nz.ac.otago.inex.ltw-toolkit.article</string>
+			<key>UTTypeTagSpecification</key>
+			<dict/>
+		</dict>
+	</array>
+	<key>UTImportedTypeDeclarations</key>
+	<array/>
 </dict>
 </plist>

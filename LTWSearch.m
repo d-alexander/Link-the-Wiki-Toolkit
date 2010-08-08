@@ -81,10 +81,8 @@ invalid_search:
     if (articleURL && ![articleURL isEqual:theArticleURL]) return NO;
     
     NSUInteger lastTokenIndex = 0;
+    BOOL foundApplicableTag = NO;
     
-    // Block variables for the enumerateTagsWithBlock call that occurs later on.
-    __block BOOL blockFoundApplicableTag = NO;
-    __block NSUInteger blockLastTokenIndex = 0;
     
     // Used for BOUNDED searches.
     NSUInteger currentToken = firstTokenIndex;
@@ -134,15 +132,17 @@ invalid_search:
             break;
         case TAG:
             // NOTE: This is terribly inefficient. The LTWTokens interface needs to be improved to fix this.
-            [theTokens enumerateTagsWithBlock:^(NSRange tagTokenRange, LTWTokenTag *tag) {
-                if (tagTokenRange.location == firstTokenIndex) {
-                    blockFoundApplicableTag = YES;
-                    blockLastTokenIndex = NSMaxRange(tagTokenRange)-1;
+            
+            for (NSValue *value in [theTokens tagRanges]) {
+                NSRange tagTokenRange = [value rangeValue];
+                for (LTWTokenTag *tag in [theTokens tagsWithRange:tagTokenRange]) {
+                    if (tagTokenRange.location == firstTokenIndex) {
+                        foundApplicableTag = YES;
+                        lastTokenIndex = NSMaxRange(tagTokenRange)-1;
+                    }
                 }
-            }];
-            if (blockFoundApplicableTag) {
-                lastTokenIndex = blockLastTokenIndex;
-            }else{
+            }
+            if (!foundApplicableTag) {
                 return NO;
             }
             break;

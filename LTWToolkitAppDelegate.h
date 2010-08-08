@@ -8,7 +8,11 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface LTWToolkitAppDelegate : NSObject <NSApplicationDelegate, NSOutlineViewDelegate, NSOutlineViewDataSource> {
+#ifdef __COCOTRON__
+@interface LTWToolkitAppDelegate : NSObject {
+#else
+@interface LTWToolkitAppDelegate : NSObject <NSApplicationDelegate, NSOutlineViewDelegate, NSOutlineViewDataSource> {  
+#endif
     NSWindow *window;
 	IBOutlet NSTextField *articleURLField;
 	NSMutableArray *corpora;

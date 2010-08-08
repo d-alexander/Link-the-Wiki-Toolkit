@@ -32,8 +32,8 @@
 	};
 	29B97313FDCFA39411CA2CEA /* Project object */ = {
 		activeBuildConfigurationName = Debug;
-		activeExecutable = 636D479411FD2C810099153C /* LTWToolkit */;
-		activeTarget = 8D1107260486CEB800E47090 /* LTWToolkit */;
+		activeExecutable = 6347EEC7120E7CB3006FAB5B /* LTWToolkit (Windows) */;
+		activeTarget = 6347EEA5120E7CB3006FAB5B /* LTWToolkit (Windows) */;
 		addToTargets = (
 			8D1107260486CEB800E47090 /* LTWToolkit */,
 		);
@@ -46,6 +46,7 @@
 		executables = (
 			636D479411FD2C810099153C /* LTWToolkit */,
 			6356FAFE120A36820072FF20 /* LTWTeAraSplitter */,
+			6347EEC7120E7CB3006FAB5B /* LTWToolkit (Windows) */,
 		);
 		perUserDictionary = {
 			"PBXConfiguration.PBXBreakpointsDataSource.v1:1CA1AED706398EBD00589147" = {
@@ -130,8 +131,8 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 302347029;
-			PBXWorkspaceStateSaveDate = 302347029;
+			PBXPerProjectTemplateStateSaveDate = 302939879;
+			PBXWorkspaceStateSaveDate = 302939879;
 		};
 		perUserProjectItems = {
 			630388991205606600E2D20A = 630388991205606600E2D20A /* PBXTextBookmark */;
@@ -164,8 +165,8 @@
 			6322422912059EA70023CD84 = 6322422912059EA70023CD84 /* PBXTextBookmark */;
 			6322422A12059EA70023CD84 = 6322422A12059EA70023CD84 /* PBXTextBookmark */;
 			6322423C12059FCF0023CD84 = 6322423C12059FCF0023CD84 /* PBXTextBookmark */;
-			6322423D12059FCF0023CD84 = 6322423D12059FCF0023CD84 /* PBXTextBookmark */;
-			6322423E12059FCF0023CD84 = 6322423E12059FCF0023CD84 /* PBXTextBookmark */;
+			6347EEC9120E7CB5006FAB5B = 6347EEC9120E7CB5006FAB5B /* PBXTextBookmark */;
+			636B162C120E801F00710ACF = 636B162C120E801F00710ACF /* PBXTextBookmark */;
 			636D47E711FD571E0099153C = 636D47E711FD571E0099153C /* PBXTextBookmark */;
 			636D47EB11FD571E0099153C = 636D47EB11FD571E0099153C /* PBXTextBookmark */;
 			636D47ED11FD571E0099153C = 636D47ED11FD571E0099153C /* PBXTextBookmark */;
@@ -651,22 +652,51 @@
 		vrLen = 1132;
 		vrLoc = 148;
 	};
-	6322423D12059FCF0023CD84 /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 636D47A611FD2CC60099153C /* LTWCorpus.m */;
-		rLen = 0;
-		rLoc = 66;
-		rType = 1;
+	6347EEA5120E7CB3006FAB5B /* LTWToolkit (Windows) */ = {
+		activeExec = 0;
+		executables = (
+			6347EEC7120E7CB3006FAB5B /* LTWToolkit (Windows) */,
+		);
 	};
-	6322423E12059FCF0023CD84 /* PBXTextBookmark */ = {
+	6347EEC7120E7CB3006FAB5B /* LTWToolkit (Windows) */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 0;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		dataTipCustomDataFormattersEnabled = 1;
+		dataTipShowTypeColumn = 1;
+		dataTipSortType = 0;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		dylibVariantSuffix = "";
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = "LTWToolkit (Windows)";
+		savedGlobals = {
+		};
+		showTypeColumn = 0;
+		sourceDirectories = (
+		);
+	};
+	6347EEC9120E7CB5006FAB5B /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 636D47A611FD2CC60099153C /* LTWCorpus.m */;
-		name = "LTWCorpus.m: 67";
+		name = "LTWCorpus.m: 70";
 		rLen = 0;
 		rLoc = 2794;
 		rType = 0;
-		vrLen = 1520;
-		vrLoc = 1299;
+		vrLen = 1597;
+		vrLoc = 1270;
 	};
 	6356FAFC120A36820072FF20 /* LTWTeAraSplitter */ = {
 		activeExec = 0;
@@ -700,6 +730,16 @@
 		showTypeColumn = 0;
 		sourceDirectories = (
 		);
+	};
+	636B162C120E801F00710ACF /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 636D47A611FD2CC60099153C /* LTWCorpus.m */;
+		name = "LTWCorpus.m: 70";
+		rLen = 0;
+		rLoc = 2794;
+		rType = 0;
+		vrLen = 643;
+		vrLoc = 0;
 	};
 	636D479411FD2C810099153C /* LTWToolkit */ = {
 		isa = PBXExecutable;
@@ -789,9 +829,9 @@
 	};
 	636D47A611FD2CC60099153C /* LTWCorpus.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {887, 936}}";
-			sepNavSelRange = "{2362, 0}";
-			sepNavVisRange = "{1638, 819}";
+			sepNavIntBoundsRect = "{{0, 0}, {895, 1560}}";
+			sepNavSelRange = "{2794, 0}";
+			sepNavVisRange = "{0, 643}";
 		};
 	};
 	636D47A811FD2CD70099153C /* LTWTokens.h */ = {
