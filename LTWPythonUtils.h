@@ -7,7 +7,11 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <Python/Python.h>
+#ifdef __COCOTRON__
+    #import <Python-Windows/Python.h>
+#else
+    #import <Python/Python.h>
+#endif
 
 #import "LTWTokens.h"
 

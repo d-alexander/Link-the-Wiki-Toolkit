@@ -1,0 +1,16 @@
+//
+// Prefix header for all source files of the 'LTWToolkit-Windows' target in the 'LTWToolkit-Windows' project
+//
+
+#ifndef __COCOTRON__
+    #define __COCOTRON__
+#endif
+
+#ifndef __WINDOWS__
+    #define __WINDOWS__
+#endif
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif
+

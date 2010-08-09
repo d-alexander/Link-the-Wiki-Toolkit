@@ -19,10 +19,17 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>Windows.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>LTWTeAraSplitter</key>
+		<true/>
+		<key>LTWToolkit-Windows.app</key>
 		<true/>
 		<key>LTWToolkit.app</key>
 		<true/>

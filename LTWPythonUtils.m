@@ -10,7 +10,6 @@
 
 #import "LTWParser.h"
 
-
 @implementation LTWPythonUtils
 
 #pragma mark LTWPyToken
@@ -44,7 +43,7 @@ struct LTWPyToken {
 static PyTypeObject LTWPyTokenType; // forward declaration.
 
 static PyObject *LTWPyToken_Length(LTWPyToken *obj, PyObject *args) {
-	return PyInt_FromLong(obj->range.length);
+	return PyLong_FromLong(obj->range.length);
 }
 
 static void LTWPyToken_dealloc(LTWPyToken* self) {
@@ -94,7 +93,9 @@ static BOOL LTWPyToken_lessorequal(PyObject *left, PyObject *right) {
 		
 		PyObject *other = ((PyObject*)token == left) ? right : left;
 		PyObject *otherString = PyObject_Str(other);
-		NSString *otherNSString = [[NSString alloc] initWithUTF8String:PyString_AsString(otherString)];
+        char *otherCString;
+        PyArg_ParseTuple(otherString, "s", &otherCString);
+		NSString *otherNSString = [[NSString alloc] initWithUTF8String:otherCString];
 		
 		[parser setDocumentText:otherNSString];
 		NSRange otherRange = [parser getNextTokenWithExtraInfo:otherExtraInfo];
@@ -230,7 +231,9 @@ static PyMethodDef LTWPyTokenIteratorMethods[] = {
 
 static PyTypeObject LTWPyTokenIteratorType = {
     PyObject_HEAD_INIT(NULL)
+#ifndef __COCOTRON__
     0,
+#endif
     "ltw.TokenIterator",
 	sizeof(LTWPyTokenIterator),
 	0,
@@ -293,12 +296,33 @@ static PyMethodDef LTWPyModuleMethods[] = {
 	{NULL}
 };
 
+#ifdef __COCOTRON__
+static struct PyModuleDef LTWPyModule = {
+    {}, /* m_base */
+    "ltw",
+    "",
+    1, // size -- not sure what to put here since the module doesn't need to store any state
+    (PyMethodDef*)&LTWPyModuleMethods[0],
+    0,  /* m_reload */
+    0,
+    0,
+    0,
+};
+#endif
+
+
 PyMODINIT_FUNC LTWPyModuleInit() {
-	PyObject *module = Py_InitModule3("ltw", LTWPyModuleMethods, "LTW Module");
-	
+#ifdef __COCOTRON__
+    PyObject *module = PyModule_Create(&LTWPyModule);
+#else
+	PyObject *module = Py_InitModule4("ltw", LTWPyModuleMethods, "LTW Module", NULL, PYTHON_API_VERSION);
+#endif
+    
 	LTWPyTokenType = (PyTypeObject){
 		PyObject_HEAD_INIT(NULL)
+#ifndef __COCOTRON__
 		0,
+#endif
 		"ltw.Token",
 		sizeof(LTWPyToken),
 		0,
@@ -325,6 +349,10 @@ PyMODINIT_FUNC LTWPyModuleInit() {
 	PyType_Ready(&LTWPyTokenIteratorType);
 	Py_INCREF(&LTWPyTokenIteratorType);
 	PyModule_AddObject(module, "TokenIterator", (PyObject*)&LTWPyTokenIteratorType);
+    
+#ifdef __COCOTRON__
+    return module;
+#endif
 }
 
 #pragma mark Objective-C
