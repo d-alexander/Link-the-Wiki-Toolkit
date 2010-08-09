@@ -15,6 +15,7 @@
 		632240CD120573E80023CD84 /* LTWTokenTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 632240CC120573E80023CD84 /* LTWTokenTag.m */; };
 		632241C2120598BA0023CD84 /* LTWArticleDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 632241C1120598BA0023CD84 /* LTWArticleDocument.m */; };
 		632241C4120598CD0023CD84 /* LTWArticleDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 632241C3120598CD0023CD84 /* LTWArticleDocument.xib */; };
+		635173DC120FB0D50013BA72 /* TeAra.py in Resources */ = {isa = PBXBuildFile; fileRef = 635173DB120FB0D50013BA72 /* TeAra.py */; };
 		6353EF241206C4180097FFF3 /* LTWSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 6353EF231206C4180097FFF3 /* LTWSearch.m */; };
 		6356FAB112097A9A0072FF20 /* WPTAMapping.py in Resources */ = {isa = PBXBuildFile; fileRef = 6356FAB012097A9A0072FF20 /* WPTAMapping.py */; };
 		6356FAB412097B2F0072FF20 /* Guardian.py in Resources */ = {isa = PBXBuildFile; fileRef = 6356FAB312097B2F0072FF20 /* Guardian.py */; };
@@ -98,6 +99,8 @@
 		632241C3120598CD0023CD84 /* LTWArticleDocument.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LTWArticleDocument.xib; sourceTree = "<group>"; };
 		6329E5EE120E798800DC42F1 /* Untitled-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Untitled-Info.plist"; sourceTree = "<group>"; };
 		6347EEC8120E7CB3006FAB5B /* LTWToolkit-Info copy.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "LTWToolkit-Info copy.plist"; sourceTree = "<group>"; };
+		635173DB120FB0D50013BA72 /* TeAra.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = TeAra.py; sourceTree = "<group>"; };
+		635173DD120FB20B0013BA72 /* Wikipedia.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = Wikipedia.py; sourceTree = "<group>"; };
 		6353EF221206C4180097FFF3 /* LTWSearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTWSearch.h; sourceTree = "<group>"; };
 		6353EF231206C4180097FFF3 /* LTWSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTWSearch.m; sourceTree = "<group>"; };
 		6356FAB012097A9A0072FF20 /* WPTAMapping.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = WPTAMapping.py; sourceTree = "<group>"; };
@@ -221,14 +224,6 @@
 		29B97314FDCFA39411CA2CEA /* LTWToolkit */ = {
 			isa = PBXGroup;
 			children = (
-				63D51D81120EC83D00FA40B8 /* Cocoa.framework */,
-				63D51DD2120ECA6F00FA40B8 /* Cocoa.framework */,
-				63D51DD3120ECA6F00FA40B8 /* Foundation.framework */,
-				6383B13B120F845500703164 /* libpython31.a */,
-				63D51DDC120EFBED00FA40B8 /* libpython3.1.a */,
-				63D51DD4120ECA6F00FA40B8 /* AppKit.framework */,
-				63D51D82120EC83D00FA40B8 /* Foundation.framework */,
-				63D51D83120EC83D00FA40B8 /* AppKit.framework */,
 				6356FAE1120A35C60072FF20 /* Tools */,
 				6356FAAA120979740072FF20 /* Python */,
 				080E96DDFE201D6D7F000001 /* Objective-C */,
@@ -263,7 +258,15 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				63D51DD2120ECA6F00FA40B8 /* Cocoa.framework */,
+				63D51D82120EC83D00FA40B8 /* Foundation.framework */,
+				63D51D83120EC83D00FA40B8 /* AppKit.framework */,
+				63D51D81120EC83D00FA40B8 /* Cocoa.framework */,
 				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
+				6383B13B120F845500703164 /* libpython31.a */,
+				63D51DDC120EFBED00FA40B8 /* libpython3.1.a */,
+				63D51DD3120ECA6F00FA40B8 /* Foundation.framework */,
+				63D51DD4120ECA6F00FA40B8 /* AppKit.framework */,
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
 			);
 			name = Frameworks;
@@ -330,6 +333,8 @@
 		6356FAAE120979B50072FF20 /* Corpora */ = {
 			isa = PBXGroup;
 			children = (
+				635173DD120FB20B0013BA72 /* Wikipedia.py */,
+				635173DB120FB0D50013BA72 /* TeAra.py */,
 				6356FAB312097B2F0072FF20 /* Guardian.py */,
 			);
 			name = Corpora;
@@ -607,6 +612,7 @@
 				632241C4120598CD0023CD84 /* LTWArticleDocument.xib in Resources */,
 				6356FAB112097A9A0072FF20 /* WPTAMapping.py in Resources */,
 				6356FAB412097B2F0072FF20 /* Guardian.py in Resources */,
+				635173DC120FB0D50013BA72 /* TeAra.py in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
