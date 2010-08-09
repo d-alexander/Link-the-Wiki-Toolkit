@@ -32,15 +32,9 @@
 -(void)setImplementationCode:(NSString*)pythonCode {
 	Py_XDECREF(self->implementation);
 	self->implementation = [LTWPythonUtils compilePythonObjectFromCode:pythonCode];
-    
-    // Temp
-    for (NSString *url in [self getArticleURLs]) {
-        [[(LTWToolkitAppDelegate*)[[NSApplication sharedApplication] delegate] articleURLField] setStringValue:url];
-        [(LTWToolkitAppDelegate*)[[NSApplication sharedApplication] delegate] loadArticle:self];
-    }
 }
 
--(NSArray*)getArticleURLs {
+-(NSArray*)articleURLs {
     NSArray *URLs;
     [LTWPythonUtils callMethod:"get_article_urls" onPythonObject:self->implementation withArgument:NULL depythonise:YES returnFormat:"O", &URLs, NULL];
     return URLs;
@@ -59,7 +53,7 @@
     if (!bodyTokens) return nil;
     
 	LTWArticle *article = [[[LTWArticle alloc] initWithBodyTokens:bodyTokens corpus:self URL:[url absoluteString]] autorelease];
-	for (NSString *fieldName in bodyTokens) {
+	for (NSString *fieldName in articleFields) {
         if ([fieldName isEqual:@"body"]) continue;
         [article addTokens:[articleFields objectForKey:fieldName] forField:fieldName];
     }
@@ -87,12 +81,16 @@
 	[curLevel setObject:article forKey:articleTitle];
 	[curLevel setObject:article forKey:[NSNumber numberWithInt:count]];
     
+    /*
 	LTWArticleDocument *doc = [[NSDocumentController sharedDocumentController] makeUntitledDocumentOfType:@"nz.ac.otago.inex.ltw-toolkit.article" error:NULL];
     [[NSDocumentController sharedDocumentController] addDocument:doc];
 	[doc setArticle:article];
     [doc makeWindowControllers];
     [doc showWindows];
-	
+      */  
+    static int numDocsLoaded = 0;
+    if (++numDocsLoaded % 100 == 0) NSLog(@"%d documents loaded.", numDocsLoaded);
+    
 	return article;
 }
 

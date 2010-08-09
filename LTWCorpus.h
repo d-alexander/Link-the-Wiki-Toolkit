@@ -24,7 +24,7 @@
 -(id)initWithImplementationCode:(NSString*)pythonCode;
 -(void)setImplementationCode:(NSString*)pythonCode;
 
--(NSArray*)getArticleURLs;
+-(NSArray*)articleURLs;
 -(LTWArticle*)loadArticleWithURL:(NSURL*)url;
 
 @end

@@ -78,12 +78,16 @@ NSInteger LTWPyToken_stringRangeCompare(NSString *s1, NSRange r1, NSString *s2, 
     [pool drain];
     return (NSInteger)((result == NSOrderedSame) ? 0 : (result == NSOrderedAscending) ? -1 : 1);
 }
-                                        
+
+typedef struct {
+    NSString *string;
+    NSRange range;
+    NSMutableDictionary *extraInfo;
+} LTWStoredStringInfo;
+
 static BOOL LTWPyToken_lessorequal(PyObject *left, PyObject *right) {
 	static LTWParser *parser = nil;
 	if (!parser) parser = [[LTWParser alloc] init];
-	static NSMutableDictionary *otherExtraInfo = nil;
-	if (!otherExtraInfo) otherExtraInfo = [[NSMutableDictionary alloc] init];
 	
 	if (PyObject_IsInstance(left, (PyObject*)&LTWPyTokenType) && PyObject_IsInstance(right, (PyObject*)&LTWPyTokenType)) {
 		return LTWPyToken_simpleCompare(left, right);
@@ -92,13 +96,38 @@ static BOOL LTWPyToken_lessorequal(PyObject *left, PyObject *right) {
 		if (!PyObject_IsInstance((PyObject*)token, (PyObject*)&LTWPyTokenType)) return NO; // this shouldn't happen!
 		
 		PyObject *other = ((PyObject*)token == left) ? right : left;
-		PyObject *otherString = PyObject_Str(other);
-        char *otherCString;
-        PyArg_ParseTuple(otherString, "s", &otherCString);
-		NSString *otherNSString = [[NSString alloc] initWithUTF8String:otherCString];
-		
-		[parser setDocumentText:otherNSString];
-		NSRange otherRange = [parser getNextTokenWithExtraInfo:otherExtraInfo];
+        
+        NSRange otherRange;
+        NSString *otherNSString;
+        NSMutableDictionary *otherExtraInfo;
+        
+        static NSMutableDictionary *existingStrings = nil;
+        if (!existingStrings) existingStrings = [[NSMutableDictionary alloc] init];
+        NSValue *storedStringInfoValue = [existingStrings objectForKey:[NSValue valueWithPointer:other]];
+        LTWStoredStringInfo *storedStringInfo;
+        if (!storedStringInfoValue) {
+            PyObject *otherString = PyObject_Str(other);
+            char *otherCString;
+            PyArg_Parse(otherString, "s", &otherCString);
+            otherNSString = [[NSString alloc] initWithUTF8String:otherCString];
+            // NOTE: Can we free otherCString here?
+            [parser setDocumentText:otherNSString];
+            otherExtraInfo = [NSMutableDictionary dictionary];
+            otherRange = [parser getNextTokenWithExtraInfo:otherExtraInfo];
+            
+            storedStringInfo = malloc(sizeof *storedStringInfo);
+            storedStringInfo->string = otherNSString; // pass ownership
+            storedStringInfo->range = otherRange;
+            storedStringInfo->extraInfo = [otherExtraInfo copy];
+            
+            [existingStrings setObject:[NSValue valueWithPointer:storedStringInfo] forKey:[NSValue valueWithPointer:other]];
+        }else{
+            storedStringInfo = [storedStringInfoValue pointerValue];
+            
+            otherNSString = storedStringInfo->string;
+            otherRange = storedStringInfo->range;
+            otherExtraInfo = storedStringInfo->extraInfo;
+        }
 		
 		if (otherRange.location == NSNotFound) return LTWPyToken_simpleCompare(left, right);
 		
@@ -386,6 +415,7 @@ PyMODINIT_FUNC LTWPyModuleInit() {
 	return result;
 }
 
+
 // Returns true if the depythonised object is an Objective-C object, and therefore doesn't need to be wrapped in NSValue before inserting into a collection.
 // NOTE: If the object is an Objective-C object, an owning reference will not be returned. The caller should either retain it directly or insert it into a collection.
 +(BOOL)depythoniseObject:(PyObject*)object intoPointer:(void**)pointer {
@@ -427,6 +457,14 @@ PyMODINIT_FUNC LTWPyModuleInit() {
         return YES;
     }else if (PySequence_Check(object)) {
         NSUInteger sequenceLength = PySequence_Length(object);
+        
+        if (sequenceLength == 2 && PySequence_GetItem(object, 0) == Py_None && PySequence_GetItem(object, 1) == Py_None) {
+            LTWTokens *tokens = [[LTWTokens alloc] initWithXML:@""];
+            *pointer = tokens;
+            return YES;
+        }
+        
+        
         NSMutableArray *array = [[NSMutableArray alloc] initWithCapacity:sequenceLength];
         for (NSUInteger i=0; i<sequenceLength; i++) {
             PyObject *item = PySequence_GetItem(object, i);

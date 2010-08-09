@@ -4,11 +4,8 @@ import urllib
 class TeAra:
     def get_article_urls(self):
         urls = []
-        print "Starting..."
         for path in glob.iglob("/Users/david/Desktop/te_ara/articles/*.xml"): # need to make this cross-platform using os.path.join()
-            print "file://" + urllib.pathname2url(path)
             urls.append("file://" + urllib.pathname2url(path))
-        print "Finishing..."
         return urls
     
     def load_article(self, tokens):

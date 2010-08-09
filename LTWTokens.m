@@ -106,7 +106,7 @@ NSString *LTWTokenTagsChangedNotification = @"LTWTokenTagsChangedNotification";
 }
 
 -(NSString*)stringValue {
-    NSMutableString *string;
+    NSMutableString *string = [NSMutableString string];
     NSString *text = [self _text];
     for (NSValue *range in self) {
         [string appendFormat:@" %@", [text substringWithRange:[range rangeValue]]];
