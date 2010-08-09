@@ -21,9 +21,9 @@
 -(id)initWithImplementationCode:(NSString*)pythonCode {
 	if (self = [super init]) {
 		if (pythonCode) {
-			self->implementation = [LTWPythonUtils compilePythonObjectFromCode:pythonCode];
 			self->hierarchy = [[NSMutableDictionary alloc] init];
 			self->displayName = @"(corpus)";
+			[self setImplementationCode:pythonCode];
 		}
 	}
 	return self;
@@ -42,7 +42,7 @@
 
 -(NSArray*)getArticleURLs {
     NSArray *URLs;
-    [LTWPythonUtils callMethod:"get_article_urls" onPythonObject:self->implementation withArgument:NULL depythonise:YES returnFormat:"O", &URLs];
+    [LTWPythonUtils callMethod:"get_article_urls" onPythonObject:self->implementation withArgument:NULL depythonise:YES returnFormat:"O", &URLs, NULL];
     return URLs;
 }
 

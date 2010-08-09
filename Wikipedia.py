@@ -34,4 +34,4 @@ class Wikipedia:
         # return value: (path_in_hierarchy, dictionary_of_fields)
         return ([], { "body":(body_start, body_end), "title":(title_start, title_end) })
 
-the_corpus = Guardian()
+the_corpus = Wikipedia()
