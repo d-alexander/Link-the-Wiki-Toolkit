@@ -49,6 +49,9 @@
     
 	[LTWPythonUtils callMethod:"load_article" onPythonObject:self->implementation withArgument:(PyObject*)[LTWPythonUtils pythonIteratorForTokens:articleTokens] depythonise:YES returnFormat:"OO", &pathInHierarchy, &articleFields, NULL];
     
+    [articleTokens saveToDatabase];
+    [articleTokens release];
+    
     LTWTokens *bodyTokens = [articleFields objectForKey:@"body"];
     if (!bodyTokens) return nil;
     

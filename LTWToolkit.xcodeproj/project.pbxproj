@@ -15,6 +15,8 @@
 		632240CD120573E80023CD84 /* LTWTokenTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 632240CC120573E80023CD84 /* LTWTokenTag.m */; };
 		632241C2120598BA0023CD84 /* LTWArticleDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 632241C1120598BA0023CD84 /* LTWArticleDocument.m */; };
 		632241C4120598CD0023CD84 /* LTWArticleDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 632241C3120598CD0023CD84 /* LTWArticleDocument.xib */; };
+		632427DB12102A36004ED16F /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 632427DA12102A36004ED16F /* libsqlite3.dylib */; };
+		632427E812103606004ED16F /* LTWConcreteCopiedTokens.m in Sources */ = {isa = PBXBuildFile; fileRef = 632427E712103606004ED16F /* LTWConcreteCopiedTokens.m */; };
 		635173DC120FB0D50013BA72 /* TeAra.py in Resources */ = {isa = PBXBuildFile; fileRef = 635173DB120FB0D50013BA72 /* TeAra.py */; };
 		6353EF241206C4180097FFF3 /* LTWSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 6353EF231206C4180097FFF3 /* LTWSearch.m */; };
 		6356FAB112097A9A0072FF20 /* WPTAMapping.py in Resources */ = {isa = PBXBuildFile; fileRef = 6356FAB012097A9A0072FF20 /* WPTAMapping.py */; };
@@ -97,6 +99,9 @@
 		632241C0120598BA0023CD84 /* LTWArticleDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTWArticleDocument.h; sourceTree = "<group>"; };
 		632241C1120598BA0023CD84 /* LTWArticleDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTWArticleDocument.m; sourceTree = "<group>"; };
 		632241C3120598CD0023CD84 /* LTWArticleDocument.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LTWArticleDocument.xib; sourceTree = "<group>"; };
+		632427DA12102A36004ED16F /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = /usr/lib/libsqlite3.dylib; sourceTree = "<absolute>"; };
+		632427E612103606004ED16F /* LTWConcreteCopiedTokens.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTWConcreteCopiedTokens.h; sourceTree = "<group>"; };
+		632427E712103606004ED16F /* LTWConcreteCopiedTokens.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTWConcreteCopiedTokens.m; sourceTree = "<group>"; };
 		6329E5EE120E798800DC42F1 /* Untitled-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Untitled-Info.plist"; sourceTree = "<group>"; };
 		6347EEC8120E7CB3006FAB5B /* LTWToolkit-Info copy.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "LTWToolkit-Info copy.plist"; sourceTree = "<group>"; };
 		635173DB120FB0D50013BA72 /* TeAra.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = TeAra.py; sourceTree = "<group>"; };
@@ -176,6 +181,7 @@
 			files = (
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				636D47AE11FD2D140099153C /* Python.framework in Frameworks */,
+				632427DB12102A36004ED16F /* libsqlite3.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -226,6 +232,7 @@
 			children = (
 				6356FAE1120A35C60072FF20 /* Tools */,
 				6356FAAA120979740072FF20 /* Python */,
+				632427DA12102A36004ED16F /* libsqlite3.dylib */,
 				080E96DDFE201D6D7F000001 /* Objective-C */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
@@ -282,6 +289,8 @@
 				631C6A551202A60600E821BD /* LTWConcreteTokens.m */,
 				631C6A571202A61600E821BD /* LTWConcreteSubTokens.h */,
 				631C6A581202A61600E821BD /* LTWConcreteSubTokens.m */,
+				632427E612103606004ED16F /* LTWConcreteCopiedTokens.h */,
+				632427E712103606004ED16F /* LTWConcreteCopiedTokens.m */,
 			);
 			name = "LTWTokens cluster";
 			sourceTree = "<group>";
@@ -703,6 +712,7 @@
 				6364ACE5120653A00042F942 /* LTWTokenProcessor.m in Sources */,
 				6353EF241206C4180097FFF3 /* LTWSearch.m in Sources */,
 				63D99AC912083B8500CEE18B /* LTWDatabase.m in Sources */,
+				632427E812103606004ED16F /* LTWConcreteCopiedTokens.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

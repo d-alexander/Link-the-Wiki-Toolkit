@@ -252,8 +252,6 @@ enum LTWXMLParserCharType {
 		
 		NSRange xml_token = NSMakeRange(start, current-start);
 		
-		NSUInteger tagRemanderStart = current;
-		
 		[self putXMLAttributesInExtraInfo:extraInfo];
 		
 		// Skip over either ">" or "&gt;".
@@ -262,8 +260,8 @@ enum LTWXMLParserCharType {
 		}
 		current++;
 		
-		[extraInfo setObject:[NSNumber numberWithInt:(current - tagRemanderStart)] forKey:@"tagRemainderLength"];
-		[extraInfo setObject:[NSValue valueWithRange:NSMakeRange(realTagStart, current - realTagStart)] forKey:@"tagRange"];
+        [extraInfo setObject:[NSNumber numberWithInt:realTagStart] forKey:@"tagStart"];
+        [extraInfo setObject:[NSNumber numberWithInt:(current - realTagStart)] forKey:@"tagLength"];
         
 		return xml_token;
 	}

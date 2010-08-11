@@ -35,12 +35,15 @@ NSString *LTWTokenTagsChangedNotification = @"LTWTokenTagsChangedNotification";
 	return nil;
 }
 
--(NSRange)rangeOfTokenAtIndex:(NSUInteger)index {
-	return NSMakeRange(NSNotFound, 0);
+-(id)init {
+    if (self = [super init]) {
+        allSubTokens = [[NSMutableArray alloc] init];
+    }
+    return self;
 }
 
--(NSDictionary*)extraInfoForTokenAtIndex:(NSUInteger)index {
-	return nil;
+-(NSRange)rangeOfTokenAtIndex:(NSUInteger)index {
+	return NSMakeRange(NSNotFound, 0);
 }
 
 -(NSUInteger)count {
@@ -48,7 +51,13 @@ NSString *LTWTokenTagsChangedNotification = @"LTWTokenTagsChangedNotification";
 }
 
 -(LTWTokens*)tokensFromIndex:(NSUInteger)startIndex toIndex:(NSUInteger)endIndex propagateTags:(BOOL)shouldPropagateTags {
-	return [[[LTWConcreteSubTokens alloc] initWithTokens:self fromIndex:startIndex toIndex:endIndex propagateTags:shouldPropagateTags] autorelease];
+	LTWConcreteSubTokens *subTokens = [[[LTWConcreteSubTokens alloc] initWithTokens:self fromIndex:startIndex toIndex:endIndex propagateTags:shouldPropagateTags] autorelease];
+    [allSubTokens addObject:[NSValue valueWithNonretainedObject:subTokens]];
+    return subTokens;
+}
+
+-(void)subtokensWillDeallocate:(LTWTokens*)subTokens {
+    [allSubTokens removeObject:[NSValue valueWithNonretainedObject:subTokens]];
 }
 
 -(BOOL)matches:(LTWTokens*)tokens fromIndex:(NSUInteger)theStartIndex toIndex:(NSUInteger)theEndIndex {
@@ -61,12 +70,6 @@ NSString *LTWTokenTagsChangedNotification = @"LTWTokenTagsChangedNotification";
 
 -(void)_addTag:(LTWTokenTag*)tag fromIndex:(NSUInteger)theStartIndex toIndex:(NSUInteger)theEndIndex {
 
-}
-
-// NOTE: Not sure whether this should be public or whether the caller should have to construct a subrange to query.
-// Also, we should probably have a method to return ALL of the tagged ranges in some way that'd be useful to LTWTokensView.
--(NSSet*)_tagsFromIndex:(NSUInteger)theStartIndex toIndex:(NSUInteger)theEndIndex {
-	return nil;
 }
 
 -(void)addTag:(LTWTokenTag*)tag {
@@ -87,19 +90,6 @@ NSString *LTWTokenTagsChangedNotification = @"LTWTokenTagsChangedNotification";
     }
     return len;
 }
-#ifndef __COCOTRON__
--(void)enumerateTagsWithBlock:(void (^)(NSRange tagTokenRange, LTWTokenTag *tag))block {
-	
-}
-#endif
-
--(NSArray*)tagRanges {
-    return nil;
-}
-
--(NSArray*)tagsWithRange:(NSRange)range {
-    return nil;
-}
 
 -(void)saveToDatabase {
     
@@ -112,6 +102,26 @@ NSString *LTWTokenTagsChangedNotification = @"LTWTokenTagsChangedNotification";
         [string appendFormat:@" %@", [text substringWithRange:[range rangeValue]]];
     }
     return string;
+}
+
+-(NSArray*)tagsStartingAtTokenIndex:(NSUInteger)firstToken {
+    return [self _tagsStartingAtTokenIndex:firstToken occurrence:NULL];
+}
+
+-(NSArray*)_tagsStartingAtTokenIndex:(NSUInteger)firstToken occurrence:(LTWTagOccurrence**)occurrence {
+    return nil;
+}
+
+-(LTWTokenTag*)tagWithName:(NSString*)name startingAtTokenIndex:(NSUInteger)firstToken {
+    for (LTWTokenTag *tag in [self tagsStartingAtTokenIndex:firstToken]) {
+        if ([[tag tagName] isEqual:name]) return tag;
+    }
+    return nil;
+}
+
+-(void)dealloc{
+    NSLog(@"%@ deallocated", [self class]); // might not be safe to try to log the description of the object itself!
+    [super dealloc];
 }
 
 

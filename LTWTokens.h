@@ -12,6 +12,14 @@
 
 extern NSString *LTWTokenTagsChangedNotification;
 
+
+typedef struct LTWTagOccurrence_struct {
+    NSUInteger firstToken;
+    NSUInteger lastToken;
+    LTWTokenTag *tag;
+    struct LTWTagOccurrence_struct *next;
+} LTWTagOccurrence;
+
 @class LTWTokens;
 typedef struct {
     LTWTokens *tokens;
@@ -25,14 +33,11 @@ typedef struct {
  A common use-case of subsequences is to specify a range over which a tag is to be added. To do this, the caller acquires the appropriate subsequence (with token-propagation enabled), adds the tag by sending a message to the newly-created subsequence, and then releases the subsequence. The supersequence now has the tag, but only over the appropriate range.
  */
 @interface LTWTokens : NSObject <NSFastEnumeration> {
-    
+    NSMutableArray *allSubTokens; // This is supposed to store all LTWConcreteSubTokens instances that currently have this LTWTokens instance as their superTokens. Before saving ourself to the database, we tell all our subtokens to "become independent" of us, which means that they create their own LTWConcreteTokens instance which holds only the tokens they need, and use it as their superTokens. (NOTE: I'm not sure what we should do if *that* instance needs to be saved to the database!) Ideally, we'd like to be able to tell them later (once we're back in memory) to re-parent themselves to us.
 }
 
 -(id)initWithXML:(NSString*)xml;
 -(NSRange)rangeOfTokenAtIndex:(NSUInteger)index;
--(NSDictionary*)extraInfoForTokenAtIndex:(NSUInteger)index;
-
-
 
 -(LTWTokens*)tokensFromIndex:(NSUInteger)startIndex toIndex:(NSUInteger)endIndex propagateTags:(BOOL)shouldPropagateTags;
 -(BOOL)matches:(LTWTokens*)tokens fromIndex:(NSUInteger)theStartIndex toIndex:(NSUInteger)theEndIndex;
@@ -40,12 +45,14 @@ typedef struct {
 
 -(void)addTag:(LTWTokenTag*)tag;
 -(void)_addTag:(LTWTokenTag*)tag fromIndex:(NSUInteger)theStartIndex toIndex:(NSUInteger)theEndIndex;
--(NSSet*)_tagsFromIndex:(NSUInteger)theStartIndex toIndex:(NSUInteger)theEndIndex;
-#ifndef __COCOTRON__
--(void)enumerateTagsWithBlock:(void (^)(NSRange tagTokenRange, LTWTokenTag *tag))block;
-#endif
--(NSArray*)tagRanges;
--(NSArray*)tagsWithRange:(NSRange)range;
+
+// NOTE: This should really return an array of occurrences, but currently it just returns an array of tags.
+-(NSArray*)tagsStartingAtTokenIndex:(NSUInteger)firstToken;
+-(NSArray*)_tagsStartingAtTokenIndex:(NSUInteger)firstToken occurrence:(LTWTagOccurrence**)occurrence;
+-(LTWTokenTag*)tagWithName:(NSString*)name startingAtTokenIndex:(NSUInteger)firstToken;
+
+-(void)subtokensWillDeallocate:(LTWTokens*)subTokens;
+
 -(NSUInteger)count;
 
 -(void)saveToDatabase;

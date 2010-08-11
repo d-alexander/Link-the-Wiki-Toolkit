@@ -15,8 +15,6 @@
 	NSUInteger startIndex;
 	NSUInteger endIndex;
 	BOOL propagateTags;
-	
-	NSMutableDictionary *tokenTags; // maps NSRanges of token indices onto NSArrays of LTWTokenTags.
 }
 
 -(id)initWithTokens:(LTWTokens*)theTokens fromIndex:(NSUInteger)theStartIndex toIndex:(NSUInteger)theEndIndex propagateTags:(BOOL)shouldPropagateTags;

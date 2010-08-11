@@ -20,6 +20,9 @@
         [fields setObject:theTokens forKey:@"body"];
 		corpus = [theCorpus retain];
         URL = [theURL retain];
+        
+        // TEMP
+        [theTokens saveToDatabase];
 	}
 	return self;
 }
@@ -34,6 +37,12 @@
 
 -(void)addTokens:(LTWTokens*)theTokens forField:(NSString*)fieldName {
     [fields setObject:theTokens forKey:fieldName];
+}
+
+-(void)pageOut {
+    for (NSString *fieldName in fields) {
+        [[fields objectForKey:fieldName] saveToDatabase];
+    }
 }
 
 @end

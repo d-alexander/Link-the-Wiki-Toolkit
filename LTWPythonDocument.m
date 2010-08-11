@@ -31,11 +31,6 @@
 	// NOTE: Ideally, we should recognise if the component is already a corpus, and avoid creating a new LTWCorpus if so.
 	pythonComponent = [[LTWCorpus alloc] initWithImplementationCode:[[codeView textStorage] string]];
 	[[(LTWToolkitAppDelegate*)[NSApp delegate] corpora] addObject:pythonComponent];
-    
-    for (NSString *url in [(LTWCorpus*)pythonComponent articleURLs]) {
-        [[(LTWToolkitAppDelegate*)[[NSApplication sharedApplication] delegate] articleURLField] setStringValue:url];
-        [(LTWToolkitAppDelegate*)[[NSApplication sharedApplication] delegate] loadArticle:self];
-    }
 }
 
 -(IBAction)compileAsTokenProcessor:(id)sender {

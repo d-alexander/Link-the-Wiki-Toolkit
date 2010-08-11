@@ -7,13 +7,17 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <sqlite3.h>
 
 #import "LTWTokenTag.h"
 
 
 @interface LTWDatabase : NSObject {
-
+    sqlite3 *database;
 }
+
+-(void)beginTransaction;
+-(void)commit;
 
 -(NSUInteger)insertTokensWithText:(NSString*)text;
 
@@ -28,14 +32,8 @@
 
 #pragma mark LTWTokenTag*
 
--(void)insertTag:(LTWTokenTag*)tag fromTokenIndex:(NSUInteger)firstTokenIndex toTokenIndex:(NSUInteger)lastTokenIndex tokensID:(NSUInteger)tokensID;
+-(void)insertTag:(LTWTokenTag*)tag withIndex:(NSUInteger)tagIndex fromTokenIndex:(NSUInteger)firstTokenIndex toTokenIndex:(NSUInteger)lastTokenIndex tokensID:(NSUInteger)tokensID;
 
 -(void)loadTag:(LTWTokenTag**)tag fromTokenIndex:(NSUInteger*)firstTokenIndex toTokenIndex:(NSUInteger*)lastTokenIndex tagIndex:(NSUInteger)tagIndex tokensID:(NSUInteger)tokensID;
-
-#pragma mark NSDictionary* (for extraInfo)
-
--(void)insertExtraInfo:(NSDictionary*)extraInfo forTokenIndex:(NSUInteger)tokenIndex tokensID:(NSUInteger)tokensID;
-
--(void)loadExtraInfo:(NSDictionary**)extraInfo forTokenIndex:(NSUInteger)tokenIndex tokensID:(NSUInteger)tokensID;
 
 @end

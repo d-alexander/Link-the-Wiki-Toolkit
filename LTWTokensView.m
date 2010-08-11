@@ -21,11 +21,11 @@
 
 -(void)_addTagsForTokens:(LTWTokens*)theTokens toAttributedString:(NSMutableAttributedString*)attributedString {
     
-    for (NSValue *value in [theTokens tagRanges]) {
-        NSRange tagTokenRange = [value rangeValue];
-        for (LTWTokenTag *tag in [theTokens tagsWithRange:tagTokenRange]) {
-            NSRange firstTokenCharRange = [theTokens rangeOfTokenAtIndex:tagTokenRange.location];
-            NSRange lastTokenCharRange = [theTokens rangeOfTokenAtIndex:NSMaxRange(tagTokenRange)-1];
+    for (NSUInteger tokenIndex = 0; tokenIndex < [theTokens count]; tokenIndex++) {
+        for (LTWTokenTag *tag in [theTokens tagsStartingAtTokenIndex:tokenIndex]) {
+            // NOTE: Should actually be getting the full range of each tag, not just the start token.
+            NSRange firstTokenCharRange = [theTokens rangeOfTokenAtIndex:tokenIndex];
+            NSRange lastTokenCharRange = [theTokens rangeOfTokenAtIndex:tokenIndex];
             NSRange tagCharRange = NSMakeRange(firstTokenCharRange.location, NSMaxRange(lastTokenCharRange) - firstTokenCharRange.location);
             
             [attributedString addAttribute:NSToolTipAttributeName value:[NSString stringWithFormat:@"%@ = %@", [tag tagName], [tag tagValue]] range:tagCharRange];

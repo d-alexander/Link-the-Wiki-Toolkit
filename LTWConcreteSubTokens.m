@@ -7,6 +7,7 @@
 //
 
 #import "LTWConcreteSubTokens.h"
+#import "LTWConcreteCopiedTokens.h"
 
 
 @implementation LTWConcreteSubTokens
@@ -18,7 +19,6 @@
 		endIndex = theEndIndex;
 		
 		propagateTags = shouldPropagateTags;
-		tokenTags = shouldPropagateTags ? nil : [[NSMutableDictionary alloc] init];
 	}
 	return self;
 }
@@ -26,11 +26,6 @@
 -(NSRange)rangeOfTokenAtIndex:(NSUInteger)index {
 	if (startIndex + index > endIndex) return NSMakeRange(NSNotFound, 0);
 	return [superTokens rangeOfTokenAtIndex:startIndex + index];
-}
-
--(NSDictionary*)extraInfoForTokenAtIndex:(NSUInteger)index {
-	if (startIndex + index > endIndex) return nil;
-	return [superTokens extraInfoForTokenAtIndex:startIndex + index];
 }
 
 -(BOOL)matches:(LTWTokens*)theTokens fromIndex:(NSUInteger)theStartIndex toIndex:(NSUInteger)theEndIndex {
@@ -48,14 +43,7 @@
 	if (propagateTags) {
 		[superTokens _addTag:tag fromIndex:startIndex+theStartIndex toIndex:startIndex+theEndIndex];
 	}else{
-		NSMutableArray *tags = [tokenTags objectForKey:[NSValue valueWithRange:NSMakeRange(startIndex, endIndex-startIndex+1)]];
-		if (!tags) {
-			tags = [[NSMutableArray alloc] init];
-			[tokenTags setObject:tags forKey:[NSValue valueWithRange:NSMakeRange(startIndex, endIndex-startIndex+1)]];
-			[tags release];
-		}
-		
-		[tags addObject:tag];
+		// Not yet implemented.
 	}
 }
 
@@ -68,67 +56,8 @@
 	return [superTokens _text];
 }
 
-#ifndef __COCOTRON__
--(void)enumerateTagsWithBlock:(void (^)(NSRange tagTokenRange, LTWTokenTag *tag))block {
-	if (propagateTags) {
-		[superTokens enumerateTagsWithBlock:^(NSRange tagTokenRange, LTWTokenTag *tag) {
-			if (tagTokenRange.location <= endIndex && NSMaxRange(tagTokenRange) > startIndex) {
-				if (tagTokenRange.location < startIndex) {
-					tagTokenRange.length -= (startIndex - tagTokenRange.location);
-					tagTokenRange.location = startIndex;
-				}
-				
-				if (NSMaxRange(tagTokenRange) >= endIndex) {
-					tagTokenRange.length -= (NSMaxRange(tagTokenRange) - endIndex);
-				}
-				
-				// Bring the range into our "token-index-space".
-				tagTokenRange.location -= startIndex;
-				
-				block(tagTokenRange, tag);
-			}
-		}];
-	}else{
-		[tokenTags enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
-			NSRange range = [key rangeValue];
-			for (LTWTokenTag *tag in obj) {
-				block(range, tag);
-			}
-		}];
-	}
-}
-#endif
-
--(NSArray*)tagRanges {
-    NSArray *superTokensRanges = [superTokens tagRanges];
-    NSMutableArray *tagRanges = [NSMutableArray array];
-    
-    for (NSValue *value in superTokensRanges) {
-        NSRange tagTokenRange = [value rangeValue];
-        
-        if (tagTokenRange.location <= endIndex && NSMaxRange(tagTokenRange) > startIndex) {
-            if (tagTokenRange.location < startIndex) {
-                tagTokenRange.length -= (startIndex - tagTokenRange.location);
-                tagTokenRange.location = startIndex;
-            }
-            
-            if (NSMaxRange(tagTokenRange) >= endIndex) {
-                tagTokenRange.length -= (NSMaxRange(tagTokenRange) - endIndex);
-            }
-            
-            // Bring the range into our "token-index-space".
-            tagTokenRange.location -= startIndex;
-            
-            [tagRanges addObject:[NSValue valueWithRange:tagTokenRange]];
-        }
-    }
-    
-    return tagRanges;
-}
-
--(NSArray*)tagsWithRange:(NSRange)range {
-    range.location += startIndex;
-    return [super tagsWithRange:range];
+-(NSArray*)_tagsStartingAtTokenIndex:(NSUInteger)firstToken occurrence:(LTWTagOccurrence**)occurrencePtr {
+    return [superTokens _tagsStartingAtTokenIndex:startIndex+firstToken occurrence:occurrencePtr];
 }
 
 -(void)saveToDatabase {
@@ -136,7 +65,29 @@
 }
 
 -(void)_becomeIndependentOfSuperTokens {
+    LTWTokens *currentAncestor = superTokens;
+    NSUInteger startIndexInAncestor = startIndex, endIndexInAncestor = endIndex;
+    while (![currentAncestor isKindOfClass:[LTWConcreteTokens class]]) {
+        startIndexInAncestor += ((LTWConcreteSubTokens*)currentAncestor)->startIndex;
+        endIndexInAncestor += ((LTWConcreteSubTokens*)currentAncestor)->startIndex;
+        currentAncestor = ((LTWConcreteSubTokens*)currentAncestor)->superTokens;
+    }
     
+    LTWConcreteTokens *root = (LTWConcreteTokens*)currentAncestor;
+    
+    LTWTokens *oldSupertokens = superTokens;
+    superTokens = [[LTWConcreteCopiedTokens alloc] initWithSuperTokens:root forSubTokens:self fromToken:startIndexInAncestor toToken:endIndexInAncestor];
+    [oldSupertokens subtokensWillDeallocate:self];
+    [oldSupertokens release];
+}
+
+-(void)dealloc {
+    if ([allSubTokens count] > 0) {
+        NSLog(@"Tried to dealloc %@ while it still had subtokens!", self);
+    }
+    [superTokens subtokensWillDeallocate:self];
+    [superTokens release];
+    [super dealloc];
 }
 
 @end

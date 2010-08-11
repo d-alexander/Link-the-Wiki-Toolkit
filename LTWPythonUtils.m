@@ -35,7 +35,6 @@ struct LTWPyToken {
 	PyObject_HEAD
 	NSString *string;
     LTWTokens *tokens;
-	NSDictionary *extraInfo;
 	NSRange range;
 	NSUInteger index;
 };
@@ -46,7 +45,9 @@ static PyObject *LTWPyToken_Length(LTWPyToken *obj, PyObject *args) {
 	return PyLong_FromLong(obj->range.length);
 }
 
-static void LTWPyToken_dealloc(LTWPyToken* self) {
+static void LTWPyToken_dealloc(LTWPyToken* obj) {
+    [obj->string release];
+    [obj->tokens release];
     //Py_TYPE(self)->tp_free((PyObject*)self);
 }
 
@@ -54,8 +55,10 @@ static PyObject *LTWPyToken_repr(LTWPyToken *obj) {
 	if (obj->range.location == NSNotFound) return Py_BuildValue("s", "(token not found)");
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	NSRange entireRange = obj->range;
-	NSNumber *tagRemainderLength = [obj->extraInfo objectForKey:@"tagRemainderLength"];
-	if (tagRemainderLength) entireRange.length += [tagRemainderLength intValue];
+    id tagStart = [obj->tokens tagWithName:@"tagStart" startingAtTokenIndex:obj->index];
+	id tagLength = [obj->tokens tagWithName:@"tagLength" startingAtTokenIndex:obj->index];
+	if (tagStart) entireRange.location = [tagStart intValue];
+    if (tagLength) entireRange.length = [tagLength intValue];
 	const char *token_cstr = [[obj->string substringWithRange:entireRange] UTF8String];
 	PyObject *str = Py_BuildValue("s", token_cstr);
 	[pool drain];
@@ -135,9 +138,9 @@ static BOOL LTWPyToken_lessorequal(PyObject *left, PyObject *right) {
 		if ((PyObject*)token == right) result = -result;
 		if (result != 0) return (result < 0);
 		
-		if ([token->extraInfo objectForKey:@"isXML"] != nil && [otherExtraInfo objectForKey:@"isXML"] == nil) {
+		if ([token->tokens tagWithName:@"isXML" startingAtTokenIndex:token->index] != nil && [otherExtraInfo objectForKey:@"isXML"] == nil) {
 			result = -1;
-		}else if ([token->extraInfo objectForKey:@"isXML"] == nil && [otherExtraInfo objectForKey:@"isXML"] != nil) {
+		}else if ([token->tokens tagWithName:@"isXML" startingAtTokenIndex:token->index] == nil && [otherExtraInfo objectForKey:@"isXML"] != nil) {
 			result = 1;
 		}else{
 			result = 0;
@@ -146,11 +149,11 @@ static BOOL LTWPyToken_lessorequal(PyObject *left, PyObject *right) {
 		if (result != 0) return (result < 0);
 		
 		// At this point, left and right are either both XML or both not XML. If not XML, we can't do any further comparison.
-		if ([token->extraInfo objectForKey:@"isXML"] == nil && [otherExtraInfo objectForKey:@"isXML"] == nil) return YES;
+		if ([token->tokens tagWithName:@"isXML" startingAtTokenIndex:token->index] == nil && [otherExtraInfo objectForKey:@"isXML"] == nil) return YES;
 		
-		if ([token->extraInfo objectForKey:@"isEndTag"] == nil && [otherExtraInfo objectForKey:@"isEndTag"] != nil) {
+		if ([token->tokens tagWithName:@"isEndTag" startingAtTokenIndex:token->index] == nil && [otherExtraInfo objectForKey:@"isEndTag"] != nil) {
 			result = -1;
-		}else if ([token->extraInfo objectForKey:@"isEndTag"] != nil && [otherExtraInfo objectForKey:@"isEndTag"] == nil) {
+		}else if ([token->tokens tagWithName:@"isEndTag" startingAtTokenIndex:token->index] != nil && [otherExtraInfo objectForKey:@"isEndTag"] == nil) {
 			result = 1;
 		}else{
 			result = 0;
@@ -159,14 +162,15 @@ static BOOL LTWPyToken_lessorequal(PyObject *left, PyObject *right) {
 		if (result != 0) return (result < 0);
 		
 		// At this point, left and right are either both end-tags or both not end-tags. If both end-tags, we can't do any further comparison so we should say they're equal.
-		if ([token->extraInfo objectForKey:@"isEndTag"] != nil && [otherExtraInfo objectForKey:@"isEndTag"] != nil) return YES;
+		if ([token->tokens tagWithName:@"isEndTag" startingAtTokenIndex:token->index] != nil && [otherExtraInfo objectForKey:@"isEndTag"] != nil) return YES;
 		
 		result = 0;
 		for (NSString *key in otherExtraInfo) {
 			if (![key hasPrefix:@"attribute"]) continue;
 			
 			NSString *otherValue = [otherExtraInfo objectForKey:key];
-			NSString *tokenValue = [token->extraInfo objectForKey:key];
+			NSString *tokenValue = [[token->tokens tagWithName:key startingAtTokenIndex:token->index] tagValue];
+            if (![tokenValue isKindOfClass:[NSString class]]) tokenValue = [(id)tokenValue stringValue];
 			
 			if (tokenValue == nil || ![tokenValue isEqual:otherValue]) {
 				result = -1;
@@ -235,10 +239,9 @@ PyObject *LTWPyTokenIterator_Next(LTWPyTokenIterator *obj) {
 	LTWPyToken *token = PyObject_New(LTWPyToken, &LTWPyTokenType);
 	
 	token->range = [obj->tokens rangeOfTokenAtIndex:obj->currentTokenIndex];
-	token->string = [obj->tokens _text];
-	token->extraInfo = [obj->tokens extraInfoForTokenAtIndex:obj->currentTokenIndex];
+	token->string = [[obj->tokens _text] retain];
 	token->index = obj->currentTokenIndex;
-    token->tokens = obj->tokens;
+    token->tokens = [obj->tokens retain];
 	
 	if (token->range.location == NSNotFound) {
 		PyErr_SetNone(PyExc_StopIteration);
@@ -250,7 +253,8 @@ PyObject *LTWPyTokenIterator_Next(LTWPyTokenIterator *obj) {
 	return (PyObject*)token;
 }
 
-static void LTWPyTokenIterator_dealloc(LTWPyToken* self) {
+static void LTWPyTokenIterator_dealloc(LTWPyToken* obj) {
+    [obj->tokens release];
     //Py_TYPE(self)->tp_free((PyObject*)self);
 }
 
@@ -287,13 +291,11 @@ PyObject* LTWPyModuleTokensFromString(PyObject *self, PyObject *args) {
     LTWPyToken *firstToken = PyObject_New(LTWPyToken, &LTWPyTokenType), *lastToken = PyObject_New(LTWPyToken, &LTWPyTokenType);
     firstToken->range = [tokens rangeOfTokenAtIndex:0];
 	firstToken->string = [tokens _text];
-	firstToken->extraInfo = [tokens extraInfoForTokenAtIndex:0];
 	firstToken->index = 0;
     firstToken->tokens = tokens;
     
     lastToken->range = [tokens rangeOfTokenAtIndex:[tokens count]-1];
 	lastToken->string = [tokens _text];
-	lastToken->extraInfo = [tokens extraInfoForTokenAtIndex:[tokens count]-1];
 	lastToken->index = [tokens count]-1;
     lastToken->tokens = tokens;
     
@@ -313,7 +315,7 @@ PyObject* LTWPyModuleTagRange(PyObject *self, PyObject *args) {
     if (![LTWPythonUtils depythoniseObject:pyTagName intoPointer:(void**)&tagName]) return nil;
     if (![LTWPythonUtils depythoniseObject:pyTagValue intoPointer:(void**)&tagValue]) return nil;
     
-    [tokens addTag:[[LTWTokenTag alloc] initWithName:tagName value:tagValue]];
+    [tokens addTag:[[[LTWTokenTag alloc] initWithName:tagName value:tagValue] autorelease]];
     
     return Py_BuildValue("i", 0);
 }

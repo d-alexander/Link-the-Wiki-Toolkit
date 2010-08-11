@@ -65,16 +65,37 @@
 // Processes all of the currently-loaded articles using all of the currently-loaded token processors.
 // NOTE: This is for testing; article re-processing will hopefully be co-ordinated in a much better way later.
 -(IBAction)processArticles:(id)sender {
+    if ([corpora count] == 0) return;
+    
+    LTWCorpus *corpus = [corpora lastObject];
+    
+
     NSMutableArray *searches = [NSMutableArray array];
     
     for (LTWTokenProcessor *tokenProcessor in tokenProcessors) {
         [searches addObjectsFromArray:[tokenProcessor initialSearches]];
     }
     
+    NSArray *urls = [corpus articleURLs];
+    NSMutableDictionary *loadedArticles = [NSMutableDictionary dictionary];
     BOOL keepGoing;
+    BOOL firstPass = YES;
     do {
         keepGoing = NO;
-        for (LTWArticle *article in articles) {
+        
+        
+        for (NSString *url in urls) {
+            LTWArticle *article;
+            // Get the next article, by loading from URL or database.
+            if (firstPass) {
+                article = [corpus loadArticleWithURL:[NSURL URLWithString:url]];
+                [loadedArticles setObject:article forKey:url];
+            }else{
+                article = [loadedArticles objectForKey:url];
+            }
+            
+            NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+            
             for (NSString *fieldName in [article fieldNames]) {
                 LTWTokens *fieldTokens = [article tokensForField:fieldName];
                 
@@ -89,11 +110,14 @@
                     
                     tokenIndex++;
                 }
+                
+                [fieldTokens saveToDatabase];
             }
             
-            
-
+            [pool drain];
         }
+        
+        firstPass = NO;
     } while (keepGoing);
 }
 

@@ -19,7 +19,7 @@
     for (NSUInteger i=0; i<sequenceLength; i++) {
         PyObject *item = PySequence_GetItem(object, i);
         
-        LTWSearch *search = [[LTWSearch alloc] initWithPythonReturnTuple:item requester:theRequester];
+        LTWSearch *search = [[[LTWSearch alloc] initWithPythonReturnTuple:item requester:theRequester] autorelease];
         [array addObject:search];
     }
     
@@ -82,7 +82,7 @@ invalid_search:
     
     NSUInteger lastTokenIndex = 0;
     BOOL foundApplicableTag = NO;
-    
+    LTWTagOccurrence *occurrence;
     
     // Used for BOUNDED searches.
     NSUInteger currentToken = firstTokenIndex;
@@ -131,17 +131,14 @@ invalid_search:
             
             break;
         case TAG:
-            // NOTE: This is terribly inefficient. The LTWTokens interface needs to be improved to fix this.
-            
-            for (NSValue *value in [theTokens tagRanges]) {
-                NSRange tagTokenRange = [value rangeValue];
-                for (LTWTokenTag *tag in [theTokens tagsWithRange:tagTokenRange]) {
-                    if (tagTokenRange.location == firstTokenIndex) {
-                        foundApplicableTag = YES;
-                        lastTokenIndex = NSMaxRange(tagTokenRange)-1;
-                    }
+            for ([theTokens _tagsStartingAtTokenIndex:firstTokenIndex occurrence:&occurrence]; occurrence != NULL; occurrence = occurrence->next) {
+                if ([[occurrence->tag tagName] isEqual:searchTagName] && (!searchTagValue || [[occurrence->tag tagValue] isEqual:searchTagValue])) {
+                    foundApplicableTag = YES;
+                    lastTokenIndex = occurrence->lastToken;
+                    break;
                 }
             }
+            
             if (!foundApplicableTag) {
                 return NO;
             }

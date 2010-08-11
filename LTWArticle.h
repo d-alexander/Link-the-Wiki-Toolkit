@@ -22,7 +22,7 @@
 -(NSArray*)fieldNames;
 -(LTWTokens*)tokensForField:(NSString*)fieldName;
 -(void)addTokens:(LTWTokens*)theTokens forField:(NSString*)fieldName;
-
+-(void)pageOut;
 
 @property (readonly) LTWCorpus *corpus;
 @property (readonly) NSString *URL;
