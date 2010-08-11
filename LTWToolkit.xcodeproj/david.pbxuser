@@ -132,8 +132,8 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 302958496;
-			PBXWorkspaceStateSaveDate = 302958496;
+			PBXPerProjectTemplateStateSaveDate = 303256132;
+			PBXWorkspaceStateSaveDate = 303256132;
 		};
 		perUserProjectItems = {
 			630388991205606600E2D20A = 630388991205606600E2D20A /* PBXTextBookmark */;
@@ -224,9 +224,9 @@
 	};
 	631C6A581202A61600E821BD /* LTWConcreteSubTokens.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {895, 1261}}";
-			sepNavSelRange = "{2460, 0}";
-			sepNavVisRange = "{1968, 971}";
+			sepNavIntBoundsRect = "{{0, 0}, {895, 1274}}";
+			sepNavSelRange = "{2037, 0}";
+			sepNavVisRange = "{783, 1582}";
 		};
 	};
 	631C6A99120317F700E821BD /* PBXTextBookmark */ = {
@@ -653,6 +653,13 @@
 		vrLen = 1132;
 		vrLoc = 148;
 	};
+	632427E712103606004ED16F /* LTWConcreteCopiedTokens.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {895, 780}}";
+			sepNavSelRange = "{1900, 0}";
+			sepNavVisRange = "{200, 1671}";
+		};
+	};
 	6356FAFC120A36820072FF20 /* LTWTeAraSplitter */ = {
 		activeExec = 0;
 		executables = (
@@ -784,9 +791,9 @@
 	};
 	636D47A611FD2CC60099153C /* LTWCorpus.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {895, 1495}}";
+			sepNavIntBoundsRect = "{{0, 0}, {895, 1521}}";
 			sepNavSelRange = "{2794, 0}";
-			sepNavVisRange = "{0, 642}";
+			sepNavVisRange = "{19, 638}";
 		};
 	};
 	636D47A811FD2CD70099153C /* LTWTokens.h */ = {

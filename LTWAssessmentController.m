@@ -26,6 +26,10 @@
     return [NSArray arrayWithObjects:[[LTWTestAssessmentMode alloc] init], nil];
 }
 
+-(LTWArticle*)articleWithURL:(NSString*)url {
+    return [corpus loadArticleWithURL:[NSURL URLWithString:url]];
+}
+
 - (id)init {
     if ((self = [super init])) {
         corpus = [[LTWCorpus alloc] initWithImplementationCode:[NSString stringWithContentsOfURL:[NSURL URLWithString:@"file:///Users/david/Dropbox/phd/code/LTWToolkit/TeAra.py"]]];

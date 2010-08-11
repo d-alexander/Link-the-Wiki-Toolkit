@@ -64,6 +64,8 @@ static LTWCocoaPlatform *sharedInstance = nil;
             [[[assessmentModeView subviews] lastObject] removeFromSuperview];
         }
         [assessmentModeView addSubview:[assessmentMode mainViewForPlatform:self]];
+    }else if ([role isEqual:@"articleSelector"]) {
+        [[self componentWithRole:@"sourceArticleBody" inView:[assessmentMode mainViewForPlatform:self]] setRepresentedValue:[[[LTWAssessmentController sharedInstance] articleWithURL:newSelection] tokensForField:@"body"]];
     }
 }
 
@@ -138,8 +140,6 @@ static NSMutableDictionary *representedValues = nil; // Stores data that is curr
 }
 
 @end
-
-#pragma mark NSView (RoleStorage)
 
 @implementation NSView (RoleStorage)
 

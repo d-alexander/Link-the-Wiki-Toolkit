@@ -20,9 +20,6 @@
         [fields setObject:theTokens forKey:@"body"];
 		corpus = [theCorpus retain];
         URL = [theURL retain];
-        
-        // TEMP
-        [theTokens saveToDatabase];
 	}
 	return self;
 }

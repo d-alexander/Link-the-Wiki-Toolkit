@@ -19,37 +19,51 @@
     return self;
 }
 
--(void)_addTagsForTokens:(LTWTokens*)theTokens toAttributedString:(NSMutableAttributedString*)attributedString {
+-(void)tokenTagsChanged:(NSNotification*)notification {
+	[[self textStorage] setAttributes:[NSDictionary dictionary] range:NSMakeRange(0, [[self textStorage] length])];
+	[self setTokens:tokens];
+}
+
+-(void)setTokens:(LTWTokens*)theTokens {
+    if (theTokens != tokens) {
+        [tokens release];
+        tokens = [theTokens retain];
+    }
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tokenTagsChanged:) name:LTWTokenTagsChangedNotification object:theTokens];
     
-    for (NSUInteger tokenIndex = 0; tokenIndex < [theTokens count]; tokenIndex++) {
+    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] init];
+    
+    NSAttributedString *space = [[NSAttributedString alloc] initWithString:@" "];
+    
+    /*
+     NOTE: Here we're juggling two sets of character-ranges: the ranges in [theTokens _text] and the ranges in the NSAttributedString that we're creating. This is kind of messy at the moment, and should be cleaned up.
+     */
+    NSUInteger tokenIndex = 0;
+    for (NSValue *rangeValue in theTokens) {
+        NSUInteger tokenStart = [attributedString length];
+        NSRange tokenRange = [rangeValue rangeValue];
+        NSAttributedString *tokenString = [[NSAttributedString alloc] initWithString:[[theTokens _text] substringWithRange:tokenRange]];
+        [attributedString appendAttributedString:tokenString];
+        [attributedString appendAttributedString:space];
+        [tokenString release];
+        
         for (LTWTokenTag *tag in [theTokens tagsStartingAtTokenIndex:tokenIndex]) {
             // NOTE: Should actually be getting the full range of each tag, not just the start token.
-            NSRange firstTokenCharRange = [theTokens rangeOfTokenAtIndex:tokenIndex];
-            NSRange lastTokenCharRange = [theTokens rangeOfTokenAtIndex:tokenIndex];
-            NSRange tagCharRange = NSMakeRange(firstTokenCharRange.location, NSMaxRange(lastTokenCharRange) - firstTokenCharRange.location);
+            NSRange tagCharRange = NSMakeRange(tokenStart, [attributedString length] - tokenStart);
             
             [attributedString addAttribute:NSToolTipAttributeName value:[NSString stringWithFormat:@"%@ = %@", [tag tagName], [tag tagValue]] range:tagCharRange];
             
             [attributedString addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInt:NSUnderlinePatternDot] range:tagCharRange];
         }
+        tokenIndex++;
     }
-}
-
--(void)tokenTagsChanged:(NSNotification*)notification {
-	[[self textStorage] setAttributes:[NSDictionary dictionary] range:NSMakeRange(0, [[self textStorage] length])];
-	[self _addTagsForTokens:tokens toAttributedString:[self textStorage]];
-}
-
--(void)setTokens:(LTWTokens*)theTokens {
-	[tokens release];
-	tokens = [theTokens retain];
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(tokenTagsChanged:) name:LTWTokenTagsChangedNotification object:theTokens];
-	NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:[theTokens _text]];
-	
-	[self _addTagsForTokens:theTokens toAttributedString:attributedString];
+    
+    //[space release];
 	
 	[[self textStorage] setAttributedString:attributedString];
+    
+    [attributedString release];
 }
 
 @end

@@ -19,5 +19,6 @@
 +(LTWAssessmentController*)sharedInstance;
 -(NSArray*)articleURLs;
 -(NSArray*)assessmentModes;
+-(LTWArticle*)articleWithURL:(NSString*)url;
 
 @end
