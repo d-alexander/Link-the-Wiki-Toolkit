@@ -47,6 +47,7 @@
 			636D479411FD2C810099153C /* LTWToolkit */,
 			6356FAFE120A36820072FF20 /* LTWTeAraSplitter */,
 			63D51D92120EC8EA00FA40B8 /* LTWToolkit-Windows */,
+			63BAE8E7121236B7008127C4 /* LTWAssessmentTool */,
 		);
 		perUserDictionary = {
 			"PBXConfiguration.PBXBreakpointsDataSource.v1:1CA1AED706398EBD00589147" = {
@@ -874,6 +875,39 @@
 		name = object.h;
 		path = /Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/Python.framework/Versions/2.6/include/python2.6/object.h;
 		sourceTree = "<absolute>";
+	};
+	63BAE8E5121236B7008127C4 /* LTWAssessmentTool */ = {
+		activeExec = 0;
+		executables = (
+			63BAE8E7121236B7008127C4 /* LTWAssessmentTool */,
+		);
+	};
+	63BAE8E7121236B7008127C4 /* LTWAssessmentTool */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 0;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		dataTipCustomDataFormattersEnabled = 1;
+		dataTipShowTypeColumn = 1;
+		dataTipSortType = 0;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = LTWAssessmentTool;
+		showTypeColumn = 0;
+		sourceDirectories = (
+		);
 	};
 	63C24CCC11FEB621002609A9 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
