@@ -18,8 +18,14 @@
     return sharedInstance;
 }
 
+-(NSDictionary*)articleDictionary {
+    static NSDictionary *articles = nil;
+    if (!articles) articles = [[[LTWDatabase sharedInstance] loadArticles] retain];
+    return articles;
+}
+
 -(NSArray*)articleURLs {
-    return [corpus articleURLs];
+    return [[self articleDictionary] allKeys];
 }
 
 -(NSArray*)assessmentModes {
@@ -27,12 +33,12 @@
 }
 
 -(LTWArticle*)articleWithURL:(NSString*)url {
-    return [corpus loadArticleWithURL:[NSURL URLWithString:url]];
+    return [[self articleDictionary] objectForKey:url];
 }
 
 - (id)init {
     if ((self = [super init])) {
-        corpus = [[LTWCorpus alloc] initWithImplementationCode:[NSString stringWithContentsOfURL:[NSURL URLWithString:@"file:///Users/david/Dropbox/phd/code/LTWToolkit/TeAra.py"]]];
+        corpus = [[LTWCorpus alloc] initWithImplementationCode:[[[NSString alloc] initWithContentsOfURL:[NSURL URLWithString:@"file:///Users/david/Dropbox/phd/code/LTWToolkit/TeAra.py"]] autorelease]];
     }
     
     return self;

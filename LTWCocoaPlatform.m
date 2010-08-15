@@ -10,6 +10,7 @@
 
 #import "LTWAssessmentController.h"
 #import "LTWTokensView.h"
+#import "LTWOverlayTokensView.h"
 #import "LTWTokens.h"
 
 @implementation LTWCocoaPlatform
@@ -45,7 +46,10 @@ static LTWCocoaPlatform *sharedInstance = nil;
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     sharedInstance = self;
     
-    [window setContentView:[self mainView]];
+    [window setContentView:mainView];
+    NSPoint origin = [window frame].origin;
+    NSSize size = [mainView frame].size;
+    [window setFrame:NSMakeRect(origin.x, origin.y, size.width, size.height) display:YES animate:YES];
     
     [[self componentWithRole:@"articleSelector" inView:[self mainView]] setRepresentedValue:[[LTWAssessmentController sharedInstance] articleURLs]];
     
@@ -59,11 +63,22 @@ static LTWCocoaPlatform *sharedInstance = nil;
     NSLog(@"%@'s selection changed to %@", role, newSelection);
     
     if ([role isEqual:@"assessmentModeSelector"]) {
+        // FIXME: Find out why this doesn't work with autoresizing subviews.
         assessmentMode = newSelection;
+        
+        NSSize oldSize = [assessmentModeView frame].size;
+        
         while ([[assessmentModeView subviews] count] > 0) {
             [[[assessmentModeView subviews] lastObject] removeFromSuperview];
         }
+        
         [assessmentModeView addSubview:[assessmentMode mainViewForPlatform:self]];
+        
+        NSSize size = [mainView convertSize:[[assessmentMode mainViewForPlatform:self] frame].size fromView:assessmentModeView];
+
+        NSRect windowFrame = [[mainView window] frame];
+        windowFrame.size = NSMakeSize(windowFrame.size.width + (size.width - oldSize.width), windowFrame.size.height + (size.height - oldSize.height));
+        [[mainView window] setFrame:windowFrame display:YES animate:YES];
     }else if ([role isEqual:@"articleSelector"]) {
         [[self componentWithRole:@"sourceArticleBody" inView:[assessmentMode mainViewForPlatform:self]] setRepresentedValue:[[[LTWAssessmentController sharedInstance] articleWithURL:newSelection] tokensForField:@"body"]];
     }
@@ -96,6 +111,11 @@ static LTWCocoaPlatform *sharedInstance = nil;
     // Clean-up code here.
     
     [super dealloc];
+}
+
+-(void)awakeFromNib {
+    //[articleSelector setValue:@"articleSelector" forKey:@"role"];
+    //[assessmentModeSelector setValue:@"assessmentModeSelector" forKey:@"role"];
 }
 
 #pragma mark NSTableViewDataSource
@@ -187,6 +207,8 @@ static NSMutableDictionary *roles = nil;
     }else if ([value isKindOfClass:[LTWTokens class]]) {
         if ([self isKindOfClass:[LTWTokensView class]]) {
             [(LTWTokensView*)self setTokens:(LTWTokens*)value];
+        }else if ([self isKindOfClass:[LTWOverlayTokensView class]]) {
+            [(LTWOverlayTokensView*)self setTokens:(LTWTokens*)value];
         }
     }else{
         NSLog(@"Unable to represent %@ in %@.", value, self);

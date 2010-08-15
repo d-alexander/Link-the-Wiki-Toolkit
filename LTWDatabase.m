@@ -19,6 +19,12 @@
     return self;
 }
 
++(LTWDatabase*)sharedInstance {
+    static LTWDatabase *instance = nil;
+    if (!instance) instance = [[LTWDatabase alloc] init];
+    return instance;
+}
+
 // TODO: Write a varargs method that can initialise, bind and run arbitrary queries.
 -(void)initialiseStatement:(sqlite3_stmt**)statement withQuery:(const char *)query {
     // If the statement hasn't already been prepared, prepare it. Otherwise, reset the state and bindings.
@@ -57,10 +63,13 @@
     static sqlite3_stmt *statement = NULL;
     [self initialiseStatement:&statement withQuery:"SELECT text, (SELECT COUNT(*) FROM LTWTokens_ranges where tokens_id = id) AS num_tokens, (SELECT COUNT(*) FROM LTWTokens_tags where tokens_id = id) AS num_tags FROM LTWTokens WHERE id = ?;"];
     sqlite3_bind_int(statement, 1, tokensID);
-    sqlite3_step(statement);
-    *text = [[NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 1)] retain];
-    *numTokens = sqlite3_column_int(statement, 2);
-    *numTags = sqlite3_column_int(statement, 3);
+    if (sqlite3_step(statement) != SQLITE_ROW) {
+        NSLog(@"Couldn't find LTWTokens with ID %u in database.", tokensID);
+        return;
+    }
+    *text = [[NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 0)] retain];
+    *numTokens = sqlite3_column_int(statement, 1);
+    *numTags = sqlite3_column_int(statement, 2);
 }
 
 #pragma mark NSRange
@@ -68,6 +77,7 @@
 -(void)insertTokenWithRange:(NSRange)tokenCharRange index:(NSUInteger)tokenIndex tokensID:(NSUInteger)tokensID {
     static sqlite3_stmt *statement = NULL;
     [self initialiseStatement:&statement withQuery:"INSERT INTO LTWTokens_ranges VALUES (?, ?, ?, ?);"];
+    
     sqlite3_bind_int(statement, 1, tokensID);
     sqlite3_bind_int(statement, 2, tokenIndex);
     sqlite3_bind_int(statement, 3, tokenCharRange.location);
@@ -76,14 +86,17 @@
 }
 
 
--(void)loadTokenWithRange:(NSRange*)tokenCharRange index:(NSUInteger)tokenIndex tokensID:(NSUInteger)tokensID {
+-(void)loadTokenWithRanges:(NSArray**)tokenCharRanges tokensID:(NSUInteger)tokensID {
+    *tokenCharRanges = [NSMutableArray array];
     static sqlite3_stmt *statement = NULL;
-    [self initialiseStatement:&statement withQuery:"SELECT range_location, range_length FROM LTWTokens_ranges WHERE tokens_id = ? AND token_index = ?;"];
+    [self initialiseStatement:&statement withQuery:"SELECT range_location, range_length FROM LTWTokens_ranges WHERE tokens_id = ?;"];
     sqlite3_bind_int(statement, 1, tokensID);
-    sqlite3_bind_int(statement, 2, tokenIndex);
-    sqlite3_step(statement);
-    tokenCharRange->location = sqlite3_column_int(statement, 1);
-    tokenCharRange->length = sqlite3_column_int(statement, 2);
+    while (sqlite3_step(statement) == SQLITE_ROW) {
+        NSRange tokenCharRange;
+        tokenCharRange.location = sqlite3_column_int(statement, 0);
+        tokenCharRange.length = sqlite3_column_int(statement, 1);
+        [(NSMutableArray*)*tokenCharRanges addObject:[NSValue valueWithRange:tokenCharRange]];
+    }
 }
 
 #pragma mark LTWTokenTag*
@@ -106,9 +119,59 @@
     sqlite3_bind_int(statement, 1, tokensID);
     sqlite3_bind_int(statement, 2, tagIndex);
     sqlite3_step(statement);
-    *firstTokenIndex = sqlite3_column_int(statement, 1);
-    *lastTokenIndex = sqlite3_column_int(statement, 2);
-    *tag = [[LTWTokenTag alloc] initWithName:[NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 3)] value:[NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 4)]];
+    *firstTokenIndex = sqlite3_column_int(statement, 0);
+    *lastTokenIndex = sqlite3_column_int(statement, 1);
+    *tag = [[LTWTokenTag alloc] initWithName:[NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 2)] value:[NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 3)]];
+}
+
+#pragma mark LTWArticle*
+
+-(NSUInteger)insertArticle:(LTWArticle*)article {
+    static sqlite3_stmt *articleInsertStatement = NULL;
+    [self initialiseStatement:&articleInsertStatement withQuery:"INSERT INTO LTWArticle VALUES (NULL, ?);"];
+    sqlite3_bind_text(articleInsertStatement, 1, [[article URL] UTF8String], -1, SQLITE_STATIC);
+    sqlite3_step(articleInsertStatement);
+    
+    NSUInteger articleID = sqlite3_last_insert_rowid(database);
+    
+    for (NSString *fieldName in [article fieldNames]) {
+        static sqlite3_stmt *fieldInsertStatement = NULL;
+        [self initialiseStatement:&fieldInsertStatement withQuery:"INSERT INTO LTWArticle_fields VALUES (?, ?, ?);"];
+        
+        NSUInteger tokensID = [[article tokensForField:fieldName] databaseID];
+        
+        sqlite3_bind_int(fieldInsertStatement, 1, articleID);
+        sqlite3_bind_text(fieldInsertStatement, 2, [fieldName UTF8String], -1, SQLITE_STATIC);
+        sqlite3_bind_int(fieldInsertStatement, 3, tokensID);
+        sqlite3_step(fieldInsertStatement);
+        
+    }
+    
+    return articleID;
+}
+
+-(NSDictionary*)loadArticles {
+    static sqlite3_stmt *statement = NULL;
+    [self initialiseStatement:&statement withQuery:"SELECT article_id, field_name, tokens_id FROM LTWArticle_fields;"];
+    
+    NSMutableDictionary *articles = [NSMutableDictionary dictionary];
+    
+    while (sqlite3_step(statement) == SQLITE_ROW) {
+        NSUInteger articleID = sqlite3_column_int(statement, 0);
+        NSString *fieldName = [NSString stringWithUTF8String:(char const*)sqlite3_column_text(statement, 1)];
+        NSUInteger tokensID = sqlite3_column_int(statement, 2);
+        
+        LTWArticle *article = [articles objectForKey:[NSNumber numberWithInt:articleID]];
+        if (!article) {
+            article = [[LTWArticle alloc] initWithCorpus:nil URL:@""];
+            [articles setObject:article forKey:[NSNumber numberWithInt:articleID]];
+            [article release];
+        }
+        
+        [article addTokens:[[LTWTokens alloc] initWithDatabase:self tokensID:tokensID] forField:fieldName];
+    }
+    
+    return articles;
 }
 
 

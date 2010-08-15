@@ -12,6 +12,7 @@
 #import "LTWPythonDocument.h"
 #import "LTWTokenProcessor.h"
 #import "LTWSearch.h"
+#import "LTWDatabase.h"
 
 @implementation LTWToolkitAppDelegate
 
@@ -65,60 +66,77 @@
 // Processes all of the currently-loaded articles using all of the currently-loaded token processors.
 // NOTE: This is for testing; article re-processing will hopefully be co-ordinated in a much better way later.
 -(IBAction)processArticles:(id)sender {
-    if ([corpora count] == 0) return;
-    
-    LTWCorpus *corpus = [corpora lastObject];
-    
-
     NSMutableArray *searches = [NSMutableArray array];
     
     for (LTWTokenProcessor *tokenProcessor in tokenProcessors) {
         [searches addObjectsFromArray:[tokenProcessor initialSearches]];
     }
     
-    NSArray *urls = [corpus articleURLs];
     NSMutableDictionary *loadedArticles = [NSMutableDictionary dictionary];
+    
     BOOL keepGoing;
     BOOL firstPass = YES;
+    NSUInteger articlesProcessed = 0;
     do {
         keepGoing = NO;
         
+        for (LTWCorpus *corpus in corpora) {
         
-        for (NSString *url in urls) {
-            LTWArticle *article;
-            // Get the next article, by loading from URL or database.
-            if (firstPass) {
-                article = [corpus loadArticleWithURL:[NSURL URLWithString:url]];
-                [loadedArticles setObject:article forKey:url];
-            }else{
-                article = [loadedArticles objectForKey:url];
-            }
+            NSArray *urls = [corpus articleURLs];
             
-            NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-            
-            for (NSString *fieldName in [article fieldNames]) {
-                LTWTokens *fieldTokens = [article tokensForField:fieldName];
-                
-                NSUInteger tokenIndex = 0;
-                for (NSValue *tokenRangeValue in fieldTokens) {
-                    NSMutableArray *newSearches = [[NSMutableArray alloc] init];
-                    for (LTWSearch *search in searches) {
-                        if ([search tryOnTokenIndex:tokenIndex ofTokens:fieldTokens fieldName:fieldName corpusName:[[article corpus] displayName] articleURL:[article URL] newSearches:newSearches]) keepGoing = YES;
-                    }
-                    [searches addObjectsFromArray:newSearches];
-                    [newSearches release];
-                    
-                    tokenIndex++;
+            for (NSString *url in urls) {
+                LTWArticle *article;
+                // Get the next article, by loading from URL or database.
+                if (firstPass) {
+                    article = [corpus loadArticleWithURL:[NSURL URLWithString:url]];
+                    [loadedArticles setObject:article forKey:url];
+                }else{
+                    article = [loadedArticles objectForKey:url];
                 }
                 
-                [fieldTokens saveToDatabase];
+                NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+                
+                for (NSString *fieldName in [article fieldNames]) {
+                    LTWTokens *fieldTokens = [article tokensForField:fieldName];
+                    
+                    NSUInteger tokenIndex = 0;
+                    for (NSValue *tokenRangeValue in fieldTokens) {
+                        NSMutableArray *newSearches = [[NSMutableArray alloc] init];
+                        for (LTWSearch *search in searches) {
+                            if ([search tryOnTokenIndex:tokenIndex ofTokens:fieldTokens fieldName:fieldName corpusName:[[article corpus] displayName] articleURL:[article URL] newSearches:newSearches]) keepGoing = YES;
+                        }
+                        
+                        // TEMP
+                        if ([newSearches count] > 0) {
+                            NSLog(@"New searches: %@", newSearches);
+                        }
+                        
+                        [searches addObjectsFromArray:newSearches];
+                        [newSearches release];
+                        
+                        tokenIndex++;
+                    }
+                    
+                    [fieldTokens saveToDatabase];
+                }
+                
+                [pool drain];
+                
+                articlesProcessed++;
+                if (articlesProcessed > 500) break;
             }
-            
-            [pool drain];
         }
         
         firstPass = NO;
     } while (keepGoing);
+    
+    [[LTWDatabase sharedInstance] beginTransaction];
+    
+    for (LTWArticle *articleURL in loadedArticles) {
+        [[LTWDatabase sharedInstance] insertArticle:[loadedArticles objectForKey:articleURL]];
+    }
+    
+    [[LTWDatabase sharedInstance] commit];
 }
 
 - (NSInteger)outlineView:(NSOutlineView*)outlineView numberOfChildrenOfItem:(id)item {

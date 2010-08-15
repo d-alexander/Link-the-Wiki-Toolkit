@@ -41,16 +41,6 @@
 		isa = PBXBookmark;
 		fRef = 636D47B311FD2EAB0099153C /* LTWPythonUtils.m */;
 	};
-	0731BED511FE5542007BF44D /* PBXTextBookmark */ = {
-		isa = PBXTextBookmark;
-		fRef = 636D47B311FD2EAB0099153C /* LTWPythonUtils.m */;
-		name = "LTWPythonUtils.m: 50";
-		rLen = 0;
-		rLoc = 1323;
-		rType = 0;
-		vrLen = 711;
-		vrLoc = 86;
-	};
 	0731BEDB11FE5542007BF44D /* Source Control */ = {
 		isa = PBXSourceControlManager;
 		fallbackIsa = XCSourceControlManager;
@@ -65,14 +55,14 @@
 		isa = PBXCodeSenseManager;
 		indexTemplatePath = "";
 	};
-	0731BEDD11FE56B4007BF44D /* PBXTextBookmark */ = {
+	0731BEDF11FE58CF007BF44D /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 636D47B311FD2EAB0099153C /* LTWPythonUtils.m */;
-		name = "LTWPythonUtils.m: 20";
+		name = "LTWPythonUtils.m: 11";
 		rLen = 0;
-		rLoc = 402;
+		rLoc = 177;
 		rType = 0;
-		vrLen = 884;
+		vrLen = 982;
 		vrLoc = 39;
 	};
 	29B97313FDCFA39411CA2CEA /* Project object */ = {
@@ -112,8 +102,7 @@
 		perUserProjectItems = {
 			0731BED311FE5542007BF44D /* PBXTextBookmark */ = 0731BED311FE5542007BF44D /* PBXTextBookmark */;
 			0731BED411FE5542007BF44D /* PBXBookmark */ = 0731BED411FE5542007BF44D /* PBXBookmark */;
-			0731BED511FE5542007BF44D /* PBXTextBookmark */ = 0731BED511FE5542007BF44D /* PBXTextBookmark */;
-			0731BEDD11FE56B4007BF44D /* PBXTextBookmark */ = 0731BEDD11FE56B4007BF44D /* PBXTextBookmark */;
+			0731BEDF11FE58CF007BF44D /* PBXTextBookmark */ = 0731BEDF11FE58CF007BF44D /* PBXTextBookmark */;
 		};
 		sourceControlManager = 0731BEDB11FE5542007BF44D /* Source Control */;
 		userBuildSettings = {
@@ -128,9 +117,9 @@
 	};
 	636D47B311FD2EAB0099153C /* LTWPythonUtils.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {923, 2223}}";
-			sepNavSelRange = "{402, 0}";
-			sepNavVisRange = "{39, 884}";
+			sepNavIntBoundsRect = "{{0, 0}, {923, 2171}}";
+			sepNavSelRange = "{177, 0}";
+			sepNavVisRange = "{39, 982}";
 		};
 	};
 	8D1107260486CEB800E47090 /* LTWToolkit */ = {

@@ -2,9 +2,12 @@ import glob
 import urllib
 
 class TeAra:
+    def get_corpus_name(self):
+        return "teara"
+
     def get_article_urls(self):
         urls = []
-        for path in glob.iglob("/Users/david/Desktop/te_ara/articles/*.xml"): # need to make this cross-platform using os.path.join()
+        for path in glob.glob('/Users/david/Desktop/te_ara/articles/*.xml'): # need to make this cross-platform using os.path.join()
             urls.append("file://" + urllib.pathname2url(path))
         return urls
     

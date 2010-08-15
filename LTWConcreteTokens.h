@@ -15,7 +15,7 @@
 @interface LTWConcreteTokens : LTWTokens {
 	NSString *text;
 	NSMutableArray *tokens;
-    NSPointerArray *tagOccurrences;
+    NSMutableArray *tagOccurrences; // Can't use NSPointerArray (Cocotron doesn't support it) so using NSArray of +[NSValue valueWithPointer:] instead.
     
     LTWDatabase *database;
     NSUInteger databaseID;

@@ -22,7 +22,8 @@
 	if (self = [super init]) {
 		if (pythonCode) {
 			self->hierarchy = [[NSMutableDictionary alloc] init];
-			self->displayName = @"(corpus)";
+			self->displayName = @"(unknown)";
+            self->articleURLs = nil;
 			[self setImplementationCode:pythonCode];
 		}
 	}
@@ -32,16 +33,17 @@
 -(void)setImplementationCode:(NSString*)pythonCode {
 	Py_XDECREF(self->implementation);
 	self->implementation = [LTWPythonUtils compilePythonObjectFromCode:pythonCode];
+    
+    [LTWPythonUtils callMethod:"get_corpus_name" onPythonObject:implementation withArgument:nil depythonise:YES returnFormat:"O",&displayName, NULL];
 }
 
 -(NSArray*)articleURLs {
-    NSArray *URLs;
-    [LTWPythonUtils callMethod:"get_article_urls" onPythonObject:self->implementation withArgument:NULL depythonise:YES returnFormat:"O", &URLs, NULL];
-    return URLs;
+    if (!articleURLs) [LTWPythonUtils callMethod:"get_article_urls" onPythonObject:self->implementation withArgument:nil depythonise:YES returnFormat:"O", &articleURLs, NULL];
+    return articleURLs;
 }
 
 -(LTWArticle*)loadArticleWithURL:(NSURL*)url {
-	NSString *xml = [NSString stringWithContentsOfURL:url];
+	NSString *xml = [[[NSString alloc] initWithContentsOfURL:url] autorelease];
 	LTWTokens *articleTokens = [[LTWTokens alloc] initWithXML:xml];
     
     NSArray *pathInHierarchy = nil;
@@ -55,9 +57,8 @@
     LTWTokens *bodyTokens = [articleFields objectForKey:@"body"];
     if (!bodyTokens) return nil;
     
-	LTWArticle *article = [[[LTWArticle alloc] initWithBodyTokens:bodyTokens corpus:self URL:[url absoluteString]] autorelease];
+	LTWArticle *article = [[[LTWArticle alloc] initWithCorpus:self URL:[url absoluteString]] autorelease];
 	for (NSString *fieldName in articleFields) {
-        if ([fieldName isEqual:@"body"]) continue;
         [article addTokens:[articleFields objectForKey:fieldName] forField:fieldName];
     }
     

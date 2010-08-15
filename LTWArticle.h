@@ -11,6 +11,7 @@
 #import "LTWTokens.h"
 
 @class LTWCorpus;
+@class LTWTokens;
 
 @interface LTWArticle : NSObject {
 	NSMutableDictionary *fields;
@@ -18,7 +19,7 @@
     NSString *URL;
 }
 
--(id)initWithBodyTokens:(LTWTokens*)theTokens corpus:(LTWCorpus*)theCorpus URL:(NSString*)theURL;
+-(id)initWithCorpus:(LTWCorpus*)theCorpus URL:(NSString*)theURL;
 -(NSArray*)fieldNames;
 -(LTWTokens*)tokensForField:(NSString*)fieldName;
 -(void)addTokens:(LTWTokens*)theTokens forField:(NSString*)fieldName;

@@ -260,7 +260,7 @@ enum LTWXMLParserCharType {
 		}
 		current++;
 		
-        [extraInfo setObject:[NSNumber numberWithInt:realTagStart] forKey:@"tagStart"];
+        [extraInfo setObject:[NSNumber numberWithInt:xml_token.location-realTagStart] forKey:@"tagStartOffset"];
         [extraInfo setObject:[NSNumber numberWithInt:(current - realTagStart)] forKey:@"tagLength"];
         
 		return xml_token;

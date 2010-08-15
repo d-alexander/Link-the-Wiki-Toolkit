@@ -1,4 +1,7 @@
 class Guardian:
+    def get_corpus_name(self):
+        return "guardian"
+    
     def get_article_urls(self):
         return ["http://www.guardian.co.uk/world/2010/jul/11/srebrenica-massacre-anniversary-killings"]
     

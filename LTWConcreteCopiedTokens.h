@@ -12,6 +12,7 @@
 
 @interface LTWConcreteCopiedTokens : LTWConcreteTokens {
     NSUInteger storedStringOffset; // how far into the "real" string (the one that's been paged out to the database) does our string start?
+    NSUInteger firstCopiedToken;
     NSUInteger numCopiedTokens;
 }
 

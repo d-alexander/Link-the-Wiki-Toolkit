@@ -45,16 +45,9 @@
 }
 
 -(NSArray*)handleSearchResult:(LTWTokens*)result forSearch:(LTWSearch*)search {
-    PyObject *arg = [LTWPythonUtils pythonTupleWithObjects:result, search, nil];
+    // NOT CURRENTLY IN USE. See LTWSearch.
     
-    PyObject *obj = NULL;
-    [LTWPythonUtils callMethod:"handle_search_result" onPythonObject:self->implementation withArgument:arg depythonise:NO returnFormat:"O", &obj];
-    
-    NSArray *newSearches = [LTWSearch parsePythonSearchArray:obj requester:self];
-    
-    // NOTE: Should also handle any newly-created tags here.
-    
-    return newSearches;
+    return nil;
 }
 
 @end

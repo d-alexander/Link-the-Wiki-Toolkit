@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>LTWAssessmentTool-Windows.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>4</integer>
+		</dict>
 		<key>LTWAssessmentTool.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -37,6 +42,8 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>LTWAssessmentTool-Windows.app</key>
+		<true/>
 		<key>LTWAssessmentTool.app</key>
 		<true/>
 		<key>LTWTeAraSplitter</key>

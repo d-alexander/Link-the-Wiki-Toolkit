@@ -1,6 +1,15 @@
+#import glob
+#import urllib
+
 class Wikipedia:
+    def get_corpus_name(self):
+        return "wikipedia"
+    
     def get_article_urls(self):
-        return []
+        urls = []
+        for path in glob.glob('/Users/david/Desktop/wp2007/part-0/*.xml'): # need to make this cross-platform using os.path.join()
+            urls.append("file://" + urllib.pathname2url(path))
+            return urls
     
     def load_article(self, tokens):
 

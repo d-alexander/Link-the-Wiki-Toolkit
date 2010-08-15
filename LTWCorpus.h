@@ -16,6 +16,7 @@
 	PyObject *implementation;
 	NSMutableDictionary *hierarchy; // should this be per-corpus or global?
 	NSString *displayName;
+    NSArray *articleURLs;
 }
 
 @property (readonly) NSString *displayName;

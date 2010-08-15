@@ -14,6 +14,7 @@
 -(id)initWithSuperTokens:(LTWConcreteTokens*)superTokens forSubTokens:(LTWTokens*)subTokens fromToken:(NSUInteger)startIndex toToken:(NSUInteger)endIndex {
     if (self = [super init]) { // note: not initWithXML:
         
+        firstCopiedToken = startIndex;
         numCopiedTokens = endIndex - startIndex + 1;
         
         // NOTE: Should really copy rather than retaining
@@ -23,10 +24,21 @@
         [allSubTokens addObject:[NSValue valueWithNonretainedObject:subTokens]];
         
         NSUInteger rangeStart = [superTokens rangeOfTokenAtIndex:startIndex].location;
-        NSUInteger rangeEnd = NSMaxRange([superTokens rangeOfTokenAtIndex:endIndex]);
+        NSRange lastTokenRange = [superTokens rangeOfTokenAtIndex:endIndex];
         
-        // TODO: EXPAND RANGE TO COVER XML TAGS. (Use the tagRange tag.)
-        // (Note: tagRange will be stored as a string!)
+        for (LTWTokenTag *tag in [superTokens tagsStartingAtTokenIndex:startIndex]) {
+            if ([[tag tagName] isEqual:@"tagStartOffset"]) rangeStart -= [[tag tagValue] intValue];
+        }
+        for (LTWTokenTag *tag in [superTokens tagsStartingAtTokenIndex:endIndex]) {
+            if ([[tag tagName] isEqual:@"tagStartOffset"]) lastTokenRange.location -= [[tag tagValue] intValue];
+            if ([[tag tagName] isEqual:@"tagLength"]) lastTokenRange.length = [[tag tagValue] intValue];
+        }
+        
+        NSUInteger rangeEnd = NSMaxRange(lastTokenRange);
+        
+        if ((NSInteger)rangeStart < 0) {
+            NSLog(@"Trying to create token with negative range-start!");
+        }
         
         text = [[superTokens->text substringWithRange:NSMakeRange(rangeStart, rangeEnd-rangeStart)] retain];
         
@@ -35,8 +47,7 @@
         inMemory = YES;
         inDatabase = NO;
         
-        // NOTE: This isn't strictly required YET since the database will never get refcount 0 anyway, but it really should be fixed.
-        //database = [sharedDatabase retain];
+        database = [[LTWDatabase sharedInstance] retain];
         databaseID = 0;
     }
     return self;
@@ -44,9 +55,15 @@
 
 -(NSRange)rangeOfTokenAtIndex:(NSUInteger)index {
     if (!inMemory) [self loadFromDatabase];
+    index += firstCopiedToken;
 	if (index >= [tokens count]) return NSMakeRange(NSNotFound, 0);
     NSRange range = [[tokens objectAtIndex:index] rangeValue];
 	range.location -= storedStringOffset;
+    
+    if ((NSInteger)range.location < 0) {
+        NSLog(@"Trying to return token with negative range-start!");
+    }
+    
     return range;
 }
 

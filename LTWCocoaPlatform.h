@@ -10,11 +10,19 @@
 #import "LTWGUIPlatform.h"
 #import "LTWAssessmentMode.h"
 
+#ifdef __COCOTRON__
+@interface LTWCocoaPlatform : NSObject <LTWGUIPlatform> {
+#else
 @interface LTWCocoaPlatform : NSObject <LTWGUIPlatform, NSApplicationDelegate, NSTableViewDataSource, NSTableViewDelegate> {
+#endif
     IBOutlet NSWindow *window;
     IBOutlet NSView *mainView;
     id <LTWAssessmentMode> assessmentMode;
     IBOutlet NSView *assessmentModeView;
+    
+    // Role outlets:
+    IBOutlet NSView *assessmentModeSelector;
+    IBOutlet NSView *articleSelector;
 }
 
 @property (assign) NSWindow *window;

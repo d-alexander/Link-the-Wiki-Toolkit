@@ -50,6 +50,11 @@ c000000004BAC505B0000000000040984
 t1269583963
 s264580
 
+N/Developer/SDKs/MacOSX10.6.sdk/usr/include/sqlite3.h
+c000000004A11A408000000000003D86F
+t1242670088
+s252015
+
 N/System/Library/Frameworks/Cocoa.framework/Cocoa
 c000000004A1F2D63000000000000A5E0
 t1243557219
@@ -71,16 +76,16 @@ t1281265599
 s2177
 
 N/Users/david/Dropbox/phd/code/LTWToolkit/LTWArticle.h
-c000000004C5E8FBF0000000000000284
-t1281265599
-s644
+c000000004C611EEB0000000000000293
+t1281433323
+s659
 i<Cocoa/Cocoa.h>
 i"LTWTokens.h"
 
 N/Users/david/Dropbox/phd/code/LTWToolkit/LTWArticle.m
-c000000004C5E8FBF0000000000000341
-t1281265599
-s833
+c000000004C61215500000000000003FC
+t1281433941
+s1020
 i"LTWArticle.h"
 
 N/Users/david/Dropbox/phd/code/LTWToolkit/LTWArticleDocument.h
@@ -102,63 +107,73 @@ c000000004C5E8FBF0000000000004871
 t1281265599
 s18545
 
+N/Users/david/Dropbox/phd/code/LTWToolkit/LTWConcreteCopiedTokens.h
+c000000004C6135A90000000000000263
+t1281439145
+s611
+i<Cocoa/Cocoa.h>
+i"LTWConcreteTokens.h"
+
 N/Users/david/Dropbox/phd/code/LTWToolkit/LTWConcreteSubTokens.h
-c000000004C5E8FBF0000000000000282
-t1281265599
-s642
+c000000004C60FD37000000000000021E
+t1281424695
+s542
 i<Cocoa/Cocoa.h>
 i"LTWTokens.h"
 
 N/Users/david/Dropbox/phd/code/LTWToolkit/LTWConcreteSubTokens.m
-c000000004C5E8FBF0000000000001160
-t1281265599
-s4448
+c000000004C6141510000000000000C3E
+t1281442129
+s3134
 i"LTWConcreteSubTokens.h"
+i"LTWConcreteCopiedTokens.h"
 
 N/Users/david/Dropbox/phd/code/LTWToolkit/LTWConcreteTokens.h
-c000000004C5E8FBF00000000000005EC
-t1281265599
-s1516
+c000000004C6318B600000000000001F6
+t1281562806
+s502
 i<Cocoa/Cocoa.h>
 i"LTWTokens.h"
 i"LTWDatabase.h"
 
 N/Users/david/Dropbox/phd/code/LTWToolkit/LTWConcreteTokens.m
-c000000004C5E8FBF000000000000206E
-t1281265599
-s8302
+c000000004C613D55000000000000235F
+t1281441109
+s9055
 i"LTWConcreteTokens.h"
 i"LTWParser.h"
 i"LTWConcreteSubTokens.h"
+i"LTWConcreteCopiedTokens.h"
 
 N/Users/david/Dropbox/phd/code/LTWToolkit/LTWCorpus.h
-c000000004C5E8FBF00000000000002AE
-t1281265599
-s686
+c000000004C5FA41D00000000000002AB
+t1281336349
+s683
 i<Cocoa/Cocoa.h>
 i"LTWPythonUtils.h"
 i"LTWArticle.h"
 
 N/Users/david/Dropbox/phd/code/LTWToolkit/LTWCorpus.m
-c000000004C5E8FBF0000000000000F0F
-t1281265599
-s3855
+c000000004C61313E0000000000000E9E
+t1281438014
+s3742
 i"LTWCorpus.h"
 i"LTWTokens.h"
 i"LTWArticleDocument.h"
 i"LTWToolkitAppDelegate.h"
 
 N/Users/david/Dropbox/phd/code/LTWToolkit/LTWDatabase.h
-c000000004C5E8FBF000000000000052F
-t1281265599
-s1327
+c000000004C60F3CB000000000000048C
+t1281422283
+s1164
 i<Foundation/Foundation.h>
+i<sqlite3.h>
 i"LTWTokenTag.h"
 
 N/Users/david/Dropbox/phd/code/LTWToolkit/LTWDatabase.m
-c000000004C5E8FBF000000000000068D
-t1281265599
-s1677
+c000000004C60F3D700000000000013AE
+t1281422295
+s5038
 i"LTWDatabase.h"
 
 N/Users/david/Dropbox/phd/code/LTWToolkit/LTWParser.h
@@ -168,9 +183,9 @@ s811
 i<Cocoa/Cocoa.h>
 
 N/Users/david/Dropbox/phd/code/LTWToolkit/LTWParser.m
-c000000004C5E8FBF0000000000002C17
-t1281265599
-s11287
+c000000004C6100B20000000000002BC5
+t1281425586
+s11205
 i"LTWParser.h"
 
 N/Users/david/Dropbox/phd/code/LTWToolkit/LTWPythonDocument.h
@@ -181,9 +196,9 @@ i<Cocoa/Cocoa.h>
 i"LTWPythonUtils.h"
 
 N/Users/david/Dropbox/phd/code/LTWToolkit/LTWPythonDocument.m
-c000000004C5E8FBF0000000000000CED
-t1281265599
-s3309
+c000000004C61221D0000000000000CDB
+t1281434141
+s3291
 i"LTWPythonDocument.h"
 i"LTWToolkitAppDelegate.h"
 i"LTWCorpus.h"
@@ -195,17 +210,18 @@ t1281265599
 s26456
 
 N/Users/david/Dropbox/phd/code/LTWToolkit/LTWPythonUtils.h
-c000000004C5E8FBF0000000000000400
-t1281265599
-s1024
+c000000004C5F4F47000000000000044B
+t1281314631
+s1099
 i<Cocoa/Cocoa.h>
+i<Python-Windows/Python.h>
 i<Python/Python.h>
 i"LTWTokens.h"
 
 N/Users/david/Dropbox/phd/code/LTWToolkit/LTWPythonUtils.m
-c000000004C5E8FBF0000000000004BCD
-t1281265599
-s19405
+c000000004C613175000000000000553B
+t1281438069
+s21819
 i"LTWPythonUtils.h"
 i"LTWParser.h"
 
@@ -232,9 +248,9 @@ i"LTWTokens.h"
 i"LTWPythonUtils.h"
 
 N/Users/david/Dropbox/phd/code/LTWToolkit/LTWSearch.m
-c000000004C5E8FBF0000000000001E86
-t1281265599
-s7814
+c000000004C61321C0000000000001E53
+t1281438236
+s7763
 i"LTWSearch.h"
 
 N/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokenProcessor.h
@@ -277,16 +293,16 @@ s208
 i"LTWTokenType.h"
 
 N/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.h
-c000000004C5E8FBF0000000000000879
-t1281265599
-s2169
+c000000004C6118020000000000000BDB
+t1281431554
+s3035
 i<Cocoa/Cocoa.h>
 i"LTWTokenTag.h"
 
 N/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokens.m
-c000000004C5E8FBF0000000000000B96
-t1281265599
-s2966
+c000000004C631AF80000000000000D46
+t1281563384
+s3398
 i"LTWTokens.h"
 i"LTWConcreteTokens.h"
 i"LTWConcreteSubTokens.h"
@@ -299,9 +315,9 @@ i<Cocoa/Cocoa.h>
 i"LTWTokens.h"
 
 N/Users/david/Dropbox/phd/code/LTWToolkit/LTWTokensView.m
-c000000004C5E8FBF0000000000000871
-t1281265599
-s2161
+c000000004C61033000000000000008AE
+t1281426224
+s2222
 i"LTWTokensView.h"
 
 N/Users/david/Dropbox/phd/code/LTWToolkit/LTWToolkitAppDelegate.h
@@ -311,9 +327,9 @@ s886
 i<Cocoa/Cocoa.h>
 
 N/Users/david/Dropbox/phd/code/LTWToolkit/LTWToolkitAppDelegate.m
-c000000004C5E8FBF000000000000143D
-t1281265599
-s5181
+c000000004C6141C30000000000001774
+t1281442243
+s6004
 i"LTWToolkitAppDelegate.h"
 i"LTWCorpus.h"
 i"LTWPythonDocument.h"
@@ -327,14 +343,14 @@ s151
 i<Cocoa/Cocoa.h>
 
 N/Users/david/Dropbox/phd/code/LTWToolkit/TeAra.py
-c00000000000000000000000000000000
-t2
-s0
+c000000004C5FA6090000000000000571
+t1281336841
+s1393
 
 N/Users/david/Dropbox/phd/code/LTWToolkit/WPTAMapping.py
-c000000004C5E8FBF0000000000000689
-t1281265599
-s1673
+c000000004C5F819F000000000000069D
+t1281327519
+s1693
 
 N/Users/david/Dropbox/phd/code/LTWToolkit/Wikipedia.py
 c00000000000000000000000000000000
@@ -495,6 +511,11 @@ c000000004C5E8FC00000000000000104
 t1281265600
 s260
 i<Cocoa/Cocoa.h>
+
+N/usr/lib/libsqlite3.dylib
+c000000004A11A42D0000000000253560
+t1242670125
+s2438496
 
 N/var/folders/pI/pI7AtQJkG5yp3XtPcBRb9k+++TM/-Caches-/com.apple.Xcode.502/SharedPrecompiledHeaders/LTWToolkit_Prefix-bdibzbbldgwgigcwnaqleegfnkjm/LTWToolkit_Prefix.pch.gch
 t2

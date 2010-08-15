@@ -14,10 +14,11 @@
 @synthesize corpus;
 @synthesize URL;
 
--(id)initWithBodyTokens:(LTWTokens*)theTokens corpus:(LTWCorpus*)theCorpus URL:(NSString*)theURL; {
+-(id)initWithCorpus:(LTWCorpus*)theCorpus URL:(NSString*)theURL {
 	if (self = [super init]) {
         fields = [[NSMutableDictionary alloc] init];
-        [fields setObject:theTokens forKey:@"body"];
+        
+        // NOTE: Currently, corpus and URL aren't set properly when an article is loaded from the database!
 		corpus = [theCorpus retain];
         URL = [theURL retain];
 	}

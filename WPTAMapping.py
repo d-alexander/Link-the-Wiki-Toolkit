@@ -25,8 +25,8 @@ class WPTAMapping:
     def found_linked_mapped_articles(self, tokens, arg):
         source_wp_article = arg
         destination_wp_article = tokens
-        source_ta_article = source_wp_article.tag_value("mapped_from")
-        destination_ta_article = destination_wp_article.tag_value("mapped_from")
+        source_ta_article = ltw.tag_value(source_wp_article, "mapped_from")
+        destination_ta_article = ltw.tag_value(destination_wp_article, "mapped_from")
         link_tag = ltw.tag_range(source_ta_article, "linked_to", destination_ta_article)
         return []
 

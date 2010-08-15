@@ -31,6 +31,14 @@ NSString *LTWTokenTagsChangedNotification = @"LTWTokenTagsChangedNotification";
 	}
 }
 
+-(id)initWithDatabase:(LTWDatabase*)theDatabase tokensID:(NSUInteger)theDatabaseID {
+    return nil;
+}
+
+-(NSUInteger)databaseID {
+    return 0;
+}
+
 -(id)initWithXML:(NSString*)xml {
 	return nil;
 }
@@ -92,6 +100,10 @@ NSString *LTWTokenTagsChangedNotification = @"LTWTokenTagsChangedNotification";
 }
 
 -(void)saveToDatabase {
+    
+}
+
+-(void)saveToDatabaseWithoutRemovingFromMemory {
     
 }
 

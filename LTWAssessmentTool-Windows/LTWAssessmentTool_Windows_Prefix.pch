@@ -1,0 +1,13 @@
+//
+// Prefix header for all source files of the 'LTWAssessmentTool-Windows' target in the 'LTWAssessmentTool-Windows' project
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+
+#ifndef __COCOTRON__
+#define __COCOTRON__
+#endif
+
+#endif
+

@@ -1301,10 +1301,11 @@
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="NSCustomView" id="601806716">
 						<reference key="NSNextResponder" ref="68435523"/>
-						<int key="NSvFlags">268</int>
+						<int key="NSvFlags">274</int>
 						<string key="NSFrame">{{166, 20}, {357, 331}}</string>
 						<reference key="NSSuperview" ref="68435523"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSClassName">NSView</string>
 					</object>
 					<object class="NSPopUpButton" id="815105898">
@@ -1313,6 +1314,7 @@
 						<string key="NSFrame">{{17, 327}, {144, 26}}</string>
 						<reference key="NSSuperview" ref="68435523"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="388025744"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSPopUpButtonCell" key="NSCell" id="322025898">
 							<int key="NSCellFlags">-2076049856</int>
@@ -1379,7 +1381,7 @@
 					</object>
 					<object class="NSScrollView" id="388025744">
 						<reference key="NSNextResponder" ref="68435523"/>
-						<int key="NSvFlags">268</int>
+						<int key="NSvFlags">284</int>
 						<array class="NSMutableArray" key="NSSubviews">
 							<object class="NSClipView" id="860177748">
 								<reference key="NSNextResponder" ref="388025744"/>
@@ -1505,6 +1507,7 @@
 								<string key="NSFrame">{{1, 290}, {147, 15}}</string>
 								<reference key="NSSuperview" ref="388025744"/>
 								<reference key="NSWindow"/>
+								<reference key="NSNextKeyView" ref="601806716"/>
 								<int key="NSsFlags">1</int>
 								<reference key="NSTarget" ref="388025744"/>
 								<string key="NSAction">_doScroller:</string>
@@ -2226,6 +2229,22 @@
 						<reference key="destination" ref="601806716"/>
 					</object>
 					<int key="connectionID">558</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">assessmentModeSelector</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="815105898"/>
+					</object>
+					<int key="connectionID">561</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">articleSelector</string>
+						<reference key="source" ref="976324537"/>
+						<reference key="destination" ref="1023636143"/>
+					</object>
+					<int key="connectionID">562</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -3624,7 +3643,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">558</int>
+			<int key="maxID">562</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -3636,6 +3655,8 @@
 						<string key="NS.object.0">id</string>
 					</object>
 					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="articleSelector">NSView</string>
+						<string key="assessmentModeSelector">NSView</string>
 						<string key="assessmentModeView">NSView</string>
 						<string key="mainView">NSView</string>
 						<string key="window">NSWindow</string>

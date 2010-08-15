@@ -55,9 +55,9 @@ static PyObject *LTWPyToken_repr(LTWPyToken *obj) {
 	if (obj->range.location == NSNotFound) return Py_BuildValue("s", "(token not found)");
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	NSRange entireRange = obj->range;
-    id tagStart = [obj->tokens tagWithName:@"tagStart" startingAtTokenIndex:obj->index];
+    id tagStartOffset = [obj->tokens tagWithName:@"tagStartOffset" startingAtTokenIndex:obj->index];
 	id tagLength = [obj->tokens tagWithName:@"tagLength" startingAtTokenIndex:obj->index];
-	if (tagStart) entireRange.location = [tagStart intValue];
+	if (tagStartOffset) entireRange.location -= [tagStartOffset intValue];
     if (tagLength) entireRange.length = [tagLength intValue];
 	const char *token_cstr = [[obj->string substringWithRange:entireRange] UTF8String];
 	PyObject *str = Py_BuildValue("s", token_cstr);
@@ -320,10 +320,29 @@ PyObject* LTWPyModuleTagRange(PyObject *self, PyObject *args) {
     return Py_BuildValue("i", 0);
 }
 
+PyObject* LTWPyModuleTagValue(PyObject *self, PyObject *args) {
+    PyObject *pyTokens = NULL, *pyTagName = NULL;
+    
+    if (!PyArg_ParseTuple(args, "OO", &pyTokens, &pyTagName)) Py_RETURN_NONE;
+    
+    LTWTokens *tokens = nil;
+    NSString *tagName = nil;
+    
+    if (![LTWPythonUtils depythoniseObject:pyTokens intoPointer:(void**)&tokens]) return nil;
+    if (![LTWPythonUtils depythoniseObject:pyTagName intoPointer:(void**)&tagName]) return nil;
+    
+    for (LTWTokenTag *tag in [tokens tagsStartingAtTokenIndex:0]) {
+        if ([[tag tagName] isEqual:tagName]) return [LTWPythonUtils pythoniseObject:tag];
+    }
+    
+    Py_RETURN_NONE;
+}
+
 static PyMethodDef LTWPyModuleMethods[] = {
     {"tokens_from_string", (PyCFunction)LTWPyModuleTokensFromString, METH_VARARGS,
         "Convert a string to a sequence of tokens, and returns a tuple consisting of the first and last token in the sequence."},
     {"tag_range", (PyCFunction)LTWPyModuleTagRange, METH_VARARGS, "Tag the given token-range (either a token iterator or a pair of tokens) with the given tagname and value."},
+    {"tag_value", (PyCFunction)LTWPyModuleTagValue, METH_VARARGS, "Returns the value of a tag with the given name on the given range of tokens, if such a tag exists."},
 	{NULL}
 };
 
@@ -422,6 +441,7 @@ PyMODINIT_FUNC LTWPyModuleInit() {
 // NOTE: If the object is an Objective-C object, an owning reference will not be returned. The caller should either retain it directly or insert it into a collection.
 +(BOOL)depythoniseObject:(PyObject*)object intoPointer:(void**)pointer {
     LTWPyToken *firstToken = NULL, *lastToken = NULL;
+    LTWPyTokenIterator *tokenIterator = NULL;
     char *str;
     
     if (PyArg_ParseTuple(object, "O!O!", &LTWPyTokenType, (PyObject**)&firstToken, &LTWPyTokenType, (PyObject**)&lastToken) && firstToken->tokens == lastToken->tokens) {
@@ -435,6 +455,9 @@ PyMODINIT_FUNC LTWPyModuleInit() {
         
         *pointer = tokens;
         return YES;
+    }else if (PyArg_ParseTuple(object, "O!", &LTWPyTokenIteratorType, (PyObject**)&tokenIterator)) {
+        LTWTokens *tokens = [tokenIterator->tokens retain];
+        *pointer = tokens;
     }else if (PyArg_Parse(object, "s", &str)) {
         *pointer = [NSString stringWithUTF8String:str];
         return YES;
@@ -512,7 +535,10 @@ PyMODINIT_FUNC LTWPyModuleInit() {
         result = PyObject_CallMethod(pythonObject, methodName, "O", argument);
     }
     
-    if (!result) return;
+    if (!result) {
+		PyErr_Print();
+        return;
+	}
     
     va_list vlParse, vlDepythonise;
     va_start(vlDepythonise, returnFormat);

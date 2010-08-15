@@ -23,6 +23,10 @@
 	return self;
 }
 
+-(NSUInteger)databaseID {
+    return [superTokens databaseID]; // NOTE: This is not always the correct answer, but it works for all current uses of the LTWTokens cluster.
+}
+
 -(NSRange)rangeOfTokenAtIndex:(NSUInteger)index {
 	if (startIndex + index > endIndex) return NSMakeRange(NSNotFound, 0);
 	return [superTokens rangeOfTokenAtIndex:startIndex + index];
@@ -79,6 +83,9 @@
     superTokens = [[LTWConcreteCopiedTokens alloc] initWithSuperTokens:root forSubTokens:self fromToken:startIndexInAncestor toToken:endIndexInAncestor];
     [oldSupertokens subtokensWillDeallocate:self];
     [oldSupertokens release];
+    
+    endIndex -= startIndex;
+    startIndex = 0;
 }
 
 -(void)dealloc {

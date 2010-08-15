@@ -151,7 +151,9 @@ invalid_search:
     
     if (requester) {
         LTWTokens *result = [theTokens tokensFromIndex:firstTokenIndex toIndex:lastTokenIndex propagateTags:YES];
-        NSArray *searches = [requester handleSearchResult:result forSearch:self];
+        
+        PyObject *obj = PyObject_CallObject(handlerMethod, Py_BuildValue("OO", [LTWPythonUtils pythoniseObject:result], handlerMethodArgument));
+        NSArray *searches = [LTWSearch parsePythonSearchArray:obj requester:requester];
         if (searches) {
             [newSearches addObjectsFromArray:searches];
         }
