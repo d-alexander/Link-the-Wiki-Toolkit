@@ -131,7 +131,7 @@
     for (occurrence = [[tagOccurrences objectAtIndex:firstToken] pointerValue]; occurrence != NULL; occurrence = occurrence->next) {
         [array addObject:occurrence->tag];
     }
-    if (occurrencePtr) *occurrencePtr = occurrence;
+    if (occurrencePtr) *occurrencePtr = [[tagOccurrences objectAtIndex:firstToken] pointerValue];
     return array;
 }
 
@@ -171,9 +171,12 @@
     // (Should tags be immutable once added?)
     
     NSUInteger tagIndex = 0;
-    for (NSUInteger tokenIndex = 0; tokenIndex < [tokens count]; tokenIndex++) {
-        for (LTWTagOccurrence *occurrence = [[tagOccurrences objectAtIndex:tokenIndex] pointerValue]; occurrence != NULL; occurrence = occurrence->next) {
-            [database insertTag:occurrence->tag withIndex:tagIndex fromTokenIndex:occurrence->firstToken toTokenIndex:occurrence->lastToken tokensID:databaseID];
+    for (NSUInteger tokenIndex = 0; tokenIndex < [self count]; tokenIndex++) {
+        LTWTagOccurrence *occurrence;
+        
+        for ([self _tagsStartingAtTokenIndex:tokenIndex occurrence:&occurrence]; occurrence != NULL; occurrence = occurrence->next) {
+            // NOTE: We have to use tokenIndex here because the occurrence may have the "wrong" indices for the token (if this is an LTWConcreteCopiedTokens or LTWConcreteSubTokens).
+            [database insertTag:occurrence->tag withIndex:tagIndex fromTokenIndex:tokenIndex toTokenIndex:tokenIndex tokensID:databaseID];
             tagIndex++;
         }
     }

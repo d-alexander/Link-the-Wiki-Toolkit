@@ -67,6 +67,10 @@
     return range;
 }
 
+-(NSArray*)_tagsStartingAtTokenIndex:(NSUInteger)firstToken occurrence:(LTWTagOccurrence**)occurrencePtr {
+    return [super _tagsStartingAtTokenIndex:firstToken+firstCopiedToken occurrence:occurrencePtr];
+}
+
 -(NSUInteger)count {
     return numCopiedTokens;
 }

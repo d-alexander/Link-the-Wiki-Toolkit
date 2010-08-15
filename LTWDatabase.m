@@ -168,7 +168,7 @@
             [article release];
         }
         
-        [article addTokens:[[LTWTokens alloc] initWithDatabase:self tokensID:tokensID] forField:fieldName];
+        [article addTokens:[[[LTWTokens alloc] initWithDatabase:self tokensID:tokensID] autorelease] forField:fieldName];
     }
     
     return articles;
