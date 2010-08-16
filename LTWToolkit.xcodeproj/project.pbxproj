@@ -16,6 +16,9 @@
 		632240CD120573E80023CD84 /* LTWTokenTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 632240CC120573E80023CD84 /* LTWTokenTag.m */; };
 		632241C2120598BA0023CD84 /* LTWArticleDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 632241C1120598BA0023CD84 /* LTWArticleDocument.m */; };
 		632241C4120598CD0023CD84 /* LTWArticleDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 632241C3120598CD0023CD84 /* LTWArticleDocument.xib */; };
+		6326E77D1217EEFA0031AA7C /* TestLinker.py in Resources */ = {isa = PBXBuildFile; fileRef = 6326E77C1217EEFA0031AA7C /* TestLinker.py */; };
+		6326E77E1217EEFA0031AA7C /* TestLinker.py in Resources */ = {isa = PBXBuildFile; fileRef = 6326E77C1217EEFA0031AA7C /* TestLinker.py */; };
+		6326E7941218F8C20031AA7C /* libFreeTDS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6326E7931218F8BD0031AA7C /* libFreeTDS.a */; };
 		632CC73F12166DF2002891F4 /* LTWOverlayTokensView.m in Sources */ = {isa = PBXBuildFile; fileRef = 632CC73E12166DF2002891F4 /* LTWOverlayTokensView.m */; };
 		632CC74012166DF2002891F4 /* LTWOverlayTokensView.m in Sources */ = {isa = PBXBuildFile; fileRef = 632CC73E12166DF2002891F4 /* LTWOverlayTokensView.m */; };
 		634020DE1216E4EC00E50C9D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 634020DD1216E4EC00E50C9D /* Cocoa.framework */; };
@@ -156,6 +159,8 @@
 		632427DA12102A36004ED16F /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = /usr/lib/libsqlite3.dylib; sourceTree = "<absolute>"; };
 		632427E612103606004ED16F /* LTWConcreteCopiedTokens.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTWConcreteCopiedTokens.h; sourceTree = "<group>"; };
 		632427E712103606004ED16F /* LTWConcreteCopiedTokens.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTWConcreteCopiedTokens.m; sourceTree = "<group>"; };
+		6326E77C1217EEFA0031AA7C /* TestLinker.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = TestLinker.py; sourceTree = "<group>"; };
+		6326E7931218F8BD0031AA7C /* libFreeTDS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libFreeTDS.a; path = "/Users/david/Desktop/VMWare Shared/libFreeTDS.a"; sourceTree = "<absolute>"; };
 		6329E5EE120E798800DC42F1 /* Untitled-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Untitled-Info.plist"; sourceTree = "<group>"; };
 		632CC73D12166DF2002891F4 /* LTWOverlayTokensView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTWOverlayTokensView.h; sourceTree = "<group>"; };
 		632CC73E12166DF2002891F4 /* LTWOverlayTokensView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTWOverlayTokensView.m; sourceTree = "<group>"; };
@@ -246,6 +251,7 @@
 				634021721216EAEF00E50C9D /* Foundation.framework in Frameworks */,
 				634021731216EAEF00E50C9D /* AppKit.framework in Frameworks */,
 				634021711216EAD700E50C9D /* libpython31.a in Frameworks */,
+				6326E7941218F8C20031AA7C /* libFreeTDS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -368,6 +374,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6326E7931218F8BD0031AA7C /* libFreeTDS.a */,
 				632427DA12102A36004ED16F /* libsqlite3.dylib */,
 				63D51DD2120ECA6F00FA40B8 /* Cocoa.framework */,
 				63D51D82120EC83D00FA40B8 /* Foundation.framework */,
@@ -485,6 +492,7 @@
 		6356FAAD120979980072FF20 /* Token Processors */ = {
 			isa = PBXGroup;
 			children = (
+				6326E77C1217EEFA0031AA7C /* TestLinker.py */,
 				6356FAB012097A9A0072FF20 /* WPTAMapping.py */,
 			);
 			name = "Token Processors";
@@ -885,6 +893,7 @@
 				6383B156120F8F9C00703164 /* MainMenu.xib in Resources */,
 				6383B157120F8FFB00703164 /* LTWPythonDocument.xib in Resources */,
 				6383B158120F8FFE00703164 /* LTWArticleDocument.xib in Resources */,
+				6326E77E1217EEFA0031AA7C /* TestLinker.py in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -899,6 +908,7 @@
 				6356FAB112097A9A0072FF20 /* WPTAMapping.py in Resources */,
 				6356FAB412097B2F0072FF20 /* Guardian.py in Resources */,
 				635173DC120FB0D50013BA72 /* TeAra.py in Resources */,
+				6326E77D1217EEFA0031AA7C /* TestLinker.py in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

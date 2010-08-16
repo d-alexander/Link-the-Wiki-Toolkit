@@ -54,6 +54,7 @@ typedef enum {
 
 -(LTWOverlayRect*)rectForTokensFromIndex:(NSUInteger)firstTokenIndex toIndex:(NSUInteger)lastTokenIndex;
 -(void)addOverlayWithRect:(LTWOverlayRect*)overlayRect text:(NSString*)text; // NOTE: I'm not sure whether to have overlays added like this, or by calling a method on the overlay itself. Also, parameters other than "text" will probably be required.
+-(void)collapseTokensFromIndex:(NSUInteger)firstTokenIndex toIndex:(NSUInteger)lastTokenIndex;
 
 @end
 

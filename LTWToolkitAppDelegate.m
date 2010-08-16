@@ -117,8 +117,23 @@
                         tokenIndex++;
                     }
                     
+                    if ([loadedArticles count] > 0) {
+                        NSUInteger tokenIndex = rand()%10;
+                        while (tokenIndex < [fieldTokens count]) {
+                            NSUInteger linkEnd = tokenIndex + rand()%5;
+                            if (linkEnd >= [fieldTokens count]) break;
+                            
+                            LTWArticle *linkTarget = [[loadedArticles allKeys] objectAtIndex:rand()%[loadedArticles count]];
+                            
+                            [fieldTokens _addTag:[[[LTWTokenTag alloc] initWithName:@"linked_to" value:linkTarget] autorelease] fromIndex:tokenIndex toIndex:linkEnd];
+                            
+                            tokenIndex = linkEnd + rand()%10;
+                        }
+                    }
+                    
                     [fieldTokens saveToDatabase];
                 }
+                
                 
                 [pool drain];
                 

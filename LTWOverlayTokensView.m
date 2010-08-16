@@ -81,6 +81,10 @@
 
 -(LTWOverlayRect*)rectForTokensFromIndex:(NSUInteger)firstTokenIndex toIndex:(NSUInteger)lastTokenIndex {
     NSRange charRange = [self charRangeForTokensFromIndex:firstTokenIndex toIndex:lastTokenIndex];
+    
+    // TEMP
+    [self collapseTokensFromIndex:(lastTokenIndex+1) toIndex:(lastTokenIndex+2)];
+    
     return [[[LTWOverlayRect alloc] initWithTextView:self characterRange:charRange] autorelease];
 }
 
@@ -89,6 +93,16 @@
     [self addSubview:layer];
     [overlayLayers addObject:layer];
     [layer release];
+}
+
+-(void)collapseTokensFromIndex:(NSUInteger)firstTokenIndex toIndex:(NSUInteger)lastTokenIndex {
+    NSRange charRange = [self charRangeForTokensFromIndex:firstTokenIndex toIndex:lastTokenIndex];
+    NSTextAttachment *attachment = [[NSTextAttachment alloc] init];
+    [attachment setAttachmentCell:[[NSTextAttachmentCell alloc] init]];
+    [[self textStorage] addAttribute:NSAttachmentAttributeName value:attachment range:charRange];
+    [[self textStorage] addAttribute:NSForegroundColorAttributeName value:[NSColor redColor] range:charRange];
+    //[attachment release];
+    [self didChangeText];
 }
 
 -(id)initWithFrame:(NSRect)frame {
@@ -205,14 +219,12 @@
     
     [attributedString release];
     
-    // TEMP: Add some random overlays.
-    NSUInteger tokenIndex = 0;
-    while (tokenIndex < [theTokens count]) {
-        LTWOverlayRect *rect = [self rectForTokensFromIndex:tokenIndex toIndex:tokenIndex+1];
-        [self addOverlayWithRect:rect text:@"Hello"];
-        tokenIndex += rand() % 10 + 2;
+    for (NSUInteger tokenIndex = 0; tokenIndex < [theTokens count]; tokenIndex++) {
+        for (LTWTokenTag *tag in [theTokens tagsStartingAtTokenIndex:tokenIndex]) {
+            LTWOverlayRect *rect = [self rectForTokensFromIndex:tokenIndex toIndex:tokenIndex];
+            [self addOverlayWithRect:rect text:@"(LINK)"];
+        }
     }
-    
 }
 
 - (void)dealloc {

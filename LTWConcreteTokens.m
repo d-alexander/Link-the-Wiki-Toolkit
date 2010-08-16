@@ -176,7 +176,7 @@
         
         for ([self _tagsStartingAtTokenIndex:tokenIndex occurrence:&occurrence]; occurrence != NULL; occurrence = occurrence->next) {
             // NOTE: We have to use tokenIndex here because the occurrence may have the "wrong" indices for the token (if this is an LTWConcreteCopiedTokens or LTWConcreteSubTokens).
-            [database insertTag:occurrence->tag withIndex:tagIndex fromTokenIndex:tokenIndex toTokenIndex:tokenIndex tokensID:databaseID];
+            [database insertTag:occurrence->tag withIndex:tagIndex fromTokenIndex:tokenIndex toTokenIndex:(occurrence->lastToken - (occurrence->firstToken - tokenIndex)) tokensID:databaseID];
             tagIndex++;
         }
     }

@@ -11,7 +11,7 @@
 @implementation LTWSearch
 
 +(NSArray*)parsePythonSearchArray:(PyObject*)object requester:(id <LTWSearchRequester>)theRequester {
-    if (!PySequence_Check(object)) return [NSArray array];
+    if (!object || !PySequence_Check(object)) return [NSArray array];
     
     NSUInteger sequenceLength = PySequence_Length(object);
     NSMutableArray *array = [[NSMutableArray alloc] initWithCapacity:sequenceLength];
@@ -93,7 +93,7 @@ invalid_search:
             break; // just for good measure
         case ENTIRE_FIELD:
             if (firstTokenIndex == 0) {
-                lastTokenIndex = [theTokens count];
+                lastTokenIndex = [theTokens count]-1;
             }else{
                 return NO;
             }
