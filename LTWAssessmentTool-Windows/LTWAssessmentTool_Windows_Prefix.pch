@@ -2,6 +2,8 @@
 // Prefix header for all source files of the 'LTWAssessmentTool-Windows' target in the 'LTWAssessmentTool-Windows' project
 //
 
+#define DATA_PATH "/Users/david/Desktop/phd"
+
 #ifdef __OBJC__
     #import <Cocoa/Cocoa.h>
 

@@ -9,6 +9,7 @@
 #import "LTWAssessmentController.h"
 
 #import "LTWTestAssessmentMode.h"
+#import "LTWSimpleAssessmentMode.h"
 
 @implementation LTWAssessmentController
 
@@ -29,7 +30,7 @@
 }
 
 -(NSArray*)assessmentModes {
-    return [NSArray arrayWithObjects:[[LTWTestAssessmentMode alloc] init], nil];
+    return [NSArray arrayWithObjects:[[LTWSimpleAssessmentMode alloc] init], [[LTWTestAssessmentMode alloc] init], nil];
 }
 
 -(LTWArticle*)articleWithURL:(NSString*)url {

@@ -13,7 +13,7 @@
 
 -(id)init {
     if (self = [super init]) {
-        sqlite3_open("/Users/david/Desktop/tokens.db", &database);
+        sqlite3_open(DATA_PATH "/tokens.db", &database);
         
     }
     return self;

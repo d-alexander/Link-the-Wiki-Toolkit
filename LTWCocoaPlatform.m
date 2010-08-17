@@ -12,6 +12,7 @@
 #import "LTWTokensView.h"
 #import "LTWOverlayTokensView.h"
 #import "LTWTokens.h"
+#import "LTWRemoteDatabase.h"
 
 @implementation LTWCocoaPlatform
 
@@ -45,6 +46,9 @@ static LTWCocoaPlatform *sharedInstance = nil;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     sharedInstance = self;
+    
+    // TEMP
+    [[LTWRemoteDatabase alloc] init];
     
     [window setContentView:mainView];
     NSPoint origin = [window frame].origin;
@@ -81,6 +85,10 @@ static LTWCocoaPlatform *sharedInstance = nil;
         [[mainView window] setFrame:windowFrame display:YES animate:YES];
     }else if ([role isEqual:@"articleSelector"]) {
         [[self componentWithRole:@"sourceArticleBody" inView:[assessmentMode mainViewForPlatform:self]] setRepresentedValue:[[[LTWAssessmentController sharedInstance] articleWithURL:newSelection] tokensForField:@"body"]];
+        [[self componentWithRole:@"sourceArticleTitle" inView:[assessmentMode mainViewForPlatform:self]] setRepresentedValue:[[[[LTWAssessmentController sharedInstance] articleWithURL:newSelection] tokensForField:@"title"] description]];
+    }else if ([role isEqual:@"sourceArticleLinks"]) {
+        [[self componentWithRole:@"targetArticleBody" inView:[assessmentMode mainViewForPlatform:self]] setRepresentedValue:[[[LTWAssessmentController sharedInstance] articleWithURL:newSelection] tokensForField:@"body"]];
+        [[self componentWithRole:@"targetArticleTitle" inView:[assessmentMode mainViewForPlatform:self]] setRepresentedValue:[[[[LTWAssessmentController sharedInstance] articleWithURL:newSelection] tokensForField:@"title"] description]];
     }
 }
 

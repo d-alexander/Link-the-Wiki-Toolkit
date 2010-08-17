@@ -12,7 +12,7 @@
 #import "LTWParser.h"
 
 void writeToFile(NSString *text, NSString *articleID) {
-    NSString *filename = [NSString stringWithFormat:@"file:///Users/david/Desktop/te_ara/articles/%@.xml", articleID];
+    NSString *filename = [NSString stringWithFormat:@"file://" DATA_PATH "/te_ara/articles/%@.xml", articleID];
     [text writeToURL:[NSURL URLWithString:filename] atomically:YES];
 }
 
@@ -20,7 +20,7 @@ int main (int argc, const char * argv[]) {
 
     NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
     
-    NSString *xml = [NSString stringWithContentsOfURL:[NSURL URLWithString:@"file:///Users/david/Desktop/te_ara/xml.xml"]];
+    NSString *xml = [NSString stringWithContentsOfURL:[NSURL URLWithString:@"file://" DATA_PATH "/te_ara/xml.xml"]];
     LTWParser *parser = [[LTWParser alloc] init];
     [parser setDocumentText:xml];
     

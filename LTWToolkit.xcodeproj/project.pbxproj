@@ -18,7 +18,9 @@
 		632241C4120598CD0023CD84 /* LTWArticleDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 632241C3120598CD0023CD84 /* LTWArticleDocument.xib */; };
 		6326E77D1217EEFA0031AA7C /* TestLinker.py in Resources */ = {isa = PBXBuildFile; fileRef = 6326E77C1217EEFA0031AA7C /* TestLinker.py */; };
 		6326E77E1217EEFA0031AA7C /* TestLinker.py in Resources */ = {isa = PBXBuildFile; fileRef = 6326E77C1217EEFA0031AA7C /* TestLinker.py */; };
-		6326E7941218F8C20031AA7C /* libFreeTDS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6326E7931218F8BD0031AA7C /* libFreeTDS.a */; };
+		6326E79C12190DFB0031AA7C /* LTWSimpleAssessmentMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 6326E79B12190DFB0031AA7C /* LTWSimpleAssessmentMode.m */; };
+		6326E79E12190E700031AA7C /* LTWSimpleAssessmentMode.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6326E79D12190E6F0031AA7C /* LTWSimpleAssessmentMode.xib */; };
+		6326E79F12190E700031AA7C /* LTWSimpleAssessmentMode.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6326E79D12190E6F0031AA7C /* LTWSimpleAssessmentMode.xib */; };
 		632CC73F12166DF2002891F4 /* LTWOverlayTokensView.m in Sources */ = {isa = PBXBuildFile; fileRef = 632CC73E12166DF2002891F4 /* LTWOverlayTokensView.m */; };
 		632CC74012166DF2002891F4 /* LTWOverlayTokensView.m in Sources */ = {isa = PBXBuildFile; fileRef = 632CC73E12166DF2002891F4 /* LTWOverlayTokensView.m */; };
 		634020DE1216E4EC00E50C9D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 634020DD1216E4EC00E50C9D /* Cocoa.framework */; };
@@ -80,6 +82,17 @@
 		636D47AA11FD2CD70099153C /* LTWTokens.m in Sources */ = {isa = PBXBuildFile; fileRef = 636D47A911FD2CD70099153C /* LTWTokens.m */; };
 		636D47AE11FD2D140099153C /* Python.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 636D47AD11FD2D140099153C /* Python.framework */; };
 		636D47B411FD2EAB0099153C /* LTWPythonUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 636D47B311FD2EAB0099153C /* LTWPythonUtils.m */; };
+		637AC821121912DD00E4B060 /* LTWSimpleAssessmentMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 6326E79B12190DFB0031AA7C /* LTWSimpleAssessmentMode.m */; };
+		637AC82B1219431400E4B060 /* LTWRemoteDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 637AC8291219431200E4B060 /* LTWRemoteDatabase.m */; };
+		637AC82C1219431400E4B060 /* LTWRemoteDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 637AC8291219431200E4B060 /* LTWRemoteDatabase.m */; };
+		637AC82D1219431400E4B060 /* LTWRemoteDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 637AC8291219431200E4B060 /* LTWRemoteDatabase.m */; };
+		637AC83D12194C2900E4B060 /* libsybdb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 637AC83B12194C2900E4B060 /* libsybdb.a */; };
+		637AC875121A4BB600E4B060 /* dblib.c in Sources */ = {isa = PBXBuildFile; fileRef = 637AC871121A4BB600E4B060 /* dblib.c */; };
+		637AC876121A4BB600E4B060 /* dbopen.c in Sources */ = {isa = PBXBuildFile; fileRef = 637AC872121A4BB600E4B060 /* dbopen.c */; };
+		637AC877121A4BB600E4B060 /* dbutil.c in Sources */ = {isa = PBXBuildFile; fileRef = 637AC873121A4BB600E4B060 /* dbutil.c */; };
+		637AC878121A4BB600E4B060 /* rpc.c in Sources */ = {isa = PBXBuildFile; fileRef = 637AC874121A4BB600E4B060 /* rpc.c */; };
+		637AC885121A4DF700E4B060 /* libTDS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 637AC884121A4DF700E4B060 /* libTDS.a */; };
+		637AC888121A4E9000E4B060 /* libwsock32.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 637AC887121A4E9000E4B060 /* libwsock32.a */; };
 		6383B13C120F845500703164 /* libpython31.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6383B13B120F845500703164 /* libpython31.a */; };
 		6383B156120F8F9C00703164 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
 		6383B157120F8FFB00703164 /* LTWPythonDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63C24E0F11FFAC4F002609A9 /* LTWPythonDocument.xib */; };
@@ -161,6 +174,9 @@
 		632427E712103606004ED16F /* LTWConcreteCopiedTokens.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTWConcreteCopiedTokens.m; sourceTree = "<group>"; };
 		6326E77C1217EEFA0031AA7C /* TestLinker.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = TestLinker.py; sourceTree = "<group>"; };
 		6326E7931218F8BD0031AA7C /* libFreeTDS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libFreeTDS.a; path = "/Users/david/Desktop/VMWare Shared/libFreeTDS.a"; sourceTree = "<absolute>"; };
+		6326E79A12190DFB0031AA7C /* LTWSimpleAssessmentMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LTWSimpleAssessmentMode.h; path = /Users/david/Dropbox/phd/code/LTWToolkit/LTWSimpleAssessmentMode.h; sourceTree = "<absolute>"; };
+		6326E79B12190DFB0031AA7C /* LTWSimpleAssessmentMode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LTWSimpleAssessmentMode.m; path = /Users/david/Dropbox/phd/code/LTWToolkit/LTWSimpleAssessmentMode.m; sourceTree = "<absolute>"; };
+		6326E79D12190E6F0031AA7C /* LTWSimpleAssessmentMode.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LTWSimpleAssessmentMode.xib; path = /Users/david/Dropbox/phd/code/LTWToolkit/LTWSimpleAssessmentMode.xib; sourceTree = "<absolute>"; };
 		6329E5EE120E798800DC42F1 /* Untitled-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Untitled-Info.plist"; sourceTree = "<group>"; };
 		632CC73D12166DF2002891F4 /* LTWOverlayTokensView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTWOverlayTokensView.h; sourceTree = "<group>"; };
 		632CC73E12166DF2002891F4 /* LTWOverlayTokensView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTWOverlayTokensView.m; sourceTree = "<group>"; };
@@ -193,6 +209,18 @@
 		636D47AD11FD2D140099153C /* Python.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Python.framework; path = System/Library/Frameworks/Python.framework; sourceTree = SDKROOT; };
 		636D47B211FD2EAB0099153C /* LTWPythonUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTWPythonUtils.h; sourceTree = "<group>"; };
 		636D47B311FD2EAB0099153C /* LTWPythonUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTWPythonUtils.m; sourceTree = "<group>"; };
+		637AC8281219431000E4B060 /* LTWRemoteDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTWRemoteDatabase.h; sourceTree = "<group>"; };
+		637AC8291219431200E4B060 /* LTWRemoteDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTWRemoteDatabase.m; sourceTree = "<group>"; };
+		637AC8331219498000E4B060 /* libsybdb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libsybdb.a; sourceTree = "<group>"; };
+		637AC83612194A3D00E4B060 /* libsybdb.5.0.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsybdb.5.0.0.dylib; path = /usr/local/lib/libsybdb.5.0.0.dylib; sourceTree = "<absolute>"; };
+		637AC83B12194C2900E4B060 /* libsybdb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsybdb.a; path = /usr/local/lib/libsybdb.a; sourceTree = "<absolute>"; };
+		637AC86E121A48E200E4B060 /* dblib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = dblib.a; path = "/Users/david/Desktop/VMWare Shared/freetds/win32/msvc6/dblib.a"; sourceTree = "<absolute>"; };
+		637AC871121A4BB600E4B060 /* dblib.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = dblib.c; path = "/Users/david/Desktop/VMWare Shared/freetds/src/dblib/dblib.c"; sourceTree = "<absolute>"; };
+		637AC872121A4BB600E4B060 /* dbopen.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = dbopen.c; path = "/Users/david/Desktop/VMWare Shared/freetds/src/dblib/dbopen.c"; sourceTree = "<absolute>"; };
+		637AC873121A4BB600E4B060 /* dbutil.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = dbutil.c; path = "/Users/david/Desktop/VMWare Shared/freetds/src/dblib/dbutil.c"; sourceTree = "<absolute>"; };
+		637AC874121A4BB600E4B060 /* rpc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = rpc.c; path = "/Users/david/Desktop/VMWare Shared/freetds/src/dblib/rpc.c"; sourceTree = "<absolute>"; };
+		637AC884121A4DF700E4B060 /* libTDS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTDS.a; path = "/Users/david/Desktop/VMWare Shared/freetds/win32/msvc6/libTDS.a"; sourceTree = "<absolute>"; };
+		637AC887121A4E9000E4B060 /* libwsock32.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libwsock32.a; path = "/Users/david/Desktop/VMWare Shared/libwsock32.a"; sourceTree = "<absolute>"; };
 		6383B13B120F845500703164 /* libpython31.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libpython31.a; path = "/Users/david/Desktop/VMWare Shared/libpython31.a"; sourceTree = "<absolute>"; };
 		638F16A61212787B00782C3F /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		638F16B912127BBF00782C3F /* LTWAssessmentMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTWAssessmentMode.h; sourceTree = SOURCE_ROOT; };
@@ -251,7 +279,8 @@
 				634021721216EAEF00E50C9D /* Foundation.framework in Frameworks */,
 				634021731216EAEF00E50C9D /* AppKit.framework in Frameworks */,
 				634021711216EAD700E50C9D /* libpython31.a in Frameworks */,
-				6326E7941218F8C20031AA7C /* libFreeTDS.a in Frameworks */,
+				637AC885121A4DF700E4B060 /* libTDS.a in Frameworks */,
+				637AC888121A4E9000E4B060 /* libwsock32.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -269,6 +298,7 @@
 			files = (
 				638F16AA1212796600782C3F /* Cocoa.framework in Frameworks */,
 				638F16AB1212797600782C3F /* Python.framework in Frameworks */,
+				637AC83D12194C2900E4B060 /* libsybdb.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -341,6 +371,16 @@
 			children = (
 				638F16A61212787B00782C3F /* Cocoa.framework */,
 				6356FAE1120A35C60072FF20 /* Tools */,
+				637AC83B12194C2900E4B060 /* libsybdb.a */,
+				637AC884121A4DF700E4B060 /* libTDS.a */,
+				637AC887121A4E9000E4B060 /* libwsock32.a */,
+				637AC83612194A3D00E4B060 /* libsybdb.5.0.0.dylib */,
+				637AC86E121A48E200E4B060 /* dblib.a */,
+				637AC8331219498000E4B060 /* libsybdb.a */,
+				637AC871121A4BB600E4B060 /* dblib.c */,
+				637AC872121A4BB600E4B060 /* dbopen.c */,
+				637AC873121A4BB600E4B060 /* dbutil.c */,
+				637AC874121A4BB600E4B060 /* rpc.c */,
 				6356FAAA120979740072FF20 /* Python */,
 				080E96DDFE201D6D7F000001 /* Objective-C */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
@@ -670,6 +710,9 @@
 				638F16BA12127C1200782C3F /* LTWTestAssessmentMode.h */,
 				638F16BB12127C1200782C3F /* LTWTestAssessmentMode.m */,
 				638F16BE12127CEB00782C3F /* LTWTestAssessmentMode.xib */,
+				6326E79A12190DFB0031AA7C /* LTWSimpleAssessmentMode.h */,
+				6326E79B12190DFB0031AA7C /* LTWSimpleAssessmentMode.m */,
+				6326E79D12190E6F0031AA7C /* LTWSimpleAssessmentMode.xib */,
 			);
 			name = "Assessment Modes";
 			path = ..;
@@ -741,6 +784,8 @@
 				634021741216EB9F00E50C9D /* sqlite3.c */,
 				63D99AC712083B8400CEE18B /* LTWDatabase.h */,
 				63D99AC812083B8400CEE18B /* LTWDatabase.m */,
+				637AC8281219431000E4B060 /* LTWRemoteDatabase.h */,
+				637AC8291219431200E4B060 /* LTWRemoteDatabase.m */,
 			);
 			name = Persistence;
 			sourceTree = "<group>";
@@ -870,6 +915,7 @@
 				634020EB1216E4ED00E50C9D /* Credits.rtf in Resources */,
 				6340214E1216E7A400E50C9D /* LTWTestAssessmentMode.xib in Resources */,
 				634F5C1F121700C000DFDF7B /* MainMenu.xib in Resources */,
+				6326E79F12190E700031AA7C /* LTWSimpleAssessmentMode.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -881,6 +927,7 @@
 				63BAE8F3121236B8008127C4 /* MainMenu.xib in Resources */,
 				63BAE8F6121236B8008127C4 /* Credits.rtf in Resources */,
 				638F16BF12127CEB00782C3F /* LTWTestAssessmentMode.xib in Resources */,
+				6326E79E12190E700031AA7C /* LTWSimpleAssessmentMode.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -971,6 +1018,11 @@
 				6340215A1216E89900E50C9D /* LTWParser.m in Sources */,
 				634021511216E7CF00E50C9D /* LTWTokensView.m in Sources */,
 				63024DAB1216FEA6009346C9 /* sqlite3.c in Sources */,
+				637AC82D1219431400E4B060 /* LTWRemoteDatabase.m in Sources */,
+				637AC875121A4BB600E4B060 /* dblib.c in Sources */,
+				637AC876121A4BB600E4B060 /* dbopen.c in Sources */,
+				637AC877121A4BB600E4B060 /* dbutil.c in Sources */,
+				637AC878121A4BB600E4B060 /* rpc.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1004,7 +1056,9 @@
 				6340216E1216EA5300E50C9D /* LTWParser.m in Sources */,
 				6340216F1216EA5500E50C9D /* LTWArticle.m in Sources */,
 				634021641216EA3500E50C9D /* LTWTokensView.m in Sources */,
+				637AC821121912DD00E4B060 /* LTWSimpleAssessmentMode.m in Sources */,
 				634021771216EBA000E50C9D /* sqlite3.c in Sources */,
+				637AC82C1219431400E4B060 /* LTWRemoteDatabase.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1029,6 +1083,7 @@
 				63D51DCE120EC9EB00FA40B8 /* main.m in Sources */,
 				632CC74012166DF2002891F4 /* LTWOverlayTokensView.m in Sources */,
 				634021761216EBA000E50C9D /* sqlite3.c in Sources */,
+				637AC82B1219431400E4B060 /* LTWRemoteDatabase.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1055,6 +1110,7 @@
 				63D99AC912083B8500CEE18B /* LTWDatabase.m in Sources */,
 				632CC73F12166DF2002891F4 /* LTWOverlayTokensView.m in Sources */,
 				634021751216EBA000E50C9D /* sqlite3.c in Sources */,
+				6326E79C12190DFB0031AA7C /* LTWSimpleAssessmentMode.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1167,6 +1223,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../../Desktop/VMWare Shared\"",
+					"\"$(SRCROOT)/../../../../Desktop/VMWare Shared/freetds/win32/msvc6\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = "";
 				PRODUCT_NAME = "LTWAssessmentTool-Windows";
@@ -1198,6 +1255,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../../Desktop/VMWare Shared\"",
+					"\"$(SRCROOT)/../../../../Desktop/VMWare Shared/freetds/win32/msvc6\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = "";
 				PRODUCT_NAME = "LTWAssessmentTool-Windows";
@@ -1244,6 +1302,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1258,6 +1317,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../../Downloads/Python-3.1.2\"",
+					"\"$(SRCROOT)\"",
 				);
 				PRODUCT_NAME = LTWAssessmentTool;
 				WRAPPER_EXTENSION = app;
@@ -1268,6 +1328,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -1281,6 +1342,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../../Downloads/Python-3.1.2\"",
+					"\"$(SRCROOT)\"",
 				);
 				PRODUCT_NAME = LTWAssessmentTool;
 				WRAPPER_EXTENSION = app;
@@ -1362,6 +1424,10 @@
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "LTWToolkit-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../../Desktop/VMWare Shared\"",
+				);
 				PRODUCT_NAME = LTWToolkit;
 			};
 			name = Debug;
@@ -1377,6 +1443,10 @@
 				GCC_VERSION = "";
 				INFOPLIST_FILE = "LTWToolkit-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../../../../Desktop/VMWare Shared\"",
+				);
 				PRODUCT_NAME = LTWToolkit;
 			};
 			name = Release;
@@ -1390,6 +1460,8 @@
 				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = /usr/local/include;
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
@@ -1405,6 +1477,8 @@
 				GCC_VERSION = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = /usr/local/include;
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				PREBINDING = NO;
 				SDKROOT = macosx10.6;
