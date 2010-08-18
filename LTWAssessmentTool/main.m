@@ -9,10 +9,19 @@
 
 #import <Cocoa/Cocoa.h>
 
+#ifdef GTK_PLATFORM
+#import <gtk/gtk.h>
+#endif
+
+#import "LTWGTKPlatform.h"
+
 int main(int argc, char *argv[])
 {
-
     return NSApplicationMain(argc,  (const char **) argv);
+    
+    //gtk_init(&argc, &argv);
+    //[[LTWGTKPlatform sharedInstance] run];
+    //return 0;
 
 }
 

@@ -6,6 +6,8 @@
 //  Copyright (c) 2010 __MyCompanyName__. All rights reserved.
 //
 
+#ifndef GTK_PLATFORM
+
 #import "LTWCocoaPlatform.h"
 
 #import "LTWAssessmentController.h"
@@ -41,21 +43,33 @@ static LTWCocoaPlatform *sharedInstance = nil;
     return nil;
 }
 
+-(void)setStatus:(NSString*)status {
+    [statusSpinner startAnimation:self];
+    [statusLabel setStringValue:status];
+}
+
+-(void)clearStatus {
+    [statusSpinner stopAnimation:self];
+    [statusLabel setStringValue:@""];
+}
+
 
 #pragma mark NSApplicationDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     sharedInstance = self;
     
-    // TEMP
-    [[LTWRemoteDatabase alloc] init];
-    
     [window setContentView:mainView];
     NSPoint origin = [window frame].origin;
     NSSize size = [mainView frame].size;
     [window setFrame:NSMakeRect(origin.x, origin.y, size.width, size.height) display:YES animate:YES];
     
-    [[self componentWithRole:@"articleSelector" inView:[self mainView]] setRepresentedValue:[[LTWAssessmentController sharedInstance] articleURLs]];
+    NSOperationQueue *backgroundOperations = [[NSOperationQueue alloc] init];
+    
+    LTWRemoteDatabase *remoteDatabase = [[LTWRemoteDatabase alloc] init];
+    [backgroundOperations addOperation:[[NSInvocationOperation alloc] initWithTarget:remoteDatabase selector:@selector(downloadNewAssessmentFiles) object:nil]];
+    
+    //[[self componentWithRole:@"articleSelector" inView:[self mainView]] setRepresentedValue:[[LTWAssessmentController sharedInstance] articleURLs]];
     
     NSArray *assessmentModes = [[NSArray arrayWithObject:@"No assessment mode"] arrayByAddingObjectsFromArray:[[LTWAssessmentController sharedInstance] assessmentModes]];
     [[self componentWithRole:@"assessmentModeSelector" inView:[self mainView]] setRepresentedValue:assessmentModes];
@@ -224,3 +238,4 @@ static NSMutableDictionary *roles = nil;
 }
 
 @end
+#endif

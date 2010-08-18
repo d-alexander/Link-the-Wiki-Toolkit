@@ -8,6 +8,11 @@
 
 #import <Cocoa/Cocoa.h>
 
+#ifdef GTK_PLATFORM
+#import <gtk/gtk.h>
+#endif
+
+
 /*
  The protocol LTWGUIPlatform defines the methods that a platform-specific GUI adapter for LTWAssessmentTool (and later, all of LTWToolkit) should implement.
  Eventually, almost all of the platform-specific code for each GUI platform should be in a single class that conforms to this protocol. This is tricky because application startup needs to begin with a main() function, in which both the GUI and other components will have to be initialised. Furthermore, platforms such as Cocoa have non-code files that play a role in application startup, such as MainMenu.xib.
@@ -17,8 +22,12 @@
 @protocol LTWGUIPlatform <NSObject>
 
 +(id <LTWGUIPlatform>)sharedInstance;
+#ifdef GTK_PLATFORM
+-(GtkWidget*)mainView;
+-(GtkWidget*)componentWithRole:(NSString*)role inView:(GtkWidget*)view;
+#else
 -(NSView*)mainView;
 -(NSView*)componentWithRole:(NSString*)role inView:(NSView*)view;
-
+#endif
 
 @end

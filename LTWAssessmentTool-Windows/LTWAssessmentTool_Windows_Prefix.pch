@@ -4,6 +4,8 @@
 
 #define DATA_PATH "/Users/david/Desktop/phd"
 
+#define GTK_PLATFORM
+
 #ifdef __OBJC__
     #import <Cocoa/Cocoa.h>
 

@@ -8,6 +8,7 @@
 
 #import "LTWRemoteDatabase.h"
 
+#import "LTWCocoaPlatform.h"
 
 @implementation LTWRemoteDatabase
 
@@ -30,9 +31,10 @@ int err_handler(DBPROCESS * dbproc, int severity, int dberr, int oserr, char *db
 	return INT_CANCEL;
 }
 
-+(void)initialize {
-    dbinit();
+-(void)downloadNewAssessmentFiles {
+    [[LTWCocoaPlatform sharedInstance] performSelectorOnMainThread:@selector(setStatus:) withObject:@"Connecting to assessment-file database..." waitUntilDone:NO];
     
+    dbinit();
     dberrhandle(err_handler);
     
     LOGINREC *login = dblogin();
@@ -41,111 +43,34 @@ int err_handler(DBPROCESS * dbproc, int severity, int dberr, int oserr, char *db
     
     DBPROCESS *process = dbopen(login, DB_SERVER);
     //dbuse(process, "ltw");
-    dbfcmd(process, "SELECT * FROM ltw.dbo.UnassessedFiles3");
+    
+    [[LTWCocoaPlatform sharedInstance] performSelectorOnMainThread:@selector(setStatus:) withObject:@"Checking for new assessment files..." waitUntilDone:NO];
+    
+    dbfcmd(process, "SELECT name, data FROM ltw.dbo.UnassessedFiles3;");
     dbsqlexec(process);
     
     while (dbresults(process) != NO_MORE_RESULTS) {
-
         
-		struct COL
-		{ 
-			char *name; 
-			char *buffer; 
-			int type, size, status; 
-		} *columns, *pcol;
-		int ncols;
-		int row_code;
-		
-		
-		ncols = dbnumcols(process);
-        
-		if ((columns = calloc(ncols, sizeof(struct COL))) == NULL) {
-			perror(NULL);
-			exit(1);
-		}
-        
-		/* 
-		 * Read metadata and bind.  
-		 */
-		for (pcol = columns; pcol - columns < ncols; pcol++) {
-			int c = pcol - columns + 1;
-			
-			pcol->name = dbcolname(process, c);
-			pcol->type = dbcoltype(process, c);
-			pcol->size = dbcollen(process, c);
-			
-			if (SYBCHAR != pcol->type) {
-				pcol->size = dbwillconvert(pcol->type, SYBCHAR);
-			}
+        while (dbnextrow(process) != NO_MORE_ROWS) {
+            static char filename[1024];
+            BYTE *data;
+            NSUInteger length;
             
-			printf("%*s ", pcol->size, pcol->name);
+            data = dbdata(process, 1);
+            length = dbdatlen(process, 1);
+            if (length > sizeof filename - 1) length = sizeof filename - 1;
+            strncpy(filename, (char*)data, length);
             
-			if ((pcol->buffer = calloc(1, pcol->size + 1)) == NULL){
-				perror(NULL);
-				exit(1);
-			}
-            
-            dbbind(process, c, NTBSTRINGBIND,	
-					     pcol->size+1, (BYTE*)pcol->buffer);
-                
-			dbnullbind(process, c, &pcol->status);	
-			
-		}
-		printf("\n");
-		
-		/* 
-		 * Print the data to stdout.  
-		 */
-		while ((row_code = dbnextrow(process)) != NO_MORE_ROWS){	
-			switch (row_code) {
-                case REG_ROW:
-                    for (pcol=columns; pcol - columns < ncols; pcol++) {
-                        char *buffer = pcol->status == -1? 
-						"NULL" : pcol->buffer;
-                        printf("%*s ", pcol->size, buffer);
-                    }
-                    printf("\n");
-                    break;
-                    
-                case BUF_FULL:
-                    assert(row_code != BUF_FULL);
-                    break;
-                    
-                case FAIL:
-                    fprintf(stderr, "%s:%d: dbresults failed\n", 
-                            "LTW", __LINE__);
-                    exit(1);
-                    break;
-                    
-                default: 					
-                    printf("Data for computeid %d ignored\n", row_code);
-			}
-            
-            
-		}
-        
-		/* free metadata and data buffers */
-		for (pcol=columns; pcol - columns < ncols; pcol++) {
-			free(pcol->buffer);
-		}
-		free(columns);
-        
-		/* 
-		 * Get row count, if available.   
-		 */
-		if (DBCOUNT(process) > -1)
-			fprintf(stderr, "%d rows affected\n", DBCOUNT(process));
-        
-		/* 
-		 * Check return status 
-		 */
-		if (dbhasretstat(process) == TRUE) {
-			printf("Procedure returned %d\n", dbretstatus(process));
-		}
-
-        
+            FILE *file = fopen(filename, "wb");
+            data = dbdata(process, 2);
+            length = dbdatlen(process, 2);
+            fwrite(data, sizeof *data, length, file);
+            fclose(file);
+        }
         
     }
+    
+    [[LTWCocoaPlatform sharedInstance] performSelectorOnMainThread:@selector(clearStatus) withObject:nil waitUntilDone:NO];
 }
 
 @end

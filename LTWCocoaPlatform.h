@@ -6,6 +6,8 @@
 //  Copyright (c) 2010 __MyCompanyName__. All rights reserved.
 //
 
+#ifndef GTK_PLATFORM
+
 #import <Cocoa/Cocoa.h>
 #import "LTWGUIPlatform.h"
 #import "LTWAssessmentMode.h"
@@ -19,10 +21,8 @@
     IBOutlet NSView *mainView;
     id <LTWAssessmentMode> assessmentMode;
     IBOutlet NSView *assessmentModeView;
-    
-    // Role outlets:
-    IBOutlet NSView *assessmentModeSelector;
-    IBOutlet NSView *articleSelector;
+    IBOutlet NSProgressIndicator *statusSpinner;
+    IBOutlet NSTextField *statusLabel;
 }
 
 @property (assign) NSWindow *window;
@@ -42,3 +42,5 @@
 -(void)setRepresentedValue:(id)value;
 
 @end
+
+#endif

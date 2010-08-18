@@ -14,10 +14,12 @@ typedef int STATUS;
 
 #import <sqlfront.h>
 #import <sqldb.h>
-#import <tds.h>
+//#import <tds.h>
 
 @interface LTWRemoteDatabase : NSObject {
     
 }
+
+-(void)downloadNewAssessmentFiles;
 
 @end
