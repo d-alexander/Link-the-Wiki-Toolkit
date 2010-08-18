@@ -22,6 +22,7 @@
 @protocol LTWGUIPlatform <NSObject>
 
 +(id <LTWGUIPlatform>)sharedInstance;
+-(void)loadNewArticles;
 #ifdef GTK_PLATFORM
 -(GtkWidget*)mainView;
 -(GtkWidget*)componentWithRole:(NSString*)role inView:(GtkWidget*)view;

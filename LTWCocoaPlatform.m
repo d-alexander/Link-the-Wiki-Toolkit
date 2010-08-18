@@ -69,10 +69,12 @@ static LTWCocoaPlatform *sharedInstance = nil;
     LTWRemoteDatabase *remoteDatabase = [[LTWRemoteDatabase alloc] init];
     [backgroundOperations addOperation:[[NSInvocationOperation alloc] initWithTarget:remoteDatabase selector:@selector(downloadNewAssessmentFiles) object:nil]];
     
-    //[[self componentWithRole:@"articleSelector" inView:[self mainView]] setRepresentedValue:[[LTWAssessmentController sharedInstance] articleURLs]];
-    
     NSArray *assessmentModes = [[NSArray arrayWithObject:@"No assessment mode"] arrayByAddingObjectsFromArray:[[LTWAssessmentController sharedInstance] assessmentModes]];
     [[self componentWithRole:@"assessmentModeSelector" inView:[self mainView]] setRepresentedValue:assessmentModes];
+}
+
+-(void)loadNewArticles {
+    [[self componentWithRole:@"articleSelector" inView:[self mainView]] setRepresentedValue:[[LTWAssessmentController sharedInstance] articleURLs]];
 }
 
 #pragma mark Private
@@ -124,6 +126,7 @@ static LTWCocoaPlatform *sharedInstance = nil;
 - (id)init {
     if ((self = [super init])) {
         assessmentMode = nil;
+        [[LTWAssessmentController sharedInstance] setPlatform:self];
     }
     
     return self;

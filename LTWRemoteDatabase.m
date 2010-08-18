@@ -7,6 +7,7 @@
 //
 
 #import "LTWRemoteDatabase.h"
+#import "LTWDatabase.h"
 
 #import "LTWCocoaPlatform.h"
 
@@ -32,7 +33,11 @@ int err_handler(DBPROCESS * dbproc, int severity, int dberr, int oserr, char *db
 }
 
 -(void)downloadNewAssessmentFiles {
+#ifndef GTK_PLATFORM
     [[LTWCocoaPlatform sharedInstance] performSelectorOnMainThread:@selector(setStatus:) withObject:@"Connecting to assessment-file database..." waitUntilDone:NO];
+#else
+    NSLog(@"Connecting to database...");
+#endif
     
     dbinit();
     dberrhandle(err_handler);
@@ -44,33 +49,55 @@ int err_handler(DBPROCESS * dbproc, int severity, int dberr, int oserr, char *db
     DBPROCESS *process = dbopen(login, DB_SERVER);
     //dbuse(process, "ltw");
     
+#ifndef GTK_PLATFORM
     [[LTWCocoaPlatform sharedInstance] performSelectorOnMainThread:@selector(setStatus:) withObject:@"Checking for new assessment files..." waitUntilDone:NO];
+#endif
     
-    dbfcmd(process, "SELECT name, data FROM ltw.dbo.UnassessedFiles3;");
+    dbfcmd(process, "SELECT data FROM ltw.dbo.UnassessedFiles4;");
     dbsqlexec(process);
     
     while (dbresults(process) != NO_MORE_RESULTS) {
         
-        while (dbnextrow(process) != NO_MORE_ROWS) {
+        while (true) {
             static char filename[1024];
-            BYTE *data;
-            NSUInteger length;
+            static int file_number = 0;
+            // NOTE: This WILL currently overwrite existing files!
+            snprintf(filename, sizeof filename, "%s/assessment_file_%d.db", DATA_PATH, file_number++);
             
-            data = dbdata(process, 1);
-            length = dbdatlen(process, 1);
-            if (length > sizeof filename - 1) length = sizeof filename - 1;
-            strncpy(filename, (char*)data, length);
+            static BYTE data[1024];
+            int bytes_read;
             
             FILE *file = fopen(filename, "wb");
-            data = dbdata(process, 2);
-            length = dbdatlen(process, 2);
-            fwrite(data, sizeof *data, length, file);
-            fclose(file);
+            
+            NSUInteger total_bytes_read = 0;
+            while (0 < (bytes_read = dbreadtext(process, data, sizeof data))) {
+                total_bytes_read += bytes_read;
+                fwrite(data, sizeof *data, bytes_read, file);
+            }
+            
+            if (bytes_read == 0) {
+                fclose(file);
+                
+                // NOTE: It would be more efficient if we didn't wait for the data file to be loaded before downloading the next one.
+                LTWDatabase *db = [[LTWDatabase alloc] initWithDataFile:[NSString stringWithUTF8String:filename]];
+                [db loadArticles];
+                
+                continue;
+            }else{
+                fclose(file);
+                unlink(filename);
+                break;
+            }
+            
         }
         
+        break; // TEMP until I can figure out why dbresults doesn't return NO_MORE_RESULTS.
+        
     }
-    
+
+#ifndef GTK_PLATFORM
     [[LTWCocoaPlatform sharedInstance] performSelectorOnMainThread:@selector(clearStatus) withObject:nil waitUntilDone:NO];
+#endif
 }
 
 @end

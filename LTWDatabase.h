@@ -12,10 +12,28 @@
 #import "LTWTokenTag.h"
 #import "LTWArticle.h"
 
+// NOTE: We're relying on each of the pointers in this struct being zeroed automatically.
+typedef struct {
+    sqlite3_stmt *beginTransaction;
+    sqlite3_stmt *commit;
+    sqlite3_stmt *insertTokens;
+    sqlite3_stmt *loadTokens;
+    sqlite3_stmt *insertRange;
+    sqlite3_stmt *loadRanges;
+    sqlite3_stmt *insertTag;
+    sqlite3_stmt *loadTag;
+    sqlite3_stmt *insertArticle;
+    sqlite3_stmt *insertField;
+    sqlite3_stmt *loadArticles;
+} LTWDatabaseStatements;
+
 @class LTWArticle;
 @interface LTWDatabase : NSObject {
     sqlite3 *database;
+    LTWDatabaseStatements statements;
 }
+
+-(id)initWithDataFile:(NSString*)dataFilename;
 
 -(void)beginTransaction;
 -(void)commit;
@@ -43,6 +61,6 @@
 
 -(NSUInteger)insertArticle:(LTWArticle*)article;
 
--(NSDictionary*)loadArticles;
+-(void)loadArticles;
 
 @end

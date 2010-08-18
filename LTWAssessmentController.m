@@ -13,15 +13,17 @@
 
 @implementation LTWAssessmentController
 
+@synthesize platform;
+
 +(LTWAssessmentController*)sharedInstance {
     static LTWAssessmentController *sharedInstance = nil;
     if (!sharedInstance) sharedInstance = [[LTWAssessmentController alloc] init];
     return sharedInstance;
 }
 
--(NSDictionary*)articleDictionary {
-    static NSDictionary *articles = nil;
-    if (!articles) articles = [[[LTWDatabase sharedInstance] loadArticles] retain];
+-(NSMutableDictionary*)articleDictionary {
+    static NSMutableDictionary *articles = nil;
+    if (!articles) articles = [[NSMutableDictionary alloc] init];
     return articles;
 }
 
@@ -31,6 +33,11 @@
 
 -(NSArray*)assessmentModes {
     return [NSArray arrayWithObjects:[[LTWSimpleAssessmentMode alloc] init], [[LTWTestAssessmentMode alloc] init], nil];
+}
+
+-(void)articlesReadyForAssessment:(NSDictionary*)newArticles {
+    [[self articleDictionary] addEntriesFromDictionary:newArticles];
+    [platform loadNewArticles];
 }
 
 -(LTWArticle*)articleWithURL:(NSString*)url {

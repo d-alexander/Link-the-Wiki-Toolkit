@@ -13,10 +13,11 @@
 #import "LTWAssessmentMode.h"
 
 #ifdef __COCOTRON__
-@interface LTWCocoaPlatform : NSObject <LTWGUIPlatform> {
+@interface LTWCocoaPlatform : NSObject <LTWGUIPlatform>
 #else
-@interface LTWCocoaPlatform : NSObject <LTWGUIPlatform, NSApplicationDelegate, NSTableViewDataSource, NSTableViewDelegate> {
+@interface LTWCocoaPlatform : NSObject <LTWGUIPlatform, NSApplicationDelegate, NSTableViewDataSource, NSTableViewDelegate>
 #endif
+{
     IBOutlet NSWindow *window;
     IBOutlet NSView *mainView;
     id <LTWAssessmentMode> assessmentMode;
@@ -28,7 +29,6 @@
 @property (assign) NSWindow *window;
 
 +(LTWCocoaPlatform*)sharedInstance;
-
 -(NSInteger)numberOfRowsInTableView:(NSTableView*)tableView;
 -(id)tableView:(NSTableView*)tableView objectValueForTableColumn:(NSTableColumn*)tableColumn row:(NSInteger)rowIndex;
 
