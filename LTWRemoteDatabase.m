@@ -38,12 +38,22 @@ int err_handler(DBPROCESS * dbproc, int severity, int dberr, int oserr, char *db
 #endif
     
     // This is the file I'm using to test the assessment tool until LTWRemoteDatabase can actually load files from a remote server.
-    LTWDatabase *testDB = [[LTWDatabase alloc] initWithDataFile:(@"" DATA_PATH @"/tokens.db")];
+    LTWDatabase *testDB = [[LTWDatabase alloc] initWithDataFile:(@"" DATA_PATH @"tokens.db")];
+    NSLog(@"Calling loadArticles.");
     [testDB loadArticles];
+    NSLog(@"loadArticles finished.");
     
 #ifndef GTK_PLATFORM
     [[LTWCocoaPlatform sharedInstance] performSelectorOnMainThread:@selector(clearStatus) withObject:nil waitUntilDone:NO];
 #endif
+}
+
+-(void)startDownloadThread {
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    
+    [self downloadNewAssessmentFiles];
+    
+    [pool drain];
 }
 
 /*
@@ -77,7 +87,7 @@ int err_handler(DBPROCESS * dbproc, int severity, int dberr, int oserr, char *db
             static char filename[1024];
             static int file_number = 0;
             // NOTE: This WILL currently overwrite existing files!
-            snprintf(filename, sizeof filename, "%s/assessment_file_%d.db", DATA_PATH, file_number++);
+            snprintf(filename, sizeof filename, "%sassessment_file_%d.db", DATA_PATH, file_number++);
             
             static BYTE data[1024];
             int bytes_read;

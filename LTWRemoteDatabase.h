@@ -21,5 +21,6 @@ typedef int STATUS;
 }
 
 -(void)downloadNewAssessmentFiles;
+-(void)startDownloadThread;
 
 @end

@@ -15,14 +15,14 @@
 -(id)initWithDataFile:(NSString*)dataFilename {
     if (self = [super init]) {
         sqlite3_open([dataFilename UTF8String], &database);
-        
+        NSLog(@"Loading database from file %@", dataFilename);
     }
     return self;
 }
 
 +(LTWDatabase*)sharedInstance {
     static LTWDatabase *instance = nil;
-    if (!instance) instance = [[LTWDatabase alloc] initWithDataFile:(@"" DATA_PATH @"/tokens.db")];
+    if (!instance) instance = [[LTWDatabase alloc] initWithDataFile:(@"" DATA_PATH @"tokens.db")];
     return instance;
 }
 

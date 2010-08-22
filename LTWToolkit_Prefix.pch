@@ -2,7 +2,7 @@
 // Prefix header for all source files of the 'LTWToolkit' target in the 'LTWToolkit' project
 //
 
-#define DATA_PATH "/Users/david/Desktop/phd"
+#define DATA_PATH "/Users/david/Desktop/phd/"
 
 #ifdef __OBJC__
     #import <Cocoa/Cocoa.h>

@@ -70,6 +70,8 @@
 		634021751216EBA000E50C9D /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = 634021741216EB9F00E50C9D /* sqlite3.c */; };
 		634021761216EBA000E50C9D /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = 634021741216EB9F00E50C9D /* sqlite3.c */; };
 		634021771216EBA000E50C9D /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = 634021741216EB9F00E50C9D /* sqlite3.c */; };
+		634319D512214DB5004542C6 /* inex_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 634319D412214DB4004542C6 /* inex_icon.png */; };
+		634319D612214DB5004542C6 /* inex_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 634319D412214DB4004542C6 /* inex_icon.png */; };
 		634DBE86121BE4E100C73057 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 634DBE85121BE4E100C73057 /* Foundation.framework */; };
 		634DBE88121BE4E100C73057 /* LTWKLDivergenceCalculator.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 634DBE87121BE4E100C73057 /* LTWKLDivergenceCalculator.1 */; };
 		634DBE8A121BE4E100C73057 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 634DBE89121BE4E100C73057 /* main.m */; };
@@ -228,6 +230,7 @@
 		634020E41216E4EC00E50C9D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		634020EA1216E4ED00E50C9D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
 		634021741216EB9F00E50C9D /* sqlite3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sqlite3.c; sourceTree = "<group>"; };
+		634319D412214DB4004542C6 /* inex_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = inex_icon.png; path = /Users/david/Downloads/inex_icon.png; sourceTree = "<absolute>"; };
 		6347EEC8120E7CB3006FAB5B /* LTWToolkit-Info copy.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "LTWToolkit-Info copy.plist"; sourceTree = "<group>"; };
 		634DBE82121BE4E000C73057 /* LTWKLDivergenceCalculator */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = LTWKLDivergenceCalculator; sourceTree = BUILT_PRODUCTS_DIR; };
 		634DBE85121BE4E100C73057 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -433,6 +436,7 @@
 		29B97314FDCFA39411CA2CEA /* LTWToolkit */ = {
 			isa = PBXGroup;
 			children = (
+				634319D412214DB4004542C6 /* inex_icon.png */,
 				63C1100E121F688700BA4FD9 /* Miscellaneous Files */,
 				6356FAE1120A35C60072FF20 /* Tools */,
 				6356FAAA120979740072FF20 /* Python */,
@@ -1068,6 +1072,7 @@
 				6326E79F12190E700031AA7C /* LTWSimpleAssessmentMode.xib in Resources */,
 				63B2AF3E121A9A6F002B8A67 /* MainWindow.glade in Resources */,
 				6320C05E1220F88300461FD8 /* SimpleAssessmentMode.glade in Resources */,
+				634319D612214DB5004542C6 /* inex_icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1081,6 +1086,7 @@
 				638F16BF12127CEB00782C3F /* LTWTestAssessmentMode.xib in Resources */,
 				6326E79E12190E700031AA7C /* LTWSimpleAssessmentMode.xib in Resources */,
 				63B2AF3D121A9A6F002B8A67 /* MainWindow.glade in Resources */,
+				634319D512214DB5004542C6 /* inex_icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
