@@ -17,6 +17,10 @@
 @interface LTWAssessmentController : NSObject {
     LTWCorpus *corpus;
     id <LTWGUIPlatform> platform;
+    
+#ifdef GTK_PLATFORM
+    NSDictionary *assessmentsReady;
+#endif
 }
 
 +(LTWAssessmentController*)sharedInstance;
@@ -24,7 +28,11 @@
 -(NSArray*)assessmentModes;
 -(LTWArticle*)articleWithURL:(NSString*)url;
 -(void)articlesReadyForAssessment:(NSDictionary*)newArticles;
+-(NSDictionary*)targetTreeForArticle:(LTWArticle*)article;
 
 @property (nonatomic, retain) id <LTWGUIPlatform> platform;
+#ifdef GTK_PLATFORM
+@property (retain) NSDictionary *assessmentsReady;
+#endif
 
 @end

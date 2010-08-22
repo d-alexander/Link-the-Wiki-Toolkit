@@ -254,4 +254,11 @@
     inMemory = YES;
 }
 
+-(void)dealloc {
+    [text release];
+    [tokens release];
+    [tagOccurrences release];
+    [super dealloc];
+}
+
 @end

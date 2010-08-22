@@ -132,7 +132,7 @@ NSString *LTWTokenTagsChangedNotification = @"LTWTokenTagsChangedNotification";
 }
 
 -(void)dealloc{
-    NSLog(@"%@ deallocated", [self class]); // might not be safe to try to log the description of the object itself!
+    //NSLog(@"%@ deallocated", [self class]); // might not be safe to try to log the description of the object itself!
     [super dealloc];
 }
 

@@ -34,6 +34,21 @@ int err_handler(DBPROCESS * dbproc, int severity, int dberr, int oserr, char *db
 
 -(void)downloadNewAssessmentFiles {
 #ifndef GTK_PLATFORM
+    [[LTWCocoaPlatform sharedInstance] performSelectorOnMainThread:@selector(setStatus:) withObject:@"Loading assessment file..." waitUntilDone:NO];
+#endif
+    
+    // This is the file I'm using to test the assessment tool until LTWRemoteDatabase can actually load files from a remote server.
+    LTWDatabase *testDB = [[LTWDatabase alloc] initWithDataFile:(@"" DATA_PATH @"/tokens.db")];
+    [testDB loadArticles];
+    
+#ifndef GTK_PLATFORM
+    [[LTWCocoaPlatform sharedInstance] performSelectorOnMainThread:@selector(clearStatus) withObject:nil waitUntilDone:NO];
+#endif
+}
+
+/*
+-(void)downloadNewAssessmentFiles {
+#ifndef GTK_PLATFORM
     [[LTWCocoaPlatform sharedInstance] performSelectorOnMainThread:@selector(setStatus:) withObject:@"Connecting to assessment-file database..." waitUntilDone:NO];
 #else
     NSLog(@"Connecting to database...");
@@ -99,5 +114,6 @@ int err_handler(DBPROCESS * dbproc, int severity, int dberr, int oserr, char *db
     [[LTWCocoaPlatform sharedInstance] performSelectorOnMainThread:@selector(clearStatus) withObject:nil waitUntilDone:NO];
 #endif
 }
-
+*/
+ 
 @end

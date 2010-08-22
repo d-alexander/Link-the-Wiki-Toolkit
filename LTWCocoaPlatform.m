@@ -53,6 +53,61 @@ static LTWCocoaPlatform *sharedInstance = nil;
     [statusLabel setStringValue:@""];
 }
 
+static NSMutableDictionary *representedValues = nil; // Stores data that is currently being shown.
+
+-(void)setRepresentedValue:(id)value forRole:(NSString*)role {
+    
+    NSView *component = [self componentWithRole:role inView:[self mainView]];
+    
+    // This tries to "translate" the given value into something that can be displayed by the view.
+    
+    BOOL success = NO;
+    
+    if ([value isKindOfClass:[NSArray class]]) {
+        if (!representedValues) representedValues = [[NSMutableDictionary alloc] init];
+        [representedValues setObject:value forKey:[NSValue valueWithNonretainedObject:component]];
+        if ([component isKindOfClass:[NSPopUpButton class]]) {
+            NSPopUpButton *button = (NSPopUpButton*)component;
+            [button removeAllItems];
+            for (id entry in (NSArray*)value) {
+                [button addItemWithTitle:[entry description]];
+            }
+            [button setAction:@selector(popUpButtonSelectionDidChange:)];
+            [button setTarget:[LTWCocoaPlatform sharedInstance]];
+            success = YES;
+        }else if ([component isKindOfClass:[NSTableView class]]) {
+            [(NSTableView*)component setDataSource:[LTWCocoaPlatform sharedInstance]];
+            [(NSTableView*)component setDelegate:[LTWCocoaPlatform sharedInstance]];
+            [(NSTableView*)component reloadData]; // NOTE: This must be called AFTER representedValues has been changed.
+            success = YES;
+        }
+    }else if ([value isKindOfClass:[NSDictionary class]]) {
+        if (!representedValues) representedValues = [[NSMutableDictionary alloc] init];
+        [representedValues setObject:value forKey:[NSValue valueWithNonretainedObject:component]];
+        if ([component isKindOfClass:[NSOutlineView class]]) {
+            [(NSOutlineView*)component setDataSource:[LTWCocoaPlatform sharedInstance]];
+            //[(NSOutlineView*)component setDelegate:[LTWCocoaPlatform sharedInstance]];
+            [(NSOutlineView*)component reloadData]; // NOTE: This must be called AFTER representedValues has been changed.
+            success = YES;
+        }
+    }else if ([value isKindOfClass:[LTWTokens class]]) {
+        if ([component isKindOfClass:[LTWTokensView class]]) {
+            [(LTWTokensView*)component setTokens:(LTWTokens*)value];
+            success = YES;
+        }else if ([component isKindOfClass:[LTWOverlayTokensView class]]) {
+            [(LTWOverlayTokensView*)component setTokens:(LTWTokens*)value];
+            success = YES;
+        }else if ([component isKindOfClass:[NSTextField class]]) {
+            [(NSTextField*)component setStringValue:[value description]];
+            success = YES;
+        }
+    }
+    
+    if (!success) {
+        NSLog(@"Unable to represent %@ in %@.", value, self);
+    }
+}
+
 
 #pragma mark NSApplicationDelegate
 
@@ -70,11 +125,11 @@ static LTWCocoaPlatform *sharedInstance = nil;
     [backgroundOperations addOperation:[[NSInvocationOperation alloc] initWithTarget:remoteDatabase selector:@selector(downloadNewAssessmentFiles) object:nil]];
     
     NSArray *assessmentModes = [[NSArray arrayWithObject:@"No assessment mode"] arrayByAddingObjectsFromArray:[[LTWAssessmentController sharedInstance] assessmentModes]];
-    [[self componentWithRole:@"assessmentModeSelector" inView:[self mainView]] setRepresentedValue:assessmentModes];
+    [self setRepresentedValue:assessmentModes forRole:@"assessmentModeSelector"];
 }
 
 -(void)loadNewArticles {
-    [[self componentWithRole:@"articleSelector" inView:[self mainView]] setRepresentedValue:[[LTWAssessmentController sharedInstance] articleURLs]];
+    [self setRepresentedValue:[[LTWAssessmentController sharedInstance] articleURLs] forRole:@"articleSelector"];
 }
 
 #pragma mark Private
@@ -99,12 +154,17 @@ static LTWCocoaPlatform *sharedInstance = nil;
         NSRect windowFrame = [[mainView window] frame];
         windowFrame.size = NSMakeSize(windowFrame.size.width + (size.width - oldSize.width), windowFrame.size.height + (size.height - oldSize.height));
         [[mainView window] setFrame:windowFrame display:YES animate:YES];
+        
+        // NOTE: Should also redo all value-assignments for roles here (so that, for example, if an article is selected in the old assessment mode it will still be selected in the new one).
     }else if ([role isEqual:@"articleSelector"]) {
-        [[self componentWithRole:@"sourceArticleBody" inView:[assessmentMode mainViewForPlatform:self]] setRepresentedValue:[[[LTWAssessmentController sharedInstance] articleWithURL:newSelection] tokensForField:@"body"]];
-        [[self componentWithRole:@"sourceArticleTitle" inView:[assessmentMode mainViewForPlatform:self]] setRepresentedValue:[[[[LTWAssessmentController sharedInstance] articleWithURL:newSelection] tokensForField:@"title"] description]];
+        LTWArticle *article = [[LTWAssessmentController sharedInstance] articleWithURL:newSelection];
+        [self setRepresentedValue:[article tokensForField:@"body"] forRole:@"sourceArticleBody"];
+        [self setRepresentedValue:[[article tokensForField:@"title"] description] forRole:@"sourceArticleTitle"];
+        [self setRepresentedValue:[[LTWAssessmentController sharedInstance] targetTreeForArticle:article] forRole:@"sourceArticleLinks"];
     }else if ([role isEqual:@"sourceArticleLinks"]) {
-        [[self componentWithRole:@"targetArticleBody" inView:[assessmentMode mainViewForPlatform:self]] setRepresentedValue:[[[LTWAssessmentController sharedInstance] articleWithURL:newSelection] tokensForField:@"body"]];
-        [[self componentWithRole:@"targetArticleTitle" inView:[assessmentMode mainViewForPlatform:self]] setRepresentedValue:[[[[LTWAssessmentController sharedInstance] articleWithURL:newSelection] tokensForField:@"title"] description]];
+        LTWArticle *article = [[LTWAssessmentController sharedInstance] articleWithURL:newSelection];
+        [self setRepresentedValue:[article tokensForField:@"body"] forRole:@"targetArticleBody"];
+        [self setRepresentedValue:[[article tokensForField:@"title"] description] forRole:@"targetArticleTitle"];
     }
 }
 
@@ -145,8 +205,6 @@ static LTWCocoaPlatform *sharedInstance = nil;
 
 #pragma mark NSTableViewDataSource
 
-static NSMutableDictionary *representedValues = nil; // Stores data that is currently being shown.
-
 -(NSInteger)numberOfRowsInTableView:(NSTableView*)tableView {
     NSArray *array = [representedValues objectForKey:[NSValue valueWithNonretainedObject:tableView]];
     return array ? [array count] : 0;
@@ -170,6 +228,45 @@ static NSMutableDictionary *representedValues = nil; // Stores data that is curr
     
     [self selectionChangedTo:[array objectAtIndex:selectedIndex] forComponent:sender];
 }
+
+#pragma mark NSOutlineViewDataSource
+
+-(id)outlineView:(NSOutlineView*)sender child:(NSInteger)index ofItem:(id)item {
+    if (!item) {
+        item = [representedValues objectForKey:[NSValue valueWithNonretainedObject:sender]];
+    }
+    if (!item || ![item isKindOfClass:[NSDictionary class]]) return nil;
+    NSDictionary *dictionary = (NSDictionary*)item;
+    
+    // NOTE: This relies on [dictionary allKeys] returning the keys in the same order each time (unless the dictionary is mutated, in which case we SHOULD reload the whole thing anyway).
+    return [[dictionary allKeys] objectAtIndex:index];
+}
+
+-(BOOL)outlineView:(NSOutlineView*)sender isItemExpandable:(id)item {
+    if (!item) {
+        item = [representedValues objectForKey:[NSValue valueWithNonretainedObject:sender]];
+    }
+    if (!item || ![item isKindOfClass:[NSDictionary class]]) return NO;
+    NSDictionary *dictionary = (NSDictionary*)item;
+    
+    return [dictionary count] > 0;
+}
+
+-(id)outlineView:(NSOutlineView*)sender objectValueForTableColumn:(NSTableColumn*)tableColumn byItem:(id)item {
+    return item;
+}
+
+-(BOOL)outlineView:(NSOutlineView*)sender numberOfChildrenOfItem:(id)item {
+    if (!item) {
+        item = [representedValues objectForKey:[NSValue valueWithNonretainedObject:sender]];
+    }
+    if (!item || ![item isKindOfClass:[NSDictionary class]]) return 0;
+    NSDictionary *dictionary = (NSDictionary*)item;
+    
+    return [dictionary count];
+}
+
+#pragma mark NSOutlineViewDelegate
 
 #pragma mark NSPopUpButton actions
 
@@ -208,36 +305,6 @@ static NSMutableDictionary *roles = nil;
 -(id)roleIfExists {
     if (!roles) roles = [[NSMutableDictionary alloc] init];
     return [roles objectForKey:[NSValue valueWithNonretainedObject:self]];
-}
-
--(void)setRepresentedValue:(id)value {
-    // This tries to "translate" the given value into something that can be displayed by the view.
-    
-    if ([value isKindOfClass:[NSArray class]]) {
-        if (!representedValues) representedValues = [[NSMutableDictionary alloc] init];
-        [representedValues setObject:value forKey:[NSValue valueWithNonretainedObject:self]];
-        if ([self isKindOfClass:[NSPopUpButton class]]) {
-            NSPopUpButton *button = (NSPopUpButton*)self;
-            [button removeAllItems];
-            for (id entry in (NSArray*)value) {
-                [button addItemWithTitle:[entry description]];
-            }
-            [button setAction:@selector(popUpButtonSelectionDidChange:)];
-            [button setTarget:[LTWCocoaPlatform sharedInstance]];
-        }else if ([self isKindOfClass:[NSTableView class]]) {
-            [(NSTableView*)self setDataSource:[LTWCocoaPlatform sharedInstance]];
-            [(NSTableView*)self setDelegate:[LTWCocoaPlatform sharedInstance]];
-            [(NSTableView*)self reloadData]; // NOTE: This must be called AFTER representedValues has been changed.
-        }
-    }else if ([value isKindOfClass:[LTWTokens class]]) {
-        if ([self isKindOfClass:[LTWTokensView class]]) {
-            [(LTWTokensView*)self setTokens:(LTWTokens*)value];
-        }else if ([self isKindOfClass:[LTWOverlayTokensView class]]) {
-            [(LTWOverlayTokensView*)self setTokens:(LTWTokens*)value];
-        }
-    }else{
-        NSLog(@"Unable to represent %@ in %@.", value, self);
-    }
 }
 
 @end

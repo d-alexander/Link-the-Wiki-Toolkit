@@ -14,6 +14,11 @@
 			<key>orderHint</key>
 			<integer>3</integer>
 		</dict>
+		<key>LTWKLDivergenceCalculator.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>5</integer>
+		</dict>
 		<key>LTWTeAraSplitter.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -45,6 +50,8 @@
 		<key>LTWAssessmentTool-Windows.app</key>
 		<true/>
 		<key>LTWAssessmentTool.app</key>
+		<true/>
+		<key>LTWKLDivergenceCalculator</key>
 		<true/>
 		<key>LTWTeAraSplitter</key>
 		<true/>

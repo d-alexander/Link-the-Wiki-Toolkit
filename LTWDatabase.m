@@ -163,7 +163,12 @@
         [article addTokens:[[[LTWTokens alloc] initWithDatabase:self tokensID:tokensID] autorelease] forField:fieldName];
     }
     
+#ifndef GTK_PLATFORM
     [[LTWAssessmentController sharedInstance] performSelectorOnMainThread:@selector(articlesReadyForAssessment:) withObject:articles waitUntilDone:NO];
+#else
+    // NOTE: This is a temporary hack until I can figure out a nice way of passing messages using GTK. It is only guaranteed to work if there is at most one set of assessments to be loaded; otherwise, a race condition could cause some assessments to be lost.
+    [[LTWAssessmentController sharedInstance] setAssessmentsReady:articles];
+#endif
 }
 
 

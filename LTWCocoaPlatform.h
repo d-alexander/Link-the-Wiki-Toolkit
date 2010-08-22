@@ -15,7 +15,7 @@
 #ifdef __COCOTRON__
 @interface LTWCocoaPlatform : NSObject <LTWGUIPlatform>
 #else
-@interface LTWCocoaPlatform : NSObject <LTWGUIPlatform, NSApplicationDelegate, NSTableViewDataSource, NSTableViewDelegate>
+@interface LTWCocoaPlatform : NSObject <LTWGUIPlatform, NSApplicationDelegate, NSTableViewDataSource, NSTableViewDelegate, NSOutlineViewDelegate>
 #endif
 {
     IBOutlet NSWindow *window;
@@ -31,7 +31,7 @@
 +(LTWCocoaPlatform*)sharedInstance;
 -(NSInteger)numberOfRowsInTableView:(NSTableView*)tableView;
 -(id)tableView:(NSTableView*)tableView objectValueForTableColumn:(NSTableColumn*)tableColumn row:(NSInteger)rowIndex;
-
+-(void)setRepresentedValue:(id)value forRole:(NSString*)role;
 @end
 
 @interface NSView (RoleStorage)
@@ -39,7 +39,6 @@
 -(void)setValue:(id)value forUndefinedKey:(NSString*)key;
 -(id)valueForUndefinedKey:(NSString*)key;
 -(id)roleIfExists;
--(void)setRepresentedValue:(id)value;
 
 @end
 

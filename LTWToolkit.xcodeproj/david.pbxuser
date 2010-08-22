@@ -49,6 +49,7 @@
 			63D51D92120EC8EA00FA40B8 /* LTWToolkit-Windows */,
 			63BAE8E7121236B7008127C4 /* LTWAssessmentTool */,
 			634020DC1216E4EA00E50C9D /* LTWAssessmentTool-Windows */,
+			634DBE83121BE4E000C73057 /* LTWKLDivergenceCalculator */,
 		);
 		perUserDictionary = {
 			"PBXConfiguration.PBXBreakpointsDataSource.v1:1CA1AED706398EBD00589147" = {
@@ -721,6 +722,39 @@
 		executableUserSymbolLevel = 0;
 		libgmallocEnabled = 0;
 		name = "LTWAssessmentTool-Windows";
+		showTypeColumn = 0;
+		sourceDirectories = (
+		);
+	};
+	634DBE81121BE4E000C73057 /* LTWKLDivergenceCalculator */ = {
+		activeExec = 0;
+		executables = (
+			634DBE83121BE4E000C73057 /* LTWKLDivergenceCalculator */,
+		);
+	};
+	634DBE83121BE4E000C73057 /* LTWKLDivergenceCalculator */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 0;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		dataTipCustomDataFormattersEnabled = 1;
+		dataTipShowTypeColumn = 1;
+		dataTipSortType = 0;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = LTWKLDivergenceCalculator;
 		showTypeColumn = 0;
 		sourceDirectories = (
 		);

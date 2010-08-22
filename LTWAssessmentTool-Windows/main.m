@@ -15,9 +15,10 @@ int main(int argc, char *argv[])
 {
 
     //return NSApplicationMain(argc,  (const char **) argv);
-    
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     gtk_init(&argc, &argv);
     [[LTWGTKPlatform sharedInstance] run];
+    [pool drain];
     return 0;
 }
 
