@@ -125,7 +125,7 @@ gboolean checkForNewAssessments(void *data) {
         
         // NOTE: Should also redo all value-assignments for roles here (so that, for example, if an article is selected in the old assessment mode it will still be selected in the new one).
     }else if ([role isEqual:@"articleSelector"]) {
-        LTWArticle *article = [[LTWAssessmentController sharedInstance] articleWithURL:newSelection];
+        LTWArticle *article = newSelection; // NOTE: The Cocoa platform takes newSelection as the URL, not the LTWArticle itself; should we do so as well?
         [self setRepresentedValue:[article tokensForField:@"body"] forRole:@"sourceArticleBody"];
         [self setRepresentedValue:[[article tokensForField:@"title"] description] forRole:@"sourceArticleTitle"];
         [self setRepresentedValue:[[LTWAssessmentController sharedInstance] targetTreeForArticle:article] forRole:@"sourceArticleLinks"];
@@ -161,7 +161,7 @@ void comboBoxSelectionChanged(GtkComboBox *sender, void *data) {
     NSArray *array;
     if ([representedValue isKindOfClass:[NSArray class]]) {
         array = (NSArray*)representedValue;
-    }else if ([representedValue isKindOfClass:[NSArray class]]) {
+    }else if ([representedValue isKindOfClass:[NSDictionary class]]) {
         array = [(NSDictionary*)representedValue allKeys];
     }else{
         return;
@@ -170,30 +170,37 @@ void comboBoxSelectionChanged(GtkComboBox *sender, void *data) {
     NSInteger selectedIndex = gtk_combo_box_get_active(sender);
     if (selectedIndex >= [array count]) return;
     
-    [[LTWGTKPlatform sharedInstance] selectionChangedTo:[array objectAtIndex:selectedIndex] forComponent:GTK_WIDGET(sender)];
+    id selectedValue = [array objectAtIndex:selectedIndex];
+    if ([representedValue isKindOfClass:[NSDictionary class]]) selectedValue = [(NSDictionary*)representedValue objectForKey:selectedValue];
+    
+    [[LTWGTKPlatform sharedInstance] selectionChangedTo:selectedValue forComponent:GTK_WIDGET(sender)];
 }
 
-void treeViewSelectionChanged(GtkComboBox *sender, void *data) {
+void treeViewSelectionChanged(GtkTreeView *sender, void *data) {
     if (!representedValues) representedValues = [[NSMutableDictionary alloc] init];
     id representedValue = [representedValues objectForKey:[NSValue valueWithPointer:sender]];
     if (!representedValue) return;
     NSArray *array;
     if ([representedValue isKindOfClass:[NSArray class]]) {
         array = (NSArray*)representedValue;
-    }else if ([representedValue isKindOfClass:[NSArray class]]) {
+    }else if ([representedValue isKindOfClass:[NSDictionary class]]) {
         array = [(NSDictionary*)representedValue allKeys];
     }else{
         return;
     }
     
-    GtkTreeSelection *selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(selection));
+    GtkTreeSelection *selection = gtk_tree_view_get_selection(sender);
     GtkTreeIter iter;
     GtkTreeModel *model;
+    NSLog(@"about to call gtk_tree_selection_get_selected(%p, %p, %p)", selection, &model, &iter);
     if (gtk_tree_selection_get_selected(selection, &model, &iter)) {
         GtkTreePath *path = gtk_tree_model_get_path(model, &iter);
         NSUInteger selectedIndex = gtk_tree_path_get_indices(path)[0];
+        NSLog(@"selectedIndex = %u", selectedIndex);
         if (selectedIndex >= [array count]) return;
-        [[LTWGTKPlatform sharedInstance] selectionChangedTo:[array objectAtIndex:selectedIndex] forComponent:GTK_WIDGET(sender)];
+        id selectedValue = [array objectAtIndex:selectedIndex];
+        if ([representedValue isKindOfClass:[NSDictionary class]]) selectedValue = [(NSDictionary*)representedValue objectForKey:selectedValue];
+        [[LTWGTKPlatform sharedInstance] selectionChangedTo:selectedValue forComponent:GTK_WIDGET(sender)];
         gtk_tree_path_free(path);
     }else{
         // NOTE: Should we do anything with a nil selection?
@@ -204,6 +211,33 @@ typedef struct {
     GtkTextTag *tag;
     GtkTextMark *start;
 } HTMLConversionStackEntry;
+
+BOOL tagForXMLToken(LTWTokens *tokens, NSUInteger tokenIndex, GtkTextBuffer *buffer, GtkTextTag **tag) {
+    // NOTE: These comparisons should be made case-insensitive.
+    NSString *tagName = [[tokens _text] substringWithRange:[tokens rangeOfTokenAtIndex:tokenIndex]];
+    
+    if ([tagName isEqual:@"h3"]) {
+        *tag = gtk_text_buffer_create_tag(buffer, NULL, "scale", PANGO_SCALE_LARGE, NULL);
+        GtkTextIter iter;
+        gtk_text_buffer_get_end_iter(buffer, &iter);
+        gtk_text_buffer_insert(buffer, &iter, "\n", 1);
+        return YES;
+    }else if ([tagName isEqual:@"p"]) {
+        *tag = NULL;
+        GtkTextIter iter;
+        gtk_text_buffer_get_end_iter(buffer, &iter);
+        gtk_text_buffer_insert(buffer, &iter, "\n", 1);
+        return YES;
+    }else if ([tagName isEqual:@"br"]) {
+        GtkTextIter iter;
+        gtk_text_buffer_get_end_iter(buffer, &iter);
+        gtk_text_buffer_insert(buffer, &iter, "\n", 1);
+        return NO;
+    }
+    
+    *tag = NULL;
+    return YES;
+}
 
 void insertHTMLTokensIntoBuffer(GtkTextBuffer *buffer, LTWTokens *tokens) {
     NSMutableArray *stack = [NSMutableArray array];
@@ -236,22 +270,32 @@ void insertHTMLTokensIntoBuffer(GtkTextBuffer *buffer, LTWTokens *tokens) {
                 gtk_text_buffer_apply_tag(buffer, entry->tag, &start, &end);
             }
         }else if (isXML) { // start tag
-            HTMLConversionStackEntry *entry = malloc(sizeof *entry);
+            // NOTE: This is messy. The tagForXMLToken function determines what the GtkTextTag should be for a given XML start tag, but sometimes there shouldn't be a tag, and sometimes we shouldn't even add an HTMLConversionStackEntry because the XML tag won't have a corresponding end-tag.
+            // So, we return the GtkTextTag itself through a pointer (which may be NULL) and the return value specifies whether to add an entry to the stack at all.
+            // It is possible for an XML tag not to result in an entry being created, despite having an effect on the buffer (e.g. <br> inserts a newline). Therefore, we also pass the buffer itself.
+            GtkTextTag *tag = NULL;
+            BOOL addEntry = tagForXMLToken(tokens, tokenIndex, buffer, &tag);
             
-            // NOTE: Should probably reuse tags when we want to create identical text properties more than once.
-            entry->tag = gtk_text_buffer_create_tag(buffer, NULL, "scale", PANGO_SCALE_LARGE, NULL);
+            if (addEntry) {
+                HTMLConversionStackEntry *entry = malloc(sizeof *entry);
             
-            // Would it be better to create two marks -- start and end -- with left and right gravity respecively, and then insert the text "between" the marks? Would this be more efficient?
-            entry->start = gtk_text_mark_new(NULL, YES); // create mark with left gravity and no name
-            GtkTextIter iter;
-            gtk_text_buffer_get_end_iter(buffer, &iter);
-            gtk_text_buffer_add_mark(buffer, entry->start, &iter);
+                // NOTE: Should probably reuse tags when we want to create identical text properties more than once.
+                entry->tag = tag;
             
-            [stack addObject:[NSValue valueWithPointer:entry]];
+                // Would it be better to create two marks -- start and end -- with left and right gravity respecively, and then insert the text "between" the marks? Would this be more efficient?
+                entry->start = gtk_text_mark_new(NULL, YES); // create mark with left gravity and no name
+                GtkTextIter iter;
+                gtk_text_buffer_get_end_iter(buffer, &iter);
+                gtk_text_buffer_add_mark(buffer, entry->start, &iter);
+                
+                [stack addObject:[NSValue valueWithPointer:entry]];
+            }
         }else{ // not XML
             GtkTextIter iter;
             gtk_text_buffer_get_end_iter(buffer, &iter);
             gtk_text_buffer_insert(buffer, &iter, [[tokensText substringWithRange:[tokens rangeOfTokenAtIndex:tokenIndex]] UTF8String], -1);
+            gtk_text_buffer_get_end_iter(buffer, &iter);
+            gtk_text_buffer_insert(buffer, &iter, " ", 1);
         }
     }
     
@@ -285,7 +329,16 @@ void insertHTMLTokensIntoBuffer(GtkTextBuffer *buffer, LTWTokens *tokens) {
         }
         
         if (GTK_IS_TREE_VIEW(component)) {
+            GtkCellRenderer *cell = gtk_cell_renderer_text_new ();
+            gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (component),
+                                                         -1,      
+                                                         "Title",  
+                                                         cell,
+                                                         "text", 0,
+                                                         NULL);
+            
             gtk_tree_view_set_model(GTK_TREE_VIEW(component), GTK_TREE_MODEL(store));
+            // NOTE: The documentation says "cursor-changed"; why doesn't it work unless I change it to "cursor_changed"?
             g_signal_connect(G_OBJECT(component), "cursor_changed", G_CALLBACK(treeViewSelectionChanged), NULL);
             if (!representedValues) representedValues = [[NSMutableDictionary alloc] init];
             [representedValues setObject:value forKey:[NSValue valueWithPointer:component]];

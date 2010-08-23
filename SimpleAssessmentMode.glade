@@ -12,6 +12,8 @@
             <property name="height_request">500</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
+            <property name="wrap_mode">word</property>
+            <property name="justification">fill</property>
           </object>
           <packing>
             <property name="x">16</property>
