@@ -10,17 +10,34 @@
 
 @implementation LTWOverlayRect
 
+@synthesize frame;
+
 -(id)initWithTextView:(NSTextView*)theTextView characterRange:(NSRange)theCharacterRange {
     if (self = [super init]) {
-        textView = theTextView;
+        textView = [theTextView retain];
         characterRange = theCharacterRange;
         
         NSRange glyphRange = [[textView layoutManager] glyphRangeForCharacterRange:characterRange actualCharacterRange:NULL];
         frame = [[textView layoutManager]  boundingRectForGlyphRange:glyphRange inTextContainer:[textView textContainer]];
         
+        rectType = DIRECT_COCOA;
+        
     }
     return self;
 }
+
+#ifdef GTK_PLATFORM
+-(id)initWithGtkTextView:(GtkTextView*)theTextView characterRange:(NSRange)theCharacterRange gdkRect:(GdkRectangle)theRect {
+    if (self = [super init]) {
+        // NOTE: When we adopt GTK's reference-counting, we need to do the equivalent of "retain" here. (And lots of other places, but they'll mostly be in LTWGTKPlatorm.)
+        gtkTextView = theTextView;
+        
+        characterRange = theCharacterRange;
+        frame = NSMakeRect(theRect.x, theRect.y, theRect.width, theRect.height);
+    }
+    return self;
+}
+#endif
 
 -(NSRect)frame {
     return frame;

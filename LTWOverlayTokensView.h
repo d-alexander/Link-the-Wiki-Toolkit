@@ -8,6 +8,10 @@
 
 #import <Cocoa/Cocoa.h>
 
+#ifdef GTK_PLATFORM
+#import <gtk/gtk.h>
+#endif
+
 #import "LTWTokens.h"
 
 /*
@@ -15,19 +19,32 @@
  The position of an LTWOverlayRect is based on the CURRENT position of the tokens that it was based on. An LTWOverlayRect can either be created directly from a sequence of tokens (in which case it is the bounding rect of those tokens), or as some function of existing LTWOverlayRects. (For example, it could be the centroid of a set of LTWOverlayRects.) If some tokens change their position, this will cause all LTWOverlayRects based on them -- and all LTWOverlayRects based on those, etc. -- to move as well. All of this will be animated.
  */
 typedef enum {
-    DIRECT
+    DIRECT_COCOA,
+    DIRECT_GTK
 } LTWOverlayRectType;
 @interface LTWOverlayRect : NSObject {
     NSRect frame;
     
     LTWOverlayRectType rectType;
     
-    // Used by DIRECT type:
+    // Used by DIRECT_* types:
     NSRange characterRange;
+    
+    // Used by DIRECT_COCOA type:
     NSTextView *textView; // We could store a pointer to the textView's textStorage here, but what if its address changed for some reason?
+    
+#ifdef GTK_PLATFORM
+    // Used by DIRECT_GTK type:
+    GtkTextView *gtkTextView;
+#endif
 }
 
--(id)initWithTextView:(NSTextView*)textView characterRange:(NSRange)characterRange;
+-(id)initWithTextView:(NSTextView*)theTextView characterRange:(NSRange)theCharacterRange;
+#ifdef GTK_PLATFORM
+-(id)initWithGtkTextView:(GtkTextView*)theTextView characterRange:(NSRange)theCharacterRange gdkRect:(GdkRectangle)theRect;
+#endif
+
+@property (readonly) NSRect frame;
 
 @end
 

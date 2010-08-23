@@ -32,7 +32,9 @@
 
 - (id)init {
     if ((self = [super init])) {
+#ifndef GTK_PLATFORM
         [NSBundle loadNibNamed:@"LTWTestAssessmentMode" owner:self];
+#endif
     }
     
     return self;

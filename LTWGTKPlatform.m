@@ -13,6 +13,7 @@
 
 #import "LTWTokens.h"
 #import "LTWRemoteDatabase.h"
+#import "LTWOverlayTokensView.h"
 
 @implementation LTWGTKPlatform
 
@@ -106,6 +107,8 @@ gboolean checkForNewAssessments(void *data) {
 
 #pragma mark Private
 
+void addOverlayForTextView(GtkTextView *textView, NSUInteger firstToken, NSUInteger lastToken); // forward declaration
+
 -(void)selectionChangedTo:(id)newSelection forRole:(NSString*)role {
     NSLog(@"%@'s selection changed to %@", role, newSelection);
     
@@ -129,6 +132,10 @@ gboolean checkForNewAssessments(void *data) {
         [self setRepresentedValue:[article tokensForField:@"body"] forRole:@"sourceArticleBody"];
         [self setRepresentedValue:[[article tokensForField:@"title"] description] forRole:@"sourceArticleTitle"];
         [self setRepresentedValue:[[LTWAssessmentController sharedInstance] targetTreeForArticle:article] forRole:@"sourceArticleLinks"];
+        
+        // TEMP
+        addOverlayForTextView(GTK_TEXT_VIEW([self componentWithRole:@"sourceArticleBody" inView:[self mainView]]), 3, 5);
+        
     }else if ([role isEqual:@"sourceArticleLinks"]) {
         LTWArticle *article = [[LTWAssessmentController sharedInstance] articleWithURL:newSelection];
         [self setRepresentedValue:[article tokensForField:@"body"] forRole:@"targetArticleBody"];
@@ -192,7 +199,6 @@ void treeViewSelectionChanged(GtkTreeView *sender, void *data) {
     GtkTreeSelection *selection = gtk_tree_view_get_selection(sender);
     GtkTreeIter iter;
     GtkTreeModel *model;
-    NSLog(@"about to call gtk_tree_selection_get_selected(%p, %p, %p)", selection, &model, &iter);
     if (gtk_tree_selection_get_selected(selection, &model, &iter)) {
         GtkTreePath *path = gtk_tree_model_get_path(model, &iter);
         NSUInteger selectedIndex = gtk_tree_path_get_indices(path)[0];
@@ -239,12 +245,19 @@ BOOL tagForXMLToken(LTWTokens *tokens, NSUInteger tokenIndex, GtkTextBuffer *buf
     return YES;
 }
 
-void insertHTMLTokensIntoBuffer(GtkTextBuffer *buffer, LTWTokens *tokens) {
+void insertHTMLTokensIntoBuffer(GtkTextBuffer *buffer, LTWTokens *tokens, GtkTextMark ***tokenStartMarks, GtkTextMark ***tokenEndMarks) {
     NSMutableArray *stack = [NSMutableArray array];
     
     NSUInteger numTokens = [tokens count];
     NSString *tokensText = [tokens _text];
+    
+    *tokenStartMarks = malloc(numTokens * sizeof **tokenStartMarks);
+    *tokenEndMarks = malloc(numTokens * sizeof **tokenEndMarks);
+    
     for (NSUInteger tokenIndex = 0; tokenIndex < numTokens; tokenIndex++) {
+        (*tokenStartMarks)[tokenIndex] = NULL;
+        (*tokenEndMarks)[tokenIndex] = NULL;
+        
         BOOL isXML = NO;
         BOOL isEndTag = NO;
         for (LTWTokenTag *tag in [tokens tagsStartingAtTokenIndex:tokenIndex]) {
@@ -291,14 +304,40 @@ void insertHTMLTokensIntoBuffer(GtkTextBuffer *buffer, LTWTokens *tokens) {
                 [stack addObject:[NSValue valueWithPointer:entry]];
             }
         }else{ // not XML
+            (*tokenStartMarks)[tokenIndex] = gtk_text_mark_new(NULL, YES);
+            (*tokenEndMarks)[tokenIndex] = gtk_text_mark_new(NULL, YES);
+            
             GtkTextIter iter;
             gtk_text_buffer_get_end_iter(buffer, &iter);
+            gtk_text_buffer_add_mark(buffer, (*tokenStartMarks)[tokenIndex], &iter);
             gtk_text_buffer_insert(buffer, &iter, [[tokensText substringWithRange:[tokens rangeOfTokenAtIndex:tokenIndex]] UTF8String], -1);
             gtk_text_buffer_get_end_iter(buffer, &iter);
+            gtk_text_buffer_add_mark(buffer, (*tokenEndMarks)[tokenIndex], &iter);
             gtk_text_buffer_insert(buffer, &iter, " ", 1);
         }
     }
     
+}
+
+void textViewExposed(GtkTextView *textView, GdkEventExpose *event); // forward declaration
+
+static NSMutableDictionary *textViewStartMarks = nil;
+static NSMutableDictionary *textViewEndMarks = nil;
+
+void addTextViewMarks(GtkTextView *textView, GtkTextMark **startMarks, GtkTextMark **endMarks) {
+    if (!textViewStartMarks) textViewStartMarks = [[NSMutableDictionary alloc] init];
+    if (!textViewEndMarks) textViewEndMarks = [[NSMutableDictionary alloc] init];
+    
+    [textViewStartMarks setObject:[NSValue valueWithPointer:startMarks] forKey:[NSValue valueWithPointer:textView]];
+    [textViewEndMarks setObject:[NSValue valueWithPointer:endMarks] forKey:[NSValue valueWithPointer:textView]];
+}
+
+void getTextViewMarks(GtkTextView *textView, GtkTextMark ***startMarks, GtkTextMark ***endMarks) {
+    if (!textViewStartMarks) textViewStartMarks = [[NSMutableDictionary alloc] init];
+    if (!textViewEndMarks) textViewEndMarks = [[NSMutableDictionary alloc] init];
+    
+    *startMarks = [[textViewStartMarks objectForKey:[NSValue valueWithPointer:textView]] pointerValue];
+    *endMarks = [[textViewEndMarks objectForKey:[NSValue valueWithPointer:textView]] pointerValue];
 }
 
 -(void)setRepresentedValue:(id)value forRole:(NSString*)role {
@@ -362,10 +401,17 @@ void insertHTMLTokensIntoBuffer(GtkTextBuffer *buffer, LTWTokens *tokens) {
         if (GTK_IS_TEXT_VIEW(component)) {
             GtkTextBuffer *buffer = gtk_text_buffer_new(NULL);
             
+            GtkTextMark **startMarks, **endMarks;
+            
             // NOTE: Should turn this into a proper "deserializing" function.
-            insertHTMLTokensIntoBuffer(buffer, (LTWTokens*)value);
+            insertHTMLTokensIntoBuffer(buffer, (LTWTokens*)value, &startMarks, &endMarks);
             
             gtk_text_view_set_buffer(GTK_TEXT_VIEW(component), buffer);
+            
+            // NOTE: Should be making sure to only do this once!
+            g_signal_connect(G_OBJECT(component), "expose_event", G_CALLBACK(textViewExposed), NULL);
+            
+            addTextViewMarks(GTK_TEXT_VIEW(component), startMarks, endMarks);
             
             success = YES;
         }
@@ -375,6 +421,71 @@ void insertHTMLTokensIntoBuffer(GtkTextBuffer *buffer, LTWTokens *tokens) {
         NSLog(@"Unable to represent %@ in %@.", value, self);
     }
      
+}
+
+NSMutableArray *overlaysForTextView(GtkTextView *textView) {
+    static NSMutableDictionary *textViewOverlays = nil;
+    if (!textViewOverlays) textViewOverlays = [[NSMutableDictionary alloc] init];
+    NSMutableArray *array = [textViewOverlays objectForKey:[NSValue valueWithPointer:textView]];
+    if (!array) {
+        array = [NSMutableArray array];
+        [textViewOverlays setObject:array forKey:[NSValue valueWithPointer:textView]];
+    }
+    return array;
+}
+
+void addOverlayForTextView(GtkTextView *textView, NSUInteger firstToken, NSUInteger lastToken) {
+    GtkTextBuffer *buffer = gtk_text_view_get_buffer(textView);
+    
+    GtkTextMark **startMarks, **endMarks;
+    getTextViewMarks(textView, &startMarks, &endMarks);
+    
+    while (firstToken <= lastToken && !startMarks[firstToken]) firstToken++;
+    while (firstToken <= lastToken && !endMarks[lastToken]) lastToken--;
+    if (firstToken > lastToken) return;
+    
+    GtkTextIter start, end;
+    gtk_text_buffer_get_iter_at_mark(buffer, &start, startMarks[firstToken]);
+    gtk_text_buffer_get_iter_at_mark(buffer, &end, endMarks[lastToken]);
+    
+    GdkRectangle startRect, endRect;
+    gtk_text_view_get_iter_location(textView, &start, &startRect);
+    gtk_text_view_get_iter_location(textView, &end, &endRect);
+    
+    GdkRectangle entireRect;
+    gdk_rectangle_union(&startRect, &endRect, &entireRect);
+    
+    LTWOverlayRect *overlayRect = [[[LTWOverlayRect alloc] initWithGtkTextView:textView characterRange:NSMakeRange(0, 0) gdkRect:entireRect] autorelease];
+    [overlaysForTextView(textView) addObject:overlayRect];
+}
+
+// Called from "expose-event" handler.
+void drawOverlaysForTextView(GtkTextView *textView, GdkPixmap *pixmap, GdkGC *gc) {
+    GdkColor color;
+    gdk_color_parse("red", &color);
+    gdk_gc_set_foreground(gc, &color);
+    
+    // NOTE: Later we'll want to use LTWOverlayLayer or something similar, rather than just the rect -- otherwise we can't store text, etc, to go inside the overlay.
+    for (LTWOverlayRect *overlayRect in overlaysForTextView(textView)) {
+        NSRect frame = [overlayRect frame];
+        NSLog(@"Drawing an overlay with frame (%f, %f, %f, %f)", frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
+        gdk_draw_rectangle(pixmap, gc, TRUE, frame.origin.x, frame.origin.y, frame.size.width, frame.size.height);
+    }
+}
+
+void textViewExposed(GtkTextView *textView, GdkEventExpose *event) {
+    GtkWidget *widget = GTK_WIDGET(textView);
+    GdkPixmap *pixmap = gdk_pixmap_new(widget->window, widget->allocation.width, widget->allocation.height, -1);
+    
+    // NOTE: We should really only be calling this when the overlays (or the widget dimensions) change!
+    drawOverlaysForTextView(textView, pixmap, gdk_gc_new(pixmap));
+    
+    gdk_draw_pixmap(widget->window,
+                    widget->style->fg_gc[GTK_WIDGET_STATE (widget)], // what is this style used for?
+                    pixmap,
+                    event->area.x, event->area.y,
+                    event->area.x, event->area.y,
+                    event->area.width, event->area.height);
 }
 
 @end
