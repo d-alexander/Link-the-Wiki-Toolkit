@@ -7,18 +7,28 @@
 //
 
 
-#import <Cocoa/Cocoa.h>
-#import <gtk/gtk.h>
-#import "LTWGTKPlatform.h"
+#import <Foundation/Foundation.h>
+
+#import "LTWGUIMediator.h"
 
 int main(int argc, char *argv[])
 {
 
     //return NSApplicationMain(argc,  (const char **) argv);
+    
+    /*
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     gtk_init(&argc, &argv);
     [[LTWGTKPlatform sharedInstance] run];
     [pool drain];
+     */
+    
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    
+    [[LTWGUIMediator alloc] init];
+    
+    [pool drain];
+    
     return 0;
 }
 

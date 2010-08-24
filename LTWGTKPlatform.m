@@ -348,33 +348,46 @@ void getTextViewMarks(GtkTextView *textView, GtkTextMark ***startMarks, GtkTextM
     BOOL success = NO;
     
     if ([value isKindOfClass:[NSArray class]] || [value isKindOfClass:[NSDictionary class]]) {
-        NSLog(@"is array or dictionary");
-        // NOTE: Should check that the component is actually a GtkTreeView.
-        
-        GtkTreeStore *store = gtk_tree_store_new(1, G_TYPE_STRING);
+        GtkTreeStore *store;
+        if ([role isEqual:@"sourceArticleLinks"]) {
+            store = gtk_tree_store_new(2, G_TYPE_STRING, G_TYPE_BOOLEAN);
+        }else{
+            store = gtk_tree_store_new(1, G_TYPE_STRING);
+        }
         
         GtkTreeIter iterator;
         
-        if ([value isKindOfClass:[NSArray class]]) {
-            for (id item in value) {
-                gtk_tree_store_append(store, &iterator, NULL);
-                gtk_tree_store_set(store, &iterator, 0, [[item description] UTF8String], -1);
-            }
-        }else if ([value isKindOfClass:[NSDictionary class]]) {
-            for (id item in [value allKeys]) {
-                gtk_tree_store_append(store, &iterator, NULL);
+        
+        NSArray *array = [value isKindOfClass:[NSDictionary class]] ? [(NSDictionary*)value allKeys] : (NSArray*)value;
+        for (id item in array) {
+            NSLog(@"adding %@", item);
+            gtk_tree_store_append(store, &iterator, NULL);
+            if ([role isEqual:@"sourceArticleLinks"]) {
+                gtk_tree_store_set(store, &iterator, 0, [[item description] UTF8String], 1, FALSE, -1);
+            }else{
                 gtk_tree_store_set(store, &iterator, 0, [[item description] UTF8String], -1);
             }
         }
         
         if (GTK_IS_TREE_VIEW(component)) {
+            
+            NSLog(@"creating cells");
+                
             GtkCellRenderer *cell = gtk_cell_renderer_text_new ();
-            gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (component),
-                                                         -1,      
-                                                         "Title",  
-                                                         cell,
-                                                         "text", 0,
-                                                         NULL);
+            gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (component), -1,                                     "Title", cell,                                                             "text", 0,                                                             NULL);
+            
+            if ([role isEqual:@"sourceArticleLinks"]) {
+                GtkCellRenderer *cell2 = gtk_cell_renderer_toggle_new ();
+                gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (component),
+                                                             -1,      
+                                                             "Relevant?",  
+                                                             cell2,
+                                                             NULL);
+                
+            }
+            
+            
+
             
             gtk_tree_view_set_model(GTK_TREE_VIEW(component), GTK_TREE_MODEL(store));
             // NOTE: The documentation says "cursor-changed"; why doesn't it work unless I change it to "cursor_changed"?
