@@ -12,6 +12,9 @@
 
 @interface LTWGUIDownloader : NSObject {
     id delegate;
+    BOOL downloadInProgress;
+    NSString *downloadFilename;
+    FILE *downloadFile;
 }
 
 -(id)initWithDelegate:(id)theDelegate;
