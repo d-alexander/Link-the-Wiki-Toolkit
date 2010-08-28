@@ -40,7 +40,7 @@ int err_handler(DBPROCESS * dbproc, int severity, int dberr, int oserr, char *db
     // This is the file I'm using to test the assessment tool until LTWRemoteDatabase can actually load files from a remote server.
     LTWDatabase *testDB = [[LTWDatabase alloc] initWithDataFile:(@"" DATA_PATH @"tokens.db")];
     NSLog(@"Calling loadArticles.");
-    [testDB loadArticles];
+    //[testDB loadArticles];
     NSLog(@"loadArticles finished.");
     
 #ifndef GTK_PLATFORM

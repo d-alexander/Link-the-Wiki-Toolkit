@@ -9,6 +9,7 @@
 #import "LTWDatabase.h"
 
 #import "LTWAssessmentController.h"
+#import "LTWGUIDownloader.h"
 
 @implementation LTWDatabase
 
@@ -143,10 +144,12 @@
     return articleID;
 }
 
--(void)loadArticles {
-    sqlite3_stmt *statement = [self initialiseStatement:&statements.loadArticles withQuery:"SELECT article_id, field_name, tokens_id FROM LTWArticle_fields;"];
+-(void)loadArticlesWithDelegate:(id)delegate {
+    sqlite3_stmt *statement = [self initialiseStatement:&statements.loadArticles withQuery:"SELECT article_id, field_name, tokens_id FROM LTWArticle_fields ORDER BY article_id;"];
     
     NSMutableDictionary *articles = [NSMutableDictionary dictionary];
+    
+    NSUInteger lastArticleID = 0;
     
     while (sqlite3_step(statement) == SQLITE_ROW) {
         NSUInteger articleID = sqlite3_column_int(statement, 0);
@@ -161,14 +164,13 @@
         }
         
         [article addTokens:[[[LTWTokens alloc] initWithDatabase:self tokensID:tokensID] autorelease] forField:fieldName];
+        
+        if (lastArticleID != articleID) {
+            [delegate articleLoaded:article];
+        }
+        
+        lastArticleID = articleID;
     }
-    
-#ifndef GTK_PLATFORM
-    [[LTWAssessmentController sharedInstance] performSelectorOnMainThread:@selector(articlesReadyForAssessment:) withObject:articles waitUntilDone:NO];
-#else
-    // NOTE: This is a temporary hack until I can figure out a nice way of passing messages using GTK. It is only guaranteed to work if there is at most one set of assessments to be loaded; otherwise, a race condition could cause some assessments to be lost.
-    [[LTWAssessmentController sharedInstance] setAssessmentsReady:articles];
-#endif
 }
 
 

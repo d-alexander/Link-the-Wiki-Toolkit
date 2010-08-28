@@ -26,6 +26,9 @@
 		6326E79F12190E700031AA7C /* LTWSimpleAssessmentMode.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6326E79D12190E6F0031AA7C /* LTWSimpleAssessmentMode.xib */; };
 		632CC73F12166DF2002891F4 /* LTWOverlayTokensView.m in Sources */ = {isa = PBXBuildFile; fileRef = 632CC73E12166DF2002891F4 /* LTWOverlayTokensView.m */; };
 		632CC74012166DF2002891F4 /* LTWOverlayTokensView.m in Sources */ = {isa = PBXBuildFile; fileRef = 632CC73E12166DF2002891F4 /* LTWOverlayTokensView.m */; };
+		632D66341228C1E8005B851E /* LTWGUIController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63E6AA6C1223925E00B8D190 /* LTWGUIController.m */; };
+		632D665E1228CF51005B851E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 632D665D1228CF51005B851E /* Foundation.framework */; };
+		632D665F1228CF51005B851E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 632D665D1228CF51005B851E /* Foundation.framework */; };
 		634020DE1216E4EC00E50C9D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 634020DD1216E4EC00E50C9D /* Cocoa.framework */; };
 		634020E31216E4EC00E50C9D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 634020E11216E4EC00E50C9D /* InfoPlist.strings */; };
 		634020E51216E4EC00E50C9D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 634020E41216E4EC00E50C9D /* main.m */; };
@@ -65,7 +68,6 @@
 		6340216E1216EA5300E50C9D /* LTWParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FE49DF11FD697700088F16 /* LTWParser.m */; };
 		6340216F1216EA5500E50C9D /* LTWArticle.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FA735A120047BE00A80269 /* LTWArticle.m */; };
 		634021711216EAD700E50C9D /* libpython31.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6383B13B120F845500703164 /* libpython31.a */; };
-		634021721216EAEF00E50C9D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63D51D82120EC83D00FA40B8 /* Foundation.framework */; };
 		634021731216EAEF00E50C9D /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63D51D83120EC83D00FA40B8 /* AppKit.framework */; };
 		634021751216EBA000E50C9D /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = 634021741216EB9F00E50C9D /* sqlite3.c */; };
 		634021761216EBA000E50C9D /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = 634021741216EB9F00E50C9D /* sqlite3.c */; };
@@ -105,6 +107,9 @@
 		636D47AA11FD2CD70099153C /* LTWTokens.m in Sources */ = {isa = PBXBuildFile; fileRef = 636D47A911FD2CD70099153C /* LTWTokens.m */; };
 		636D47AE11FD2D140099153C /* Python.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 636D47AD11FD2D140099153C /* Python.framework */; };
 		636D47B411FD2EAB0099153C /* LTWPythonUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 636D47B311FD2EAB0099153C /* LTWPythonUtils.m */; };
+		6372811D1224D49400451AFE /* LTWGUIRepresentedObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 637281151224A40300451AFE /* LTWGUIRepresentedObjects.m */; };
+		637281301224DCAB00451AFE /* LTWGUIDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 6372812F1224DCAB00451AFE /* LTWGUIDownloader.m */; };
+		63728138122502F300451AFE /* LTWGUIDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 6372812F1224DCAB00451AFE /* LTWGUIDownloader.m */; };
 		637AC821121912DD00E4B060 /* LTWSimpleAssessmentMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 6326E79B12190DFB0031AA7C /* LTWSimpleAssessmentMode.m */; };
 		637AC82B1219431400E4B060 /* LTWRemoteDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 637AC8291219431200E4B060 /* LTWRemoteDatabase.m */; };
 		637AC82C1219431400E4B060 /* LTWRemoteDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 637AC8291219431200E4B060 /* LTWRemoteDatabase.m */; };
@@ -227,6 +232,7 @@
 		6329E5EE120E798800DC42F1 /* Untitled-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Untitled-Info.plist"; sourceTree = "<group>"; };
 		632CC73D12166DF2002891F4 /* LTWOverlayTokensView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTWOverlayTokensView.h; sourceTree = "<group>"; };
 		632CC73E12166DF2002891F4 /* LTWOverlayTokensView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTWOverlayTokensView.m; sourceTree = "<group>"; };
+		632D665D1228CF51005B851E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /Developer/Cocotron/1.0/Windows/i386/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		634020DB1216E4EA00E50C9D /* LTWAssessmentTool-Windows.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "LTWAssessmentTool-Windows.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		634020DD1216E4EC00E50C9D /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		634020DF1216E4EC00E50C9D /* LTWAssessmentTool_Windows-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "LTWAssessmentTool_Windows-Info.plist"; sourceTree = "<group>"; };
@@ -262,6 +268,10 @@
 		636D47AD11FD2D140099153C /* Python.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Python.framework; path = System/Library/Frameworks/Python.framework; sourceTree = SDKROOT; };
 		636D47B211FD2EAB0099153C /* LTWPythonUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTWPythonUtils.h; sourceTree = "<group>"; };
 		636D47B311FD2EAB0099153C /* LTWPythonUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTWPythonUtils.m; sourceTree = "<group>"; };
+		637281141224A40300451AFE /* LTWGUIRepresentedObjects.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LTWGUIRepresentedObjects.h; path = /Users/david/Dropbox/phd/code/LTWToolkit/LTWGUIRepresentedObjects.h; sourceTree = "<absolute>"; };
+		637281151224A40300451AFE /* LTWGUIRepresentedObjects.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = LTWGUIRepresentedObjects.m; path = /Users/david/Dropbox/phd/code/LTWToolkit/LTWGUIRepresentedObjects.m; sourceTree = "<absolute>"; };
+		6372812E1224DCAB00451AFE /* LTWGUIDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LTWGUIDownloader.h; path = /Users/david/Dropbox/phd/code/LTWToolkit/LTWGUIDownloader.h; sourceTree = "<absolute>"; };
+		6372812F1224DCAB00451AFE /* LTWGUIDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LTWGUIDownloader.m; path = /Users/david/Dropbox/phd/code/LTWToolkit/LTWGUIDownloader.m; sourceTree = "<absolute>"; };
 		637AC8281219431000E4B060 /* LTWRemoteDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTWRemoteDatabase.h; sourceTree = "<group>"; };
 		637AC8291219431200E4B060 /* LTWRemoteDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTWRemoteDatabase.m; sourceTree = "<group>"; };
 		637AC8331219498000E4B060 /* libsybdb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libsybdb.a; sourceTree = "<group>"; };
@@ -325,10 +335,8 @@
 		63E6AA61122377E100B8D190 /* LTWGUIMediator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = LTWGUIMediator.m; path = /Users/david/Dropbox/phd/code/LTWToolkit/LTWGUIMediator.m; sourceTree = "<absolute>"; };
 		63E6AA62122382E300B8D190 /* LTWGUIViewAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LTWGUIViewAdapter.h; path = /Users/david/Dropbox/phd/code/LTWToolkit/LTWGUIViewAdapter.h; sourceTree = "<absolute>"; };
 		63E6AA63122382E300B8D190 /* LTWGUIViewAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LTWGUIViewAdapter.m; path = /Users/david/Dropbox/phd/code/LTWToolkit/LTWGUIViewAdapter.m; sourceTree = "<absolute>"; };
-		63E6AA6B1223925E00B8D190 /* LTWGUIController.h */ = {isa = PBXFileReference; name = LTWGUIController.h; path = /Users/david/Dropbox/phd/code/LTWToolkit/LTWGUIController.h; sourceTree = "<absolute>"; };
-		63E6AA6C1223925E00B8D190 /* LTWGUIController.m */ = {isa = PBXFileReference; name = LTWGUIController.m; path = /Users/david/Dropbox/phd/code/LTWToolkit/LTWGUIController.m; sourceTree = "<absolute>"; };
-		63E6AA6D1223927500B8D190 /* LTWGUIAssessmentMode.h */ = {isa = PBXFileReference; name = LTWGUIAssessmentMode.h; path = /Users/david/Dropbox/phd/code/LTWToolkit/LTWGUIAssessmentMode.h; sourceTree = "<absolute>"; };
-		63E6AA6E1223927500B8D190 /* LTWGUIAssessmentMode.m */ = {isa = PBXFileReference; name = LTWGUIAssessmentMode.m; path = /Users/david/Dropbox/phd/code/LTWToolkit/LTWGUIAssessmentMode.m; sourceTree = "<absolute>"; };
+		63E6AA6B1223925E00B8D190 /* LTWGUIController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LTWGUIController.h; path = /Users/david/Dropbox/phd/code/LTWToolkit/LTWGUIController.h; sourceTree = "<absolute>"; };
+		63E6AA6C1223925E00B8D190 /* LTWGUIController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = LTWGUIController.m; path = /Users/david/Dropbox/phd/code/LTWToolkit/LTWGUIController.m; sourceTree = "<absolute>"; };
 		63EBB0BF120E8FA400E8AE1E /* Python.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Python.framework; path = /Developer/Cocotron/1.0/Windows/i386/Frameworks/Python.framework; sourceTree = "<absolute>"; };
 		63FA7359120047BE00A80269 /* LTWArticle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTWArticle.h; sourceTree = "<group>"; };
 		63FA735A120047BE00A80269 /* LTWArticle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTWArticle.m; sourceTree = "<group>"; };
@@ -344,7 +352,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				634020DE1216E4EC00E50C9D /* Cocoa.framework in Frameworks */,
-				634021721216EAEF00E50C9D /* Foundation.framework in Frameworks */,
 				634021731216EAEF00E50C9D /* AppKit.framework in Frameworks */,
 				634021711216EAD700E50C9D /* libpython31.a in Frameworks */,
 				637AC885121A4DF700E4B060 /* libTDS.a in Frameworks */,
@@ -354,6 +361,7 @@
 				6320C0781221148C00461FD8 /* libglib-2.0.dll.a in Frameworks */,
 				638F590F12224C2700E86D8B /* libgdk_pixbuf-2.0.dll.a in Frameworks */,
 				638F591012224C2700E86D8B /* libgdk-win32-2.0.dll.a in Frameworks */,
+				632D665F1228CF51005B851E /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -393,6 +401,7 @@
 				63D51DD6120ECA6F00FA40B8 /* Foundation.framework in Frameworks */,
 				63D51DD7120ECA6F00FA40B8 /* AppKit.framework in Frameworks */,
 				6383B13C120F845500703164 /* libpython31.a in Frameworks */,
+				632D665E1228CF51005B851E /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -456,6 +465,7 @@
 				634319D412214DB4004542C6 /* inex_icon.png */,
 				63C1100E121F688700BA4FD9 /* Miscellaneous Files */,
 				6356FAE1120A35C60072FF20 /* Tools */,
+				632D665D1228CF51005B851E /* Foundation.framework */,
 				6356FAAA120979740072FF20 /* Python */,
 				080E96DDFE201D6D7F000001 /* Objective-C */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
@@ -948,12 +958,14 @@
 		63E6AA5F122377C200B8D190 /* GUI Rewrite */ = {
 			isa = PBXGroup;
 			children = (
+				6372812E1224DCAB00451AFE /* LTWGUIDownloader.h */,
+				6372812F1224DCAB00451AFE /* LTWGUIDownloader.m */,
+				637281141224A40300451AFE /* LTWGUIRepresentedObjects.h */,
+				637281151224A40300451AFE /* LTWGUIRepresentedObjects.m */,
 				63E6AA62122382E300B8D190 /* LTWGUIViewAdapter.h */,
 				63E6AA63122382E300B8D190 /* LTWGUIViewAdapter.m */,
 				63E6AA60122377E100B8D190 /* LTWGUIMediator.h */,
 				63E6AA61122377E100B8D190 /* LTWGUIMediator.m */,
-				63E6AA6D1223927500B8D190 /* LTWGUIAssessmentMode.h */,
-				63E6AA6E1223927500B8D190 /* LTWGUIAssessmentMode.m */,
 				63E6AA6B1223925E00B8D190 /* LTWGUIController.h */,
 				63E6AA6C1223925E00B8D190 /* LTWGUIController.m */,
 			);
@@ -1211,13 +1223,16 @@
 				6340214A1216E78000E50C9D /* LTWAssessmentController.m in Sources */,
 				6340214B1216E78300E50C9D /* LTWTestAssessmentMode.m in Sources */,
 				6320C05A1220E63700461FD8 /* LTWSimpleAssessmentMode.m in Sources */,
+				63728138122502F300451AFE /* LTWGUIDownloader.m in Sources */,
 				6340214C1216E78600E50C9D /* LTWCocoaPlatform.m in Sources */,
 				634021501216E7CC00E50C9D /* LTWOverlayTokensView.m in Sources */,
 				634021521216E7D300E50C9D /* LTWDatabase.m in Sources */,
 				63E6AA681223920B00B8D190 /* LTWGUIViewAdapter.m in Sources */,
+				632D66341228C1E8005B851E /* LTWGUIController.m in Sources */,
 				63E6AA691223920E00B8D190 /* LTWGUIMediator.m in Sources */,
 				634021531216E7D600E50C9D /* LTWSearch.m in Sources */,
 				634021551216E7DC00E50C9D /* LTWTokens.m in Sources */,
+				6372811D1224D49400451AFE /* LTWGUIRepresentedObjects.m in Sources */,
 				634021561216E7DE00E50C9D /* LTWConcreteTokens.m in Sources */,
 				634021571216E7EC00E50C9D /* LTWConcreteSubTokens.m in Sources */,
 				634021581216E80400E50C9D /* LTWConcreteCopiedTokens.m in Sources */,
@@ -1347,6 +1362,7 @@
 				634021751216EBA000E50C9D /* sqlite3.c in Sources */,
 				6326E79C12190DFB0031AA7C /* LTWSimpleAssessmentMode.m in Sources */,
 				63E6AA64122382E300B8D190 /* LTWGUIViewAdapter.m in Sources */,
+				637281301224DCAB00451AFE /* LTWGUIDownloader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

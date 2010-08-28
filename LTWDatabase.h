@@ -61,6 +61,6 @@ typedef struct {
 
 -(NSUInteger)insertArticle:(LTWArticle*)article;
 
--(void)loadArticles;
+-(void)loadArticlesWithDelegate:(id)delegate;
 
 @end

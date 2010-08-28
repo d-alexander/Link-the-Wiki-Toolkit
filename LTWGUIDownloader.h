@@ -1,0 +1,21 @@
+//
+//  LTWGUIDownloader.h
+//  LTWToolkit
+//
+//  Created by David Alexander on 25/08/10.
+//  Copyright (c) 2010 __MyCompanyName__. All rights reserved.
+//
+
+#import <Cocoa/Cocoa.h>
+
+#import "LTWArticle.h"
+
+@interface LTWGUIDownloader : NSObject {
+    id delegate;
+}
+
+-(id)initWithDelegate:(id)theDelegate;
+-(void)downloadAssessments;
+-(void)articleLoaded:(LTWArticle*)article;
+
+@end
