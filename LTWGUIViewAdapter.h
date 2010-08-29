@@ -107,7 +107,8 @@ typedef enum {
 
 @interface LTWGUITextViewAdapter : LTWGUIViewAdapter {
 #ifdef GTK_PLATFORM
-    
+    GtkTextBuffer *textBuffer;
+    GtkTextMark **tokenStartMarks, **tokenEndMarks;
 #else
     
 #endif

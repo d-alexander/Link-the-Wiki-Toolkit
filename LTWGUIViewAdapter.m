@@ -413,20 +413,162 @@ void LTWGUIComboBoxViewAdapter_changed(GtkComboBox *view, LTWGUIComboBoxViewAdap
 
 @implementation LTWGUITextViewAdapter
 
+#ifdef GTK_PLATFORM
+
+typedef struct {
+    GtkTextTag *tag;
+    GtkTextMark *start;
+} HTMLConversionStackEntry;
+
+void LTWGUITextViewAdapter_exposed(GtkTextView *textView, GdkEventExpose *event);
+
+-(BOOL)getTag:(GtkTextTag**)tag forXMLTokenAtIndex:(NSUInteger)tokenIndex inTokens:(LTWTokens*)tokens usingBuffer:(GtkTextBuffer*)buffer {
+    // NOTE: These comparisons should be made case-insensitive.
+    NSString *tagName = [[tokens _text] substringWithRange:[tokens rangeOfTokenAtIndex:tokenIndex]];
+    
+    if ([tagName isEqual:@"h3"]) {
+        *tag = gtk_text_buffer_create_tag(buffer, NULL, "scale", PANGO_SCALE_LARGE, NULL);
+        GtkTextIter iter;
+        gtk_text_buffer_get_end_iter(buffer, &iter);
+        gtk_text_buffer_insert(buffer, &iter, "\n", 1);
+        return YES;
+    }else if ([tagName isEqual:@"p"]) {
+        *tag = NULL;
+        GtkTextIter iter;
+        gtk_text_buffer_get_end_iter(buffer, &iter);
+        gtk_text_buffer_insert(buffer, &iter, "\n", 1);
+        return YES;
+    }else if ([tagName isEqual:@"br"]) {
+        GtkTextIter iter;
+        gtk_text_buffer_get_end_iter(buffer, &iter);
+        gtk_text_buffer_insert(buffer, &iter, "\n", 1);
+        return NO;
+    }
+    
+    *tag = NULL;
+    return YES;
+}
+
+-(void)insertHTMLTokens:(LTWTokens*)tokens {
+    NSMutableArray *stack = [NSMutableArray array];
+    
+    NSUInteger numTokens = [tokens count];
+    NSString *tokensText = [tokens _text];
+    
+    tokenStartMarks = malloc(numTokens * sizeof **tokenStartMarks);
+    tokenEndMarks = malloc(numTokens * sizeof **tokenEndMarks);
+    
+    for (NSUInteger tokenIndex = 0; tokenIndex < numTokens; tokenIndex++) {
+        tokenStartMarks[tokenIndex] = NULL;
+        tokenEndMarks[tokenIndex] = NULL;
+        
+        BOOL isXML = NO;
+        BOOL isEndTag = NO;
+        for (LTWTokenTag *tag in [tokens tagsStartingAtTokenIndex:tokenIndex]) {
+            if ([[tag tagName] isEqual:@"isXML"]) {
+                isXML = YES;
+            }else if ([[tag tagName] isEqual:@"isEndTag"]) {
+                isEndTag = YES;
+            }
+        }
+        if (isEndTag) {
+            // The corresponding start-tag should be at the top of the stack.
+            if ([stack count] == 0) {
+                NSLog(@"Stack empty while inserting HTML tokens into GTK text buffer!");
+                continue;
+            }
+            HTMLConversionStackEntry *entry = [[stack lastObject] pointerValue];
+            [stack removeLastObject];
+            
+            if (entry->tag) { // entry->tag is NULL if the corresponding XML tag has no effect on the text.
+                GtkTextIter start, end;
+                gtk_text_buffer_get_iter_at_mark(textBuffer, &start, entry->start);
+                gtk_text_buffer_get_end_iter(textBuffer, &end);
+                gtk_text_buffer_apply_tag(textBuffer, entry->tag, &start, &end);
+            }
+        }else if (isXML) { // start tag
+            // NOTE: This is messy. The getTag:forXMLTokenAtIndex:inTokens:usingBuffer:method determines what the GtkTextTag should be for a given XML start tag, but sometimes there shouldn't be a tag, and sometimes we shouldn't even add an HTMLConversionStackEntry because the XML tag won't have a corresponding end-tag.
+            // So, we return the GtkTextTag itself through a pointer (which may be NULL) and the return value specifies whether to add an entry to the stack at all.
+            // It is possible for an XML tag not to result in an entry being created, despite having an effect on the buffer (e.g. <br> inserts a newline). Therefore, we also pass the buffer itself.
+            GtkTextTag *tag = NULL;
+            BOOL addEntry = [self getTag:&tag forXMLTokenAtIndex:tokenIndex inTokens:tokens usingBuffer:textBuffer];
+            
+            if (addEntry) {
+                HTMLConversionStackEntry *entry = malloc(sizeof *entry);
+                
+                // NOTE: Should probably reuse tags when we want to create identical text properties more than once.
+                entry->tag = tag;
+                
+                // Would it be better to create two marks -- start and end -- with left and right gravity respectively, and then insert the text "between" the marks? Would this be more efficient?
+                entry->start = gtk_text_mark_new(NULL, YES); // create mark with left gravity and no name
+                GtkTextIter iter;
+                gtk_text_buffer_get_end_iter(textBuffer, &iter);
+                gtk_text_buffer_add_mark(textBuffer, entry->start, &iter);
+                
+                [stack addObject:[NSValue valueWithPointer:entry]];
+            }
+        }else{ // not XML
+            tokenStartMarks[tokenIndex] = gtk_text_mark_new(NULL, YES);
+            tokenEndMarks[tokenIndex] = gtk_text_mark_new(NULL, YES);
+            
+            GtkTextIter iter;
+            gtk_text_buffer_get_end_iter(textBuffer, &iter);
+            gtk_text_buffer_add_mark(textBuffer, tokenStartMarks[tokenIndex], &iter);
+            gtk_text_buffer_insert(textBuffer, &iter, [[tokensText substringWithRange:[tokens rangeOfTokenAtIndex:tokenIndex]] UTF8String], -1);
+            gtk_text_buffer_get_end_iter(textBuffer, &iter);
+            gtk_text_buffer_add_mark(textBuffer, tokenEndMarks[tokenIndex], &iter);
+            gtk_text_buffer_insert(textBuffer, &iter, " ", 1);
+        }
+    }
+    
+}
+#endif
+
 -(void)setUpView {
 #ifdef GTK_PLATFORM
-    
+    textBuffer = gtk_text_buffer_new(NULL);
+    gtk_text_view_set_buffer(GTK_TEXT_VIEW(view), textBuffer);
+    g_signal_connect(G_OBJECT(view), "expose_event", G_CALLBACK(LTWGUITextViewAdapter_exposed), NULL);
 #else
     
 #endif
 }
 
 -(void)applyMutationWithType:(LTWGUIViewMutationType)mutationType object:(id)object {
-    return;
+    NSLog(@"object = %@", object);
+    if (![object isKindOfClass:[LTWTokens class]]) return;
+#ifdef GTK_PLATFORM
+    gtk_text_buffer_set_text(textBuffer, "", -1);
+    
+    // NOTE: Should turn this into a proper "deserializing" function.
+    [self insertHTMLTokens:(LTWTokens*)object];
+    
+    // Note sure if this is necessary.
+    gtk_text_view_set_buffer(GTK_TEXT_VIEW(view), textBuffer);
+#else
+    
+#endif
 }
 
 -(id <NSFastEnumeration>)objectsOfType:(Class*)type {
     return nil;
+}
+
+void LTWGUITextViewAdapter_exposed(GtkTextView *textView, GdkEventExpose *event) {
+    /*
+    GtkWidget *widget = GTK_WIDGET(textView);
+    GdkPixmap *pixmap = gdk_pixmap_new(widget->window, widget->allocation.width, widget->allocation.height, -1);
+    
+    // NOTE: We should really only be calling this when the overlays (or the widget dimensions) change!
+    drawOverlaysForTextView(textView, pixmap, gdk_gc_new(pixmap));
+    
+    gdk_draw_pixmap(widget->window,
+                    widget->style->fg_gc[GTK_WIDGET_STATE (widget)], // what is this style used for?
+                    pixmap,
+                    event->area.x, event->area.y,
+                    event->area.x, event->area.y,
+                    event->area.width, event->area.height);
+     */
 }
 
 @end
