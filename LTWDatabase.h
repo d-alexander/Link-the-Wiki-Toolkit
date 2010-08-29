@@ -25,6 +25,7 @@ typedef struct {
     sqlite3_stmt *insertArticle;
     sqlite3_stmt *insertField;
     sqlite3_stmt *loadArticles;
+    sqlite3_stmt *getAssessmentFileTimestamp;
 } LTWDatabaseStatements;
 
 @class LTWArticle;
@@ -62,5 +63,9 @@ typedef struct {
 -(NSUInteger)insertArticle:(LTWArticle*)article;
 
 -(void)loadArticlesWithDelegate:(id)delegate;
+
+#pragma mark LTWAssessmentFile
+
+-(NSUInteger)assessmentFileTimestamp;
 
 @end

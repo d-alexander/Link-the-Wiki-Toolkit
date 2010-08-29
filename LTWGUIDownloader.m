@@ -19,9 +19,13 @@ static LTWGUIDownloader *instance = nil;
 -(id)initWithDelegate:(id)theDelegate {
     if ((self = [super init])) {
         delegate = theDelegate;
-        [NSThread detachNewThreadSelector:@selector(downloadAssessments) toTarget:self withObject:nil];
+        lastFileTimestamp = 0;
+        finishedDownloadingFiles = NO;
         downloadInProgress = NO;
         instance = [self retain];
+        
+        // To prevent a race condition, this must be done AFTER all the ivars have been filled in.
+        [NSThread detachNewThreadSelector:@selector(downloadAssessments) toTarget:self withObject:nil];
     }
     
     return self;
@@ -40,9 +44,10 @@ static NSString *runLoopMode = @"NSURLConnectionRequestMode";
     
     // TODO: Display messages in status bar.
     
+    finishedDownloadingFiles = NO;
     
-    do {
-        NSURLRequest *request = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:@"http://linkthewiki.nfshost.com/getfile.php?last_file_timestamp=0"]];
+    while (!finishedDownloadingFiles) {
+        NSURLRequest *request = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"http://linkthewiki.nfshost.com/getfile.php?last_file_timestamp=%d", lastFileTimestamp]]];
         NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
         
         downloadFilename = nil;
@@ -56,9 +61,10 @@ static NSString *runLoopMode = @"NSURLConnectionRequestMode";
         [connection unscheduleFromRunLoop:[NSRunLoop currentRunLoop] forMode:runLoopMode];
         [connection cancel];
         [connection release];
-        
-        // TODO: Rather than stopping here, update the timestamp and try again. (Unless the current download 404ed.)
-    } while (NO);
+        [request release];
+    }
+    
+    NSLog(@"Finished downloading assessment files.");
     
     [pool drain];
 
@@ -66,11 +72,19 @@ static NSString *runLoopMode = @"NSURLConnectionRequestMode";
 
 -(void)handleDownloadedFile:(NSString*)filename {
     LTWDatabase *database = [[LTWDatabase alloc] initWithDataFile:filename];
+    lastFileTimestamp = [database assessmentFileTimestamp];
     [database loadArticlesWithDelegate:self];
 }
 
 -(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     if (!downloadFile) {
+        // Temporary hack to see if we've got a 404.
+        if ([data length] > 6 && memcmp([data bytes], "SQLite", 6) != 0) {
+            downloadInProgress = NO;
+            finishedDownloadingFiles = YES;
+            return;
+        }
+        
         downloadFilename = [@""DATA_PATH stringByAppendingPathComponent:@"downloaded_assessments.ltw"];
         downloadFile = fopen([downloadFilename UTF8String], "wb");
     }
@@ -93,7 +107,8 @@ static NSString *runLoopMode = @"NSURLConnectionRequestMode";
 }
 
 -(void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-    downloadInProgress=NO;
+    downloadInProgress = NO;
+    finishedDownloadingFiles = YES;
 }
 
 

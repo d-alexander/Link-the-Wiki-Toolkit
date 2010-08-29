@@ -12,6 +12,8 @@
 
 @interface LTWGUIDownloader : NSObject {
     id delegate;
+    NSUInteger lastFileTimestamp;
+    BOOL finishedDownloadingFiles;
     BOOL downloadInProgress;
     NSString *downloadFilename;
     FILE *downloadFile;

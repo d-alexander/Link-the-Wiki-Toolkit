@@ -173,5 +173,18 @@
     }
 }
 
+#pragma mark LTWAssessmentFile
+
+-(NSUInteger)assessmentFileTimestamp {
+    NSLog(@"assessmentFileTimestamp called");
+    
+    sqlite3_stmt *statement = [self initialiseStatement:&statements.getAssessmentFileTimestamp withQuery:"SELECT strftime('%s', date_created) FROM LTWAssessmentFile;"];
+    
+    if (!sqlite3_step(statement) == SQLITE_ROW) return UINT_MAX; // NOTE: Is this the best way to handle the error?
+    
+    
+    return [[NSString stringWithUTF8String:sqlite3_column_text(statement, 0)] intValue];
+}
+
 
 @end
