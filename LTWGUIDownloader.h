@@ -22,5 +22,6 @@
 -(id)initWithDelegate:(id)theDelegate;
 -(void)downloadAssessments;
 -(void)articleLoaded:(LTWArticle*)article;
+-(void)handleDownloadedFile:(NSString*)filename;
 
 @end

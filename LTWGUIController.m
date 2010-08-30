@@ -24,6 +24,7 @@
             [context mutateViewWithRole:@"sourceArticleLinks" mutationType:ADD object:link caller:self];
         }
     }else if ([role isEqual:@"sourceArticleLinks"]) {
+        // NOTE: This may not work properly with the current hierarchical tree-viewing setup. Check it.
         if ([selectedObject isKindOfClass:[LTWArticle class]]) {
             // A target has been selected from the link-tree view, so load its article into the targetArticleBody view.
             [context mutateViewWithRole:@"targetArticleBody" mutationType:ADD object:selectedObject caller:self];

@@ -44,6 +44,14 @@ static NSString *runLoopMode = @"NSURLConnectionRequestMode";
     
     // TODO: Display messages in status bar.
     
+    NSDirectoryEnumerator *enumerator = [[NSFileManager defaultManager] enumeratorAtPath:(@""DATA_PATH)];
+    for (NSString *filename = [enumerator nextObject]; filename; filename = [enumerator nextObject]) {
+        if ([filename hasSuffix:@".ltw"]) {
+            [self handleDownloadedFile:[@""DATA_PATH stringByAppendingPathComponent:filename]];
+        }
+    }
+    
+    
     finishedDownloadingFiles = NO;
     
     while (!finishedDownloadingFiles) {
