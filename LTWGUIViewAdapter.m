@@ -74,8 +74,7 @@ static NSString *GUIDefinitionPath = @"";
         view = RETAIN_VIEW(theView);
         delegate = [theDelegate retain];
         nilSubstitute = nil;
-        representedObjects = [[NSMutableDictionary alloc] init];
-        nextIndexPath = [[NSIndexPath indexPathWithIndex:0] retain];
+        representedObjects = [[LTWGUITreeBranch branchWithDictionary:[NSMutableDictionary dictionary] index:0] retain];
         [self setUpView];
     }
     return self;
@@ -107,27 +106,38 @@ static NSString *GUIDefinitionPath = @"";
     gtk_widget_size_request(view, &size);
     return NSMakeSize(size.width, size.height);
 #endif
+
 }
 
 -(LTWGUIView*)topLevelView {
 #ifdef GTK_PLATFORM
     return gtk_widget_get_toplevel(view);
 #endif
-}
 
--(void)object:(id)object insertedAtIndexPath:(NSIndexPath*)indexPath {
-    // NOTE: Once it is possible to add objects at arbitrary positions (rather than just at the end of the tree) this method will need to be modified.
-    [representedObjects setObject:object forKey:indexPath];
-    
-    
-    if ([indexPath indexAtPosition:0] >= [nextIndexPath indexAtPosition:0]) {
-        [nextIndexPath release];
-        nextIndexPath = [[NSIndexPath alloc] initWithIndex:[indexPath indexAtPosition:0]+1];
-    }
 }
 
 -(id)objectAtIndexPath:(NSIndexPath*)indexPath {
-    return [representedObjects objectForKey:indexPath];
+    LTWGUITreeBranch *branch = representedObjects;
+    for (NSUInteger position = 0; position < [indexPath length]; position++) {
+        id object = [[branch dictionary] objectForKey:[NSNumber numberWithInt:[indexPath indexAtPosition:position]]];
+        
+        if (object) return object; // This SHOULD be the leaf.
+        
+        BOOL found = NO;
+        for (id key in [branch dictionary]) {
+            object = [[branch dictionary] objectForKey:key];
+            
+            if ([object isKindOfClass:[LTWGUITreeBranch class]] && [(LTWGUITreeBranch*)object index] == [indexPath indexAtPosition:position]) {
+                branch = object;
+                found = YES;
+                break;
+            }
+        }
+        
+        if (!found) return nil;
+    }
+    
+    return nil;
 }
 
 #ifdef GTK_PLATFORM
@@ -149,6 +159,28 @@ static NSString *GUIDefinitionPath = @"";
     return NULL;
 }
 #endif
+
+@end
+
+#pragma mark -
+#pragma mark Miscellaneous
+
+@implementation LTWGUITreeBranch
+
+-(id)initWithDictionary:(NSMutableDictionary*)theDictionary index:(NSUInteger)theIndex {
+    if (self = [super init]) {
+        dictionary = [theDictionary retain];
+        index = theIndex;
+    }
+    return self;
+}
+
++(id)branchWithDictionary:(NSMutableDictionary*)theDictionary index:(NSUInteger)theIndex {
+    return [[[LTWGUITreeBranch alloc] initWithDictionary:theDictionary index:theIndex] autorelease];
+}
+
+@synthesize dictionary;
+@synthesize index;
 
 @end
 
@@ -192,7 +224,6 @@ static NSString *GUIDefinitionPath = @"";
 }
 
 -(void)applyMutationWithType:(LTWGUIViewMutationType)mutationType object:(id)object {
-    
     if (![object isKindOfClass:[LTWGUIAssessmentMode class]]) return;
     
     LTWGUIViewAdapter *assessmentMainView = [LTWGUIViewAdapter loadViewsFromFile:[(LTWGUIAssessmentMode*)object GUIDefinitionFilename] withDelegate:delegate returningViewWithRole:@"assessmentMainView"];
@@ -243,6 +274,7 @@ void LTWGUITreeViewAdapter_cursorChanged(GtkTreeView *view, LTWGUITreeViewAdapte
     
     // Get the names of the properties that will be displayed in each of the table columns for this object. If these property-names aren't specified, just call the description method and use that as a single column.
     // If this is the first object, set up the table columns according to the given properties. Otherwise, make sure that the columns are the same for this one as for the first one, and if so, insert the object.
+    // TODO: Put ALL the table setup into its own method so that it doesn't interfere with the MAIN TASK of inserting objects.
     NSArray *newColumnProperties;
     if ([object respondsToSelector:@selector(displayableProperties)]) {
         newColumnProperties = [object displayableProperties];
@@ -277,9 +309,39 @@ void LTWGUITreeViewAdapter_cursorChanged(GtkTreeView *view, LTWGUITreeViewAdapte
         return;
     }
     
-    // Now that we've made sure that the columns are sorted out, insert the new row into the table.
     GtkTreeIter iterator;
-    gtk_tree_store_append(store, &iterator, NULL);
+    
+    if ([object respondsToSelector:@selector(propertyHierarchy)]) {
+        
+        LTWGUITreeBranch *branch = representedObjects;
+        GtkTreeIter parent;
+        for (id property in [object propertyHierarchy]) {
+            id propertyValue = [object valueForKey:property];
+            
+            LTWGUITreeBranch *nextBranch = [[branch dictionary] objectForKey:propertyValue];
+            if (!nextBranch) {
+                nextBranch = [[[LTWGUITreeBranch alloc] initWithDictionary:[NSMutableDictionary dictionary] index:[[branch dictionary] count]] autorelease];
+                [[branch dictionary] setObject:nextBranch forKey:propertyValue];
+                
+                GtkTreeIter newBranchIterator;
+                gtk_tree_store_append(store, &newBranchIterator, (branch == representedObjects ? NULL : &parent));
+                gtk_tree_store_set(store, &newBranchIterator, 0, [[propertyValue description] UTF8String], -1);
+            }
+            
+            GtkTreeIter newParent;
+            gtk_tree_model_iter_nth_child(GTK_TREE_MODEL(store), &newParent, (branch == representedObjects ? NULL : &parent), [nextBranch index]);
+            parent = newParent;
+            branch = nextBranch;
+        }
+        
+        [[branch dictionary] setObject:object forKey:[NSNumber numberWithInt:[[branch dictionary] count]]];
+        
+        gtk_tree_store_append(GTK_TREE_STORE(store), &iterator, &parent);
+    }else{
+        [[representedObjects dictionary] setObject:object forKey:[NSNumber numberWithInt:[[representedObjects dictionary] count]]];
+        
+        gtk_tree_store_append(GTK_TREE_STORE(store), &iterator, NULL);
+    }
     
     for (NSUInteger columnIndex = 0; columnIndex < numColumns; columnIndex++) {
         void *value;
@@ -287,8 +349,6 @@ void LTWGUITreeViewAdapter_cursorChanged(GtkTreeView *view, LTWGUITreeViewAdapte
         [LTWGUIViewAdapter translateValue:[object valueForKey:property] intoObject:&value type:NULL];
         gtk_tree_store_set(store, &iterator, columnIndex, value, -1);
     }
-    
-    [self object:object insertedAtIndexPath:nextIndexPath];
 #else
     
 #endif
@@ -306,9 +366,9 @@ void LTWGUITreeViewAdapter_cursorChanged(GtkTreeView *view, LTWGUITreeViewAdapte
     
     if (gtk_tree_selection_get_selected(selection, &model, &iter)) {
         GtkTreePath *path = gtk_tree_model_get_path(model, &iter);
-        NSUInteger selectedIndex = gtk_tree_path_get_indices(path)[0];
+        NSIndexPath *indexPath = [NSIndexPath indexPathWithIndexes:gtk_tree_path_get_indices(path) length:gtk_tree_path_get_depth(path)];
         
-        [adapter objectSelected:[adapter objectAtIndexPath:[NSIndexPath indexPathWithIndex:selectedIndex]]];
+        [adapter objectSelected:[adapter objectAtIndexPath:indexPath]];
         
         gtk_tree_path_free(path);
     }else{
@@ -382,9 +442,39 @@ void LTWGUIComboBoxViewAdapter_changed(GtkComboBox *view, LTWGUIComboBoxViewAdap
         return;
     }
     
-    // Now that we've made sure that the columns are sorted out, insert the new row into the table.
     GtkTreeIter iterator;
-    gtk_tree_store_append(store, &iterator, NULL);
+    
+    if ([object respondsToSelector:@selector(propertyHierarchy)]) {
+        
+        LTWGUITreeBranch *branch = representedObjects;
+        GtkTreeIter parent;
+        for (id property in [object propertyHierarchy]) {
+            id propertyValue = [object valueForKey:property];
+            
+            LTWGUITreeBranch *nextBranch = [[branch dictionary] objectForKey:propertyValue];
+            if (!nextBranch) {
+                nextBranch = [[[LTWGUITreeBranch alloc] initWithDictionary:[NSMutableDictionary dictionary] index:[[branch dictionary] count]] autorelease];
+                [[branch dictionary] setObject:nextBranch forKey:propertyValue];
+                
+                GtkTreeIter newBranchIterator;
+                gtk_tree_store_append(store, &newBranchIterator, &parent);
+                gtk_tree_store_set(store, &newBranchIterator, 0, [[propertyValue description] UTF8String], -1);
+            }
+            
+            GtkTreeIter newParent;
+            gtk_tree_model_iter_nth_child(GTK_TREE_MODEL(store), &newParent, &parent, [nextBranch index]);
+            parent = newParent;
+            branch = nextBranch;
+        }
+        
+        [[branch dictionary] setObject:object forKey:[NSNumber numberWithInt:[[branch dictionary] count]]];
+        
+        gtk_tree_store_append(GTK_TREE_STORE(store), &iterator, &parent);
+    }else{
+        [[representedObjects dictionary] setObject:object forKey:[NSNumber numberWithInt:[[representedObjects dictionary] count]]];
+        
+        gtk_tree_store_append(GTK_TREE_STORE(store), &iterator, NULL);
+    }
     
     for (NSUInteger columnIndex = 0; columnIndex < numColumns; columnIndex++) {
         void *value;
@@ -392,8 +482,7 @@ void LTWGUIComboBoxViewAdapter_changed(GtkComboBox *view, LTWGUIComboBoxViewAdap
         [LTWGUIViewAdapter translateValue:[object valueForKey:property] intoObject:&value type:NULL];
         gtk_tree_store_set(store, &iterator, columnIndex, value, -1);
     }
-    
-    [self object:object insertedAtIndexPath:nextIndexPath];
+
 #else
     
 #endif

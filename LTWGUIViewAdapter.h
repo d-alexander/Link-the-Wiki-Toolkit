@@ -24,13 +24,14 @@ typedef enum {
 } LTWGUIViewMutationType;
 
 
+@class LTWGUITreeBranch;
+
 @interface LTWGUIViewAdapter : NSObject {
     NSString *role;
     LTWGUIView *view;
     id delegate;
     id nilSubstitute; // The object that gets displayed if a nil value is inserted into the view.
-    NSMutableDictionary *representedObjects; // Maps NSIndexPaths to the Objective-C objects currently represented by them. NOTE: Large numbers of NSIndexPaths may need to be updated when an item is inserted in the middle of an object.
-    NSIndexPath *nextIndexPath; // The NSIndexPath that the next object to be appended (i.e. inserted at the "bottom" of the list/tree will have).
+    LTWGUITreeBranch *representedObjects; // A tree of NSMutableDictionaries of objects that are represented by the view.
 }
 
 +(void)setGUIDefinitionPath:(NSString*)thePath;
@@ -48,7 +49,6 @@ typedef enum {
 -(LTWGUIView*)topLevelView;
 
 // "Private" utility methods.
--(void)object:(id)object insertedAtIndexPath:(NSIndexPath*)indexPath;
 -(id)objectAtIndexPath:(NSIndexPath*)indexPath;
 #ifdef GTK_PLATFORM
 +(BOOL)translateValue:(id)value intoObject:(void**)destination type:(GType*)type;
@@ -56,6 +56,25 @@ typedef enum {
 #endif
 
 @end
+
+#pragma mark -
+#pragma mark Miscellaneous
+
+@interface LTWGUITreeBranch : NSObject {
+    NSMutableDictionary *dictionary;
+    NSUInteger index;
+}
+
+-(id)initWithDictionary:(NSMutableDictionary*)theDictionary index:(NSUInteger)theIndex;
++(id)branchWithDictionary:(NSMutableDictionary*)theDictionary index:(NSUInteger)theIndex;
+
+@property (readonly) NSMutableDictionary *dictionary;
+@property (readonly) NSUInteger index;
+
+@end
+
+#pragma mark -
+#pragma mark View Adapters
 
 @interface LTWGUIGenericViewAdapter : LTWGUIViewAdapter {
 

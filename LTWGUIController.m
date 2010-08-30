@@ -19,6 +19,10 @@
         [context setAssessmentMode:selectedObject];
     }else if ([role isEqual:@"articleSelector"]) {
         [context mutateViewWithRole:@"sourceArticleBody" mutationType:ADD object:[[(LTWGUIArticle*)selectedObject article] tokensForField:@"body"] caller:self];
+        // NOTE: Should remove any old links before adding new ones!
+        for (LTWGUILink *link in [(LTWGUIArticle*)selectedObject links]) {
+            [context mutateViewWithRole:@"sourceArticleLinks" mutationType:ADD object:link caller:self];
+        }
     }else if ([role isEqual:@"sourceArticleLinks"]) {
         if ([selectedObject isKindOfClass:[LTWArticle class]]) {
             // A target has been selected from the link-tree view, so load its article into the targetArticleBody view.

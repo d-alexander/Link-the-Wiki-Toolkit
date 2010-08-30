@@ -14,10 +14,12 @@
 @synthesize target;
 
 -(NSArray*)displayableProperties {
-    return [NSArray arrayWithObjects:@"anchor", @"target", nil];
+    return [NSArray arrayWithObjects:@"anchor", nil];
 }
 
-
+-(NSArray*)propertyHierarchy {
+    return [NSArray arrayWithObjects:@"target", nil];
+}
 
 @end
 
@@ -37,6 +39,24 @@
     return [article URL];
 }
 
-
+-(NSArray*)links {
+    NSMutableArray *links = [NSMutableArray array];
+    
+    LTWTokens *tokens = [article tokensForField:@"body"];
+    
+    for (NSUInteger tokenIndex = 0; tokenIndex < [tokens count]; tokenIndex++) {
+        for (LTWTokenTag *tag in [tokens tagsStartingAtTokenIndex:tokenIndex]) {
+            if ([[tag tagName] isEqual:@"linked_to"]) {
+                LTWGUILink *link = [[[LTWGUILink alloc] init] autorelease];
+                [link setAnchor:[tokens tokensFromIndex:tokenIndex toIndex:tokenIndex propagateTags:YES]];
+                [link setTarget:[tag tagValue]];
+                [links addObject:link];
+            }
+        }
+    }
+    
+    
+    return links;
+}
 
 @end

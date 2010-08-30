@@ -5,6 +5,7 @@
   <object class="GtkHBox" id="assessmentMainView">
     <property name="visible">True</property>
     <property name="can_focus">True</property>
+    <property name="homogeneous">True</property>
     <child>
       <object class="GtkTextView" id="sourceArticleBody">
         <property name="visible">True</property>
