@@ -50,6 +50,8 @@
 			63BAE8E7121236B7008127C4 /* LTWAssessmentTool */,
 			634020DC1216E4EA00E50C9D /* LTWAssessmentTool-Windows */,
 			634DBE83121BE4E000C73057 /* LTWKLDivergenceCalculator */,
+			6329CAFE122A558B00480589 /* LTWRunConverter */,
+			636BE722122B5DEE0003DE00 /* LTWNibTranslator */,
 		);
 		perUserDictionary = {
 			"PBXConfiguration.PBXBreakpointsDataSource.v1:1CA1AED706398EBD00589147" = {
@@ -633,6 +635,39 @@
 			sepNavVisRange = "{0, 1565}";
 		};
 	};
+	6329CAFC122A558B00480589 /* LTWRunConverter */ = {
+		activeExec = 0;
+		executables = (
+			6329CAFE122A558B00480589 /* LTWRunConverter */,
+		);
+	};
+	6329CAFE122A558B00480589 /* LTWRunConverter */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 0;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		dataTipCustomDataFormattersEnabled = 1;
+		dataTipShowTypeColumn = 1;
+		dataTipSortType = 0;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = LTWRunConverter;
+		showTypeColumn = 0;
+		sourceDirectories = (
+		);
+	};
 	632C660312135833003289E2 /* PBXTextBookmark */ = {
 		isa = PBXTextBookmark;
 		fRef = 636D47A611FD2CC60099153C /* LTWCorpus.m */;
@@ -788,6 +823,39 @@
 		executableUserSymbolLevel = 0;
 		libgmallocEnabled = 0;
 		name = LTWTeAraSplitter;
+		showTypeColumn = 0;
+		sourceDirectories = (
+		);
+	};
+	636BE720122B5DEE0003DE00 /* LTWNibTranslator */ = {
+		activeExec = 0;
+		executables = (
+			636BE722122B5DEE0003DE00 /* LTWNibTranslator */,
+		);
+	};
+	636BE722122B5DEE0003DE00 /* LTWNibTranslator */ = {
+		isa = PBXExecutable;
+		activeArgIndices = (
+		);
+		argumentStrings = (
+		);
+		autoAttachOnCrash = 1;
+		breakpointsEnabled = 0;
+		configStateDict = {
+		};
+		customDataFormattersEnabled = 1;
+		dataTipCustomDataFormattersEnabled = 1;
+		dataTipShowTypeColumn = 1;
+		dataTipSortType = 0;
+		debuggerPlugin = GDBDebugging;
+		disassemblyDisplayState = 0;
+		enableDebugStr = 1;
+		environmentEntries = (
+		);
+		executableSystemSymbolLevel = 0;
+		executableUserSymbolLevel = 0;
+		libgmallocEnabled = 0;
+		name = LTWNibTranslator;
 		showTypeColumn = 0;
 		sourceDirectories = (
 		);

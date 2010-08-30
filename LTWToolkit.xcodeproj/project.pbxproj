@@ -24,6 +24,24 @@
 		6326E79C12190DFB0031AA7C /* LTWSimpleAssessmentMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 6326E79B12190DFB0031AA7C /* LTWSimpleAssessmentMode.m */; };
 		6326E79E12190E700031AA7C /* LTWSimpleAssessmentMode.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6326E79D12190E6F0031AA7C /* LTWSimpleAssessmentMode.xib */; };
 		6326E79F12190E700031AA7C /* LTWSimpleAssessmentMode.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6326E79D12190E6F0031AA7C /* LTWSimpleAssessmentMode.xib */; };
+		6329CB01122A558D00480589 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6329CB00122A558D00480589 /* Foundation.framework */; };
+		6329CB03122A558E00480589 /* LTWRunConverter.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6329CB02122A558E00480589 /* LTWRunConverter.1 */; };
+		6329CB05122A558E00480589 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6329CB04122A558E00480589 /* main.m */; };
+		6329CB0F122A5B0100480589 /* LTWAssessmentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63BAE91A12126AB2008127C4 /* LTWAssessmentController.m */; };
+		6329CB10122A5B0100480589 /* LTWTestAssessmentMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 638F16BB12127C1200782C3F /* LTWTestAssessmentMode.m */; };
+		6329CB11122A5B0100480589 /* LTWSimpleAssessmentMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 6326E79B12190DFB0031AA7C /* LTWSimpleAssessmentMode.m */; };
+		6329CB13122A5B0100480589 /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = 634021741216EB9F00E50C9D /* sqlite3.c */; };
+		6329CB14122A5B0100480589 /* LTWDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D99AC812083B8400CEE18B /* LTWDatabase.m */; };
+		6329CB15122A5B0100480589 /* LTWTokenTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 632240CC120573E80023CD84 /* LTWTokenTag.m */; };
+		6329CB16122A5B0100480589 /* LTWTokens.m in Sources */ = {isa = PBXBuildFile; fileRef = 636D47A911FD2CD70099153C /* LTWTokens.m */; };
+		6329CB17122A5B0100480589 /* LTWConcreteTokens.m in Sources */ = {isa = PBXBuildFile; fileRef = 631C6A551202A60600E821BD /* LTWConcreteTokens.m */; };
+		6329CB18122A5B0100480589 /* LTWConcreteSubTokens.m in Sources */ = {isa = PBXBuildFile; fileRef = 631C6A581202A61600E821BD /* LTWConcreteSubTokens.m */; };
+		6329CB19122A5B0100480589 /* LTWConcreteCopiedTokens.m in Sources */ = {isa = PBXBuildFile; fileRef = 632427E712103606004ED16F /* LTWConcreteCopiedTokens.m */; };
+		6329CB1A122A5B0100480589 /* LTWPythonUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 636D47B311FD2EAB0099153C /* LTWPythonUtils.m */; };
+		6329CB1B122A5B0100480589 /* LTWCorpus.m in Sources */ = {isa = PBXBuildFile; fileRef = 636D47A611FD2CC60099153C /* LTWCorpus.m */; };
+		6329CB1C122A5B0100480589 /* LTWParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FE49DF11FD697700088F16 /* LTWParser.m */; };
+		6329CB1D122A5B0100480589 /* LTWArticle.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FA735A120047BE00A80269 /* LTWArticle.m */; };
+		6329CB21122A5BA000480589 /* Python.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63EBB0BF120E8FA400E8AE1E /* Python.framework */; };
 		632CC73F12166DF2002891F4 /* LTWOverlayTokensView.m in Sources */ = {isa = PBXBuildFile; fileRef = 632CC73E12166DF2002891F4 /* LTWOverlayTokensView.m */; };
 		632CC74012166DF2002891F4 /* LTWOverlayTokensView.m in Sources */ = {isa = PBXBuildFile; fileRef = 632CC73E12166DF2002891F4 /* LTWOverlayTokensView.m */; };
 		632D66341228C1E8005B851E /* LTWGUIController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63E6AA6C1223925E00B8D190 /* LTWGUIController.m */; };
@@ -103,6 +121,10 @@
 		6356FB05120A36830072FF20 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6356FB04120A36830072FF20 /* main.m */; };
 		6356FB0B120A36A80072FF20 /* LTWParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FE49DF11FD697700088F16 /* LTWParser.m */; };
 		6364ACE5120653A00042F942 /* LTWTokenProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 6364ACE4120653A00042F942 /* LTWTokenProcessor.m */; };
+		636BE725122B5DEF0003DE00 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 636BE724122B5DEF0003DE00 /* Foundation.framework */; };
+		636BE727122B5DEF0003DE00 /* LTWNibTranslator.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 636BE726122B5DEF0003DE00 /* LTWNibTranslator.1 */; };
+		636BE729122B5DEF0003DE00 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 636BE728122B5DEF0003DE00 /* main.m */; };
+		636BE732122B60140003DE00 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 636BE731122B60140003DE00 /* AppKit.framework */; };
 		636D47A711FD2CC60099153C /* LTWCorpus.m in Sources */ = {isa = PBXBuildFile; fileRef = 636D47A611FD2CC60099153C /* LTWCorpus.m */; };
 		636D47AA11FD2CD70099153C /* LTWTokens.m in Sources */ = {isa = PBXBuildFile; fileRef = 636D47A911FD2CD70099153C /* LTWTokens.m */; };
 		636D47AE11FD2D140099153C /* Python.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 636D47AD11FD2D140099153C /* Python.framework */; };
@@ -110,6 +132,7 @@
 		6372811D1224D49400451AFE /* LTWGUIRepresentedObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 637281151224A40300451AFE /* LTWGUIRepresentedObjects.m */; };
 		637281301224DCAB00451AFE /* LTWGUIDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 6372812F1224DCAB00451AFE /* LTWGUIDownloader.m */; };
 		63728138122502F300451AFE /* LTWGUIDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 6372812F1224DCAB00451AFE /* LTWGUIDownloader.m */; };
+		6377B86E122B6EDC001DCC74 /* NibTranslatorTest.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6377B86B122B6AE5001DCC74 /* NibTranslatorTest.xib */; };
 		637AC821121912DD00E4B060 /* LTWSimpleAssessmentMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 6326E79B12190DFB0031AA7C /* LTWSimpleAssessmentMode.m */; };
 		637AC82B1219431400E4B060 /* LTWRemoteDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 637AC8291219431200E4B060 /* LTWRemoteDatabase.m */; };
 		637AC82C1219431400E4B060 /* LTWRemoteDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 637AC8291219431200E4B060 /* LTWRemoteDatabase.m */; };
@@ -175,6 +198,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		6329CAFB122A558B00480589 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+				6329CB03122A558E00480589 /* LTWRunConverter.1 in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
 		634DBE80121BE4E000C73057 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -192,6 +225,16 @@
 			dstSubfolderSpec = 0;
 			files = (
 				6356FB03120A36830072FF20 /* LTWTeAraSplitter.1 in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		636BE71F122B5DEE0003DE00 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+				636BE727122B5DEF0003DE00 /* LTWNibTranslator.1 in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
@@ -229,6 +272,11 @@
 		6326E79A12190DFB0031AA7C /* LTWSimpleAssessmentMode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LTWSimpleAssessmentMode.h; path = /Users/david/Dropbox/phd/code/LTWToolkit/LTWSimpleAssessmentMode.h; sourceTree = "<absolute>"; };
 		6326E79B12190DFB0031AA7C /* LTWSimpleAssessmentMode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LTWSimpleAssessmentMode.m; path = /Users/david/Dropbox/phd/code/LTWToolkit/LTWSimpleAssessmentMode.m; sourceTree = "<absolute>"; };
 		6326E79D12190E6F0031AA7C /* LTWSimpleAssessmentMode.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = LTWSimpleAssessmentMode.xib; path = /Users/david/Dropbox/phd/code/LTWToolkit/LTWSimpleAssessmentMode.xib; sourceTree = "<absolute>"; };
+		6329CAFD122A558B00480589 /* LTWRunConverter */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = LTWRunConverter; sourceTree = BUILT_PRODUCTS_DIR; };
+		6329CB00122A558D00480589 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		6329CB02122A558E00480589 /* LTWRunConverter.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = LTWRunConverter.1; sourceTree = "<group>"; };
+		6329CB04122A558E00480589 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		6329CB07122A558F00480589 /* LTWRunConverter_Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTWRunConverter_Prefix.pch; sourceTree = "<group>"; };
 		6329E5EE120E798800DC42F1 /* Untitled-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Untitled-Info.plist"; sourceTree = "<group>"; };
 		632CC73D12166DF2002891F4 /* LTWOverlayTokensView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTWOverlayTokensView.h; sourceTree = "<group>"; };
 		632CC73E12166DF2002891F4 /* LTWOverlayTokensView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTWOverlayTokensView.m; sourceTree = "<group>"; };
@@ -261,6 +309,12 @@
 		6356FB07120A36830072FF20 /* LTWTeAraSplitter_Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTWTeAraSplitter_Prefix.pch; sourceTree = "<group>"; };
 		6364ACE3120653A00042F942 /* LTWTokenProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTWTokenProcessor.h; sourceTree = "<group>"; };
 		6364ACE4120653A00042F942 /* LTWTokenProcessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTWTokenProcessor.m; sourceTree = "<group>"; };
+		636BE721122B5DEE0003DE00 /* LTWNibTranslator */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = LTWNibTranslator; sourceTree = BUILT_PRODUCTS_DIR; };
+		636BE724122B5DEF0003DE00 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		636BE726122B5DEF0003DE00 /* LTWNibTranslator.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = LTWNibTranslator.1; sourceTree = "<group>"; };
+		636BE728122B5DEF0003DE00 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		636BE72B122B5DEF0003DE00 /* LTWNibTranslator_Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTWNibTranslator_Prefix.pch; sourceTree = "<group>"; };
+		636BE731122B60140003DE00 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		636D47A511FD2CC60099153C /* LTWCorpus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTWCorpus.h; sourceTree = "<group>"; };
 		636D47A611FD2CC60099153C /* LTWCorpus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTWCorpus.m; sourceTree = "<group>"; };
 		636D47A811FD2CD70099153C /* LTWTokens.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTWTokens.h; sourceTree = "<group>"; };
@@ -272,6 +326,7 @@
 		637281151224A40300451AFE /* LTWGUIRepresentedObjects.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = LTWGUIRepresentedObjects.m; path = /Users/david/Dropbox/phd/code/LTWToolkit/LTWGUIRepresentedObjects.m; sourceTree = "<absolute>"; };
 		6372812E1224DCAB00451AFE /* LTWGUIDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LTWGUIDownloader.h; path = /Users/david/Dropbox/phd/code/LTWToolkit/LTWGUIDownloader.h; sourceTree = "<absolute>"; };
 		6372812F1224DCAB00451AFE /* LTWGUIDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LTWGUIDownloader.m; path = /Users/david/Dropbox/phd/code/LTWToolkit/LTWGUIDownloader.m; sourceTree = "<absolute>"; };
+		6377B86B122B6AE5001DCC74 /* NibTranslatorTest.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NibTranslatorTest.xib; sourceTree = "<group>"; };
 		637AC8281219431000E4B060 /* LTWRemoteDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTWRemoteDatabase.h; sourceTree = "<group>"; };
 		637AC8291219431200E4B060 /* LTWRemoteDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTWRemoteDatabase.m; sourceTree = "<group>"; };
 		637AC8331219498000E4B060 /* libsybdb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libsybdb.a; sourceTree = "<group>"; };
@@ -347,6 +402,15 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		6329CAFA122A558B00480589 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6329CB01122A558D00480589 /* Foundation.framework in Frameworks */,
+				6329CB21122A5BA000480589 /* Python.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		634020D81216E4E900E50C9D /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -379,6 +443,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				6356FB01120A36830072FF20 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		636BE71E122B5DEE0003DE00 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				636BE725122B5DEF0003DE00 /* Foundation.framework in Frameworks */,
+				636BE732122B60140003DE00 /* AppKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -455,6 +528,8 @@
 				63BAE8E6121236B7008127C4 /* LTWAssessmentTool.app */,
 				634020DB1216E4EA00E50C9D /* LTWAssessmentTool-Windows.app */,
 				634DBE82121BE4E000C73057 /* LTWKLDivergenceCalculator */,
+				6329CAFD122A558B00480589 /* LTWRunConverter */,
+				636BE721122B5DEE0003DE00 /* LTWNibTranslator */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -462,6 +537,7 @@
 		29B97314FDCFA39411CA2CEA /* LTWToolkit */ = {
 			isa = PBXGroup;
 			children = (
+				636BE731122B60140003DE00 /* AppKit.framework */,
 				634319D412214DB4004542C6 /* inex_icon.png */,
 				63C1100E121F688700BA4FD9 /* Miscellaneous Files */,
 				6356FAE1120A35C60072FF20 /* Tools */,
@@ -552,6 +628,49 @@
 				632240CC120573E80023CD84 /* LTWTokenTag.m */,
 			);
 			name = "Token Tags";
+			sourceTree = "<group>";
+		};
+		6329CAF6122A558800480589 /* LTWRunConverter */ = {
+			isa = PBXGroup;
+			children = (
+				6329CAF7122A558B00480589 /* Source */,
+				6329CAF8122A558B00480589 /* Documentation */,
+				6329CAFF122A558D00480589 /* Frameworks */,
+				6329CB06122A558F00480589 /* Other Sources */,
+			);
+			path = LTWRunConverter;
+			sourceTree = "<group>";
+		};
+		6329CAF7122A558B00480589 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				6329CB04122A558E00480589 /* main.m */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
+		6329CAF8122A558B00480589 /* Documentation */ = {
+			isa = PBXGroup;
+			children = (
+				6329CB02122A558E00480589 /* LTWRunConverter.1 */,
+			);
+			name = Documentation;
+			sourceTree = "<group>";
+		};
+		6329CAFF122A558D00480589 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6329CB00122A558D00480589 /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		6329CB06122A558F00480589 /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				6329CB07122A558F00480589 /* LTWRunConverter_Prefix.pch */,
+			);
+			name = "Other Sources";
 			sourceTree = "<group>";
 		};
 		634020D21216E4E300E50C9D /* LTWAssessmentTool-Windows */ = {
@@ -687,6 +806,9 @@
 				63BAE8DD121236B6008127C4 /* LTWAssessmentTool */,
 				634020D21216E4E300E50C9D /* LTWAssessmentTool-Windows */,
 				634DBE7B121BE4DE00C73057 /* LTWKLDivergenceCalculator */,
+				6329CAF6122A558800480589 /* LTWRunConverter */,
+				636BE71A122B5DEC0003DE00 /* LTWNibTranslator */,
+				6377B86B122B6AE5001DCC74 /* NibTranslatorTest.xib */,
 			);
 			name = Tools;
 			sourceTree = "<group>";
@@ -730,6 +852,49 @@
 			isa = PBXGroup;
 			children = (
 				6356FB07120A36830072FF20 /* LTWTeAraSplitter_Prefix.pch */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		636BE71A122B5DEC0003DE00 /* LTWNibTranslator */ = {
+			isa = PBXGroup;
+			children = (
+				636BE71B122B5DEE0003DE00 /* Source */,
+				636BE71C122B5DEE0003DE00 /* Documentation */,
+				636BE723122B5DEF0003DE00 /* Frameworks */,
+				636BE72A122B5DEF0003DE00 /* Other Sources */,
+			);
+			path = LTWNibTranslator;
+			sourceTree = "<group>";
+		};
+		636BE71B122B5DEE0003DE00 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				636BE728122B5DEF0003DE00 /* main.m */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
+		636BE71C122B5DEE0003DE00 /* Documentation */ = {
+			isa = PBXGroup;
+			children = (
+				636BE726122B5DEF0003DE00 /* LTWNibTranslator.1 */,
+			);
+			name = Documentation;
+			sourceTree = "<group>";
+		};
+		636BE723122B5DEF0003DE00 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				636BE724122B5DEF0003DE00 /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		636BE72A122B5DEF0003DE00 /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				636BE72B122B5DEF0003DE00 /* LTWNibTranslator_Prefix.pch */,
 			);
 			name = "Other Sources";
 			sourceTree = "<group>";
@@ -975,6 +1140,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		6329CAFC122A558B00480589 /* LTWRunConverter */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6329CB0A122A558F00480589 /* Build configuration list for PBXNativeTarget "LTWRunConverter" */;
+			buildPhases = (
+				6329CAF9122A558B00480589 /* Sources */,
+				6329CAFA122A558B00480589 /* Frameworks */,
+				6329CAFB122A558B00480589 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LTWRunConverter;
+			productName = LTWRunConverter;
+			productReference = 6329CAFD122A558B00480589 /* LTWRunConverter */;
+			productType = "com.apple.product-type.tool";
+		};
 		634020DA1216E4E900E50C9D /* LTWAssessmentTool-Windows */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 634020F11216E4ED00E50C9D /* Build configuration list for PBXNativeTarget "LTWAssessmentTool-Windows" */;
@@ -1025,6 +1207,23 @@
 			name = LTWTeAraSplitter;
 			productName = LTWTeAraSplitter;
 			productReference = 6356FAFD120A36820072FF20 /* LTWTeAraSplitter */;
+			productType = "com.apple.product-type.tool";
+		};
+		636BE720122B5DEE0003DE00 /* LTWNibTranslator */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 636BE72E122B5DEF0003DE00 /* Build configuration list for PBXNativeTarget "LTWNibTranslator" */;
+			buildPhases = (
+				636BE71D122B5DEE0003DE00 /* Sources */,
+				636BE71E122B5DEE0003DE00 /* Frameworks */,
+				636BE71F122B5DEE0003DE00 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LTWNibTranslator;
+			productName = LTWNibTranslator;
+			productReference = 636BE721122B5DEE0003DE00 /* LTWNibTranslator */;
 			productType = "com.apple.product-type.tool";
 		};
 		63BAE8E5121236B7008127C4 /* LTWAssessmentTool */ = {
@@ -1103,6 +1302,8 @@
 				63BAE8E5121236B7008127C4 /* LTWAssessmentTool */,
 				634020DA1216E4E900E50C9D /* LTWAssessmentTool-Windows */,
 				634DBE81121BE4E000C73057 /* LTWKLDivergenceCalculator */,
+				6329CAFC122A558B00480589 /* LTWRunConverter */,
+				636BE720122B5DEE0003DE00 /* LTWNibTranslator */,
 			);
 		};
 /* End PBXProject section */
@@ -1130,6 +1331,7 @@
 				63BAE8EE121236B8008127C4 /* InfoPlist.strings in Resources */,
 				63BAE8F3121236B8008127C4 /* MainMenu.xib in Resources */,
 				63BAE8F6121236B8008127C4 /* Credits.rtf in Resources */,
+				6377B86E122B6EDC001DCC74 /* NibTranslatorTest.xib in Resources */,
 				638F16BF12127CEB00782C3F /* LTWTestAssessmentMode.xib in Resources */,
 				6326E79E12190E700031AA7C /* LTWSimpleAssessmentMode.xib in Resources */,
 				63B2AF3D121A9A6F002B8A67 /* MainWindow.glade in Resources */,
@@ -1215,6 +1417,28 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		6329CAF9122A558B00480589 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6329CB05122A558E00480589 /* main.m in Sources */,
+				6329CB0F122A5B0100480589 /* LTWAssessmentController.m in Sources */,
+				6329CB10122A5B0100480589 /* LTWTestAssessmentMode.m in Sources */,
+				6329CB11122A5B0100480589 /* LTWSimpleAssessmentMode.m in Sources */,
+				6329CB13122A5B0100480589 /* sqlite3.c in Sources */,
+				6329CB14122A5B0100480589 /* LTWDatabase.m in Sources */,
+				6329CB15122A5B0100480589 /* LTWTokenTag.m in Sources */,
+				6329CB16122A5B0100480589 /* LTWTokens.m in Sources */,
+				6329CB17122A5B0100480589 /* LTWConcreteTokens.m in Sources */,
+				6329CB18122A5B0100480589 /* LTWConcreteSubTokens.m in Sources */,
+				6329CB19122A5B0100480589 /* LTWConcreteCopiedTokens.m in Sources */,
+				6329CB1A122A5B0100480589 /* LTWPythonUtils.m in Sources */,
+				6329CB1B122A5B0100480589 /* LTWCorpus.m in Sources */,
+				6329CB1C122A5B0100480589 /* LTWParser.m in Sources */,
+				6329CB1D122A5B0100480589 /* LTWArticle.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		634020D71216E4E900E50C9D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1281,6 +1505,14 @@
 			files = (
 				6356FB0B120A36A80072FF20 /* LTWParser.m in Sources */,
 				6356FB05120A36830072FF20 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		636BE71D122B5DEE0003DE00 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				636BE729122B5DEF0003DE00 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1452,6 +1684,41 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		6329CB08122A558F00480589 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = LTWRunConverter/LTWRunConverter_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_VERSION = "";
+				INSTALL_PATH = /usr/local/bin;
+				PRODUCT_NAME = LTWRunConverter;
+			};
+			name = Debug;
+		};
+		6329CB09122A558F00480589 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = LTWRunConverter/LTWRunConverter_Prefix.pch;
+				GCC_VERSION = "";
+				INSTALL_PATH = /usr/local/bin;
+				PRODUCT_NAME = LTWRunConverter;
+			};
+			name = Release;
+		};
 		634020EF1216E4ED00E50C9D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1596,6 +1863,39 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INSTALL_PATH = /usr/local/bin;
 				PRODUCT_NAME = LTWTeAraSplitter;
+			};
+			name = Release;
+		};
+		636BE72C122B5DEF0003DE00 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = LTWNibTranslator/LTWNibTranslator_Prefix.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				INSTALL_PATH = /usr/local/bin;
+				PRODUCT_NAME = LTWNibTranslator;
+			};
+			name = Debug;
+		};
+		636BE72D122B5DEF0003DE00 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = LTWNibTranslator/LTWNibTranslator_Prefix.pch;
+				GCC_VERSION = com.apple.compilers.llvmgcc42;
+				INSTALL_PATH = /usr/local/bin;
+				PRODUCT_NAME = LTWNibTranslator;
 			};
 			name = Release;
 		};
@@ -1791,6 +2091,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		6329CB0A122A558F00480589 /* Build configuration list for PBXNativeTarget "LTWRunConverter" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6329CB08122A558F00480589 /* Debug */,
+				6329CB09122A558F00480589 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		634020F11216E4ED00E50C9D /* Build configuration list for PBXNativeTarget "LTWAssessmentTool-Windows" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1814,6 +2123,15 @@
 			buildConfigurations = (
 				6356FB09120A36830072FF20 /* Debug */,
 				6356FB0A120A36830072FF20 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		636BE72E122B5DEF0003DE00 /* Build configuration list for PBXNativeTarget "LTWNibTranslator" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				636BE72C122B5DEF0003DE00 /* Debug */,
+				636BE72D122B5DEF0003DE00 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

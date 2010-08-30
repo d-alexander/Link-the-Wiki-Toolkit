@@ -19,6 +19,16 @@
 			<key>orderHint</key>
 			<integer>5</integer>
 		</dict>
+		<key>LTWNibTranslator.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>7</integer>
+		</dict>
+		<key>LTWRunConverter.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>6</integer>
+		</dict>
 		<key>LTWTeAraSplitter.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -52,6 +62,10 @@
 		<key>LTWAssessmentTool.app</key>
 		<true/>
 		<key>LTWKLDivergenceCalculator</key>
+		<true/>
+		<key>LTWNibTranslator</key>
+		<true/>
+		<key>LTWRunConverter</key>
 		<true/>
 		<key>LTWTeAraSplitter</key>
 		<true/>

@@ -121,7 +121,7 @@ static NSString *GUIDefinitionPath = @"";
     
     
     if ([indexPath indexAtPosition:0] >= [nextIndexPath indexAtPosition:0]) {
-        //[nextIndexPath release];
+        [nextIndexPath release];
         nextIndexPath = [[NSIndexPath alloc] initWithIndex:[indexPath indexAtPosition:0]+1];
     }
 }
@@ -196,7 +196,8 @@ static NSString *GUIDefinitionPath = @"";
     if (![object isKindOfClass:[LTWGUIAssessmentMode class]]) return;
     
     LTWGUIViewAdapter *assessmentMainView = [LTWGUIViewAdapter loadViewsFromFile:[(LTWGUIAssessmentMode*)object GUIDefinitionFilename] withDelegate:delegate returningViewWithRole:@"assessmentMainView"];
-    gtk_widget_reparent(assessmentMainView->view, view);
+    //gtk_widget_reparent(assessmentMainView->view, view);
+    gtk_box_pack_end(GTK_BOX(view), assessmentMainView->view, TRUE, TRUE, 5);
     NSSize assessmentSize = [assessmentMainView size];
     
     LTWGUIView *mainWindow = [self topLevelView];
@@ -528,7 +529,7 @@ void LTWGUITextViewAdapter_exposed(GtkTextView *textView, GdkEventExpose *event)
 #ifdef GTK_PLATFORM
     textBuffer = gtk_text_buffer_new(NULL);
     gtk_text_view_set_buffer(GTK_TEXT_VIEW(view), textBuffer);
-    g_signal_connect(G_OBJECT(view), "expose_event", G_CALLBACK(LTWGUITextViewAdapter_exposed), NULL);
+    //g_signal_connect(G_OBJECT(view), "expose_event", G_CALLBACK(LTWGUITextViewAdapter_exposed), NULL);
 #else
     
 #endif

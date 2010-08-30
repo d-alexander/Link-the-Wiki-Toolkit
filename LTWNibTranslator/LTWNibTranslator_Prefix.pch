@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'LTWNibTranslator' target in the 'LTWNibTranslator' project
+//
+
+#ifdef __OBJC__
+#endif
+
