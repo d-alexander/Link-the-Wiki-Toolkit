@@ -48,30 +48,9 @@ typedef enum {
 -(NSSize)size;
 -(LTWGUIView*)topLevelView;
 
-// "Private" utility methods.
--(id)objectAtIndexPath:(NSIndexPath*)indexPath;
-#ifdef GTK_PLATFORM
-+(BOOL)translateValue:(id)value intoObject:(void**)destination type:(GType*)type;
-+(GtkCellRenderer*)cellRendererForType:(GType)type;
-#endif
 
 @end
 
-#pragma mark -
-#pragma mark Miscellaneous
-
-@interface LTWGUITreeBranch : NSObject {
-    NSMutableDictionary *dictionary;
-    NSUInteger index;
-}
-
--(id)initWithDictionary:(NSMutableDictionary*)theDictionary index:(NSUInteger)theIndex;
-+(id)branchWithDictionary:(NSMutableDictionary*)theDictionary index:(NSUInteger)theIndex;
-
-@property (readonly) NSMutableDictionary *dictionary;
-@property (readonly) NSUInteger index;
-
-@end
 
 #pragma mark -
 #pragma mark View Adapters
@@ -94,11 +73,10 @@ typedef enum {
 
 @end
 
-@interface LTWGUITreeViewAdapter : LTWGUIViewAdapter {
+@interface LTWGUIGenericTreeViewAdapter : LTWGUIViewAdapter {
 #ifdef GTK_PLATFORM
     GtkTreeStore *store;
     NSArray *columnProperties;
-    
     NSUInteger numColumns;
     GType *columnTypes;
     NSString **usedColumnProperties;
@@ -107,18 +85,30 @@ typedef enum {
 #endif
 }
 
+-(id)objectAtIndexPath:(NSIndexPath*)indexPath;
+-(BOOL)useColumnPropertiesForObject:(id)object maxColumns:(NSUInteger)maxColumns;
+#ifdef GTK_PLATFORM
+-(void)insertObject:(id)object;
++(BOOL)translateValueForProperty:(NSString*)property ofObject:(id)object intoObject:(void**)destination type:(GType*)type;
++(GtkCellRenderer*)cellRendererForType:(GType)type attribute:(char**)attribute;
+#endif
 @end
 
-@interface LTWGUIComboBoxViewAdapter : LTWGUIViewAdapter {
+@interface LTWGUITreeViewAdapter : LTWGUIGenericTreeViewAdapter {
 #ifdef GTK_PLATFORM
-    GtkTreeStore *store;
-    NSArray *columnProperties;
-    
-    NSUInteger numColumns;
-    GType *columnTypes;
-    NSString **usedColumnProperties;
+    BOOL signalConnected;
+    BOOL storeConnected;
 #else
-    
+#endif
+}
+
+@end
+
+@interface LTWGUIComboBoxViewAdapter : LTWGUIGenericTreeViewAdapter {
+#ifdef GTK_PLATFORM
+    BOOL signalConnected;
+    BOOL storeConnected;
+#else
 #endif
 }
 
@@ -132,5 +122,25 @@ typedef enum {
     
 #endif
 }
+
+@end
+
+#pragma mark -
+#pragma mark Miscellaneous
+
+@interface LTWGUITreeBranch : NSObject {
+    NSMutableDictionary *dictionary;
+    NSUInteger index;
+}
+
+-(id)initWithDictionary:(NSMutableDictionary*)theDictionary index:(NSUInteger)theIndex;
++(id)branchWithDictionary:(NSMutableDictionary*)theDictionary index:(NSUInteger)theIndex;
+
+@property (readonly) NSMutableDictionary *dictionary;
+@property (readonly) NSUInteger index;
+
+@end
+
+@interface NSIndexPath (BugFix)
 
 @end

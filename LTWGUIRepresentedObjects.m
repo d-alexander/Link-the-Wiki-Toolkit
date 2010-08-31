@@ -12,9 +12,10 @@
 
 @synthesize anchor;
 @synthesize target;
+@synthesize isRelevant;
 
 -(NSArray*)displayableProperties {
-    return [NSArray arrayWithObjects:@"anchor", nil];
+    return [NSArray arrayWithObjects:@"anchor", @"isRelevant", nil];
 }
 
 -(NSArray*)propertyHierarchy {
