@@ -34,6 +34,8 @@ const char *className(id object) {
         return "GtkTextView";
     }else if ([object isKindOfClass:[NSOutlineView class]]) {
         return "GtkTreeView";
+    }else if ([object isKindOfClass:[NSScrollView class]]) {
+        return "GtkScrolledWindow";
     }else if ([object isMemberOfClass:[NSView class]]) {
         return "NSVIEW_PLACEHOLDER";
     }else{
@@ -79,6 +81,7 @@ void printXMLEnd(FILE *file) {
 @end
 @interface ViewBox : Box {
     NSView *view;
+    ViewBox *containedViewBox;
 }
 @end
 @interface BoxBox : Box {
@@ -119,12 +122,8 @@ void printXMLEnd(FILE *file) {
 }
 -(id)initWithView:(NSView*)theView {
     if (self = [super init]) {
-        while (YES) {
-            if ([theView isKindOfClass:[NSScrollView class]]) {
-                theView = [(NSScrollView*)theView documentView];
-            }else{
-                break;
-            }
+        if ([theView isKindOfClass:[NSScrollView class]]) {
+            containedViewBox = [[ViewBox alloc] initWithView:[(NSScrollView*)theView documentView]];
         }
         view = [theView retain];
     }
@@ -137,6 +136,7 @@ void printXMLEnd(FILE *file) {
     printIndented(file, depth, "<child>");
     printIndented(file, depth+1, "<object class=\"%s\">", className(view));
     printProperties(file, depth+2, [NSDictionary dictionaryWithObjectsAndKeys:(!parent || [self shouldExpandInBoxOfType:[parent type]] ? @"True" : @"False"), @"expand", [NSValue valueWithRect:[self rect]], @"rect (TEMP)", view, @"Cocoa View (TEMP(", nil]);
+    [containedViewBox printXMLTo:file depth:depth+2 parent:parent];
     printIndented(file, depth+1, "</object>");
     printIndented(file, depth, "</child>");
 }
@@ -222,6 +222,38 @@ void printXMLEnd(FILE *file) {
 }
 @end
 
+NSArray *placeBoxes(NSArray *boxes, int depth) {
+    if ([boxes count] == 1) return boxes;
+    
+    //NSLog(@"placeBoxes called with boxes = %@, depth = %d", boxes, depth);
+    
+    for (NSUInteger startIndex = 0; startIndex < [boxes count]; startIndex++) {
+        
+        if (depth == 0 && startIndex == 2) {
+            NSLog(@"");
+        }
+        
+        for (NSUInteger maxNumChildren = [boxes count] - startIndex; maxNumChildren >= 2; ) {
+            //if (depth < 1) NSLog(@"%d, %d, %d", depth, startIndex, maxNumChildren);
+            BoxBox *newBox = [[BoxBox alloc] init];
+            for (NSUInteger index = startIndex; index < [boxes count]; index++) {
+                newBox = [newBox boxByTryingToAddChildBox:[boxes objectAtIndex:index]];
+                if ([[newBox boxes] count] == maxNumChildren) break;
+            }
+            if ([newBox type] == UNKNOWN) break;
+            NSMutableArray *newBoxes = [boxes mutableCopy];
+            [newBoxes removeObjectsInArray:[newBox boxes]];
+            [newBoxes addObject:newBox];
+            NSArray *result = placeBoxes(newBoxes, depth+1);
+            if (result) return result;
+            
+            maxNumChildren = [[newBox boxes] count] - 1;
+        }
+    }
+    
+    return nil;
+}
+
 int main (int argc, const char * argv[]) {
 
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
@@ -242,30 +274,11 @@ int main (int argc, const char * argv[]) {
         }
     }
     
-    BOOL changed;
-    do {
-        changed = NO;
-        for (Box *box in boxes) {
-            BoxBox *newBox = [[BoxBox alloc] init];
-            newBox = [newBox boxByTryingToAddChildBox:box];
-            for (Box *box2 in boxes) {
-                if (box != box2) newBox = [newBox boxByTryingToAddChildBox:box2];
-            }
-            
-            if ([newBox type] != UNKNOWN) {
-                [boxes addObject:newBox];
-                for (Box *boxToRemove in [newBox boxes]) {
-                    [boxes removeObject:boxToRemove];
-                }
-                changed = YES;
-                break;
-            }
-        }
-    } while (changed);
+    NSArray *placedBoxes = placeBoxes(boxes, 0);
     
     printXMLStart(stdout);
     
-    for (Box *box in boxes) {
+    for (Box *box in placedBoxes) {
         [box printXMLTo:stdout depth:2 parent:nil];
     }
     

@@ -113,6 +113,14 @@
 		634F5C1F121700C000DFDF7B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63BAE8F1121236B8008127C4 /* MainMenu.xib */; };
 		634F5C2D121798F100DFDF7B /* LTWConcreteCopiedTokens.m in Sources */ = {isa = PBXBuildFile; fileRef = 632427E712103606004ED16F /* LTWConcreteCopiedTokens.m */; };
 		635173DC120FB0D50013BA72 /* TeAra.py in Resources */ = {isa = PBXBuildFile; fileRef = 635173DB120FB0D50013BA72 /* TeAra.py */; };
+		63522B75122DD12C00844A67 /* sqlite3async.c in Sources */ = {isa = PBXBuildFile; fileRef = 63522B73122DD12C00844A67 /* sqlite3async.c */; };
+		63522B76122DD12C00844A67 /* sqlite3async.c in Sources */ = {isa = PBXBuildFile; fileRef = 63522B73122DD12C00844A67 /* sqlite3async.c */; };
+		63522B77122DD12C00844A67 /* sqlite3async.c in Sources */ = {isa = PBXBuildFile; fileRef = 63522B73122DD12C00844A67 /* sqlite3async.c */; };
+		63522B78122DD12C00844A67 /* sqlite3async.c in Sources */ = {isa = PBXBuildFile; fileRef = 63522B73122DD12C00844A67 /* sqlite3async.c */; };
+		63522B79122DD12C00844A67 /* sqlite3async.c in Sources */ = {isa = PBXBuildFile; fileRef = 63522B73122DD12C00844A67 /* sqlite3async.c */; };
+		63522B7A122DD12C00844A67 /* sqlite3async.c in Sources */ = {isa = PBXBuildFile; fileRef = 63522B73122DD12C00844A67 /* sqlite3async.c */; };
+		63522B7B122DD12C00844A67 /* sqlite3async.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 63522B74122DD12C00844A67 /* sqlite3async.h */; };
+		63522B7C122DD12C00844A67 /* sqlite3async.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 63522B74122DD12C00844A67 /* sqlite3async.h */; };
 		6353EF241206C4180097FFF3 /* LTWSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 6353EF231206C4180097FFF3 /* LTWSearch.m */; };
 		6356FAB112097A9A0072FF20 /* WPTAMapping.py in Resources */ = {isa = PBXBuildFile; fileRef = 6356FAB012097A9A0072FF20 /* WPTAMapping.py */; };
 		6356FAB412097B2F0072FF20 /* Guardian.py in Resources */ = {isa = PBXBuildFile; fileRef = 6356FAB312097B2F0072FF20 /* Guardian.py */; };
@@ -205,6 +213,7 @@
 			dstSubfolderSpec = 0;
 			files = (
 				6329CB03122A558E00480589 /* LTWRunConverter.1 in CopyFiles */,
+				63522B7C122DD12C00844A67 /* sqlite3async.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
@@ -215,6 +224,7 @@
 			dstSubfolderSpec = 0;
 			files = (
 				634DBE88121BE4E100C73057 /* LTWKLDivergenceCalculator.1 in CopyFiles */,
+				63522B7B122DD12C00844A67 /* sqlite3async.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
@@ -298,6 +308,8 @@
 		634DBE8C121BE4E100C73057 /* LTWKLDivergenceCalculator_Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LTWKLDivergenceCalculator_Prefix.pch; sourceTree = "<group>"; };
 		635173DB120FB0D50013BA72 /* TeAra.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = TeAra.py; sourceTree = "<group>"; };
 		635173DD120FB20B0013BA72 /* Wikipedia.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = Wikipedia.py; sourceTree = "<group>"; };
+		63522B73122DD12C00844A67 /* sqlite3async.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = sqlite3async.c; sourceTree = "<group>"; };
+		63522B74122DD12C00844A67 /* sqlite3async.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sqlite3async.h; sourceTree = "<group>"; };
 		6353EF221206C4180097FFF3 /* LTWSearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTWSearch.h; sourceTree = "<group>"; };
 		6353EF231206C4180097FFF3 /* LTWSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTWSearch.m; sourceTree = "<group>"; };
 		6356FAB012097A9A0072FF20 /* WPTAMapping.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = WPTAMapping.py; sourceTree = "<group>"; };
@@ -916,6 +928,8 @@
 			isa = PBXGroup;
 			children = (
 				63D99AC612083B7500CEE18B /* Persistence */,
+				63522B73122DD12C00844A67 /* sqlite3async.c */,
+				63522B74122DD12C00844A67 /* sqlite3async.h */,
 				6353EF211206C3F30097FFF3 /* LTWSearch cluster */,
 				631C6A531202A5DE00E821BD /* LTWTokens cluster */,
 				636D47B111FD2E9C0099153C /* Utilities */,
@@ -1436,6 +1450,7 @@
 				6329CB1B122A5B0100480589 /* LTWCorpus.m in Sources */,
 				6329CB1C122A5B0100480589 /* LTWParser.m in Sources */,
 				6329CB1D122A5B0100480589 /* LTWArticle.m in Sources */,
+				63522B7A122DD12C00844A67 /* sqlite3async.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1474,6 +1489,7 @@
 				637AC877121A4BB600E4B060 /* dbutil.c in Sources */,
 				637AC878121A4BB600E4B060 /* rpc.c in Sources */,
 				637AC890121A7A0C00E4B060 /* LTWGTKPlatform.m in Sources */,
+				63522B78122DD12C00844A67 /* sqlite3async.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1496,6 +1512,7 @@
 				634DBE95121BE98500C73057 /* LTWConcreteSubTokens.m in Sources */,
 				634DBE96121BE98800C73057 /* LTWConcreteCopiedTokens.m in Sources */,
 				634DBE98121BE99600C73057 /* LTWDatabase.m in Sources */,
+				63522B79122DD12C00844A67 /* sqlite3async.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1541,6 +1558,7 @@
 				634021771216EBA000E50C9D /* sqlite3.c in Sources */,
 				637AC82C1219431400E4B060 /* LTWRemoteDatabase.m in Sources */,
 				637AC88F121A7A0C00E4B060 /* LTWGTKPlatform.m in Sources */,
+				63522B77122DD12C00844A67 /* sqlite3async.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1566,6 +1584,7 @@
 				632CC74012166DF2002891F4 /* LTWOverlayTokensView.m in Sources */,
 				634021761216EBA000E50C9D /* sqlite3.c in Sources */,
 				637AC82B1219431400E4B060 /* LTWRemoteDatabase.m in Sources */,
+				63522B76122DD12C00844A67 /* sqlite3async.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1595,6 +1614,7 @@
 				6326E79C12190DFB0031AA7C /* LTWSimpleAssessmentMode.m in Sources */,
 				63E6AA64122382E300B8D190 /* LTWGUIViewAdapter.m in Sources */,
 				637281301224DCAB00451AFE /* LTWGUIDownloader.m in Sources */,
+				63522B75122DD12C00844A67 /* sqlite3async.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

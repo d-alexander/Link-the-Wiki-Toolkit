@@ -172,7 +172,7 @@
 											<int key="NSvFlags">256</int>
 											<string key="NSFrameSize">{216, 426}</string>
 											<reference key="NSSuperview" ref="194660624"/>
-											<reference key="NSNextKeyView" ref="176059791"/>
+											<reference key="NSNextKeyView" ref="422258013"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSTableHeaderView" key="NSHeaderView" id="920089983">
 												<reference key="NSNextResponder" ref="176059791"/>
@@ -318,7 +318,7 @@
 							</object>
 							<string key="NSFrame">{{20, 20}, {218, 444}}</string>
 							<reference key="NSSuperview" ref="1006"/>
-							<reference key="NSNextKeyView" ref="194660624"/>
+							<reference key="NSNextKeyView" ref="176059791"/>
 							<int key="NSsFlags">562</int>
 							<reference key="NSVScroller" ref="422258013"/>
 							<reference key="NSHScroller" ref="587766879"/>
@@ -461,6 +461,7 @@
 							<int key="NSvFlags">274</int>
 							<string key="NSFrame">{{246, 20}, {369, 419}}</string>
 							<reference key="NSSuperview" ref="1006"/>
+							<reference key="NSNextKeyView"/>
 							<string key="NSClassName">NSView</string>
 						</object>
 					</object>
@@ -515,7 +516,6 @@
 						<reference key="object" ref="1006"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="903403719"/>
 							<reference ref="642870921"/>
 							<reference ref="672898345"/>
 							<reference ref="188853668"/>
@@ -524,6 +524,7 @@
 							<reference ref="1048329683"/>
 							<reference ref="47525204"/>
 							<reference ref="662136521"/>
+							<reference ref="903403719"/>
 						</object>
 						<reference key="parent" ref="1005"/>
 					</object>

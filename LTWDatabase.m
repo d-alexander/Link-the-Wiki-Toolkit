@@ -21,8 +21,23 @@
     return self;
 }
 
+static LTWDatabase *instance = nil;
+
++(void)asynchronousThread {
+    sqlite3async_run();
+}
+
++(void)initialize {
+    sqlite3async_initialize(NULL, 1);
+    [NSThread detachNewThreadSelector:@selector(asynchronousThread) toTarget:self withObject:nil];
+}
+
++(void)setSharedDatabaseFile:(NSString*)filePath {
+    NSAssert(!instance, "Cannot change database file after shared instance has been created.");
+    instance = [[LTWDatabase alloc] initWithDataFile:filePath];
+}
+
 +(LTWDatabase*)sharedInstance {
-    static LTWDatabase *instance = nil;
     if (!instance) instance = [[LTWDatabase alloc] initWithDataFile:(@"" DATA_PATH @"tokens.db")];
     return instance;
 }

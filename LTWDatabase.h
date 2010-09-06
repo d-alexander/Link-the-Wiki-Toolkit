@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <sqlite3.h>
+#import "sqlite3async.h"
 
 #import "LTWTokenTag.h"
 #import "LTWArticle.h"
@@ -39,6 +40,7 @@ typedef struct {
 -(void)beginTransaction;
 -(void)commit;
 
++(void)setSharedDatabaseFile:(NSString*)filePath;
 +(LTWDatabase*)sharedInstance;
 
 -(NSUInteger)insertTokensWithText:(NSString*)text;

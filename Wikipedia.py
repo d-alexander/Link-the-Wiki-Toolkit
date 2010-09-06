@@ -1,5 +1,5 @@
-#import glob
-#import urllib
+import glob
+import urllib
 
 class Wikipedia:
     def get_corpus_name(self):
@@ -9,7 +9,7 @@ class Wikipedia:
         urls = []
         for path in glob.glob('/Users/david/Desktop/phd/wp2007/part-0/*.xml'): # need to make this cross-platform using os.path.join()
             urls.append("file://" + urllib.pathname2url(path))
-            return urls
+        return urls
     
     def load_article(self, tokens):
 
