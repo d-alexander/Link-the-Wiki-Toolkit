@@ -1,20 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Bucket
    type = "1">
-   <FileBreakpoints>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         isPathRelative = "1"
-         filePath = "LTWNibTranslator/Source/main.m"
-         timestampString = "305439651.486416"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "233"
-         endingLineNumber = "233"
-         landmarkName = "placeBoxes()"
-         landmarkType = "7">
-      </FileBreakpoint>
-   </FileBreakpoints>
 </Bucket>

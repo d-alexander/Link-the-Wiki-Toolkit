@@ -28,7 +28,8 @@
         [LTWGUIViewAdapter setGUIDefinitionPath:@"\\\\vmware-host\\Shared Folders\\VMWare Shared\\LTWAssessmentTool-Windows.app\\Contents\\Resources\\"];
         mainWindow = [LTWGUIViewAdapter loadViewsFromFile:@"MainWindow.glade" withDelegate:self returningViewWithRole:@"mainWindow"];
 #else
-        mainWindow = [LTWGUIViewAdapter loadViewsFromFile:@"MainMenu" withDelegate:self returningViewWithRole:@"mainView"];
+        [LTWGUIViewAdapter setGUIDefinitionPath:[[NSBundle mainBundle] resourcePath]];
+        mainWindow = [LTWGUIViewAdapter loadViewsFromFile:@"MainWindow.nib" withDelegate:self returningViewWithRole:@"mainView"];
 #endif
         
         assessmentMode = nil;
@@ -66,11 +67,13 @@
     }
 }
 
+#ifdef GTK_PLATFORM
 gboolean checkForMainThreadCalls(void *data) {
     LTWGUIMediator *mediatorInstance = (LTWGUIMediator*)data;
     [mediatorInstance checkForMainThreadCalls];
     return TRUE;
 }
+#endif
 
 -(void)doPlatformSpecificInitialisation {
 #ifdef GTK_PLATFORM
@@ -83,7 +86,7 @@ gboolean checkForMainThreadCalls(void *data) {
     // NOTE: Should make this work using signals instead.
     g_timeout_add(100, checkForMainThreadCalls, self);
 #else
-    
+    [NSApplication sharedApplication];
 #endif
 }
 
@@ -91,7 +94,7 @@ gboolean checkForMainThreadCalls(void *data) {
 #ifdef GTK_PLATFORM
     gtk_main();
 #else
-    
+    [NSApp run];
 #endif
 }
 

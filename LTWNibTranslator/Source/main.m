@@ -225,16 +225,9 @@ void printXMLEnd(FILE *file) {
 NSArray *placeBoxes(NSArray *boxes, int depth) {
     if ([boxes count] == 1) return boxes;
     
-    //NSLog(@"placeBoxes called with boxes = %@, depth = %d", boxes, depth);
-    
     for (NSUInteger startIndex = 0; startIndex < [boxes count]; startIndex++) {
         
-        if (depth == 0 && startIndex == 2) {
-            NSLog(@"");
-        }
-        
         for (NSUInteger maxNumChildren = [boxes count] - startIndex; maxNumChildren >= 2; ) {
-            //if (depth < 1) NSLog(@"%d, %d, %d", depth, startIndex, maxNumChildren);
             BoxBox *newBox = [[BoxBox alloc] init];
             for (NSUInteger index = startIndex; index < [boxes count]; index++) {
                 newBox = [newBox boxByTryingToAddChildBox:[boxes objectAtIndex:index]];

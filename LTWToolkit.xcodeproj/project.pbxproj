@@ -10,6 +10,7 @@
 		1DDD58160DA1D0A300B32029 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
 		256AC3DA0F4B6AC300CF3369 /* LTWToolkitAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* LTWToolkitAppDelegate.m */; };
 		63024DAB1216FEA6009346C9 /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = 634021741216EB9F00E50C9D /* sqlite3.c */; };
+		63140D4B1234D05A009CF707 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63140D4A1234D05A009CF707 /* MainWindow.xib */; };
 		631C6A561202A60600E821BD /* LTWConcreteTokens.m in Sources */ = {isa = PBXBuildFile; fileRef = 631C6A551202A60600E821BD /* LTWConcreteTokens.m */; };
 		631C6A591202A61600E821BD /* LTWConcreteSubTokens.m in Sources */ = {isa = PBXBuildFile; fileRef = 631C6A581202A61600E821BD /* LTWConcreteSubTokens.m */; };
 		6320C05A1220E63700461FD8 /* LTWSimpleAssessmentMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 6326E79B12190DFB0031AA7C /* LTWSimpleAssessmentMode.m */; };
@@ -129,6 +130,11 @@
 		6356FB05120A36830072FF20 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6356FB04120A36830072FF20 /* main.m */; };
 		6356FB0B120A36A80072FF20 /* LTWParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FE49DF11FD697700088F16 /* LTWParser.m */; };
 		6364ACE5120653A00042F942 /* LTWTokenProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 6364ACE4120653A00042F942 /* LTWTokenProcessor.m */; };
+		6366F7971234A8AA000F3C87 /* LTWGUIDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 6372812F1224DCAB00451AFE /* LTWGUIDownloader.m */; };
+		6366F7981234A8AC000F3C87 /* LTWGUIRepresentedObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 637281151224A40300451AFE /* LTWGUIRepresentedObjects.m */; };
+		6366F7991234A8B4000F3C87 /* LTWGUIViewAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 63E6AA63122382E300B8D190 /* LTWGUIViewAdapter.m */; };
+		6366F79A1234A8B7000F3C87 /* LTWGUIMediator.m in Sources */ = {isa = PBXBuildFile; fileRef = 63E6AA61122377E100B8D190 /* LTWGUIMediator.m */; };
+		6366F79B1234A8BC000F3C87 /* LTWGUIController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63E6AA6C1223925E00B8D190 /* LTWGUIController.m */; };
 		636BE725122B5DEF0003DE00 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 636BE724122B5DEF0003DE00 /* Foundation.framework */; };
 		636BE727122B5DEF0003DE00 /* LTWNibTranslator.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 636BE726122B5DEF0003DE00 /* LTWNibTranslator.1 */; };
 		636BE729122B5DEF0003DE00 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 636BE728122B5DEF0003DE00 /* main.m */; };
@@ -140,12 +146,10 @@
 		6372811D1224D49400451AFE /* LTWGUIRepresentedObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = 637281151224A40300451AFE /* LTWGUIRepresentedObjects.m */; };
 		637281301224DCAB00451AFE /* LTWGUIDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 6372812F1224DCAB00451AFE /* LTWGUIDownloader.m */; };
 		63728138122502F300451AFE /* LTWGUIDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 6372812F1224DCAB00451AFE /* LTWGUIDownloader.m */; };
-		6377B86E122B6EDC001DCC74 /* NibTranslatorTest.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6377B86B122B6AE5001DCC74 /* NibTranslatorTest.xib */; };
 		637AC821121912DD00E4B060 /* LTWSimpleAssessmentMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 6326E79B12190DFB0031AA7C /* LTWSimpleAssessmentMode.m */; };
 		637AC82B1219431400E4B060 /* LTWRemoteDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 637AC8291219431200E4B060 /* LTWRemoteDatabase.m */; };
 		637AC82C1219431400E4B060 /* LTWRemoteDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 637AC8291219431200E4B060 /* LTWRemoteDatabase.m */; };
 		637AC82D1219431400E4B060 /* LTWRemoteDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 637AC8291219431200E4B060 /* LTWRemoteDatabase.m */; };
-		637AC83D12194C2900E4B060 /* libsybdb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 637AC83B12194C2900E4B060 /* libsybdb.a */; };
 		637AC875121A4BB600E4B060 /* dblib.c in Sources */ = {isa = PBXBuildFile; fileRef = 637AC871121A4BB600E4B060 /* dblib.c */; };
 		637AC876121A4BB600E4B060 /* dbopen.c in Sources */ = {isa = PBXBuildFile; fileRef = 637AC872121A4BB600E4B060 /* dbopen.c */; };
 		637AC877121A4BB600E4B060 /* dbutil.c in Sources */ = {isa = PBXBuildFile; fileRef = 637AC873121A4BB600E4B060 /* dbutil.c */; };
@@ -170,7 +174,6 @@
 		63B2AF46121A9F4C002B8A67 /* libgobject-2.0.dll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63B2AF44121A9F4C002B8A67 /* libgobject-2.0.dll.a */; };
 		63BAE8EE121236B8008127C4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 63BAE8EC121236B8008127C4 /* InfoPlist.strings */; };
 		63BAE8F0121236B8008127C4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 63BAE8EF121236B8008127C4 /* main.m */; };
-		63BAE8F3121236B8008127C4 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63BAE8F1121236B8008127C4 /* MainMenu.xib */; };
 		63BAE8F6121236B8008127C4 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 63BAE8F4121236B8008127C4 /* Credits.rtf */; };
 		63C24E0E11FFAC0B002609A9 /* LTWPythonDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C24E0D11FFAC0B002609A9 /* LTWPythonDocument.m */; };
 		63C24E1011FFAC4F002609A9 /* LTWPythonDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63C24E0F11FFAC4F002609A9 /* LTWPythonDocument.xib */; };
@@ -261,6 +264,7 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		63140D4A1234D05A009CF707 /* MainWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = SOURCE_ROOT; };
 		631C6A541202A60600E821BD /* LTWConcreteTokens.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTWConcreteTokens.h; sourceTree = "<group>"; };
 		631C6A551202A60600E821BD /* LTWConcreteTokens.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTWConcreteTokens.m; sourceTree = "<group>"; };
 		631C6A571202A61600E821BD /* LTWConcreteSubTokens.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTWConcreteSubTokens.h; sourceTree = "<group>"; };
@@ -338,7 +342,6 @@
 		637281151224A40300451AFE /* LTWGUIRepresentedObjects.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = LTWGUIRepresentedObjects.m; path = /Users/david/Dropbox/phd/code/LTWToolkit/LTWGUIRepresentedObjects.m; sourceTree = "<absolute>"; };
 		6372812E1224DCAB00451AFE /* LTWGUIDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LTWGUIDownloader.h; path = /Users/david/Dropbox/phd/code/LTWToolkit/LTWGUIDownloader.h; sourceTree = "<absolute>"; };
 		6372812F1224DCAB00451AFE /* LTWGUIDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LTWGUIDownloader.m; path = /Users/david/Dropbox/phd/code/LTWToolkit/LTWGUIDownloader.m; sourceTree = "<absolute>"; };
-		6377B86B122B6AE5001DCC74 /* NibTranslatorTest.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NibTranslatorTest.xib; sourceTree = "<group>"; };
 		637AC8281219431000E4B060 /* LTWRemoteDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LTWRemoteDatabase.h; sourceTree = "<group>"; };
 		637AC8291219431200E4B060 /* LTWRemoteDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LTWRemoteDatabase.m; sourceTree = "<group>"; };
 		637AC8331219498000E4B060 /* libsybdb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libsybdb.a; sourceTree = "<group>"; };
@@ -473,7 +476,6 @@
 			files = (
 				638F16AA1212796600782C3F /* Cocoa.framework in Frameworks */,
 				638F16AB1212797600782C3F /* Python.framework in Frameworks */,
-				637AC83D12194C2900E4B060 /* libsybdb.a in Frameworks */,
 				63B2AF45121A9F4C002B8A67 /* libgobject-2.0.dll.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -820,7 +822,6 @@
 				634DBE7B121BE4DE00C73057 /* LTWKLDivergenceCalculator */,
 				6329CAF6122A558800480589 /* LTWRunConverter */,
 				636BE71A122B5DEC0003DE00 /* LTWNibTranslator */,
-				6377B86B122B6AE5001DCC74 /* NibTranslatorTest.xib */,
 			);
 			name = Tools;
 			sourceTree = "<group>";
@@ -1137,6 +1138,7 @@
 		63E6AA5F122377C200B8D190 /* GUI Rewrite */ = {
 			isa = PBXGroup;
 			children = (
+				63140D4A1234D05A009CF707 /* MainWindow.xib */,
 				6372812E1224DCAB00451AFE /* LTWGUIDownloader.h */,
 				6372812F1224DCAB00451AFE /* LTWGUIDownloader.m */,
 				637281141224A40300451AFE /* LTWGUIRepresentedObjects.h */,
@@ -1343,13 +1345,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				63BAE8EE121236B8008127C4 /* InfoPlist.strings in Resources */,
-				63BAE8F3121236B8008127C4 /* MainMenu.xib in Resources */,
 				63BAE8F6121236B8008127C4 /* Credits.rtf in Resources */,
-				6377B86E122B6EDC001DCC74 /* NibTranslatorTest.xib in Resources */,
 				638F16BF12127CEB00782C3F /* LTWTestAssessmentMode.xib in Resources */,
 				6326E79E12190E700031AA7C /* LTWSimpleAssessmentMode.xib in Resources */,
 				63B2AF3D121A9A6F002B8A67 /* MainWindow.glade in Resources */,
 				634319D512214DB5004542C6 /* inex_icon.png in Resources */,
+				63140D4B1234D05A009CF707 /* MainWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1541,6 +1542,11 @@
 				634021601216E92700E50C9D /* LTWAssessmentController.m in Sources */,
 				634021621216E92E00E50C9D /* LTWCocoaPlatform.m in Sources */,
 				634021611216E92B00E50C9D /* LTWTestAssessmentMode.m in Sources */,
+				6366F7971234A8AA000F3C87 /* LTWGUIDownloader.m in Sources */,
+				6366F7981234A8AC000F3C87 /* LTWGUIRepresentedObjects.m in Sources */,
+				6366F7991234A8B4000F3C87 /* LTWGUIViewAdapter.m in Sources */,
+				6366F79A1234A8B7000F3C87 /* LTWGUIMediator.m in Sources */,
+				6366F79B1234A8BC000F3C87 /* LTWGUIController.m in Sources */,
 				634021631216EA3200E50C9D /* LTWOverlayTokensView.m in Sources */,
 				634021651216EA3900E50C9D /* LTWDatabase.m in Sources */,
 				634021661216EA3C00E50C9D /* LTWSearch.m in Sources */,
@@ -1932,7 +1938,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = LTWAssessmentTool/LTWAssessmentTool_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = "";
 				INFOPLIST_FILE = "LTWAssessmentTool/LTWAssessmentTool-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
@@ -1958,7 +1964,7 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = LTWAssessmentTool/LTWAssessmentTool_Prefix.pch;
-				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_VERSION = "";
 				INFOPLIST_FILE = "LTWAssessmentTool/LTWAssessmentTool-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (

@@ -56,6 +56,8 @@
 -(NSString*)GUIDefinitionFilename {
 #ifdef GTK_PLATFORM
     return @"SimpleAssessmentMode.glade";
+#else
+    return @"SimpleAssessmentMode.nib";
 #endif
 }
 

@@ -14,7 +14,7 @@ typedef GtkWidget LTWGUIView;
 #define RELEASE_VIEW(view) (view)
 #else
 #import <Cocoa/Cocoa.h>
-typedef NSView LTWGUIView;
+typedef NSResponder LTWGUIView;
 #define RETAIN_VIEW(view) ([view retain])
 #define RELEASE_VIEW(view) ([view release])
 #endif
@@ -144,3 +144,12 @@ typedef enum {
 @interface NSIndexPath (BugFix)
 
 @end
+
+#ifndef GTK_PLATFORM
+@interface NSResponder (Roles)
+
+-(NSString*)role;
+-(void)setRole:(NSString*)role;
+
+@end
+#endif

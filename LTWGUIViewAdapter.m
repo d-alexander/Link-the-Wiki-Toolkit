@@ -23,10 +23,11 @@ static NSString *GUIDefinitionPath = @"";
     
     if (!roleDictionary) roleDictionary = [[NSMutableDictionary alloc] init];
     
-    LTWGUIViewAdapter *adapterToReturn = nil;
 #ifdef GTK_PLATFORM
+    LTWGUIViewAdapter *adapterToReturn = nil;
+    
     GtkBuilder *builder = gtk_builder_new();
-    gtk_builder_add_from_file(builder, [[GUIDefinitionPath stringByAppendingString:theFilePath] UTF8String], NULL);
+    gtk_builder_add_from_file(builder, [[GUIDefinitionPath stringByAppendingPathComponent:theFilePath] UTF8String], NULL);
     GSList *objects = gtk_builder_get_objects(builder);
     for (GSList *elem = objects; elem != NULL; elem = g_slist_next(elem)) {
         LTWGUIView *view = GTK_WIDGET(elem->data);
@@ -37,7 +38,28 @@ static NSString *GUIDefinitionPath = @"";
     }
     g_slist_free(objects);
 #else
+    __block LTWGUIViewAdapter *adapterToReturn = nil;
     
+    __block void (^traverseViewTree)(LTWGUIView*);
+    traverseViewTree = ^(LTWGUIView *view) {
+        NSString *role = [view role];
+        LTWGUIViewAdapter *adapter = [LTWGUIViewAdapter adapterForView:view role:role delegate:theDelegate];
+        if (role) {
+            [roleDictionary setObject:adapter forKey:role];
+            if ([role isEqual:theReturnedViewRole]) adapterToReturn = adapter;
+        }
+        NSArray *subviews = [view isKindOfClass:[NSView class]] ? [(NSView*)view subviews] : [view isKindOfClass:[NSWindow class]] ? [[(NSWindow*)view contentView] subviews] : nil;
+        for (NSView *subview in subviews) {
+            traverseViewTree(subview);
+        }
+    };
+    
+    NSArray *topLevelObjects = nil;
+    NSNib *nib = [[NSNib alloc] initWithContentsOfURL:[NSURL URLWithString:[GUIDefinitionPath stringByAppendingPathComponent:theFilePath]]];
+    [nib instantiateNibWithOwner:theDelegate topLevelObjects:&topLevelObjects];
+    for (id object in topLevelObjects){
+        if ([object isKindOfClass:[LTWGUIView class]]) traverseViewTree((LTWGUIView*)object);
+    }
 #endif
     return adapterToReturn;
 }
@@ -59,7 +81,19 @@ static NSString *GUIDefinitionPath = @"";
         adapter = [[LTWGUIGenericViewAdapter alloc] initWithView:theView role:theRole delegate:theDelegate];
     }
 #else
-    
+    if ([theView isKindOfClass:[NSWindow class]]) {
+        adapter = [[LTWGUIWindowViewAdapter alloc] initWithView:theView role:theRole delegate:theDelegate];
+    }else if ([theView isKindOfClass:[NSOutlineView class]]) {
+        adapter = [[LTWGUITreeViewAdapter alloc] initWithView:theView role:theRole delegate:theDelegate];
+    }else if ([theView isKindOfClass:[NSComboBox class]]) {
+        adapter = [[LTWGUIComboBoxViewAdapter alloc] initWithView:theView role:theRole delegate:theDelegate];
+    }else if ([theView isKindOfClass:[NSTextView class]]) {
+        adapter = [[LTWGUITextViewAdapter alloc] initWithView:theView role:theRole delegate:theDelegate];
+    }else if ([theRole isEqual:@"assessmentModeContainer"]) {
+        adapter = [[LTWGUIAssessmentContainerViewAdapter alloc] initWithView:theView role:theRole delegate:theDelegate];
+    }else{
+        adapter = [[LTWGUIGenericViewAdapter alloc] initWithView:theView role:theRole delegate:theDelegate];
+    }
 #endif
     return [adapter autorelease];
 }
@@ -105,15 +139,17 @@ static NSString *GUIDefinitionPath = @"";
     GtkRequisition size;
     gtk_widget_size_request(view, &size);
     return NSMakeSize(size.width, size.height);
+#else
+    return [(NSView*)view frame].size;
 #endif
-
 }
 
 -(LTWGUIView*)topLevelView {
 #ifdef GTK_PLATFORM
     return gtk_widget_get_toplevel(view);
+#else
+    return nil;
 #endif
-
 }
 
 @end
@@ -162,7 +198,9 @@ static NSString *GUIDefinitionPath = @"";
     if (![object isKindOfClass:[LTWGUIAssessmentMode class]]) return;
     
     LTWGUIViewAdapter *assessmentMainView = [LTWGUIViewAdapter loadViewsFromFile:[(LTWGUIAssessmentMode*)object GUIDefinitionFilename] withDelegate:delegate returningViewWithRole:@"assessmentMainView"];
-    //gtk_widget_reparent(assessmentMainView->view, view);
+
+    
+#ifdef GTK_PLATFORM
     gtk_box_pack_end(GTK_BOX(view), assessmentMainView->view, TRUE, TRUE, 5);
     NSSize assessmentSize = [assessmentMainView size];
     
@@ -172,7 +210,6 @@ static NSString *GUIDefinitionPath = @"";
         return;
     }
     
-#ifdef GTK_PLATFORM
     NSInteger windowMaxX, windowMaxY;
     gtk_widget_translate_coordinates(view, mainWindow, (int)assessmentSize.width, (int)assessmentSize.height, &windowMaxX, &windowMaxY);
     gtk_window_resize(GTK_WINDOW(mainWindow), windowMaxX, windowMaxY);
@@ -211,7 +248,7 @@ static NSString *GUIDefinitionPath = @"";
     return nil;
 }
 
-#ifdef GTK_PLATFORM
+
 
 -(BOOL)useColumnPropertiesForObject:(id)object maxColumns:(NSUInteger)maxColumns {
     // Get the names of the properties that will be displayed in each of the table columns for this object. If these property-names aren't specified, just call the description method and use that as a single column.
@@ -223,6 +260,7 @@ static NSString *GUIDefinitionPath = @"";
         newColumnProperties = [NSArray arrayWithObject:@"description"];
     }
     
+#ifdef GTK_PLATFORM
     if (!columnProperties) {
         columnProperties = [newColumnProperties retain];
         columnTypes = malloc([columnProperties count] * sizeof *columnTypes);
@@ -255,8 +293,12 @@ static NSString *GUIDefinitionPath = @"";
     }
     
     return YES;
+#else
+    return NO;
+#endif
 }
 
+#ifdef GTK_PLATFORM
 -(GtkTreeIter)iteratorForInsertingObject:(id)object {
     GtkTreeIter iterator;
     
@@ -606,6 +648,7 @@ void LTWGUITextViewAdapter_exposed(GtkTextView *textView, GdkEventExpose *event)
     return nil;
 }
 
+#ifdef GTK_PLATFORM
 void LTWGUITextViewAdapter_exposed(GtkTextView *textView, GdkEventExpose *event) {
     /*
     GtkWidget *widget = GTK_WIDGET(textView);
@@ -622,6 +665,7 @@ void LTWGUITextViewAdapter_exposed(GtkTextView *textView, GdkEventExpose *event)
                     event->area.width, event->area.height);
      */
 }
+#endif
 
 @end
 
@@ -655,3 +699,21 @@ void LTWGUITextViewAdapter_exposed(GtkTextView *textView, GdkEventExpose *event)
 }
 
 @end
+
+#ifndef GTK_PLATFORM
+static NSMutableDictionary *viewRoles = nil;
+
+@implementation NSResponder (Roles)
+
+-(NSString*)role {
+    if (!viewRoles) viewRoles = [[NSMutableDictionary alloc] init];
+    return [viewRoles objectForKey:[NSValue valueWithNonretainedObject:self]];
+}
+
+-(void)setRole:(NSString*)role {
+    if (!viewRoles) viewRoles = [[NSMutableDictionary alloc] init];
+    [viewRoles setObject:role forKey:[NSValue valueWithNonretainedObject:self]];
+}
+
+@end
+#endif

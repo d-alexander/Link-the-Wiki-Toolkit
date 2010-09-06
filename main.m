@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-
 #import "LTWGUIMediator.h"
 
 int main(int argc, char *argv[])
