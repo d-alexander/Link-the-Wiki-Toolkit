@@ -224,6 +224,10 @@ static NSString *GUIDefinitionPath = @"";
 
 @implementation LTWGUIGenericTreeViewAdapter
 
+#ifdef GTK_PLATFORM
+void LTWGUIGenericTreeViewAdapter_toggled(GtkCellRendererToggle *cellRenderer, char *treePathString, LTWGUIGenericTreeViewAdapter *adapter);
+#endif
+
 -(id)objectAtIndexPath:(NSIndexPath*)indexPath {
     LTWGUITreeBranch *branch = representedObjects;
     for (NSUInteger position = 0; position < [indexPath length]; position++) {
@@ -262,9 +266,11 @@ static NSString *GUIDefinitionPath = @"";
     
 #ifdef GTK_PLATFORM
     if (!columnProperties) {
+        
         columnProperties = [newColumnProperties retain];
         columnTypes = malloc([columnProperties count] * sizeof *columnTypes);
         usedColumnProperties = malloc([columnProperties count] * sizeof *usedColumnProperties);
+        cellRenderers = [[NSMutableArray alloc] init];
         
         NSUInteger columnNumber = 0;
         for (NSString *property in columnProperties) {
@@ -272,12 +278,22 @@ static NSString *GUIDefinitionPath = @"";
             GType type;
             if ([LTWGUIGenericTreeViewAdapter translateValueForProperty:property ofObject:object intoObject:&value type:&type]) {
                 char *cellAttribute;
-                GtkCellRenderer *cellRenderer = [LTWGUIGenericTreeViewAdapter cellRendererForType:type attribute:&cellAttribute];
-                if ([self isKindOfClass:[LTWGUITreeViewAdapter class]]) {gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW(view), -1, [property UTF8String], cellRenderer, cellAttribute, columnNumber, NULL);
+                char *cellChangedSignalName;
+                GtkCellRenderer *cellRenderer = [LTWGUIGenericTreeViewAdapter cellRendererForType:type attribute:&cellAttribute signal:&cellChangedSignalName];
+                if ([self isKindOfClass:[LTWGUITreeViewAdapter class]]) {
+                    gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW(view), -1, [property UTF8String], cellRenderer, cellAttribute, columnNumber, NULL);
                 }else{
                     gtk_cell_layout_pack_start(GTK_CELL_LAYOUT(view), cellRenderer, FALSE);
                     gtk_cell_layout_set_attributes(GTK_CELL_LAYOUT(view), cellRenderer, "text", 0, NULL);
                 }
+                
+                [cellRenderers addObject:[NSValue valueWithPointer:cellRenderer]];
+                
+                // TEMP
+                if (strcmp(cellChangedSignalName, "toggled") == 0) {
+                    g_signal_connect(G_OBJECT(cellRenderer), cellChangedSignalName, G_CALLBACK(LTWGUIGenericTreeViewAdapter_toggled), self);
+                }
+                
                 columnTypes[columnNumber] = type;
                 usedColumnProperties[columnNumber] = [property retain];
                 columnNumber++;
@@ -377,16 +393,32 @@ static NSString *GUIDefinitionPath = @"";
     return NO;
 }
 
-+(GtkCellRenderer*)cellRendererForType:(GType)type attribute:(char**)attribute {
++(GtkCellRenderer*)cellRendererForType:(GType)type attribute:(char**)attribute signal:(char**)signal {
     if (type == G_TYPE_STRING) {
         *attribute = "text";
+        *signal = "edited";
         return gtk_cell_renderer_text_new();
     }else if (type == G_TYPE_BOOLEAN) {
         *attribute = "active";
+        *signal = "toggled";
         return gtk_cell_renderer_toggle_new();
     }
     
     return NULL;
+}
+
+-(void)handleToggleForCellRenderer:(GtkCellRendererToggle*)cellRenderer treePathString:(char*)treePathString {
+    GtkTreeIter iterator;
+    gtk_tree_model_get_iter(GTK_TREE_MODEL(store), &iterator, gtk_tree_path_new_from_string(treePathString));
+    BOOL oldValue;
+    NSUInteger columnIndex = [cellRenderers indexOfObject:[NSValue valueWithPointer:cellRenderer]];
+    gtk_tree_model_get(GTK_TREE_MODEL(store), &iterator, columnIndex, &oldValue, -1);
+    gtk_tree_model_get_iter(GTK_TREE_MODEL(store), &iterator, gtk_tree_path_new_from_string(treePathString));
+    gtk_tree_store_set(store, &iterator, columnIndex, !oldValue, -1);
+}
+
+void LTWGUIGenericTreeViewAdapter_toggled(GtkCellRendererToggle *cellRenderer, char *treePathString, LTWGUIGenericTreeViewAdapter *adapter) {
+    [adapter handleToggleForCellRenderer:cellRenderer treePathString:treePathString];
 }
 #endif
 
@@ -409,6 +441,19 @@ void LTWGUITreeViewAdapter_cursorChanged(GtkTreeView *view, LTWGUITreeViewAdapte
 
 -(void)applyMutationWithType:(LTWGUIViewMutationType)mutationType object:(id)object {
 #ifdef GTK_PLATFORM
+    
+    // NOTE: This should be duplicated in the other views that support the CLEAR mutation.
+    if (mutationType == CLEAR) {
+        store = NULL;
+        columnProperties = nil;
+        [[representedObjects dictionary] removeAllObjects];
+        storeConnected = NO;
+        cellRenderers = nil;
+        gtk_tree_view_set_model(GTK_TREE_VIEW(view), NULL);
+        return;
+    }
+    
+    
     if (!object) {
         NSLog(@"Trying to apply mutation on %@ with nil object, which is not yet implemented!", self);
         return;
@@ -629,7 +674,6 @@ void LTWGUITextViewAdapter_exposed(GtkTextView *textView, GdkEventExpose *event)
 }
 
 -(void)applyMutationWithType:(LTWGUIViewMutationType)mutationType object:(id)object {
-    NSLog(@"object = %@", object);
     if (![object isKindOfClass:[LTWTokens class]]) return;
 #ifdef GTK_PLATFORM
     gtk_text_buffer_set_text(textBuffer, "", -1);

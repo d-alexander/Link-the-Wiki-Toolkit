@@ -21,12 +21,20 @@ enum LTWXMLParserCharType {
 	XML_PUNCT = 1, ALPHABETICAL = 2, NUMERICAL = 4, NON_BREAKING_PUNCT = 8, BREAKING_PUNCT = 16, XML_NAME_START = 32, XML_NAME = 64, XML_QUOTE = 128, END_OF_STRING = 256
 };
 
+-(void)ensureCharactersAvailableFromIndex:(NSUInteger)startIndex {
+    // Implemented in LTWBufferParser.
+}
+
 -(unichar)charAt:(NSUInteger)pos {
 	if (pos < 0 || pos >= [self->xml length]) {
 		return '\0';
 	}else{
 		return [self->xml characterAtIndex:pos];
 	}
+}
+
+-(NSString*)substringWithRange:(NSRange)range {
+    return [self->xml substringWithRange:range];
 }
 
 -(BOOL)unicodeCharIsAlphabetical:(unichar)c {
@@ -53,11 +61,12 @@ enum LTWXMLParserCharType {
 }
 
 -(BOOL)charAt:(NSUInteger)pos hasType:(enum LTWXMLParserCharType)charType {
-	if (pos < 0 || pos >= [self->xml length]) {
-		// NOTE: Should probably have a START_OF_STRING type.
-		return (charType & END_OF_STRING) ? YES : NO;
-	}
-	unichar c = [self->xml characterAtIndex:pos];
+	
+    unichar c = [self charAt:pos];
+    
+    if (c == '\0') {
+        return (charType & END_OF_STRING) ? YES : NO;
+    }
 	
 	if (charType & XML_PUNCT) {
 		if (c == '<' || c == '>' || c == '&' || c == '/') return YES;
@@ -111,7 +120,7 @@ enum LTWXMLParserCharType {
 			current++;
 			while ([self currentCharHasType:XML_NAME]) current++;
 			
-			NSString *attributeName = [self->xml substringWithRange:NSMakeRange(start, current-start)];
+			NSString *attributeName = [self substringWithRange:NSMakeRange(start, current-start)];
 			
 			while (![self currentCharHasType:(XML_QUOTE | XML_PUNCT | END_OF_STRING)] && [self charAt:current] != '&') current++;
 			if ([self currentCharHasType:(XML_PUNCT | END_OF_STRING)] && [self charAt:current] != '&') return;
@@ -127,7 +136,7 @@ enum LTWXMLParserCharType {
 			start = current;
 			while ([self charAt:current] != quote && [self charAt:current] != '\0') current++;
 			
-			NSString *attributeValue = [self->xml substringWithRange:NSMakeRange(start, current-start)];
+			NSString *attributeValue = [self substringWithRange:NSMakeRange(start, current-start)];
 			
 			[extraInfo setObject:attributeValue forKey:[@"attribute" stringByAppendingString:[attributeName capitalizedString]]];
 			
@@ -210,7 +219,7 @@ enum LTWXMLParserCharType {
 		current++;
 		
 		// If we see an entity other than "&lt;", just skip over it.
-		if ([@"&lt;" isEqual:[self->xml substringWithRange:NSMakeRange(start, current-start)]]) {
+		if ([@"&lt;" isEqual:[self substringWithRange:NSMakeRange(start, current-start)]]) {
 			isXMLStart = YES;
 		}else{
 			isXMLStart = NO;
@@ -271,6 +280,8 @@ enum LTWXMLParserCharType {
 
 -(NSRange)getNextTokenWithExtraInfo:(NSMutableDictionary *)extraInfo tokenType:(LTWTokenType*)tokenType {
 	*tokenType = 0;
+    
+    [self ensureCharactersAvailableFromIndex:current];
 	
 	[extraInfo removeAllObjects];
 	
@@ -312,6 +323,8 @@ enum LTWXMLParserCharType {
 }
 
 -(NSRange)getTokenUpToCharacter:(unichar)character {
+    [self ensureCharactersAvailableFromIndex:current];
+    
 	NSUInteger start = current;
 	while ([self charAt:current] != character && [self charAt:current] != '\0') current++;
 	if ([self charAt:current] == '\0') return NSMakeRange(NSNotFound, 0);

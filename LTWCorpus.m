@@ -91,9 +91,7 @@
 	[doc setArticle:article];
     [doc makeWindowControllers];
     [doc showWindows];
-      */  
-    static int numDocsLoaded = 0;
-    if (++numDocsLoaded % 100 == 0) NSLog(@"%d documents loaded.", numDocsLoaded);
+      */
     
 	return article;
 }

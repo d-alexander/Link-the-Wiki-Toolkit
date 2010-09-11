@@ -26,5 +26,6 @@ typedef enum {
 -(NSRange)getNextTokenWithTokenType:(LTWTokenType*)tokenType;
 -(NSRange)getNextToken;
 -(NSRange)getTokenUpToCharacter:(unichar)character;
+-(NSString*)substringWithRange:(NSRange)range;
 
 @end

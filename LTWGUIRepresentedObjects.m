@@ -15,13 +15,13 @@
 @synthesize isRelevant;
 
 -(NSArray*)displayableProperties {
-    return [NSArray arrayWithObjects:@"anchor", @"isRelevant", nil];
+    return [NSArray arrayWithObjects:@"anchor", @"target", @"isRelevant", nil];
 }
-
+/*
 -(NSArray*)propertyHierarchy {
     return [NSArray arrayWithObjects:@"target", nil];
 }
-
+*/
 @end
 
 @implementation LTWGUIArticle

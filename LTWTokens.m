@@ -64,6 +64,18 @@ NSString *LTWTokenTagsChangedNotification = @"LTWTokenTagsChangedNotification";
     return subTokens;
 }
 
+-(NSString*)description {
+    if (!cachedDescription) {
+        cachedDescription = [[NSMutableString alloc] init];
+        for (NSUInteger tokenIndex = 0; tokenIndex < [self count]; tokenIndex++) {
+            if (tokenIndex > 0) 
+                [cachedDescription appendString:@" "];
+            [cachedDescription appendString:[[self _text] substringWithRange:[self rangeOfTokenAtIndex:tokenIndex]]];
+        }
+    }
+    return cachedDescription;
+}
+
 -(void)subtokensWillDeallocate:(LTWTokens*)subTokens {
     [allSubTokens removeObject:[NSValue valueWithNonretainedObject:subTokens]];
 }

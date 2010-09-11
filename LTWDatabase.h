@@ -33,6 +33,7 @@ typedef struct {
 @interface LTWDatabase : NSObject {
     sqlite3 *database;
     LTWDatabaseStatements statements;
+    NSUInteger numNestedTransactions;
 }
 
 -(id)initWithDataFile:(NSString*)dataFilename;

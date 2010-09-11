@@ -20,6 +20,7 @@
     }else if ([role isEqual:@"articleSelector"]) {
         [context mutateViewWithRole:@"sourceArticleBody" mutationType:ADD object:[[(LTWGUIArticle*)selectedObject article] tokensForField:@"body"] caller:self];
         // NOTE: Should remove any old links before adding new ones!
+        [context mutateViewWithRole:@"sourceArticleLinks" mutationType:CLEAR object:nil caller:self];
         for (LTWGUILink *link in [(LTWGUIArticle*)selectedObject links]) {
             [context mutateViewWithRole:@"sourceArticleLinks" mutationType:ADD object:link caller:self];
         }

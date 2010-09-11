@@ -17,6 +17,7 @@
     if (self = [super init]) {
         sqlite3_open([dataFilename UTF8String], &database);
         NSLog(@"Loading database from file %@", dataFilename);
+        numNestedTransactions = 0;
     }
     return self;
 }
@@ -55,14 +56,19 @@ static LTWDatabase *instance = nil;
 }
 
 -(void)beginTransaction {
-    sqlite3_stmt *statement = [self initialiseStatement:&statements.beginTransaction withQuery:"BEGIN TRANSACTION;"];
-    sqlite3_step(statement);
+    if (numNestedTransactions == 0) {
+        sqlite3_stmt *statement = [self initialiseStatement:&statements.beginTransaction withQuery:"BEGIN TRANSACTION;"];
+        sqlite3_step(statement);
+    }
+    numNestedTransactions++;
 }
 
 -(void)commit {
-    static sqlite3_stmt *statement = NULL;
-    [self initialiseStatement:&statements.commit withQuery:"COMMIT;"];
-    sqlite3_step(statement);
+    if (numNestedTransactions == 1) {
+        sqlite3_stmt *statement = [self initialiseStatement:&statements.commit withQuery:"COMMIT;"];
+        sqlite3_step(statement);
+    }
+    numNestedTransactions--;
 }
 
 #pragma mark LTWTokens*

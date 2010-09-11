@@ -11,6 +11,7 @@
 
 #import "LTWTokens.h"
 #import "LTWCorpus.h"
+#import "LTWBufferedParser.h"
 
 int main (int argc, const char * argv[]) {
 
@@ -23,40 +24,69 @@ int main (int argc, const char * argv[]) {
         
         LTWCorpus *corpus = [[LTWCorpus alloc] initWithImplementationCode:[NSString stringWithContentsOfURL:[NSURL URLWithString:@"file:///Users/david/Dropbox/phd/code/LTWToolkit/Wikipedia.py"]]];
 
-        LTWTokens *runFileTokens = [[LTWTokens alloc] initWithXML:[NSString stringWithContentsOfURL:[NSURL URLWithString:@"file:///Users/david/Desktop/phd/LTW2008/Otago/OtagocapConstantSingleSearch.xml"]]];
         
         
-        NSUInteger tokenIndex = 0;
-        NSRange tokenRange;
+        __block LTWBufferedParser *runFileParser = [[LTWBufferedParser alloc] init];
+    
+        [runFileParser setFile:@"/Users/david/Desktop/phd/LTW2008/Otago/OtagocapConstantSingleSearch.xml"];
+        
+        __block NSString *tokenString;
+        __block NSMutableDictionary *extraInfo = [[NSMutableDictionary alloc] init];
+        __block BOOL isXML = NO, isStartTag = NO, isEndTag = NO;
+        BOOL (^getTokenFromRunFile)() = ^{
+            
+            NSRange tokenRange = [runFileParser getNextTokenWithExtraInfo:extraInfo];
+            if (tokenRange.location == NSNotFound) return NO;
+            tokenString = [runFileParser substringWithRange:tokenRange];
+            isXML = [extraInfo objectForKey:@"isXML"] != nil;
+            isEndTag = isXML && [extraInfo objectForKey:@"isEndTag"] != nil;
+            isStartTag = isXML && !isEndTag;
+             
+            return YES;
+        };
+        
         NSString *currentSourceID = @"";
         LTWArticle *currentSourceArticle = nil;
         BOOL outgoing = NO;
-        while ((tokenRange = [runFileTokens rangeOfTokenAtIndex:tokenIndex]).location != NSNotFound) {
-            NSString *tokenString = [[runFileTokens _text] substringWithRange:tokenRange];
-            BOOL isEndTag = [runFileTokens tagWithName:@"isEndTag" startingAtTokenIndex:tokenIndex] != nil;
-            BOOL isStartTag = !isEndTag && [runFileTokens tagWithName:@"isXML" startingAtTokenIndex:tokenIndex] != nil;
-            
+        
+        NSUInteger articlesProcessed = 0;
+        
+        NSAutoreleasePool *loopPool = [[NSAutoreleasePool alloc] init];
+        
+        [[LTWDatabase sharedInstance] beginTransaction];
+        
+        while (getTokenFromRunFile()) {
             if (isStartTag && [tokenString isEqual:@"topic"]) {
-                currentSourceID = [[runFileTokens tagWithName:@"attributeFile" startingAtTokenIndex:tokenIndex] tagValue];
+                currentSourceID = [extraInfo objectForKey:@"attributeFile"];
                 if (currentSourceArticle) {
                     for (NSString *fieldName in [currentSourceArticle fieldNames]) {
                         [[currentSourceArticle tokensForField:fieldName] saveToDatabase];
                     }
                 }
-                currentSourceArticle = [corpus loadArticleWithURL:[NSURL URLWithString:[@"file:///Users/david/Desktop/phd/wp2007/" stringByAppendingString:currentSourceID]]];
+                currentSourceArticle = [corpus loadArticleWithURL:[NSURL URLWithString:[@"file:///Users/david/Desktop/phd/wp2007/" stringByAppendingPathComponent:currentSourceID]]];
+                
+                [loopPool drain];
+                
+                loopPool = [[NSAutoreleasePool alloc] init];
+                
+                if (++articlesProcessed % 100 == 0) {
+                    NSLog(@"%lu articles processed", articlesProcessed);
+                    [[LTWDatabase sharedInstance] commit];
+                    [[LTWDatabase sharedInstance] beginTransaction];
+                }
             }else if (isStartTag && [tokenString isEqual:@"outgoing"]) {
                 outgoing = YES;
             }else if (isStartTag && [tokenString isEqual:@"incoming"]) {
                 outgoing = NO;
-            }else if (isStartTag && [tokenString isEqual:@"link"]) {
-                do tokenIndex++; while ([runFileTokens tagWithName:@"isXML" startingAtTokenIndex:tokenIndex] != nil);
-                do tokenIndex++; while ([runFileTokens tagWithName:@"isXML" startingAtTokenIndex:tokenIndex] != nil);
-                NSUInteger offset = [[[runFileTokens _text] substringWithRange:[runFileTokens rangeOfTokenAtIndex:tokenIndex]] intValue];
-                do tokenIndex++; while ([runFileTokens tagWithName:@"isXML" startingAtTokenIndex:tokenIndex] != nil);
-                NSUInteger length = [[[runFileTokens _text] substringWithRange:[runFileTokens rangeOfTokenAtIndex:tokenIndex]] intValue];
-                
-                do tokenIndex++; while ([runFileTokens tagWithName:@"isXML" startingAtTokenIndex:tokenIndex] != nil);
-                NSString *target = [[runFileTokens _text] substringWithRange:[runFileTokens rangeOfTokenAtIndex:tokenIndex]];
+            }else if (isStartTag && [tokenString isEqual:@"link"] && outgoing) {
+                while (getTokenFromRunFile() && isXML);
+                while (!isXML && getTokenFromRunFile());
+                while (getTokenFromRunFile() && isXML);
+                NSUInteger offset = [tokenString intValue];
+                while (getTokenFromRunFile() && isXML);
+                NSUInteger length = [tokenString intValue];
+                while (getTokenFromRunFile() && isXML);
+                NSString *target = tokenString;
                 
                 LTWTokens *articleTokens = [currentSourceArticle tokensForField:@"body"];
                 for (NSUInteger articleTokenIndex = 0; articleTokenIndex < [articleTokens count]; articleTokenIndex++) {
@@ -67,26 +97,15 @@ int main (int argc, const char * argv[]) {
                             articleTokenIndex++;
                             articleTokenRange = [articleTokens rangeOfTokenAtIndex:articleTokenIndex];
                         }
-                        
-                        // TEMP
-                        NSLog(@"LINK:");
-                        for (NSUInteger i=firstTokenIndex; i<=articleTokenIndex; i++) {
-                            NSLog(@"\t%@ ", [[articleTokens _text] substringWithRange:[articleTokens rangeOfTokenAtIndex:i]]);
-                        }
+                        [articleTokens _addTag:[[[LTWTokenTag alloc] initWithName:@"linked_to" value:target] autorelease] fromIndex:firstTokenIndex toIndex:articleTokenIndex];
+                        break;
                     }
                 }
-                
-                /*
-                 TODO:
-                  - For each source article, load the LTWArticle from disk.
-                  - For each link, find the token range associated with a given FOL and tag it as a link to the specified target. The target article needn't be loaded.
-                  - At the end of each source, save the article to the database.
-                 */
             }
-            
-            tokenIndex++;
         }
-        
+        [[LTWDatabase sharedInstance] commit];
+        [loopPool drain];
+            
         
     }else if (year == 2009) {
         NSString *xml = [NSString stringWithContentsOfURL:[NSURL URLWithString:@"file:///Users/david/Downloads/2009-official-link-the-wiki/923.xml"]];

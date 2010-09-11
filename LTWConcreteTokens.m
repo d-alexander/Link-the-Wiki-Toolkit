@@ -181,6 +181,7 @@
         }
     }
     
+    
     [database commit]; // Should check the result before releasing the memory.
     
     inDatabase = YES;

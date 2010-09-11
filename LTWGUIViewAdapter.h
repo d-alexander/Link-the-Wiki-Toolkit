@@ -20,7 +20,7 @@ typedef NSResponder LTWGUIView;
 #endif
 
 typedef enum {
-    ADD
+    ADD, CLEAR
 } LTWGUIViewMutationType;
 
 
@@ -80,6 +80,7 @@ typedef enum {
     NSUInteger numColumns;
     GType *columnTypes;
     NSString **usedColumnProperties;
+    NSMutableArray *cellRenderers;
 #else
     
 #endif
@@ -90,7 +91,7 @@ typedef enum {
 #ifdef GTK_PLATFORM
 -(void)insertObject:(id)object;
 +(BOOL)translateValueForProperty:(NSString*)property ofObject:(id)object intoObject:(void**)destination type:(GType*)type;
-+(GtkCellRenderer*)cellRendererForType:(GType)type attribute:(char**)attribute;
++(GtkCellRenderer*)cellRendererForType:(GType)type attribute:(char**)attribute signal:(char**)signal;
 #endif
 @end
 

@@ -1,0 +1,370 @@
+
+	<html>
+	<link href="/style.css" type="text/css" rel="stylesheet">
+	<title>INEX 2009 Link-The-Wiki Task and Result Submission Specification</title>
+	<body>
+	
+	<table cellspacing=0 cellpadding=0 border=0 width=100%>
+	<tr>
+		<td width=119 height=80>
+			<a href=/><img src=/inex_small.jpg border=0></a>
+		</td>
+		<td>
+			<table cellspacing=0 cellpadding=0 border=0 width=100% height=80>
+				<tr height=100%>
+					<td valign=center>
+						<div class=aspt_title>
+							INEX 2009 Link-The-Wiki Task and Result Submission Specification
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<div class=aspt_menu>
+							<a href=/>Home</a>  | <a href=wiki-link.asp>About</a> | <a href=runsubmission.asp>Tasks&Runs</a> | <a href=assess.asp>Assessments</a>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	</table>
+	<h1>Introduction</h1>
+<b>Link-the-Wiki in 2009:</b> The Link-the-Wiki track aims to produce a standard procedure and metrics for the evaluation of link discovery between documents. Given a new orphan document, the task is to analyse the text and recommend a set of incoming and outgoing links from anchor-text specified as a passage to Best Entry Point (BEP) in the existing collection. This means that anchor text will be linked to a specific position in the target document for starting to read the relevant content. In addition to the INEX 2009 Wikipedia Collection, the Te Ara Encyclopaedia is adopted at the first time in the track. The tasks are to discover links either within the same collection or from the Te Ara documents to the Wikipedia documents. The performance of the link discovery engines will be evaluated.<br>
+
+
+<h1>Link-the-Wiki Task</h1>
+In 2009, two collections, the <i>INEX 2009 Wikipedia collection</i> and the <i>Te Ara Encyclopedia collection</i>, are adopted and three tasks will be run.
+<ol>
+<li><b>Link-the-Wiki</b> Documents from within the INEX 2009 Wikipedia collection are used. Random selection will be used for file-to-file link discovery. Topic nomination is expected to be used for anchor-to-BEP linking.</li>
+<li><b>Link-Te-Ara</b> The Te Ara Encyclopedia has no links in it. The task is to identify anchor-to-BEP links within the encyclopedia. All topics are used and a number of topics will be chosen for evaluation.</li>
+<li><b>Link-Te-Ara-to-Wiki</b> The task is to link Te Ara to the Wikipedia at anchor-to-BEP level. All topics will be used and a number of topics will be chosen for evaluation.</li>
+</ol>
+
+In link discovery at file-to-file level, participants will be given a set of existing Wikipedia documents, randomly selected up from the collection. The task is to discover incoming and outgoing links. Submissions will be evaluated automatically against the Wikipedia ground-truth using an evaluation methodology, which is similar to the one used in previous years. This task requires no manual assessment.<br>
+<br>
+In link discovery of the Wikipedia at anchor-to-BEP level, topics will be nominated by and distributed to participants. Link engines must identify anchors in the topic document where each anchor can be linked to several best entry points in respective documents. Incoming links are, again, from anchor text in the referring documents to BEP in the topic document. This task will require collaborative assessment by participants in the INEX tradition. An assessment GUI will be used to allow for efficient assessment of links.<br>
+<br>
+Beside the INEX 2009 Wikipedia Collection, the Te Ara Encyclopedia is used in INEX 2009. Currently, there are no links in the collection. Two tasks are designated for the Te Ara Encyclopedia collection. <b>Link-Te-Ara</b> is to achieve anchor-to-BEP linking within the Te Ara collection whilst <b>Link-Te-Ara-to-Wiki</b> dedicates to finding anchors in the Te Ara documents and linking these anchors to respective best entry points in the Wikipedia documents. As a result, all documents in Te Ara will be inter-linked or linked to documents in the Wikipedia. Only outgoing links are necessary for both tasks. A set of submission documents will be significantly selected and distributed to participants for manual assessment. <br>
+
+<h2>Assistant Programs</h2>
+A Java program, XML2FOL, is provided to produce a list of all the element nodes offsets and lengths according to a given XML file. Another Java program, XML2TXT, is also prepared for the participants to convert the XML document into the text-only content.  These 2 programs may be used by participants to indicate the precise offset and length for anchors and best entry points. These same programs define the reference in the process of assessment and evaluation.  Both anchors and BEPs are specified with respect to the text-only version of the files.
+<h2>Anchor and Best Entry Point Specification</h2>
+An anchor is specified in four parts; the filename of the XML document, the start position of the anchor-text, the length of the anchor-text, and the anchor text itself.  The first three define the File,Offset,Length (FOL) of the anchor while the latter is used to verify that the anchor text is correctly specified by the FOL.   The file name is specified without the path or the extension, the offset specifies the anchor starting byte position within the corresponding text-only document, and the anchor length is specified in bytes.<br>
+<br>
+	(file, offset, length)<br>
+<br>
+The file name could be a unique number (e.g. <i>23816</i>) in the INEX 2009 Wikipedia collection, or a unique name (e.g. <i>Manawatu - entry-6</i>) in the Te Ara collection. The Te Ara encyclopedia does not use a number id to represent a document.<br>
+<br>
+Destination links are specified in two parts: a unique filename and a best entry point (BEP). It is the best location in a document from which a user should start reading the referred material.<br>
+<br>
+	(file, offset)<br>
+<br>
+Multiple outgoing links for a sibngle anchor can be specified in the following format in the case of the Wikipedia collection. <br>
+
+<pre>
+&lt;outgoing&gt;
+   &lt;anchor name="Luminiferous aether" offset="1688" length="19"&gt;
+      &lt;tobep offset="2038"&gt;123456&lt;/tobep&gt;
+      &lt;tobep offset="28"&gt;356&lt;/tobep&gt;
+      ...
+   &lt;/anchor&gt;
+   ...
+&lt;/outgoing&gt;
+</pre>
+
+
+<h2>Restriction of Linking</h2>
+The Link-the-Wiki task accepts submissions that identify links from anchor-text to best-entry-points. For instance, a document on <i>Information Retrieval</i> which briefly refers to <i>Latent Semantic Analysis</i> may well link to a document which discusses <i>Dimensionality Reduction</i>. Although the two <i>documents</i> may not seem related, a section on <i>latent semantic analysis</i> in one may link to a section on <i>singular value decomposition</i> in the other.<br>
+<br>
+An anchor, indicated by a combination of <i>Offset</i> and <i>Length</i>, must appear only once in a submission - although it may have multiple distinct BEPs.  An anchor-text in one document can be linked to several destinations (BEPs) in other distinct documents.  It means that the same set of <i>Offset</i> and <i>Length</i> should not appear more than once and hence there is no duplicated anchor for a given topic. Multiple instances of the same anchor in a document will be ignored in evaluation. Document title can also be an anchor, but like any other anchor it can be linked to at most 5 destinations.
+<br>
+The number of anchors and its BEP links is highly restricted. Up to 50 anchors per topic and up to 5 BEPs per anchor may be specified in anchor-to-BEP link discovery. <br>
+<br>
+By contrast, there is no anchor and BEP indicated in file level link discovery but 250 outgoing and 250 incoming file-level links may be specified.<br>
+<br>
+For evaluation purposes, both anchors, and up to 5 BEPs within each anchor, must be ranked and listed in decreasing order of relevance.<br>
+
+<h1>Result Submission</h1>
+Number of Submissions:
+<ul>
+<li>Link-the-Wiki:
+	<ul>
+	<li>File-to-File (automated assessment, 5,000 topics used)</li>
+	<li>Anchor-to-BEP (manual relevance assessment, 50 topics used)</li>
+	</ul></li>
+<li>Link-Te-Ara: 
+	<ul>
+	<li>Anchor-to-BEP (Outgoing only, All topics used)</li>
+	</ul></li>
+<li>Link-Te-Ara-To-Wiki: 
+	<ul>
+	<li>Anchor-to-BEP (Outgoing only, All topics used)</li>
+	</ul></li>
+</ul>
+File-to-File link discovery for the Wikipedia:
+<ul>
+<li>Each submission may contain up to 5,000 topics. Missing topics will be regarded as having a score of zero for the purpose of computing system performance.</li>
+<li>Up to 250 incoming links and up to 250 outgoing links may be specified per topic.</li>
+</ul>
+
+Anchor-to-BEP linking discovery:
+<ul>
+<li>Each submission may contain up to 50 topics. Missing topics will be regarded as having a score of zero for the purpose of evaluating system performance.</li>
+<li>Up to 50 anchors per topic and up to 5 BEPs per anchor can be specified. In a single submission, multiple best entry points linked from an anchor text must point to different documents. Up to 250 incoming links can be specified in the case of Link-the-Wiki.  Each incoming link must be from a different document.</li>
+<li>Only outgoing links need to be discovered for the Te Ara tasks in 2009.</li>
+</ul>
+
+Runs that violate requirements and specific rules in any way will be disqualified.
+
+<h2>Topics, the Wikipedia collection, and the Te Ara encyclopedia</h2>
+These two collections with topics are available for download from the INEX 2009 web site (http://www.inex.otago.ac.nz).
+
+<h2>Special Rules</h2>
+Since the topics are not truly orphaned documents, we adopt the following rules to simulate the use-case situation of genuinely new documents:  
+<ol>
+<li>Participants must delete the topic files from the collection. It is left to the participants to choose the best way to do this. The simplest (and safest) is to physically delete and re-index the collection. Participants my choose virtual deletion instead.</li>
+<li>Systems must not use the existing collection links to the orphaned documents.  Since it is too complicated to delete the numerous existing links to the topic files from the collection, participants are strictly advised not to use such mark-up.  For example, if the Albert Einstein page is a topic file then it is OK to identify the text Albert Einstein in another existing document and suggest a link.  It is NOT OK to search for collection links for the Albert Einstein page.  In other words, text can be used, but not the knowledge that it appears inside a Wikipedia link element (e.g. <link></link>).</li>
+<li>Systems are allowed to use any link as long as they are not linking the topic file. In the example above, this means that it is valid to use any <link></link> tag from the page Special Relativity - with the exception of the links to the topic file itself, namely, links to the Albert Einstein topic file.</li>
+</ol>
+
+<h2>Run Timings</h2>
+Each submission at file level can contain 250 incoming and 250 outgoing links for each of 5,000 topics, which is a total of 2,500,000 links per submission. In the anchor-to-BEP link discovery, the retrieval system needs to identify passages as anchors and BEPs as target links.<br>
+<br>
+Along with the submission of links participants are asked to submit details of the time taken to generate the results (excluding the output to the submission file, but including the reading and parsing of the orphan) and details of the hardware used to generate the result. Time should be CPU time in seconds (to 2 decimal places). The details of the computer are difficult to specify as such details as cache size differs from machine to machine. In 2009 the details of the CPU, core numbers, hyper-threading, and main memory are still requested. Please be as accurate as reasonably possible.<br>
+<br>
+The sample submission format is showed below.
+<pre>
+&lt;details&gt;
+   &lt;machine&gt;
+      &lt;cpu&gt;Intel Celeron&lt;/cpu&gt;
+      &lt;speed&gt;1.06GHz&lt;/speed&gt;
+      &lt;cores&gt;1&lt;/cores&gt;
+      &lt;hyperthreads&gt;1&lt;/hyperthreads&gt;
+      &lt;memory&gt;128MB&lt;/memory&gt;
+   &lt;/machine&gt;
+   &lt;time&gt;3.04 seconds&lt;/time&gt;
+&lt;/details&gt;
+</pre>
+
+<h1>Format and Sample Submission</h1>
+<h2>Link Discovery Tasks</h2>
+Each submission run must specify the <i>task</i> performed. <i>Run-id</i> should be tried to make as simple but meaningful as possible. The detail description of a run can be specified in <i>description</i> section.<br>
+<br>
+
+<pre>
+&lt;inexltw-submission participant-id="12" 
+   run-id="Affiliation_LTWF2F_01"
+   task="LTW_F2F"&gt;
+<hr>
+
+&lt;inexltw-submission participant-id="12"
+   run-id="Affiliation_LTWA2B_01"
+   task="LTW_A2B"&gt;
+<hr>
+
+
+&lt;inexltw-submission participant-id="12"
+   run-id="Affiliation_LTAraA2B_01"
+   task="LTAra_A2B"&gt;
+<hr>
+
+
+&lt;inexltw-submission participant-id="12"
+   run-id="Affiliation_LTAraTWA2B_01"
+   task="LTAraTW_A2B"&gt;
+
+
+&lt;description&gt;Describe the approach here, NOT in run-id.&lt;/description&gt;
+&lt;collections&gt;
+   &lt;collection&gt;Wikipedia_2009_Collection&lt;/collection&gt;
+   &lt;collection&gt;Te_Ara_Collection&lt;/collection&gt;
+&lt;collections&gt;
+</pre>
+<h2>Submission DTD for File-to- File</h2>
+<pre>
+
+&lt;!ELEMENT inexltw-submission (details, description, collections, topic+)&gt;
+&lt;!ATTLIST inexltw-submission
+   participant-id CDATA #REQUIRED
+   run-id CDATA #REQUIRED
+   task (LTW_F2F) #REQUIRED
+&gt;
+&lt;!ELEMENT details (machine, time)&gt;
+&lt;!ELEMENT machine (cpu, speed, cores, hyperthreads, memory)&gt;
+&lt;!ELEMENT cpu (#PCDATA)&gt;
+&lt;!ELEMENT speed (#PCDATA)&gt;
+&lt;!ELEMENT cores (#PCDATA)&gt;
+&lt;!ELEMENT hyperthreads (#PCDATA)&gt;
+&lt;!ELEMENT memory (#PCDATA)&gt;
+&lt;!ELEMENT time (#PCDATA)&gt;
+
+&lt;!ELEMENT description (#PCDATA)&gt;
+&lt;!ELEMENT collections (collection+)&gt;
+&lt;!ELEMENT collection (#PCDATA)&gt;
+&lt;!ELEMENT topic (outgoing, incoming)&gt;
+&lt;!ATTLIST topic
+   file CDATA #REQUIRED
+   name CDATA #REQUIRED
+&gt;
+&lt;!ELEMENT outgoing (linkto)&gt;
+&lt;!ELEMENT incoming (linkfrom)&gt;
+&lt;!ELEMENT linkto (#PCDATA)&gt;
+&lt;!ELEMENT linkfrom (#PCDATA)&gt;
+
+</pre>
+
+<h2>Submission DTD for Anchor-to-BEP</h2>
+<pre>
+&lt;!ELEMENT inexltw-submission (details, description, collections, topic+)&gt;
+&lt;!ATTLIST inexltw-submission
+   participant-id CDATA #REQUIRED
+   run-id CDATA #REQUIRED
+   task (LTW_A2B|LTAra_A2B|LTAraTW_A2B) #REQUIRED
+&gt;
+&lt;!ELEMENT details (machine, time)&gt;
+&lt;!ELEMENT machine (cpu, speed, cores, hyperthreads, memory)&gt;
+&lt;!ELEMENT cpu (#PCDATA)&gt;
+&lt;!ELEMENT speed (#PCDATA)&gt;
+&lt;!ELEMENT cores (#PCDATA)&gt;
+&lt;!ELEMENT hyperthreads (#PCDATA)&gt;
+&lt;!ELEMENT memory (#PCDATA)&gt;
+&lt;!ELEMENT time (#PCDATA)&gt;
+&lt;!ELEMENT description (#PCDATA)&gt;
+&lt;!ELEMENT collections (collection+)&gt;
+&lt;!ELEMENT collection (#PCDATA)&gt;
+&lt;!ELEMENT topic (outgoing, incoming)&gt;
+&lt;!ATTLIST topic
+   file CDATA #REQUIRED
+   name CDATA #REQUIRED
+&gt;
+
+&lt;!ELEMENT outgoing (anchor+)&gt;
+&lt;!ELEMENT incoming (bep+)&gt;
+&lt;!ELEMENT anchor (tobep+)&gt;
+&lt;!ATTLIST anchor
+   name CDATA #REQUIRED
+   offset CDATA #REQUIRED
+   length CDATA #REQUIRED
+&gt;
+&lt;!ELEMENT tobep (#PCDATA)&gt;
+&lt;!ATTLIST tobep
+   offset CDATA #REQUIRED
+&gt;
+&lt;!ELEMENT bep (fromanchor+)&gt;
+&lt;!ATTLIST bep
+   offset CDATA #REQUIRED
+&gt;
+&lt;!ELEMENT fromanchor (#PCDATA)&gt;
+&lt;!ATTLIST fromanchor
+   file CDATA #REQUIRED
+   offset CDATA #REQUIRED
+   length CDATA #REQUIRED
+&gt;
+</pre> 
+
+
+<h2>File-to-File Submission Sample</h2>
+<pre>
+&lt;inexltw-submission participant-id="12"
+   run-id="Affiliation_LTWF2F_01"
+   task="LTW_F2F"&gt;
+   &lt;details&gt;
+      &lt;machine&gt;
+         &lt;cpu&gt;Intel Celeron&lt;/cpu&gt;
+         &lt;speed&gt;1.06GHz&lt;/speed&gt;
+         &lt;cores&gt;1&lt;/cores&gt;
+         &lt;hyperthreads&gt;1&lt;/hyperthreads&gt;
+         &lt;memory&gt;128MB&lt;/memory&gt;
+      &lt;/machine&gt;
+      &lt;time&gt;3.04 seconds&lt;/time&gt;
+   &lt;/details&gt;
+   &lt;description&gt;Describe the approach here, NOT on run-id.&lt;/description&gt;
+   &lt;collections&gt;
+      &lt;collection&gt;Wikipedia_2009_Collection&lt;/collection&gt;
+   &lt;collections&gt;
+   &lt;topic file="13876" name="Albert Einstein"&gt;
+      &lt;outgoing&gt;
+         &lt;linkto&gt;123456, 356, 1256, 1288 ...&lt;/linkto&gt;
+      &lt;/outgoing&gt;
+      &lt;incoming&gt;
+         &lt;linkfrom&gt;9456, 613, 15889 ...&lt;/linkfrom&gt;
+      &lt;/incoming&gt;
+   &lt;/topic&gt;
+  ...
+&lt;/inexltw-submission&gt;
+</pre>
+
+<h2>Anchor-to-BEP Submission Sample</h2>
+
+<pre>
+&lt;inexltw-submission participant-id="12"
+   run-id="Affiliation_LTWA2B_01"
+   task="Refer_To_Page5 & 7"&gt;
+   &lt;details&gt;
+      &lt;machine&gt;
+         &lt;cpu&gt;Intel Celeron&lt;/cpu&gt;
+         &lt;speed&gt;1.06GHz&lt;/speed&gt;
+         &lt;cores&gt;1&lt;/cores&gt;
+         &lt;hyperthreads&gt;1&lt;/hyperthreads&gt;
+         &lt;memory&gt;128MB&lt;/memory&gt;
+      &lt;/machine&gt;
+      &lt;time&gt;3.04 seconds&lt;/time&gt;
+   &lt;/details&gt;
+   &lt;description&gt;Describe the approach here, NOT on run-id.&lt;/description&gt;
+   &lt;collections&gt;
+      &lt;collection&gt;Wikipedia_2009_Collection&lt;/collection&gt;
+   &lt;collections&gt;
+   &lt;topic file="13876" name="Albert Einstein"&gt;
+<font color=000080><b><i>      &lt;outgoing&gt;
+         &lt;anchor offset="1688" length="19" name="Luminiferous aether"&gt;
+            &lt;tobep offset="2038"&gt;123456&lt;/tobep&gt;
+            &lt;tobep offset="28"&gt;356&lt;/tobep&gt;
+            &lt;tobep offset="72"&gt;1256&lt;/tobep&gt;
+            &lt;tobep offset="1920"&gt;1288&lt;/tobep&gt;
+            &lt;tobep offset="836"&gt;1990&lt;/tobep&gt;
+         &lt;/anchor&gt;
+         ...
+      &lt;/outgoing&gt;</font></i></b>
+<font color=000080><b><i>      &lt;incoming&gt;
+         &lt;bep offset="2038"&gt;
+            &lt;fromanchor offset="799" length="9" file="654321"&gt;radiation&lt;/fromanchor&gt;
+         &lt;/bep&gt;
+         ...
+      &lt;/incoming&gt;</font></i></b>
+   &lt;/topic&gt;
+&lt;/inexltw-submission&gt;
+</pre>
+
+
+<h3>Link-Te-Ara</h3>
+<pre>
+<font color=000080><b><i>&lt;outgoing&gt;
+   &lt;anchor offset="768" length="8" name="Balloons"&gt;
+      &lt;tobep offset="1038"&gt;Atmosphere-2&lt;/tofile&gt;
+      &lt;tobep offset="208"&gt;Diving and snorkelling-5&lt;/tofile&gt;
+      &lt;tobep offset="72"&gt;Auckland - Entry-7&lt;/tofile&gt;
+      &lt;tobep offset="920"&gt;West Coast - gazetteer&lt;/tofile&gt;
+      &lt;tobep offset="836"&gt;National Parks-1&lt;/tofile&gt;
+   &lt;/anchor&gt;
+   ...
+&lt;/outgoing&gt;</font></i></b>
+</pre>
+
+<h3>Link-Te-Ara-To-Wiki</h3>
+<pre>
+<font color=000080><b><i>&lt;outgoing&gt;
+   &lt;anchor offset="768" length="8" name="Balloons"&gt;
+      &lt;tobep offset="918"&gt;123456&lt;/tobep&gt;
+      &lt;tobep offset="258"&gt;356&lt;/tobep&gt;
+      &lt;tobep offset="702"&gt;1256&lt;/tobep&gt;
+      &lt;tobep offset="1190"&gt;1288&lt;/tobep&gt;
+      &lt;tobep offset="186"&gt;1990&lt;/tobep&gt;
+   &lt;/anchor&gt;
+   ...
+&lt;/outgoing&gt;</font></i></b>
+</pre>
+
+	</body>
+	</html>
+	
