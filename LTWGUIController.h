@@ -10,11 +10,14 @@
 
 #import "LTWGUIViewAdapter.h"
 
+@class LTWGUIUndoGroup;
 
 @interface LTWGUIController : NSObject {
-
+    LTWGUIUndoGroup *documentLoadingUndoGroup;
+    LTWGUIUndoGroup *targetDocumentLoadingUndoGroup;
 }
 
+-(void)GUIDidLoadWithContext:(id)context;
 -(void)objectSelected:(id)selectedObject inViewWithRole:(NSString*)role context:(id)context;
 
 @end
@@ -24,7 +27,8 @@
 }
 
 -(NSString*)GUIDefinitionFilename;
--(BOOL)shouldMutateViewWithRole:(NSString*)role mutationType:(LTWGUIViewMutationType)mutationType object:(id)object;
+-(void)assessmentModeDidLoadWithContext:(id)context;
++(NSArray*)assessmentModes;
 
 @end
 
@@ -32,6 +36,18 @@
 #pragma mark Assessment Modes
 
 @interface LTWGUISimpleAssessmentMode : LTWGUIAssessmentMode {
+    
+}
+
+@end
+
+@interface LTWGUIAnchorTargetAssessmentMode : LTWGUIAssessmentMode {
+    
+}
+
+@end
+
+@interface LTWGUITargetAnchorAssessmentMode : LTWGUIAssessmentMode {
     
 }
 

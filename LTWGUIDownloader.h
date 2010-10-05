@@ -13,15 +13,17 @@
 @interface LTWGUIDownloader : NSObject {
     id delegate;
     NSUInteger lastFileTimestamp;
-    BOOL finishedDownloadingFiles;
-    BOOL downloadInProgress;
-    NSString *downloadFilename;
-    FILE *downloadFile;
+    NSMutableDictionary *databases;
 }
 
 -(id)initWithDelegate:(id)theDelegate;
 -(void)downloadAssessments;
--(void)articleLoaded:(LTWArticle*)article;
--(void)handleDownloadedFile:(NSString*)filename;
+-(void)articleLoaded:(LTWArticle*)article articleID:(NSUInteger)articleID;
+-(void)handleFile:(NSString*)filename downloaded:(BOOL)downloaded;
+-(void)loadExistingFiles;
+-(BOOL)downloadFile;
+-(BOOL)uploadFile:(NSString*)filename;
+-(void)loadFile:(NSString*)filename;
+-(void)startLoadAssessmentFile:(NSString*)filename;
 
 @end

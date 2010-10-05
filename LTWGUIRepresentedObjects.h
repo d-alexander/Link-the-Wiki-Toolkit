@@ -17,10 +17,6 @@
     BOOL isRelevant;
 }
 
-// NOTE: The return value of this function should probably be able to be changed without subclassing. This would make it much easier to make assessment modes that display different information.
--(NSArray*)displayableProperties;
-//-(NSArray*)propertyHierarchy;
-
 // NOTE: These properties are only writable to avoid having to write an initialisation method. I will probably make them (readonly) later.
 @property (retain) LTWTokens *anchor;
 @property (retain) LTWArticle *target;
@@ -31,9 +27,6 @@
 @interface LTWGUIArticle : NSObject {
     LTWArticle *article;
 }
-
-// NOTE: The return value of this function should probably be able to be changed without subclassing. This would make it much easier to make assessment modes that display different information.
--(NSArray*)displayableProperties;
 
 -(NSArray*)links;
 

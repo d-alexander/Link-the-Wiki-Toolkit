@@ -10,19 +10,16 @@
 #import <Foundation/Foundation.h>
 #import <gtk/gtk.h>
 typedef GtkWidget LTWGUIView;
+typedef GType LTWGUIDataType;
 #define RETAIN_VIEW(view) (view)
 #define RELEASE_VIEW(view) (view)
 #else
 #import <Cocoa/Cocoa.h>
-typedef NSResponder LTWGUIView;
+typedef NSObject LTWGUIView;
+typedef Class LTWGUIDataType;
 #define RETAIN_VIEW(view) ([view retain])
 #define RELEASE_VIEW(view) ([view release])
 #endif
-
-typedef enum {
-    ADD, CLEAR
-} LTWGUIViewMutationType;
-
 
 @class LTWGUITreeBranch;
 
@@ -31,7 +28,6 @@ typedef enum {
     LTWGUIView *view;
     id delegate;
     id nilSubstitute; // The object that gets displayed if a nil value is inserted into the view.
-    LTWGUITreeBranch *representedObjects; // A tree of NSMutableDictionaries of objects that are represented by the view.
 }
 
 +(void)setGUIDefinitionPath:(NSString*)thePath;
@@ -41,7 +37,7 @@ typedef enum {
 
 -(id)initWithView:(LTWGUIView*)theView role:(NSString*)theRole delegate:(id)delegate;
 -(void)setUpView;
--(void)applyMutationWithType:(LTWGUIViewMutationType)mutationType object:(id)object;
+-(void)addObject:(id)object;
 -(id <NSFastEnumeration>)objectsOfType:(Class*)type;
 -(void)setNilSubstitute:(id)theSubstitute;
 -(void)objectSelected:(id)object;
@@ -65,6 +61,15 @@ typedef enum {
     
 }
 
+-(void)displayModallyAbove:(LTWGUIWindowViewAdapter*)parent;
+-(void)hide;
+
+@end
+
+@interface LTWGUIStatusBarViewAdapter : LTWGUIViewAdapter {
+    
+}
+
 @end
 
 @interface LTWGUIAssessmentContainerViewAdapter : LTWGUIViewAdapter {
@@ -73,44 +78,41 @@ typedef enum {
 
 @end
 
-@interface LTWGUIGenericTreeViewAdapter : LTWGUIViewAdapter {
-#ifdef GTK_PLATFORM
-    GtkTreeStore *store;
-    NSArray *columnProperties;
-    NSUInteger numColumns;
-    GType *columnTypes;
-    NSString **usedColumnProperties;
-    NSMutableArray *cellRenderers;
-#else
+@interface LTWGUIButtonViewAdapter : LTWGUIViewAdapter {
     
-#endif
 }
 
--(id)objectAtIndexPath:(NSIndexPath*)indexPath;
--(BOOL)useColumnPropertiesForObject:(id)object maxColumns:(NSUInteger)maxColumns;
-#ifdef GTK_PLATFORM
--(void)insertObject:(id)object;
-+(BOOL)translateValueForProperty:(NSString*)property ofObject:(id)object intoObject:(void**)destination type:(GType*)type;
-+(GtkCellRenderer*)cellRendererForType:(GType)type attribute:(char**)attribute signal:(char**)signal;
-#endif
+@end
+
+@class LTWGUITreeModel;
+
+@interface LTWGUIGenericTreeViewAdapter : LTWGUIViewAdapter {
+    LTWGUITreeModel *model;
+    
+    // These are only here so that we can construct a new model when we want to get rid of an existing one.
+    NSArray *storedDisplayProperties;
+    NSArray *storedHierarchyProperties;
+    NSArray *storedColumnClasses;
+}
+
+typedef struct {
+    LTWGUIGenericTreeViewAdapter *adapter;
+    NSUInteger columnIndex;
+} LTWGUITreeViewAdapterColumn;
+
+-(void)setDisplayProperties:(NSArray*)properties hierarchyProperties:(NSArray*)hierarchyProperties withClasses:(NSArray*)classes;
+-(LTWGUITreeModel*)model;
+
 @end
 
 @interface LTWGUITreeViewAdapter : LTWGUIGenericTreeViewAdapter {
-#ifdef GTK_PLATFORM
-    BOOL signalConnected;
-    BOOL storeConnected;
-#else
-#endif
+    
 }
 
 @end
 
 @interface LTWGUIComboBoxViewAdapter : LTWGUIGenericTreeViewAdapter {
-#ifdef GTK_PLATFORM
-    BOOL signalConnected;
-    BOOL storeConnected;
-#else
-#endif
+    
 }
 
 @end
@@ -129,16 +131,48 @@ typedef enum {
 #pragma mark -
 #pragma mark Miscellaneous
 
-@interface LTWGUITreeBranch : NSObject {
-    NSMutableDictionary *dictionary;
-    NSUInteger index;
+#ifndef GTK_PLATFORM
+@interface LTWGUIPathFormatter : NSFormatter {
+    
 }
 
--(id)initWithDictionary:(NSMutableDictionary*)theDictionary index:(NSUInteger)theIndex;
-+(id)branchWithDictionary:(NSMutableDictionary*)theDictionary index:(NSUInteger)theIndex;
+@end
+#endif
 
-@property (readonly) NSMutableDictionary *dictionary;
-@property (readonly) NSUInteger index;
+#ifdef GTK_PLATFORM
+@interface LTWGUITreeModel : NSObject {
+#else
+@interface LTWGUITreeModel : NSObject <NSOutlineViewDataSource, NSComboBoxDataSource> {
+#endif
+#ifdef GTK_PLATFORM
+    GtkTreeModel *model;
+#else
+    
+#endif
+    id delegate;
+    NSMutableArray *levels;
+    NSMutableArray *displayProperties;
+    NSMutableArray *hierarchyProperties;
+    NSMutableArray *columnTypes;
+}
+
+-(id)initWithDisplayProperties:(NSArray*)theDisplayProperties classes:(NSArray*)theClasses;
+-(void)setHierarchyProperties:(NSArray*)hierarchyProperties;
+-(NSArray*)columnTypes;
+-(NSIndexPath*)addObject:(id)object;
+-(void)moveObject:(id)object;
+-(void)changeObject:(id)object newValue:(id)newValue forColumn:(NSUInteger)columnIndex;
+-(void)removeObject:(id)object;
+    
+-(NSArray*)pathOfChildAtIndex:(NSUInteger)childIndex parentPath:(NSArray*)parentPath;
+
+#ifdef GTK_PLATFORM
+-(id)objectAtTreePath:(GtkTreePath*)treePath;
+-(GtkTreeModel*)model;
+-(GtkTreeIter)iteratorForIndexPath:(NSIndexPath*)indexPath;
+#endif
+    
+@property (assign) id delegate;
 
 @end
 

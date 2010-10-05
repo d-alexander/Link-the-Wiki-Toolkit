@@ -13,28 +13,53 @@
 
 @implementation LTWDatabase
 
+static LTWDatabase *instance = nil;
+static NSConditionLock *asynchronousThreadQuitLock = nil;
+static NSMutableArray *databases = nil;
+
+-(sqlite3*)databaseConnection {
+    return database;
+}
+
 -(id)initWithDataFile:(NSString*)dataFilename {
     if (self = [super init]) {
         sqlite3_open([dataFilename UTF8String], &database);
         NSLog(@"Loading database from file %@", dataFilename);
         numNestedTransactions = 0;
+        [databases addObject:self];
     }
     return self;
 }
 
-static LTWDatabase *instance = nil;
-
 +(void)asynchronousThread {
     sqlite3async_run();
+    [asynchronousThreadQuitLock lock];
+    [asynchronousThreadQuitLock unlockWithCondition:1];
+}
+
+-(void)close {
+    sqlite3_close(database);
+}
+
++(void)stopAsynchronousThread {
+    sqlite3async_control(SQLITEASYNC_HALT, SQLITEASYNC_HALT_IDLE);
+    [asynchronousThreadQuitLock lockWhenCondition:1];
+    [asynchronousThreadQuitLock unlock];
+    for (LTWDatabase *database in databases) {
+        [database close];
+    }
+    sqlite3async_shutdown();
 }
 
 +(void)initialize {
+    asynchronousThreadQuitLock = [[NSConditionLock alloc] initWithCondition:0];
+    databases = [[NSMutableArray alloc] init];
     sqlite3async_initialize(NULL, 1);
     [NSThread detachNewThreadSelector:@selector(asynchronousThread) toTarget:self withObject:nil];
 }
 
 +(void)setSharedDatabaseFile:(NSString*)filePath {
-    NSAssert(!instance, "Cannot change database file after shared instance has been created.");
+    NSAssert(!instance, @"Cannot change database file after shared instance has been created.");
     instance = [[LTWDatabase alloc] initWithDataFile:filePath];
 }
 
@@ -166,30 +191,31 @@ static LTWDatabase *instance = nil;
 }
 
 -(void)loadArticlesWithDelegate:(id)delegate {
-    sqlite3_stmt *statement = [self initialiseStatement:&statements.loadArticles withQuery:"SELECT article_id, field_name, tokens_id FROM LTWArticle_fields ORDER BY article_id;"];
+    sqlite3_stmt *statement = [self initialiseStatement:&statements.loadArticles withQuery:"SELECT LTWArticle.id, LTWArticle.url, LTWArticle_fields.field_name, LTWArticle_fields.tokens_id FROM LTWArticle JOIN LTWArticle_fields ON LTWArticle.id = LTWArticle_fields.article_id ORDER BY LTWArticle.id;"];
     
     NSMutableDictionary *articles = [NSMutableDictionary dictionary];
     
+    LTWArticle *lastArticle = nil;
     NSUInteger lastArticleID = 0;
     
     while (sqlite3_step(statement) == SQLITE_ROW) {
         NSUInteger articleID = sqlite3_column_int(statement, 0);
-        NSString *fieldName = [NSString stringWithUTF8String:(char const*)sqlite3_column_text(statement, 1)];
-        NSUInteger tokensID = sqlite3_column_int(statement, 2);
+        const unsigned char *articleURL = sqlite3_column_text(statement, 1);
+        NSString *fieldName = [NSString stringWithUTF8String:(char const*)sqlite3_column_text(statement, 2)];
+        NSUInteger tokensID = sqlite3_column_int(statement, 3);
         
         LTWArticle *article = [articles objectForKey:[NSNumber numberWithInt:articleID]];
         if (!article) {
-            article = [[LTWArticle alloc] initWithCorpus:nil URL:@""];
+            if (lastArticle) [delegate articleLoaded:lastArticle articleID:lastArticleID];
+            
+            article = [[LTWArticle alloc] initWithCorpus:nil URL:[NSString stringWithUTF8String:(const char*)articleURL]];
             [articles setObject:article forKey:[NSNumber numberWithInt:articleID]];
             [article release];
         }
         
         [article addTokens:[[[LTWTokens alloc] initWithDatabase:self tokensID:tokensID] autorelease] forField:fieldName];
         
-        if (lastArticleID != articleID) {
-            [delegate articleLoaded:article];
-        }
-        
+        lastArticle = article;
         lastArticleID = articleID;
     }
 }
@@ -197,14 +223,15 @@ static LTWDatabase *instance = nil;
 #pragma mark LTWAssessmentFile
 
 -(NSUInteger)assessmentFileTimestamp {
-    NSLog(@"assessmentFileTimestamp called");
-    
     sqlite3_stmt *statement = [self initialiseStatement:&statements.getAssessmentFileTimestamp withQuery:"SELECT strftime('%s', date_created) FROM LTWAssessmentFile;"];
     
     if (!sqlite3_step(statement) == SQLITE_ROW) return UINT_MAX; // NOTE: Is this the best way to handle the error?
+    const unsigned char *str = sqlite3_column_text(statement, 0);
+    
+    if (!str) return UINT_MAX;
     
     
-    return [[NSString stringWithUTF8String:sqlite3_column_text(statement, 0)] intValue];
+    return [[NSString stringWithUTF8String:(const char*)str] intValue];
 }
 
 

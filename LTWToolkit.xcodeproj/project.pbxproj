@@ -1199,7 +1199,7 @@
 				634020D71216E4E900E50C9D /* Sources */,
 				634020D81216E4E900E50C9D /* Frameworks */,
 				634020D91216E4E900E50C9D /* Resources */,
-				6320C0121220CADB00461FD8 /* ShellScript */,
+				6320C0121220CADB00461FD8 /* Run Script */,
 			);
 			buildRules = (
 			);
@@ -1285,7 +1285,7 @@
 				63D51D8F120EC8EA00FA40B8 /* Resources */,
 				63D51D8D120EC8EA00FA40B8 /* Sources */,
 				63D51D8E120EC8EA00FA40B8 /* Frameworks */,
-				63B12877120F98F90006D729 /* ShellScript */,
+				63B12877120F98F90006D729 /* Run Script */,
 				63B12878120F99310006D729 /* ShellScript */,
 			);
 			buildRules = (
@@ -1404,7 +1404,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		6320C0121220CADB00461FD8 /* ShellScript */ = {
+		6320C0121220CADB00461FD8 /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1412,20 +1412,22 @@
 			inputPaths = (
 				"$(BUILDROOT)/LTWAssessmentTool-Windows.app/Contents/MacOS/LTWAssessmentTool-Windows.exe",
 			);
+			name = "Run Script";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "cd /Users/david/Library/Developer/Xcode/DerivedData/LTWToolkit-ewrgnwzwitofwpcgqktuanpsxjpr/Build/Products/Debug\ncp -r LTWAssessmentTool-Windows.app ~/Desktop/VMWare\\ Shared/\nmv /Users/david/Desktop/VMWare\\ Shared/LTWAssessmentTool-Windows.app/Contents/MacOS/LTWAssessmentTool-Windows ~/Desktop/VMWare\\ Shared/LTWAssessmentTool-Windows.app/Contents/MacOS/LTWAssessmentTool-Windows.exe\ncp /Users/david/Downloads/gtk+-bundle_2.20.0-20100406_win32/bin/*.dll ~/Desktop/VMWare\\ Shared/LTWAssessmentTool-Windows.app/Contents/MacOS/";
 		};
-		63B12877120F98F90006D729 /* ShellScript */ = {
+		63B12877120F98F90006D729 /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"/Developer/Cocotron/1.0/Windows/i386/gcc-4.3.1/bin/i386-mingw32msvc-gdbserver.exe \\",
+				"/Developer/Cocotron/1.0/Windows/i386/gcc-4.3.1/bin/i386-mingw32msvc-gdbserver.exe",
 			);
+			name = "Run Script";
 			outputPaths = (
 				"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/gdbserver.exe",
 			);
@@ -1744,6 +1746,7 @@
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_ENABLE_OBJC_GC = supported;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = LTWRunConverter/LTWRunConverter_Prefix.pch;
@@ -1762,6 +1765,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_ENABLE_OBJC_GC = supported;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = LTWRunConverter/LTWRunConverter_Prefix.pch;

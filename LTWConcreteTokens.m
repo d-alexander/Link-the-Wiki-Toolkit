@@ -170,6 +170,7 @@
     // NOTE: The insertTag method will somehow have to know when a tag already exists so as not to replace it.
     // (Should tags be immutable once added?)
     
+    
     NSUInteger tagIndex = 0;
     for (NSUInteger tokenIndex = 0; tokenIndex < [self count]; tokenIndex++) {
         LTWTagOccurrence *occurrence;
@@ -197,6 +198,7 @@
     [tokens release];
     
     // NOTE: Not freeing here because tagOccurrences is not guaranteed not to have been retained by something else!
+    
     /*
     for (NSUInteger tokenIndex = 0; tokenIndex < [tagOccurrences count]; tokenIndex++) {
         LTWTagOccurrence *occurrence = [[tagOccurrences objectAtIndex:tokenIndex] pointerValue];
@@ -208,6 +210,7 @@
         }
     }
      */
+     
     [tagOccurrences release];
     
     text = nil;

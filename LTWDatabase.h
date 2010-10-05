@@ -36,7 +36,11 @@ typedef struct {
     NSUInteger numNestedTransactions;
 }
 
+-(sqlite3*)databaseConnection;
+-(sqlite3_stmt*)initialiseStatement:(sqlite3_stmt**)statement withQuery:(const char *)query;
+
 -(id)initWithDataFile:(NSString*)dataFilename;
++(void)stopAsynchronousThread;
 
 -(void)beginTransaction;
 -(void)commit;

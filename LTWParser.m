@@ -11,10 +11,23 @@
 
 @implementation LTWParser
 
+-(id)init {
+    if (self = [super init]) {
+        textTagNames = [[NSMutableSet alloc] init];
+        tagStack = [[NSMutableArray alloc] init];
+    }
+    return self;
+}
+
 -(void)setDocumentText:(NSString*)theContents {
-	if (self->xml) [self->xml release];
-	self->xml = [theContents retain];
-	self->current = 0;
+	if (xml) [xml release];
+	xml = [theContents retain];
+	current = 0;
+    textChars = 0;
+}
+
+-(void)addTextTagsWithNames:(NSArray*)tagNames {
+    [textTagNames addObjectsFromArray:tagNames];
 }
 
 enum LTWXMLParserCharType {
@@ -103,30 +116,47 @@ enum LTWXMLParserCharType {
 	return [self charAt:current hasType:charType];
 }
 
--(void)putXMLAttributesInExtraInfo:(NSMutableDictionary*)extraInfo {
+-(void)countAndSkipCurrentCharacter {
+    if ([textTagNames containsObject:[tagStack lastObject]]) {
+        textChars++;
+        //fprintf(stderr, "%C", [self charAt:current]);
+    }
+    current++;
+}
+
+-(void)addTagToStack:(NSString*)tagName {
+    [tagStack addObject:tagName];
+}
+
+-(void)removeTagFromStack {
+    if ([tagStack count] > 0) [tagStack removeLastObject];
+}
+
+-(void)putXMLAttributesInExtraInfo:(NSMutableDictionary*)extraInfo encoded:(BOOL)isEncoded {
 	while (![self currentCharHasType:(XML_PUNCT | END_OF_STRING)]) {
 		
 		if ([self charAt:current] == '&' && [self charAt:current+1] == 'g' && [self charAt:current+2] == 't' && [self charAt:current+3] == ';') {
-			current += 4;
+			current += 3;
+            [self countAndSkipCurrentCharacter];
 			break;
 		}
 		
-		while (isspace([self charAt:current]) || [self charAt:current] == '/') current++;
+		while (isspace([self charAt:current]) || [self charAt:current] == '/') if (!isEncoded) current++; else [self countAndSkipCurrentCharacter];
 		
-		while (![self currentCharHasType:(XML_PUNCT | XML_NAME_START | END_OF_STRING)]) current++;
+		while (![self currentCharHasType:(XML_PUNCT | XML_NAME_START | END_OF_STRING)]) if (!isEncoded) current++; else [self countAndSkipCurrentCharacter];
 		
 		if ([self currentCharHasType:XML_NAME_START]) {
 			NSInteger start = current;
-			current++;
-			while ([self currentCharHasType:XML_NAME]) current++;
+			if (!isEncoded) current++; else [self countAndSkipCurrentCharacter];
+			while ([self currentCharHasType:XML_NAME]) if (!isEncoded) current++; else [self countAndSkipCurrentCharacter];
 			
 			NSString *attributeName = [self substringWithRange:NSMakeRange(start, current-start)];
 			
-			while (![self currentCharHasType:(XML_QUOTE | XML_PUNCT | END_OF_STRING)] && [self charAt:current] != '&') current++;
+			while (![self currentCharHasType:(XML_QUOTE | XML_PUNCT | END_OF_STRING)] && [self charAt:current] != '&') if (!isEncoded) current++; else [self countAndSkipCurrentCharacter];
 			if ([self currentCharHasType:(XML_PUNCT | END_OF_STRING)] && [self charAt:current] != '&') return;
 			
 			unichar quote = [self charAt:current];
-			current++;
+			if (!isEncoded) current++; else [self countAndSkipCurrentCharacter];
 			
 			if (quote == '&') {
 				while ([self charAt:current] != ';' && [self charAt:current] != '\0') current++;
@@ -134,7 +164,7 @@ enum LTWXMLParserCharType {
 			}
 			
 			start = current;
-			while ([self charAt:current] != quote && [self charAt:current] != '\0') current++;
+			while ([self charAt:current] != quote && [self charAt:current] != '\0') if (!isEncoded) current++; else [self countAndSkipCurrentCharacter];
 			
 			NSString *attributeValue = [self substringWithRange:NSMakeRange(start, current-start)];
 			
@@ -144,7 +174,7 @@ enum LTWXMLParserCharType {
 				while ([self charAt:current] != ';' && [self charAt:current] != '\0') current++;
 			}
 			
-			current++;
+			if (!isEncoded) current++; else [self countAndSkipCurrentCharacter];
 		}
 	}
 }
@@ -210,17 +240,19 @@ enum LTWXMLParserCharType {
 
 -(NSRange)getXMLTokenWithExtraInfo:(NSMutableDictionary*)extraInfo tokenType:(LTWTokenType*)tokenType {
 	BOOL isXMLStart;
+    BOOL isEncoded = NO;
     
     NSUInteger realTagStart = current; // the position of the < or &
 	
 	if ([self charAt:current] == '&') {
 		NSUInteger start = current;
 		while ([self charAt:current] != ';') current++;
-		current++;
+        [self countAndSkipCurrentCharacter]; // just count this as one character.
 		
 		// If we see an entity other than "&lt;", just skip over it.
 		if ([@"&lt;" isEqual:[self substringWithRange:NSMakeRange(start, current-start)]]) {
 			isXMLStart = YES;
+            isEncoded = YES;
 		}else{
 			isXMLStart = NO;
 		}
@@ -229,7 +261,7 @@ enum LTWXMLParserCharType {
 		isXMLStart = YES;
 	}else{
 		// This shouldn't happen in valid XML. If it does, the best we can do is skip over the offending character and let the caller try again.
-		current++;
+        [self countAndSkipCurrentCharacter];
 		isXMLStart = NO;
 	}
 	
@@ -244,31 +276,39 @@ enum LTWXMLParserCharType {
 		[self skipOverXMLComment];
 		return NSMakeRange(NSNotFound, 0);
 	}
-	
+    
 	if ([self charAt:current] == '/') {
 		[extraInfo setObject:[NSNumber numberWithBool:YES] forKey:@"isEndTag"];
-		current++; // skip over '/' if this is an end tag.
+		if (!isEncoded) current++; else [self countAndSkipCurrentCharacter]; // skip over '/' if this is an end tag.
 		*tokenType |= XML_END_TAG;
 	}else{
 		*tokenType |= XML_START_TAG;	
 	}
+    
+    if (!isEncoded && (*tokenType & XML_END_TAG)) {
+        [self removeTagFromStack];
+    }
 	
 	if ([self currentCharHasType:XML_NAME_START]) {
 		NSUInteger start = current;
 		
-		current++;
-		while ([self currentCharHasType:XML_NAME]) current++;
+		if (!isEncoded) current++; else [self countAndSkipCurrentCharacter];
+		while ([self currentCharHasType:XML_NAME]) if (!isEncoded) current++; else [self countAndSkipCurrentCharacter];
 		
 		NSRange xml_token = NSMakeRange(start, current-start);
 		
-		[self putXMLAttributesInExtraInfo:extraInfo];
-		
+		[self putXMLAttributesInExtraInfo:extraInfo encoded:isEncoded];
+        
 		// Skip over either ">" or "&gt;".
 		if ([self charAt:current] == '&') {
 			while ([self charAt:current] != ';') current++;
 		}
-		current++;
+		if (!isEncoded) current++; else [self countAndSkipCurrentCharacter]; // count as 1 char if encoded, 0 if not.
 		
+        if (!isEncoded && (*tokenType & XML_START_TAG)) {
+            [self addTagToStack:[self substringWithRange:xml_token]];
+        }
+        
         [extraInfo setObject:[NSNumber numberWithInt:xml_token.location-realTagStart] forKey:@"tagStartOffset"];
         [extraInfo setObject:[NSNumber numberWithInt:(current - realTagStart)] forKey:@"tagLength"];
         
@@ -288,24 +328,26 @@ enum LTWXMLParserCharType {
 	NSRange current_token = NSMakeRange(NSNotFound, 0);
 	
 	// Skip over unwanted initial characters.
-	while (![self currentCharHasType:(XML_PUNCT | ALPHABETICAL | NUMERICAL | BREAKING_PUNCT | END_OF_STRING)]) current++;
+	while (![self currentCharHasType:(XML_PUNCT | ALPHABETICAL | NUMERICAL | BREAKING_PUNCT | END_OF_STRING)]) [self countAndSkipCurrentCharacter];
+    
+    [extraInfo setObject:[NSNumber numberWithInt:textChars] forKey:@"INEXOffset"];
 	
 	if ([self currentCharHasType:ALPHABETICAL]) {
 		NSUInteger start = current;
-		while ([self currentCharHasType:(ALPHABETICAL | NON_BREAKING_PUNCT)]) current++;
+		while ([self currentCharHasType:(ALPHABETICAL | NON_BREAKING_PUNCT)]) [self countAndSkipCurrentCharacter];
 		
 		current_token.location = start;
 		current_token.length = current - start;
 	}else if ([self currentCharHasType:NUMERICAL]) {
 		NSUInteger start = current;
-		current++;
-		while ([self currentCharHasType:(NUMERICAL | ALPHABETICAL | NON_BREAKING_PUNCT)]) current++;
+		[self countAndSkipCurrentCharacter];
+		while ([self currentCharHasType:(NUMERICAL | ALPHABETICAL | NON_BREAKING_PUNCT)]) [self countAndSkipCurrentCharacter];
 		
 		current_token.location = start;
 		current_token.length = current - start;
 	}else if ([self currentCharHasType:BREAKING_PUNCT]) { // initial non-breaking punctuation is skipped over, so we don't have to worry about it here.
 		NSUInteger start = current;
-		current++;
+        [self countAndSkipCurrentCharacter];
 		
 		current_token.location = start;
 		current_token.length = current - start;
@@ -315,6 +357,7 @@ enum LTWXMLParserCharType {
 	}else if ([self currentCharHasType:XML_PUNCT]) {
 		// There are two characters that can start a tag: '<' starts an unencoded tag, and '&' starts an entity, which may be '&lt;' (or it may be something else, which we might want to return as a token later, but not for now.)
 		// If [self getXMLToken] returns (NSNotFound, 0), it means there wasn't an interesting XML token at the current position, and whatever was there has been skipped over. In this case, we re-run getNextToken and return the result.
+        
 		current_token = [self getXMLTokenWithExtraInfo:extraInfo tokenType:tokenType];
 		if (current_token.location == NSNotFound) current_token = [self getNextTokenWithExtraInfo:extraInfo tokenType:tokenType];
 	}
@@ -326,10 +369,10 @@ enum LTWXMLParserCharType {
     [self ensureCharactersAvailableFromIndex:current];
     
 	NSUInteger start = current;
-	while ([self charAt:current] != character && [self charAt:current] != '\0') current++;
+	while ([self charAt:current] != character && [self charAt:current] != '\0') [self countAndSkipCurrentCharacter];
 	if ([self charAt:current] == '\0') return NSMakeRange(NSNotFound, 0);
 	NSRange range = NSMakeRange(start, current-start);
-	current++;
+    [self countAndSkipCurrentCharacter];
 	return range;
 }
 

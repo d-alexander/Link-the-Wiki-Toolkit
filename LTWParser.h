@@ -14,6 +14,9 @@
 @interface LTWParser : NSObject {
 	NSString *xml;
 	NSUInteger current;
+    NSMutableSet *textTagNames;
+    NSUInteger textChars;
+    NSMutableArray *tagStack;
 }
 
 typedef enum {
@@ -21,6 +24,7 @@ typedef enum {
 } LTWTokenType;
 
 -(void)setDocumentText:(NSString*)text;
+-(void)addTextTagsWithNames:(NSArray*)tagNames;
 -(NSRange)getNextTokenWithExtraInfo:(NSMutableDictionary *)extraInfo tokenType:(LTWTokenType*)tokenType;
 -(NSRange)getNextTokenWithExtraInfo:(NSMutableDictionary*)extraInfo;
 -(NSRange)getNextTokenWithTokenType:(LTWTokenType*)tokenType;

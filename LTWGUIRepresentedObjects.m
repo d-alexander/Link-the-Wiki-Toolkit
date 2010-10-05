@@ -8,32 +8,54 @@
 
 #import "LTWGUIRepresentedObjects.h"
 
+static NSMutableDictionary *articlesByURL = nil;
+
 @implementation LTWGUILink
 
 @synthesize anchor;
 @synthesize target;
+
++(void)initialize {
+    if (!articlesByURL) articlesByURL = [[NSMutableDictionary alloc] init];
+}
+
+-(void)setIsRelevant:(BOOL)theValue {
+    if (theValue) {
+        [anchor addTag:[[LTWTokenTag alloc] initWithName:@"is_relevant" value:[NSNumber numberWithBool:YES]]];
+    }else{
+        [[anchor tagWithName:@"is_relevant" startingAtTokenIndex:0] remove];
+    }
+}
+
+-(void)setTargetURL:(NSString*)targetURL {
+    [self setTarget:[articlesByURL objectForKey:targetURL]];
+}
+
 @synthesize isRelevant;
 
--(NSArray*)displayableProperties {
-    return [NSArray arrayWithObjects:@"anchor", @"target", @"isRelevant", nil];
-}
-/*
--(NSArray*)propertyHierarchy {
-    return [NSArray arrayWithObjects:@"target", nil];
-}
-*/
 @end
 
 @implementation LTWGUIArticle
 
-@synthesize article;
++(void)initialize {
+    if (!articlesByURL) articlesByURL = [[NSMutableDictionary alloc] init];
+}
 
--(NSArray*)displayableProperties {
-    return [NSArray arrayWithObjects:@"title", @"url", nil];
+-(LTWArticle*)article {
+    return article;
+}
+
+-(void)setArticle:(LTWArticle*)theArticle {
+    article = [theArticle retain];
+    [articlesByURL setObject:theArticle forKey:[theArticle URL]];
 }
 
 -(NSString*)title {
-    return @"placeholder title";
+    return [[article tokensForField:@"title"] description];
+}
+
+-(NSString*)description {
+    return [self title];
 }
 
 -(NSString*)url {
@@ -50,7 +72,7 @@
             if ([[tag tagName] isEqual:@"linked_to"]) {
                 LTWGUILink *link = [[[LTWGUILink alloc] init] autorelease];
                 [link setAnchor:[tokens tokensFromIndex:tokenIndex toIndex:tokenIndex propagateTags:YES]];
-                [link setTarget:[tag tagValue]];
+                [link setTargetURL:[tag tagValue]];
                 [links addObject:link];
             }
         }

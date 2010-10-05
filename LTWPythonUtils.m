@@ -41,14 +41,17 @@ struct LTWPyToken {
 
 static PyTypeObject LTWPyTokenType; // forward declaration.
 
+static NSMutableDictionary *existingStrings = nil;
+
 static PyObject *LTWPyToken_Length(LTWPyToken *obj, PyObject *args) {
 	return PyLong_FromLong(obj->range.length);
 }
 
 static void LTWPyToken_dealloc(LTWPyToken* obj) {
+    if (existingStrings) [existingStrings removeObjectForKey:[NSValue valueWithPointer:obj]];
     [obj->string release];
     [obj->tokens release];
-    //Py_TYPE(self)->tp_free((PyObject*)self);
+    Py_TYPE(obj)->tp_free((PyObject*)obj);
 }
 
 static PyObject *LTWPyToken_repr(LTWPyToken *obj) {
@@ -104,7 +107,6 @@ static BOOL LTWPyToken_lessorequal(PyObject *left, PyObject *right) {
         NSString *otherNSString;
         NSMutableDictionary *otherExtraInfo;
         
-        static NSMutableDictionary *existingStrings = nil;
         if (!existingStrings) existingStrings = [[NSMutableDictionary alloc] init];
         NSValue *storedStringInfoValue = [existingStrings objectForKey:[NSValue valueWithPointer:other]];
         LTWStoredStringInfo *storedStringInfo;
@@ -124,6 +126,8 @@ static BOOL LTWPyToken_lessorequal(PyObject *left, PyObject *right) {
             storedStringInfo->extraInfo = [otherExtraInfo copy];
             
             [existingStrings setObject:[NSValue valueWithPointer:storedStringInfo] forKey:[NSValue valueWithPointer:other]];
+            
+            Py_DECREF(otherString);
         }else{
             storedStringInfo = [storedStringInfoValue pointerValue];
             
@@ -255,7 +259,7 @@ PyObject *LTWPyTokenIterator_Next(LTWPyTokenIterator *obj) {
 
 static void LTWPyTokenIterator_dealloc(LTWPyToken* obj) {
     [obj->tokens release];
-    //Py_TYPE(self)->tp_free((PyObject*)self);
+    Py_TYPE(obj)->tp_free((PyObject*)obj);
 }
 
 static PyMethodDef LTWPyTokenIteratorMethods[] = {

@@ -41,6 +41,9 @@
     for (NSString *fieldName in fields) {
         [[fields objectForKey:fieldName] saveToDatabase];
     }
+    
+    // NOTE: Shouldn't use sharedInstance here.
+    [[LTWDatabase sharedInstance] insertArticle:self];
 }
 
 @end

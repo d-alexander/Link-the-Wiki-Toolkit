@@ -13,7 +13,7 @@
     FILE *inputFile;
     NSRange bufferRangeInFile;
     NSUInteger ensuredCharacterIndex;
-    NSString *buffer;
+    wchar_t *buffer;
 }
 
 -(void)setFile:(NSString*)filename;

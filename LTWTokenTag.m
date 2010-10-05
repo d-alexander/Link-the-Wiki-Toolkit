@@ -58,4 +58,8 @@
 	return value;
 }
 
+-(void)remove {
+    name = [[NSString stringWithFormat:@"REMOVED_%@", name] retain];
+}
+
 @end

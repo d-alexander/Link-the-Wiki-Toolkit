@@ -9,6 +9,7 @@
 #import "LTWGUIMediator.h"
 #import "LTWArticle.h"
 #import "LTWGUIRepresentedObjects.h"
+#import "LTWGUIViewAdapter.h"
 
 /*
  This class co-ordinates communication between the other classes that make up the GUI. Under Cocoa, it will probably also act as the NSApplicationDelegate, although I haven't decided that yet.
@@ -29,16 +30,18 @@
         mainWindow = [LTWGUIViewAdapter loadViewsFromFile:@"MainWindow.glade" withDelegate:self returningViewWithRole:@"mainWindow"];
 #else
         [LTWGUIViewAdapter setGUIDefinitionPath:[[NSBundle mainBundle] resourcePath]];
-        mainWindow = [LTWGUIViewAdapter loadViewsFromFile:@"MainWindow.nib" withDelegate:self returningViewWithRole:@"mainView"];
+        mainWindow = [LTWGUIViewAdapter loadViewsFromFile:@"MainWindow.nib" withDelegate:self returningViewWithRole:@"mainWindow"];
 #endif
         
+        [controller GUIDidLoadWithContext:self];
+        
         assessmentMode = nil;
-        viewMutations = nil;
         
-        // Put the available assessment modes into the selector.
-        [self mutateViewWithRole:@"assessmentModeSelector" mutationType:ADD object:[[[LTWGUISimpleAssessmentMode alloc] init] autorelease] caller:self];
+        for (LTWGUIAssessmentMode *mode in [LTWGUIAssessmentMode assessmentModes]) {
+            [self addObject:mode toViewWithRole:@"assessmentModeSelector"];
+        }
         
-        [[LTWGUIDownloader alloc] initWithDelegate:self];
+        downloader = [[LTWGUIDownloader alloc] initWithDelegate:self];
         [self runPlatformSpecificMainLoop];
         
     }
@@ -46,10 +49,34 @@
     return self;
 }
 
--(void)articleLoaded:(LTWArticle*)article {
+-(void)displaySourceArticle:(LTWArticle*)article {
     LTWGUIArticle *articleRepresentation = [[[LTWGUIArticle alloc] init] autorelease];
     [articleRepresentation setArticle:article];
-    [self mutateViewWithRole:@"articleSelector" mutationType:ADD object:articleRepresentation caller:self];
+    [self addObject:[article tokensForField:@"body"] toViewWithRole:@"sourceArticleBody"];
+    
+    [(LTWGUIGenericTreeViewAdapter*)[self viewWithRole:@"sourceArticleLinks"] removeAllObjects];
+    
+    for (LTWGUILink *link in [articleRepresentation links]) {
+        [self addObject:link toViewWithRole:@"sourceArticleLinks"];
+    }
+}
+
+-(void)loadNonSourceArticle:(LTWArticle*)article {
+    LTWGUIArticle *articleRepresentation = [[[LTWGUIArticle alloc] init] autorelease];
+    [articleRepresentation setArticle:article];
+    // NOTE: Should make sure that everything gets refreshed here.
+}
+
+-(void)loadAssessmentFile:(NSString*)assessmentFile {
+    [downloader startLoadAssessmentFile:assessmentFile];
+}
+
+-(void)assessmentFileFound:(NSString*)filename {
+    [self addObject:filename toViewWithRole:@"assessmentFileSelector"];
+}
+
+-(void)pushStatus:(id)status {
+    [self addObject:status toViewWithRole:@"statusBar"];
 }
 
 -(void)checkForMainThreadCalls {
@@ -62,9 +89,13 @@
 }
 
 -(void)callOnMainThread:(LTWGUIMethodCall*)call {
+#ifdef GTK_PLATFORM
     @synchronized (pendingMainThreadCalls) {
         [pendingMainThreadCalls addObject:call];
     }
+#else
+    [call performSelectorOnMainThread:@selector(executeWithTarget:) withObject:self waitUntilDone:NO];
+#endif
 }
 
 #ifdef GTK_PLATFORM
@@ -98,35 +129,20 @@ gboolean checkForMainThreadCalls(void *data) {
 #endif
 }
 
-// NOTE: Should this be the only event-handling method, or should there be others, e.g. for "checkbox ticked", "button pressed", etc?
-// NOTE: Should we have a special "iterator" type so that the reference to the object can always be used to remove/change the object efficiently?
 -(void)objectSelected:(id)selectedObject inViewWithRole:(NSString*)role {
-    NSLog(@"objectSelected:%@ inViewWithRole:%@", selectedObject, role);
-    
-    viewMutations = [[NSMutableArray alloc] init];
-    
     [controller objectSelected:selectedObject inViewWithRole:role context:self];
-    
-    for (LTWGUIViewMutation *mutation in viewMutations) {
-        // By calling shouldMutateViewWithRole:mutationType:object:, we give the assessmentMode a chance to cause more mutations. It can also stop the current one by returning NO.
-        if (!assessmentMode || [assessmentMode shouldMutateViewWithRole:[mutation role] mutationType:[mutation type] object:[mutation object]]) {
-            [self mutateViewWithRole:[mutation role] mutationType:[mutation type] object:[mutation object] caller:assessmentMode];
-        }
-    }
-    
-    [viewMutations release];
-    viewMutations = nil;
-    
 }
 
-// NOTE: We need to insert all mutations created by the controller into an array so that they can be vetted by the assessmentMode before being passed on. LTWGUIMutation serves only as a "boxing" type to allow us to insert mutations into an array.
-// NOTE: If an assessmentMode implicitly approves a mutation by returning YES from shouldMutateViewWithRole:mutationType:object, the "caller" is considered to be the assessmentMode itself.
--(void)mutateViewWithRole:(NSString*)role mutationType:(LTWGUIViewMutationType)mutationType object:(id)object caller:(id)caller {
-    if (caller == controller) {
-        [viewMutations addObject:[[[LTWGUIViewMutation alloc] initWithRole:role type:mutationType object:object] autorelease]];
-    }else{
-        [[LTWGUIViewAdapter adapterWithRole:role] applyMutationWithType:mutationType object:object];
-    }
+-(LTWGUIUndoGroup*)newUndoGroup {
+    return [[LTWGUIUndoGroup alloc] init];
+}
+
+-(LTWGUIViewAdapter*)viewWithRole:(NSString*)role {
+    return [LTWGUIViewAdapter adapterWithRole:role];
+}
+
+-(void)addObject:(id)object toViewWithRole:(NSString*)role {
+    [[self viewWithRole:role] addObject:object];
 }
 
 -(void)setAssessmentMode:(LTWGUIAssessmentMode*)newAssessmentMode {
@@ -134,7 +150,8 @@ gboolean checkForMainThreadCalls(void *data) {
     [assessmentMode release];
     assessmentMode = [newAssessmentMode retain];
     
-    [self mutateViewWithRole:@"assessmentModeContainer" mutationType:ADD object:assessmentMode caller:self];
+    [self addObject:assessmentMode toViewWithRole:@"assessmentModeContainer"];
+    [assessmentMode assessmentModeDidLoadWithContext:self];
 }
 
 -(void)dealloc {
@@ -145,20 +162,135 @@ gboolean checkForMainThreadCalls(void *data) {
 
 @end
 
-@implementation LTWGUIViewMutation
+@implementation LTWGUIUndoableOperation
 
--(id)initWithRole:(NSString*)theRole type:(LTWGUIViewMutationType)theType object:(id)theObject {
+
+-(void)dealloc {
+    [addedOrConfiguredView release];
+    [addedOrChangedObject release];
+    [changedProperty release];
+    [preChangePropertyValue release];
+    [configurationArgument release];
+    [super dealloc];
+}
+
++(id)operationAddingObject:(id)theObject toView:(LTWGUIViewAdapter*)theView {
+    LTWGUIUndoableOperation *operation = [[[LTWGUIUndoableOperation alloc] init] autorelease];
+    
+    operation->type = ADD;
+    operation->addedOrConfiguredView = [theView retain];
+    operation->addedOrChangedObject = [theObject retain];
+    
+    return operation;
+}
+
++(id)operationChangingProperty:(NSString*)theProperty ofObject:(id)theObject fromValue:(id)theOldValue {
+    LTWGUIUndoableOperation *operation = [[[LTWGUIUndoableOperation alloc] init] autorelease];
+    
+    operation->type = CHANGE;
+    operation->addedOrChangedObject = [theObject retain];
+    operation->changedProperty = [theProperty retain];
+    operation->preChangePropertyValue = [theOldValue retain];
+    
+    return operation;
+}
+
+/*
+ NOTE: Not properly implemented yet. (Should 'argument' be the OLD value of the configuration?)
+ */
++(id)operationConfiguringView:(id)theView type:(UndoableConfigurationType)theType argument:(id)theArgument {
+    LTWGUIUndoableOperation *operation = [[[LTWGUIUndoableOperation alloc] init] autorelease];
+    
+    operation->addedOrConfiguredView = [theView retain];
+    operation->configurationType = theType;
+    operation->configurationArgument = [theArgument retain];
+    
+    return operation;
+}
+
+-(void)undo {
+    switch (type) {
+        case ADD:
+            if ([addedOrConfiguredView respondsToSelector:@selector(removeObject:hierarchyValues:)]) {
+                [addedOrConfiguredView removeObject:addedOrChangedObject];
+            }
+            break;
+        case CHANGE:
+            [addedOrChangedObject setValue:preChangePropertyValue forKey:changedProperty];
+            break;
+        case CONFIGURE:
+            /*
+            switch (configurationType) {
+                case COLUMN_PROPERTIES:
+                    [addedOrConfiguredView setDisplayProperties:configurationArgument withClasses:???];
+                    break;
+                case HIERARCHY_PROPERTIES:
+                    [addedOrConfiguredView setHierarchyProperties:configurationArgument];
+                    break;
+            }
+             */
+            break;
+    }
+}
+
+@end
+
+@implementation LTWGUIUndoGroup
+
+static NSMutableArray *undoGroups;
+
++(void)initialize {
+    NSLog(@"initialize called");
+    undoGroups = [[NSMutableArray alloc] init];
+}
+
++(void)addOperationToCurrentUndoGroup:(LTWGUIUndoableOperation*)operation {
+    if ([undoGroups count] == 0 || ((LTWGUIUndoGroup*)[undoGroups lastObject])->isFinished) {
+        LTWGUIUndoGroup *group = [self startNewUndoGroup];
+        [group->operations addObject:operation];        
+        [group finish];
+    }else{
+        [((LTWGUIUndoGroup*)[undoGroups lastObject])->operations addObject:operation];
+    }
+}
+
++(LTWGUIUndoGroup*)startNewUndoGroup {
+    LTWGUIUndoGroup *group = [[[LTWGUIUndoGroup alloc] init] autorelease];
+    [undoGroups addObject:group];
+    return group;
+}
+
+-(id)init {
     if (self = [super init]) {
-        role = [theRole retain];
-        type = theType;
-        object = [theObject retain];
+        operations = [[NSMutableArray alloc] init];
     }
     return self;
 }
 
-@synthesize role;
-@synthesize type;
-@synthesize object;
++(void)undoMostRecentGroup {
+    if ([undoGroups count] > 0) {
+        [[undoGroups lastObject] undo];
+    }
+}
+
+-(void)finish {
+    isFinished = YES;
+}
+
+-(void)undo {
+    if (isUndone) return;
+    
+    while ([undoGroups count] > 0 && [undoGroups lastObject] != self) [[undoGroups lastObject] undo];
+    
+    if ([undoGroups count] == 0) return;
+    
+    while ([operations count] > 0) {
+        [[operations lastObject] undo];
+        [operations removeLastObject];
+    }
+    
+    [undoGroups removeLastObject];
+}
 
 @end
 
