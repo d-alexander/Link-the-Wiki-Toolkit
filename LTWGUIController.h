@@ -41,6 +41,12 @@
 
 @end
 
+@interface LTWGUISortedAssessmentMode : LTWGUIAssessmentMode {
+    
+}
+
+@end
+
 @interface LTWGUIAnchorTargetAssessmentMode : LTWGUIAssessmentMode {
     
 }

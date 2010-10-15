@@ -25,7 +25,7 @@
 #endif
 
 -(void)selectionChangedTo:(id)newSelection forRole:(NSString*)role {
-    NSLog(@"%@: %@'s selection changed to %@", self, role, newSelection);
+
 }
 
 #pragma mark Miscellaneous

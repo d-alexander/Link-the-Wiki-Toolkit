@@ -31,7 +31,7 @@ NSString *LTWTokenTagsChangedNotification = @"LTWTokenTagsChangedNotification";
 	}
 }
 
--(id)initWithDatabase:(LTWDatabase*)theDatabase tokensID:(NSUInteger)theDatabaseID {
+-(id)initWithDatabase:(LTWDatabase*)theDatabase tokensID:(NSUInteger)theDatabaseID writeThrough:(BOOL)writeThrough {
     return nil;
 }
 
@@ -96,6 +96,10 @@ NSString *LTWTokenTagsChangedNotification = @"LTWTokenTagsChangedNotification";
 
 }
 
+-(void)_removeTag:(LTWTokenTag*)tag fromIndex:(NSUInteger)theStartIndex {
+    
+}
+
 -(NSString*)_text {
 	return nil;
 }
@@ -109,6 +113,10 @@ NSString *LTWTokenTagsChangedNotification = @"LTWTokenTagsChangedNotification";
         state->state++;
     }
     return len;
+}
+
+-(NSUInteger)startIndexInAncestor:(LTWTokens*)ancestor {
+    return NSNotFound;
 }
 
 -(void)saveToDatabase {
@@ -130,6 +138,15 @@ NSString *LTWTokenTagsChangedNotification = @"LTWTokenTagsChangedNotification";
 
 -(NSArray*)tagsStartingAtTokenIndex:(NSUInteger)firstToken {
     return [self _tagsStartingAtTokenIndex:firstToken occurrence:NULL];
+}
+
+-(NSUInteger)lengthOfTag:(LTWTokenTag*)tag startingAtIndex:(NSUInteger)firstToken {
+    LTWTagOccurrence *occurrence = NULL;
+    [self _tagsStartingAtTokenIndex:firstToken occurrence:&occurrence];
+    while (occurrence != NULL && occurrence->tag != tag) occurrence = occurrence->next;
+    if (!occurrence) return 0;
+    
+    return occurrence->lastToken - occurrence->firstToken + 1;
 }
 
 -(NSArray*)_tagsStartingAtTokenIndex:(NSUInteger)firstToken occurrence:(LTWTagOccurrence**)occurrence {

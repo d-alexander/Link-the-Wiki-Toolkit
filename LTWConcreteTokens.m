@@ -14,13 +14,15 @@
 
 @implementation LTWConcreteTokens
 
--(id)initWithDatabase:(LTWDatabase*)theDatabase tokensID:(NSUInteger)theDatabaseID {
+-(id)initWithDatabase:(LTWDatabase*)theDatabase tokensID:(NSUInteger)theDatabaseID writeThrough:(BOOL)writeThrough {
     if (self = [super init]) {
-        database = theDatabase;
+        database = [theDatabase retain];
         databaseID = theDatabaseID;
         
         inMemory = NO;
         inDatabase = YES;
+        
+        writeThroughToDatabase = writeThrough;
         
         [self loadFromDatabase];
     }
@@ -53,12 +55,13 @@
 			[mutableTokens addObject:[NSValue valueWithRange:tokenRange]];
             
             LTWTagOccurrence *occurrenceList = NULL;
-            
             for (NSString *key in [extraInfo allKeys]) {
                 LTWTagOccurrence *occurrence = malloc(sizeof *occurrence);
                 occurrence->firstToken = tokenIndex;
                 occurrence->lastToken = tokenIndex;
                 occurrence->tag = [[LTWTokenTag alloc] initWithName:key value:[extraInfo valueForKey:key]];
+                occurrence->deleted = NO;
+                occurrence->databaseIndex = nextTagIndex++;
                 occurrence->next = occurrenceList;
                 
                 occurrenceList = occurrence;
@@ -116,8 +119,31 @@
     occurrence->lastToken = theEndIndex;
     occurrence->tag = [tag retain];
     occurrence->next = [[tagOccurrences objectAtIndex:theStartIndex] pointerValue];
+    occurrence->deleted = NO;
+    occurrence->databaseIndex = nextTagIndex;
     
     [tagOccurrences replaceObjectAtIndex:theStartIndex withObject:[NSValue valueWithPointer:occurrence]];
+    
+    if (writeThroughToDatabase) {
+        [database insertTag:occurrence->tag withIndex:nextTagIndex++ fromTokenIndex:theStartIndex toTokenIndex:theEndIndex tokensID:databaseID];
+    }
+}
+
+-(void)_removeTag:(LTWTokenTag*)tag fromIndex:(NSUInteger)theStartIndex {
+    LTWTagOccurrence *occurrence;
+    for (occurrence = [[tagOccurrences objectAtIndex:theStartIndex] pointerValue]; occurrence != NULL; occurrence = occurrence->next) {
+        
+        if (occurrence->tag == tag) {
+            // NOTE: Tags are removed by identity, not equality.
+            occurrence->deleted = YES;
+            if (writeThroughToDatabase) {
+                [database deleteTagWithIndex:occurrence->databaseIndex tokensID:databaseID];
+            }
+            break;
+        }
+        
+    }
+
 }
 
 -(void)addTag:(LTWTokenTag*)tag {
@@ -129,6 +155,7 @@
     NSMutableArray *array = [NSMutableArray array];
     LTWTagOccurrence *occurrence;
     for (occurrence = [[tagOccurrences objectAtIndex:firstToken] pointerValue]; occurrence != NULL; occurrence = occurrence->next) {
+        if (occurrence->deleted) continue;
         [array addObject:occurrence->tag];
     }
     if (occurrencePtr) *occurrencePtr = [[tagOccurrences objectAtIndex:firstToken] pointerValue];
@@ -138,6 +165,11 @@
 -(NSString*)_text {
     if (!inMemory) [self loadFromDatabase];
 	return text;
+}
+
+-(NSUInteger)startIndexInAncestor:(LTWTokens*)ancestor {
+    if (ancestor == self) return 0;
+    return NSNotFound;
 }
 
 -(void)removeSuperTokenDependenciesForTokens:(LTWTokens*)theTokens {
@@ -154,6 +186,11 @@
 }
 
 -(void)saveToDatabaseWithoutRemovingFromMemory {
+    if (writeThroughToDatabase) {
+        NSLog(@"saveToDatabaseWithoutRemovingFromRemember called on LTWTokens with writeThroughToDatabase on.");
+        return;
+    }
+    
     [self removeSuperTokenDependenciesForTokens:self];
     
     [database beginTransaction];
@@ -176,6 +213,7 @@
         LTWTagOccurrence *occurrence;
         
         for ([self _tagsStartingAtTokenIndex:tokenIndex occurrence:&occurrence]; occurrence != NULL; occurrence = occurrence->next) {
+            if (occurrence->deleted) continue;
             // NOTE: We have to use tokenIndex here because the occurrence may have the "wrong" indices for the token (if this is an LTWConcreteCopiedTokens or LTWConcreteSubTokens).
             [database insertTag:occurrence->tag withIndex:tagIndex fromTokenIndex:tokenIndex toTokenIndex:(occurrence->lastToken - (occurrence->firstToken - tokenIndex)) tokensID:databaseID];
             tagIndex++;
@@ -203,6 +241,7 @@
     for (NSUInteger tokenIndex = 0; tokenIndex < [tagOccurrences count]; tokenIndex++) {
         LTWTagOccurrence *occurrence = [[tagOccurrences objectAtIndex:tokenIndex] pointerValue];
         while (occurrence != NULL) {
+            if (occurrence->deleted) continue;
             LTWTagOccurrence *prevOccurrence = occurrence;
             occurrence = occurrence->next;
             [prevOccurrence->tag release];
@@ -242,16 +281,22 @@
         NSUInteger firstTokenIndex = 0, lastTokenIndex = 0;
         [database loadTag:&tag fromTokenIndex:&firstTokenIndex toTokenIndex:&lastTokenIndex tagIndex:tagIndex tokensID:databaseID];
         
+        if (!tag) continue;
+        
         if (firstTokenIndex >= numTokens) continue; // This can happen if we have a tag that occurs after the end of a LTWConcreteCopiedTokens.
         
         LTWTagOccurrence *occurrence = malloc(sizeof *occurrence);
         occurrence->firstToken = firstTokenIndex;
         occurrence->lastToken = lastTokenIndex;
         occurrence->tag = [tag retain];
+        occurrence->deleted = NO;
+        occurrence->databaseIndex = tagIndex;
         occurrence->next = [[tagOccurrences objectAtIndex:firstTokenIndex] pointerValue];
         
         [tagOccurrences replaceObjectAtIndex:firstTokenIndex withObject:[NSValue valueWithPointer:occurrence]];
     }
+    
+    nextTagIndex = numTags; // used when writing new tag s through to database.
     
     // Ideally, we should also restore our subtokens' dependencies here. We could do this by saving the subtokens array to the database as well, but this would involve saving pointers. Perhaps we could just keep the subtokens array in memory. Note that even then we may want to hold a weak reference to the tokens so that they can be deallocated if they're not needed.
     

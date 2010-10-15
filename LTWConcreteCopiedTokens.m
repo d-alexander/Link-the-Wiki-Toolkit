@@ -53,6 +53,10 @@
     return self;
 }
 
+-(void)_removeTag:(LTWTokenTag*)tag fromIndex:(NSUInteger)theStartIndex {
+    NSLog(@"_removeTag:fromIndex: not yet implemented on LTWConcreteCopiedTokens!");
+}
+
 -(NSRange)rangeOfTokenAtIndex:(NSUInteger)index {
     if (!inMemory) [self loadFromDatabase];
     index += firstCopiedToken;

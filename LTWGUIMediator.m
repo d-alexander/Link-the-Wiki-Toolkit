@@ -11,13 +11,17 @@
 #import "LTWGUIRepresentedObjects.h"
 #import "LTWGUIViewAdapter.h"
 
+#ifdef GTK_PLATFORM
+#include <windows.h>
+#endif
+
 /*
  This class co-ordinates communication between the other classes that make up the GUI. Under Cocoa, it will probably also act as the NSApplicationDelegate, although I haven't decided that yet.
  The objects created by this one generally think of it as their "delegate", rather than as a LTWGUIMediator per se. Therefore, at some point I may decide to create a sort of "context" class that gets passed as a parameter to certain other classes' methods so that they can call-back to it if necessary. The most likely use for this is when the LTWGUIController wants to add values to a view, but those values must first be passed on to the appropriate assessment mode for possible further processsing. Since there may be many values, it wouldn't be very nice to try to have them returned from the method, so instead they could each be added via a separate call to the context.
  */
 @implementation LTWGUIMediator
 
--(id)init {
+-(id)initWithArguments:(char**)arguments numArguments:(NSInteger)numArguments {
     if ((self = [super init])) {
         
         [self doPlatformSpecificInitialisation];
@@ -25,24 +29,47 @@
         pendingMainThreadCalls = [[NSMutableArray alloc] init];
         controller = [[LTWGUIController alloc] init];
         
+        NSString *dataPath;
+        NSString *resourcePath;
+        
 #ifdef GTK_PLATFORM
-        [LTWGUIViewAdapter setGUIDefinitionPath:@"\\\\vmware-host\\Shared Folders\\VMWare Shared\\LTWAssessmentTool-Windows.app\\Contents\\Resources\\"];
+        NSMutableArray *pathComponents = [[[NSString stringWithUTF8String:arguments[0]] componentsSeparatedByString:@"\\"] mutableCopy];
+        [pathComponents removeLastObject];
+        resourcePath = [pathComponents componentsJoinedByString:@"\\"];
+        [pathComponents removeLastObject];
+        [pathComponents addObject:@"assessment_files"];
+        dataPath = [pathComponents componentsJoinedByString:@"\\"];
+#else
+        resourcePath = [[NSBundle mainBundle] resourcePath];
+        dataPath = resourcePath;
+#endif
+        
+        [LTWGUIViewAdapter setGUIDefinitionPath:resourcePath];
+        
+#ifdef GTK_PLATFORM
         mainWindow = [LTWGUIViewAdapter loadViewsFromFile:@"MainWindow.glade" withDelegate:self returningViewWithRole:@"mainWindow"];
 #else
-        [LTWGUIViewAdapter setGUIDefinitionPath:[[NSBundle mainBundle] resourcePath]];
         mainWindow = [LTWGUIViewAdapter loadViewsFromFile:@"MainWindow.nib" withDelegate:self returningViewWithRole:@"mainWindow"];
 #endif
         
         [controller GUIDidLoadWithContext:self];
         
-        assessmentMode = nil;
-        
         for (LTWGUIAssessmentMode *mode in [LTWGUIAssessmentMode assessmentModes]) {
             [self addObject:mode toViewWithRole:@"assessmentModeSelector"];
         }
         
-        downloader = [[LTWGUIDownloader alloc] initWithDelegate:self];
+        assessmentMode = nil;
+        [self setAssessmentMode:[[LTWGUIAssessmentMode assessmentModes] objectAtIndex:0]];
+        
+        NSString *proxyHostname = (numArguments >= 2) ? [NSString stringWithUTF8String:arguments[1]] : nil;
+        NSUInteger proxyPort = (numArguments >= 3) ? atoi(arguments[2]) : 0;
+        NSString *proxyUsername = (numArguments >= 4) ? [NSString stringWithUTF8String:arguments[3]] : nil;
+        NSString *proxyPassword = (numArguments >= 5) ? [NSString stringWithUTF8String:arguments[4]] : nil;
+        
+        downloader = [[LTWGUIDownloader alloc] initWithDelegate:self proxyHostname:proxyHostname proxyPort:proxyPort proxyUsername:proxyUsername proxyPassword:proxyPassword dataPath:dataPath];
         [self runPlatformSpecificMainLoop];
+        
+        [LTWDatabase closeAllDatabases];
         
     }
     
@@ -56,27 +83,59 @@
     
     [(LTWGUIGenericTreeViewAdapter*)[self viewWithRole:@"sourceArticleLinks"] removeAllObjects];
     
-    for (LTWGUILink *link in [articleRepresentation links]) {
-        [self addObject:link toViewWithRole:@"sourceArticleLinks"];
-    }
+    sourceArticle = [articleRepresentation retain];
 }
 
 -(void)loadNonSourceArticle:(LTWArticle*)article {
     LTWGUIArticle *articleRepresentation = [[[LTWGUIArticle alloc] init] autorelease];
     [articleRepresentation setArticle:article];
-    // NOTE: Should make sure that everything gets refreshed here.
+    [(LTWGUITextViewAdapter*)[self viewWithRole:@"targetArticleBody"] preCreateModelForObject:[article tokensForField:@"body"]];
 }
 
--(void)loadAssessmentFile:(NSString*)assessmentFile {
-    [downloader startLoadAssessmentFile:assessmentFile];
+-(void)finishedLoadingArticles {
+    for (LTWGUILink *link in [sourceArticle links]) {
+        [self addObject:link toViewWithRole:@"sourceArticleLinks"];
+    }
+    [(LTWGUIGenericTreeViewAdapter*)[self viewWithRole:@"sourceArticleLinks"] expandNodes];
 }
 
--(void)assessmentFileFound:(NSString*)filename {
-    [self addObject:filename toViewWithRole:@"assessmentFileSelector"];
+-(void)setKnownIssues:(NSString*)knownIssues {
+    [self addObject:knownIssues toViewWithRole:@"knownIssues"];
+}
+
+-(void)loadAssessmentFile:(LTWGUIDatabaseFile*)assessmentFile {
+    [downloader startLoadAssessmentFile:[assessmentFile filename]];
+    currentAssessmentFile = [assessmentFile retain];
+}
+
+-(void)revealCurrentAssessmentFile {
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    NSString *filename = [currentAssessmentFile filePath];
+#ifdef GTK_PLATFORM
+    ShellExecute(NULL, "open", "explorer.exe", [[NSString stringWithFormat:@"/select,%@", filename] UTF8String], NULL, SW_SHOW);
+#else
+    
+#endif
+    [pool drain];
+}
+
+-(void)uploadCurrentAssessmentFile {
+    if (!currentAssessmentFile) return;
+    [downloader startUploadAssessmentFile:[currentAssessmentFile filename]];
+}
+
+-(void)assessmentFileFound:(LTWGUIDatabaseFile*)file {
+    [self addObject:file toViewWithRole:@"assessmentFileSelector"];
 }
 
 -(void)pushStatus:(id)status {
     [self addObject:status toViewWithRole:@"statusBar"];
+}
+
+// This method is safe to be called from other threads.
+-(void)threadSafePushStatus:(id)status {
+    LTWGUIMethodCall *call = [[LTWGUIMethodCall alloc] initWithSelector:@selector(pushStatus:) argument:status];
+    [self callOnMainThread:call];
 }
 
 -(void)checkForMainThreadCalls {
@@ -115,7 +174,7 @@ gboolean checkForMainThreadCalls(void *data) {
     
     // Set up a timeout to repeatedly check for calls from other threads.
     // NOTE: Should make this work using signals instead.
-    g_timeout_add(100, checkForMainThreadCalls, self);
+    g_timeout_add(1000, checkForMainThreadCalls, self);
 #else
     [NSApplication sharedApplication];
 #endif
@@ -133,10 +192,6 @@ gboolean checkForMainThreadCalls(void *data) {
     [controller objectSelected:selectedObject inViewWithRole:role context:self];
 }
 
--(LTWGUIUndoGroup*)newUndoGroup {
-    return [[LTWGUIUndoGroup alloc] init];
-}
-
 -(LTWGUIViewAdapter*)viewWithRole:(NSString*)role {
     return [LTWGUIViewAdapter adapterWithRole:role];
 }
@@ -146,12 +201,16 @@ gboolean checkForMainThreadCalls(void *data) {
 }
 
 -(void)setAssessmentMode:(LTWGUIAssessmentMode*)newAssessmentMode {
-    NSLog(@"assessmentMode set to %@", newAssessmentMode);
     [assessmentMode release];
     assessmentMode = [newAssessmentMode retain];
     
     [self addObject:assessmentMode toViewWithRole:@"assessmentModeContainer"];
     [assessmentMode assessmentModeDidLoadWithContext:self];
+}
+
+-(void)submitBugReport {
+    NSString *bugReportText = [(LTWGUITextViewAdapter*)[self viewWithRole:@"bugReportText"] text];
+    [downloader startSubmitBugReport:bugReportText];
 }
 
 -(void)dealloc {
@@ -162,137 +221,93 @@ gboolean checkForMainThreadCalls(void *data) {
 
 @end
 
-@implementation LTWGUIUndoableOperation
+@implementation LTWGUICommand
 
-
--(void)dealloc {
-    [addedOrConfiguredView release];
-    [addedOrChangedObject release];
-    [changedProperty release];
-    [preChangePropertyValue release];
-    [configurationArgument release];
-    [super dealloc];
-}
-
-+(id)operationAddingObject:(id)theObject toView:(LTWGUIViewAdapter*)theView {
-    LTWGUIUndoableOperation *operation = [[[LTWGUIUndoableOperation alloc] init] autorelease];
-    
-    operation->type = ADD;
-    operation->addedOrConfiguredView = [theView retain];
-    operation->addedOrChangedObject = [theObject retain];
-    
-    return operation;
-}
-
-+(id)operationChangingProperty:(NSString*)theProperty ofObject:(id)theObject fromValue:(id)theOldValue {
-    LTWGUIUndoableOperation *operation = [[[LTWGUIUndoableOperation alloc] init] autorelease];
-    
-    operation->type = CHANGE;
-    operation->addedOrChangedObject = [theObject retain];
-    operation->changedProperty = [theProperty retain];
-    operation->preChangePropertyValue = [theOldValue retain];
-    
-    return operation;
-}
-
-/*
- NOTE: Not properly implemented yet. (Should 'argument' be the OLD value of the configuration?)
- */
-+(id)operationConfiguringView:(id)theView type:(UndoableConfigurationType)theType argument:(id)theArgument {
-    LTWGUIUndoableOperation *operation = [[[LTWGUIUndoableOperation alloc] init] autorelease];
-    
-    operation->addedOrConfiguredView = [theView retain];
-    operation->configurationType = theType;
-    operation->configurationArgument = [theArgument retain];
-    
-    return operation;
-}
-
--(void)undo {
-    switch (type) {
-        case ADD:
-            if ([addedOrConfiguredView respondsToSelector:@selector(removeObject:hierarchyValues:)]) {
-                [addedOrConfiguredView removeObject:addedOrChangedObject];
-            }
-            break;
-        case CHANGE:
-            [addedOrChangedObject setValue:preChangePropertyValue forKey:changedProperty];
-            break;
-        case CONFIGURE:
-            /*
-            switch (configurationType) {
-                case COLUMN_PROPERTIES:
-                    [addedOrConfiguredView setDisplayProperties:configurationArgument withClasses:???];
-                    break;
-                case HIERARCHY_PROPERTIES:
-                    [addedOrConfiguredView setHierarchyProperties:configurationArgument];
-                    break;
-            }
-             */
-            break;
-    }
-}
-
-@end
-
-@implementation LTWGUIUndoGroup
-
-static NSMutableArray *undoGroups;
+static NSMutableArray *undoStack;
+static NSMutableArray *redoStack;
+static id lastUndoCommand = nil;
+static BOOL executingCommand = NO;
 
 +(void)initialize {
-    NSLog(@"initialize called");
-    undoGroups = [[NSMutableArray alloc] init];
+    undoStack = [[NSMutableArray alloc] init];
+    redoStack = [[NSMutableArray alloc] init];
 }
 
-+(void)addOperationToCurrentUndoGroup:(LTWGUIUndoableOperation*)operation {
-    if ([undoGroups count] == 0 || ((LTWGUIUndoGroup*)[undoGroups lastObject])->isFinished) {
-        LTWGUIUndoGroup *group = [self startNewUndoGroup];
-        [group->operations addObject:operation];        
-        [group finish];
-    }else{
-        [((LTWGUIUndoGroup*)[undoGroups lastObject])->operations addObject:operation];
++(id)recordUndoCommandWithTarget:(id)target {
+    if (executingCommand) return nil;
+    
+    LTWGUICommand *command = [[LTWGUICommand alloc] init];
+    command->target = [target retain];
+    lastUndoCommand = [command retain];
+    return [command autorelease];
+}
+
++(id)recordRedoForLastUndoCommand {
+    if (executingCommand) return nil;
+    
+    LTWGUICommand *command = lastUndoCommand;
+    lastUndoCommand = nil;
+    return [command autorelease];
+}
+
+-(void)forwardInvocation:(NSInvocation*)invocation {
+    if (!undoInvocation) {
+        [invocation setTarget:target];
+        [invocation retainArguments];
+        undoInvocation = [invocation retain];
+    }else if (!redoInvocation) {
+        [invocation setTarget:target];
+        [invocation retainArguments];
+        redoInvocation = [invocation retain];
+        [undoStack addObject:self];
     }
 }
 
-+(LTWGUIUndoGroup*)startNewUndoGroup {
-    LTWGUIUndoGroup *group = [[[LTWGUIUndoGroup alloc] init] autorelease];
-    [undoGroups addObject:group];
-    return group;
-}
-
--(id)init {
-    if (self = [super init]) {
-        operations = [[NSMutableArray alloc] init];
-    }
-    return self;
-}
-
-+(void)undoMostRecentGroup {
-    if ([undoGroups count] > 0) {
-        [[undoGroups lastObject] undo];
-    }
-}
-
--(void)finish {
-    isFinished = YES;
+-(NSMethodSignature*)methodSignatureForSelector:(SEL)selector {
+    return [target methodSignatureForSelector:selector];
 }
 
 -(void)undo {
-    if (isUndone) return;
-    
-    while ([undoGroups count] > 0 && [undoGroups lastObject] != self) [[undoGroups lastObject] undo];
-    
-    if ([undoGroups count] == 0) return;
-    
-    while ([operations count] > 0) {
-        [[operations lastObject] undo];
-        [operations removeLastObject];
+    [undoInvocation invoke];
+}
+
+-(void)redo {
+    [redoInvocation invoke];
+}
+
++(void)undoLastCommand {
+    if ([undoStack count] > 0) {
+        executingCommand = YES;
+        LTWGUICommand *command = [undoStack lastObject];
+        [command undo];
+        [redoStack addObject:command];
+        [undoStack removeLastObject];
+        executingCommand = NO;
     }
-    
-    [undoGroups removeLastObject];
+}
+
++(void)redoNextCommand {
+    if ([redoStack count] > 0) {
+        executingCommand = YES;
+        LTWGUICommand *command = [redoStack lastObject];
+        NSLog(@"redoing command %@", command);
+        [command redo];
+        [undoStack addObject:command];
+        [redoStack removeLastObject];
+        executingCommand = NO;
+    }
+}
+
++(BOOL)canUndo {
+    return [undoStack count] > 0;
+}
+
++(BOOL)canRedo {
+    return [redoStack count] > 0;
 }
 
 @end
+
 
 @implementation LTWGUIMethodCall
 

@@ -12,25 +12,11 @@
 @implementation LTWTokenTag
 
 -(id)initWithName:(NSString*)theName value:(id)theValue {
-	static NSMutableSet *instances = nil;
-	if (!instances) {
-		NSLog(@"Constructing instance set");
-		instances = [[NSMutableSet alloc] init];
-	}
-	
 	[theName retain];
 	[theValue retain];
 	
 	name = theName;
 	value = theValue;
-	LTWTokenTag *instance = [instances member:self];
-	
-	if (instance) {
-		[self release];
-		self = [instance retain];
-	}else{
-		[instances addObject:self];
-	}
 	
 	return self;
 }
@@ -56,10 +42,6 @@
 
 -(id)tagValue {
 	return value;
-}
-
--(void)remove {
-    name = [[NSString stringWithFormat:@"REMOVED_%@", name] retain];
 }
 
 @end

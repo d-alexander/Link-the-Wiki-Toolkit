@@ -2,7 +2,7 @@
 // Prefix header for all source files of the 'LTWAssessmentTool-Windows' target in the 'LTWAssessmentTool-Windows' project
 //
 
-#define DATA_PATH "C:\\Documents and Settings\\Administrator\\Desktop\\LTW Data\\"
+#define DATA_PATH "" // Current directory
 
 #define GTK_PLATFORM
 

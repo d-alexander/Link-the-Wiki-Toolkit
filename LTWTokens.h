@@ -19,6 +19,8 @@ typedef struct LTWTagOccurrence_struct {
     NSUInteger firstToken;
     NSUInteger lastToken;
     LTWTokenTag *tag;
+    NSUInteger databaseIndex;
+    BOOL deleted;
     struct LTWTagOccurrence_struct *next;
 } LTWTagOccurrence;
 
@@ -39,7 +41,7 @@ typedef struct {
     NSMutableString *cachedDescription;
 }
 
--(id)initWithDatabase:(LTWDatabase*)theDatabase tokensID:(NSUInteger)theDatabaseID;
+-(id)initWithDatabase:(LTWDatabase*)theDatabase tokensID:(NSUInteger)theDatabaseID writeThrough:(BOOL)writeThrough;
 -(NSUInteger)databaseID;
 
 -(id)initWithXML:(NSString*)xml;
@@ -51,6 +53,9 @@ typedef struct {
 
 -(void)addTag:(LTWTokenTag*)tag;
 -(void)_addTag:(LTWTokenTag*)tag fromIndex:(NSUInteger)theStartIndex toIndex:(NSUInteger)theEndIndex;
+-(void)_removeTag:(LTWTokenTag*)tag fromIndex:(NSUInteger)theStartIndex;
+-(NSUInteger)lengthOfTag:(LTWTokenTag*)tag startingAtIndex:(NSUInteger)firstToken;
+-(NSUInteger)startIndexInAncestor:(LTWTokens*)ancestor;
 
 // NOTE: This should really return an array of occurrences, but currently it just returns an array of tags.
 -(NSArray*)tagsStartingAtTokenIndex:(NSUInteger)firstToken;

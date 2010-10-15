@@ -161,9 +161,16 @@ id delegateForLoadedViews = nil;
 
 @implementation LTWGUIWindowViewAdapter
 
+#ifdef GTK_PLATFORM
+void LTWGUIWindowViewAdapter_hideMainWindow(GtkWindow *window, void *data) {
+    gtk_main_quit();
+}
+#endif
+
 -(void)setUpView {
     if ([role isEqual:@"mainWindow"]) {
 #ifdef GTK_PLATFORM
+        g_signal_connect(G_OBJECT(view), "hide", G_CALLBACK(LTWGUIWindowViewAdapter_hideMainWindow), self);
         gtk_widget_show_all(view);
 #else
     
@@ -237,6 +244,11 @@ id delegateForLoadedViews = nil;
 -(void)addObject:(id)object {
     if (![object isKindOfClass:[LTWGUIAssessmentMode class]]) return;
     
+    // TEMP
+    static BOOL alreadyLoadedAnAssessmentMode = NO;
+    if (alreadyLoadedAnAssessmentMode) return;
+    alreadyLoadedAnAssessmentMode = YES;
+    
     static LTWGUIViewAdapter *assessmentMainView = nil;
     
 #ifdef GTK_PLATFORM
@@ -299,21 +311,28 @@ void LTWGUIButtonViewAdapter_clicked(GtkButton *button, LTWGUIButtonViewAdapter 
 
 #ifdef GTK_PLATFORM
 -(void)handleToggleForColumn:(NSUInteger)columnIndex treePathString:(char*)treePathString {
-    /*
     GtkTreePath *treePath = gtk_tree_path_new_from_string(treePathString);
-    NSString *property = [columnProperties objectAtIndex:columnIndex];
+    if (sortableModel) treePath = gtk_tree_model_sort_convert_path_to_child_path(sortableModel, treePath);
     id object = [model objectAtTreePath:treePath];
-    [object setValue:[NSNumber numberWithBool:![[object valueForKey:property] boolValue]] forKey:property];
     gtk_tree_path_free(treePath);
-     */
+    
+    NSString *propertyName = [storedDisplayProperties objectAtIndex:columnIndex];
+    if (![object respondsToSelector:NSSelectorFromString(propertyName)]) return;
+    
+    id value = [model valueIfExistsForProperty:propertyName ofObject:object];
+    if (!value) return;
+    if (![value isKindOfClass:[NSNumber class]]) return;
+    [object setValue:[NSNumber numberWithBool:![value boolValue]] forKey:propertyName];
 }
 
 void LTWGUIGenericTreeViewAdapter_toggled(GtkCellRendererToggle *cellRenderer, char *treePathString, LTWGUITreeViewAdapterColumn *column) {
     [column->adapter handleToggleForColumn:column->columnIndex treePathString:treePathString];
 }
+#else
+
 #endif
 
--(void)setUpColumnWithType:(LTWGUIDataType*)columnType name:(NSString*)columnName index:(NSUInteger)columnIndex {
+-(void)setUpColumnWithType:(LTWGUIDataType*)columnType name:(NSString*)columnName index:(NSUInteger)columnIndex model:(id)theModel {
 #ifdef GTK_PLATFORM
     char *signalName = NULL;
     char *cellAttribute = NULL;
@@ -338,6 +357,8 @@ void LTWGUIGenericTreeViewAdapter_toggled(GtkCellRendererToggle *cellRenderer, c
     
     if ([self isKindOfClass:[LTWGUITreeViewAdapter class]]) {
         gtk_tree_view_insert_column_with_attributes(GTK_TREE_VIEW(view), -1, [columnName UTF8String], cellRenderer, cellAttribute, columnIndex, NULL);
+        GtkTreeViewColumn *column = gtk_tree_view_get_column(GTK_TREE_VIEW(view), columnIndex);
+        gtk_tree_view_column_set_sort_column_id(column, columnIndex);
     }else{
         gtk_cell_layout_pack_start(GTK_CELL_LAYOUT(view), cellRenderer, FALSE);
         gtk_cell_layout_set_attributes(GTK_CELL_LAYOUT(view), cellRenderer, cellAttribute, 0, NULL);
@@ -352,10 +373,26 @@ void LTWGUIGenericTreeViewAdapter_toggled(GtkCellRendererToggle *cellRenderer, c
 
 #else
     if ([self isKindOfClass:[LTWGUITreeViewAdapter class]]) {
-        NSTableColumn *column = [[[NSTableColumn alloc] init] autorelease];
+        
+        NSTableColumn *column;
+        if (columnIndex > 0) {
+            column = [[[NSTableColumn alloc] init] autorelease];
+            [(NSOutlineView*)view addTableColumn:column];
+        }else{
+            column = [(NSOutlineView*)view outlineTableColumn];
+        }
+        
         [column setIdentifier:[NSNumber numberWithInt:columnIndex]];
         [[column headerCell] setStringValue:columnName];
-        [(NSOutlineView*)view addTableColumn:column];
+        
+        if ([*columnType isEqual:[NSNumber class]]) {
+            NSButtonCell *cell = [[[NSButtonCell alloc] init] autorelease];
+            [cell setButtonType:NSSwitchButton];
+            [cell setAction:@selector(toggled:)];
+            [cell setTarget:theModel];
+            [cell setTag:columnIndex];
+            [column setDataCell:cell];
+        }
     }
 #endif
 }
@@ -363,7 +400,8 @@ void LTWGUIGenericTreeViewAdapter_toggled(GtkCellRendererToggle *cellRenderer, c
 -(void)attachModel:(LTWGUITreeModel*)theModel {
 #ifdef GTK_PLATFORM
     if ([self isKindOfClass:[LTWGUITreeViewAdapter class]]) {
-        gtk_tree_view_set_model(GTK_TREE_VIEW(view), [model model]);
+        sortableModel = GTK_TREE_MODEL_SORT(gtk_tree_model_sort_new_with_model([model model]));
+        gtk_tree_view_set_model(GTK_TREE_VIEW(view), GTK_TREE_MODEL(sortableModel));
     }else{
         gtk_combo_box_set_model(GTK_COMBO_BOX(view), [model model]);
     }
@@ -382,16 +420,27 @@ void LTWGUIGenericTreeViewAdapter_toggled(GtkCellRendererToggle *cellRenderer, c
             [(NSControl*)view setTarget:theModel];
         }
     }
+#endif
     [theModel setDelegate:self];
+}
+
+-(void)expandNodes {
+#ifdef GTK_PLATFORM
+    if ([self isKindOfClass:[LTWGUITreeViewAdapter class]]) {
+        gtk_tree_view_expand_all(GTK_TREE_VIEW(view));
+    }
+#else
+    
 #endif
 }
 
 -(void)setDisplayProperties:(NSArray*)displayProperties hierarchyProperties:(NSArray*)hierarchyProperties withClasses:(NSArray*)classes {    
-    model = [[LTWGUITreeModel alloc] initWithDisplayProperties:displayProperties classes:classes];
+    LTWGUITreeModel *oldModel = model;
+    
+    model = [[LTWGUITreeModel alloc] initWithDisplayProperties:displayProperties classes:classes hierarchyProperties:hierarchyProperties];
     storedDisplayProperties = [displayProperties retain];
     storedHierarchyProperties = [hierarchyProperties retain];
     storedColumnClasses = [classes retain];
-    
 
     if ([self isKindOfClass:[LTWGUITreeViewAdapter class]]) {
 #ifdef GTK_PLATFORM
@@ -406,10 +455,18 @@ void LTWGUIGenericTreeViewAdapter_toggled(GtkCellRendererToggle *cellRenderer, c
 #endif
     }
     
+    [self attachModel:model];
+    
+    if (oldModel) [model addObjectsFromModel:oldModel];
+    
     NSUInteger columnIndex = 0;
     for (NSValue *value in [model columnTypes]) {
         LTWGUIDataType *columnType = [value pointerValue];
-        [self setUpColumnWithType:columnType name:[[displayProperties objectAtIndex:columnIndex] capitalizedString] index:columnIndex];
+        NSString *propertyName = [displayProperties objectAtIndex:columnIndex];
+        if ([propertyName isEqual:@"self"] || [propertyName isEqual:@"description"]) {
+            propertyName = @"";
+        }
+        [self setUpColumnWithType:columnType name:[propertyName presentableString] index:columnIndex model:model];
         columnIndex++;
     }
     
@@ -419,11 +476,10 @@ void LTWGUIGenericTreeViewAdapter_toggled(GtkCellRendererToggle *cellRenderer, c
 #else
     
 #endif
+        
     }
     
-    [self attachModel:model];
-    
-    [model setHierarchyProperties:hierarchyProperties];
+    [self expandNodes];
 }
 
 -(void)addObject:(id)object {
@@ -431,7 +487,15 @@ void LTWGUIGenericTreeViewAdapter_toggled(GtkCellRendererToggle *cellRenderer, c
     
     //[LTWGUIUndoGroup addOperationToCurrentUndoGroup:[LTWGUIUndoableOperation operationAddingObject:object toView:self]];
     
-#ifndef GTK_PLATFORM
+#ifdef GTK_PLATFORM
+    if ([self isKindOfClass:[LTWGUIComboBoxViewAdapter class]]) {
+        static BOOL firstObject = YES;
+        if (firstObject) {
+            gtk_combo_box_set_active(GTK_COMBO_BOX(view), 0);
+            firstObject = NO;
+        }
+    }
+#else
     if ([view isKindOfClass:[NSPopUpButton class]]) {
         // NOTE: This won't work properly if things have been removed. Should really use the NSIndexPath returned by the model's addObject: method.
         [(NSPopUpButton*)view addItemWithTitle:[object description]];
@@ -449,9 +513,15 @@ void LTWGUIGenericTreeViewAdapter_toggled(GtkCellRendererToggle *cellRenderer, c
 }
 
 -(void)observeValueForKeyPath:(NSString*)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
+#ifdef GTK_PLATFORM
+    NSArray *path = (NSArray*)context;
+    NSUInteger columnIndex = [storedDisplayProperties indexOfObject:keyPath];
+    if (columnIndex == NSNotFound) return;
     
     
-#ifndef GTK_PLATFORM
+    NSIndexPath *indexPath = [model rowReferenceForPath:path];
+    [model setColumn:columnIndex indexPath:indexPath toValue:[change objectForKey:NSKeyValueChangeNewKey]];
+#else
     [view reloadData];
 #endif
 }
@@ -480,20 +550,24 @@ void LTWGUIGenericTreeViewAdapter_toggled(GtkCellRendererToggle *cellRenderer, c
 @implementation LTWGUITreeViewAdapter
 
 #ifdef GTK_PLATFORM
-void LTWGUITreeViewAdapter_cursorChanged(GtkTreeView *view, LTWGUITreeViewAdapter *adapter) {
-    GtkTreeSelection *selection = gtk_tree_view_get_selection(view);
+-(void)handleCursorChanged {
+    GtkTreeSelection *selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(view));
     GtkTreeIter iter;
-    GtkTreeModel *model;
+    GtkTreeModel *gtkModel;
     
-    if (gtk_tree_selection_get_selected(selection, &model, &iter)) {
-        GtkTreePath *path = gtk_tree_model_get_path(model, &iter);
-        [adapter objectSelected:[[adapter model] objectAtTreePath:path]];
+    if (gtk_tree_selection_get_selected(selection, &gtkModel, &iter)) {
+        GtkTreePath *path = gtk_tree_model_get_path(gtkModel, &iter);
+        if (sortableModel) path = gtk_tree_model_sort_convert_path_to_child_path(sortableModel, path);
+        [self objectSelected:[model objectAtTreePath:path]];
         
         gtk_tree_path_free(path);
     }else{
-        [adapter objectSelected:nil];
+        [self objectSelected:nil];
     }
-    
+}
+
+void LTWGUITreeViewAdapter_cursorChanged(GtkTreeView *view, LTWGUITreeViewAdapter *adapter) {
+    [adapter handleCursorChanged];
 }
 
 void LTWGUITreeViewAdapter_sizeAllocate(GtkTreeView *view, GtkAllocation *allocation, LTWGUITreeViewAdapter *adapter) {
@@ -544,14 +618,88 @@ void LTWGUIComboBoxViewAdapter_changed(GtkComboBox *view, LTWGUIComboBoxViewAdap
 
 @implementation LTWGUITextViewAdapter
 
+-(void)setUpView {
+    models = [[NSMutableDictionary alloc] init];
+}
+
+-(void)attachModel:(LTWGUITextModel*)theModel {
+#ifdef GTK_PLATFORM
+    gtk_text_view_set_buffer(GTK_TEXT_VIEW(view), [model buffer]);
+#else
+    [[(NSTextView*)view textStorage] setAttributedString:[theModel buffer]];
+#endif
+}
+
+-(void)addObject:(id)object {
+    model = [models objectForKey:[NSValue valueWithNonretainedObject:object]];
+    
+    if (!model) {
+        model = [[LTWGUITextModel alloc] initWithObject:object];
+        [models setObject:model forKey:[NSValue valueWithNonretainedObject:object]];
+    }
+    
+    [self attachModel:model];
+}
+
+-(NSString*)text {
+    return [model text];
+}
+
+-(void)selectTokens:(LTWTokens*)theTokens {
+    [model selectTokens:theTokens];
+}
+
+-(id <NSFastEnumeration>)objectsOfType:(Class*)type {
+    return nil;
+}
+
+-(void)preCreateModelForObject:(id)object {
+    LTWGUITextModel *theModel = [models objectForKey:[NSValue valueWithNonretainedObject:object]];
+    
+    if (!theModel) {
+        theModel = [[LTWGUITextModel alloc] initWithObject:object];
+        [models setObject:theModel forKey:[NSValue valueWithNonretainedObject:object]];
+    }
+}
+
+@end
+
+#pragma mark -
+#pragma mark Miscellaneous
+
+#ifndef GTK_PLATFORM
+
+@implementation LTWGUIPathFormatter
+
+-(NSString*)stringForObjectValue:(id)object {
+    if ([object isKindOfClass:[NSArray class]]) {
+        return [[object lastObject] description];
+    }else{
+        return [object description];
+    }
+}
+
+-(BOOL)getObjectValue:(id*)object forString:(NSString*)string errorDescription:(NSString**)error {
+    if (error) *error = @"Not implemented";
+    return NO;
+}
+
+-(NSAttributedString*)attributedStringForObjectValue:(id)object withDefaultAttributes:(NSDictionary*)attributes {
+    return [[[NSAttributedString alloc] initWithString:[self stringForObjectValue:object]] autorelease];
+}
+
+@end
+
+#endif
+
+@implementation LTWGUITextModel
+
 #ifdef GTK_PLATFORM
 
 typedef struct {
     GtkTextTag *tag;
     GtkTextMark *start;
 } HTMLConversionStackEntry;
-
-void LTWGUITextViewAdapter_exposed(GtkTextView *textView, GdkEventExpose *event);
 
 -(BOOL)getTag:(GtkTextTag**)tag forXMLTokenAtIndex:(NSUInteger)tokenIndex inTokens:(LTWTokens*)tokens usingBuffer:(GtkTextBuffer*)buffer {
     // NOTE: These comparisons should be made case-insensitive.
@@ -579,15 +727,22 @@ void LTWGUITextViewAdapter_exposed(GtkTextView *textView, GdkEventExpose *event)
     *tag = NULL;
     return YES;
 }
+#endif
 
 -(void)insertHTMLTokens:(LTWTokens*)tokens {
+#ifdef GTK_PLATFORM
     NSMutableArray *stack = [NSMutableArray array];
     
     NSUInteger numTokens = [tokens count];
     NSString *tokensText = [tokens _text];
     
-    tokenStartMarks = malloc(numTokens * sizeof **tokenStartMarks);
-    tokenEndMarks = malloc(numTokens * sizeof **tokenEndMarks);
+    tokenStartMarks = malloc(numTokens * sizeof *tokenStartMarks);
+    tokenEndMarks = malloc(numTokens * sizeof *tokenEndMarks);
+    
+    NSUInteger linkStartToken = 0;
+    NSUInteger linkEndToken = 0;
+    BOOL inLink = NO;
+    GtkTextTag *linkTag = gtk_text_buffer_create_tag(textBuffer, NULL, "underline", PANGO_UNDERLINE_SINGLE, NULL);
     
     for (NSUInteger tokenIndex = 0; tokenIndex < numTokens; tokenIndex++) {
         tokenStartMarks[tokenIndex] = NULL;
@@ -600,6 +755,10 @@ void LTWGUITextViewAdapter_exposed(GtkTextView *textView, GdkEventExpose *event)
                 isXML = YES;
             }else if ([[tag tagName] isEqual:@"isEndTag"]) {
                 isEndTag = YES;
+            }else if (!isXML && [[tag tagName] isEqual:@"linked_to"]) {
+                inLink = YES;
+                linkStartToken = tokenIndex;
+                linkEndToken = tokenIndex + [tokens lengthOfTag:tag startingAtIndex:tokenIndex] - 1;
             }
         }
         if (isEndTag) {
@@ -649,89 +808,87 @@ void LTWGUITextViewAdapter_exposed(GtkTextView *textView, GdkEventExpose *event)
             gtk_text_buffer_get_end_iter(textBuffer, &iter);
             gtk_text_buffer_add_mark(textBuffer, tokenEndMarks[tokenIndex], &iter);
             gtk_text_buffer_insert(textBuffer, &iter, " ", 1);
+            
+            if (inLink && linkEndToken == tokenIndex) {
+                // TEMPORARILY REMOVED BECAUSE THE UNDERLINES WERE APPEARING IN THE WRONG PLACE!
+                /*
+                 GtkTextIter linkStartIter, linkEndIter;
+                 gtk_text_buffer_get_iter_at_mark(textBuffer, &linkStartIter, tokenStartMarks[linkStartToken]);
+                 gtk_text_buffer_get_iter_at_mark(textBuffer, &linkEndIter, tokenEndMarks[linkEndToken]);
+                 gtk_text_buffer_apply_tag(textBuffer, linkTag, &linkStartIter, &linkEndIter);
+                 */
+            }
         }
     }
-    
-}
-#endif
+#else    
 
--(void)setUpView {
+#endif
+}
+
+-(id)initWithObject:(id)theObject {
+    if (self = [super init]) {
+        
+        object = [theObject retain];
+        
 #ifdef GTK_PLATFORM
-    textBuffer = gtk_text_buffer_new(NULL);
-    gtk_text_view_set_buffer(GTK_TEXT_VIEW(view), textBuffer);
-    //g_signal_connect(G_OBJECT(view), "expose_event", G_CALLBACK(LTWGUITextViewAdapter_exposed), NULL);
+        textBuffer = gtk_text_buffer_new(NULL);
+        
+        if ([object isKindOfClass:[NSString class]]) {
+            gtk_text_buffer_set_text(textBuffer, [object UTF8String], -1);
+        }else if ([object isKindOfClass:[LTWTokens class]]) {
+            gtk_text_buffer_set_text(textBuffer, "", -1);
+            [self insertHTMLTokens:(LTWTokens*)object];
+        }
 #else
-    
-#endif
-}
-
--(void)addObject:(id)object {
-    if (![object isKindOfClass:[LTWTokens class]]) return;
-#ifdef GTK_PLATFORM
-    gtk_text_buffer_set_text(textBuffer, "", -1);
-    
-    // NOTE: Should turn this into a proper "deserializing" function.
-    [self insertHTMLTokens:(LTWTokens*)object];
-    
-    // Note sure if this is necessary.
-    gtk_text_view_set_buffer(GTK_TEXT_VIEW(view), textBuffer);
-#else
-    [[(NSTextView*)view textStorage] setAttributedString:[[[NSAttributedString alloc] initWithString:[object description]] autorelease]];
-#endif
-}
-
--(id <NSFastEnumeration>)objectsOfType:(Class*)type {
-    return nil;
-}
-
-#ifdef GTK_PLATFORM
-void LTWGUITextViewAdapter_exposed(GtkTextView *textView, GdkEventExpose *event) {
-    /*
-    GtkWidget *widget = GTK_WIDGET(textView);
-    GdkPixmap *pixmap = gdk_pixmap_new(widget->window, widget->allocation.width, widget->allocation.height, -1);
-    
-    // NOTE: We should really only be calling this when the overlays (or the widget dimensions) change!
-    drawOverlaysForTextView(textView, pixmap, gdk_gc_new(pixmap));
-    
-    gdk_draw_pixmap(widget->window,
-                    widget->style->fg_gc[GTK_WIDGET_STATE (widget)], // what is this style used for?
-                    pixmap,
-                    event->area.x, event->area.y,
-                    event->area.x, event->area.y,
-                    event->area.width, event->area.height);
-     */
-}
+        textStorage = [[NSMutableAttributedString alloc] initWithString:[theObject description]];
 #endif
 
-@end
-
-#pragma mark -
-#pragma mark Miscellaneous
-
-#ifndef GTK_PLATFORM
-
-@implementation LTWGUIPathFormatter
-
--(NSString*)stringForObjectValue:(id)object {
-    if ([object isKindOfClass:[NSArray class]]) {
-        return [[object lastObject] description];
-    }else{
-        return [object description];
     }
+    return self;
 }
 
--(BOOL)getObjectValue:(id*)object forString:(NSString*)string errorDescription:(NSString**)error {
-    if (error) *error = @"Not implemented";
-    return NO;
+-(void)selectTokens:(LTWTokens*)theTokens {
+    if (![object isKindOfClass:[LTWTokens class]]) return;
+    
+#ifdef GTK_PLATFORM
+    NSUInteger startIndex = [theTokens startIndexInAncestor:(LTWTokens*)object];
+    if (startIndex == NSNotFound) return;
+    
+    NSUInteger endIndex = startIndex + [theTokens count] - 1;
+    
+    GtkTextIter start, end;
+    gtk_text_buffer_get_iter_at_mark(textBuffer, &start, tokenStartMarks[startIndex]);
+    gtk_text_buffer_get_iter_at_mark(textBuffer, &end, tokenEndMarks[endIndex]);
+    
+    gtk_text_buffer_select_range(textBuffer, &start, &end);
+#else
+    NSLog(@"Selection not yet implemented in Cocoa.");
+#endif
 }
 
--(NSAttributedString*)attributedStringForObjectValue:(id)object withDefaultAttributes:(NSDictionary*)attributes {
-    return [[[NSAttributedString alloc] initWithString:[self stringForObjectValue:object]] autorelease];
+-(NSString*)text {
+#ifdef GTK_PLATFORM
+    GtkTextIter start, end;
+    gtk_text_buffer_get_start_iter(textBuffer, &start);
+    gtk_text_buffer_get_end_iter(textBuffer, &end);
+    return [NSString stringWithUTF8String:gtk_text_buffer_get_text(textBuffer, &start, &end, TRUE)];
+#else
+    return [textStorage string];
+#endif
+
 }
+
+#ifdef GTK_PLATFORM
+-(GtkTextBuffer*)buffer {
+    return textBuffer;
+}
+#else
+-(NSAttributedString*)buffer {
+    return textStorage;
+}
+#endif
 
 @end
-
-#endif
 
 @implementation LTWGUITreeModel
 
@@ -739,8 +896,11 @@ void LTWGUITextViewAdapter_exposed(GtkTextView *textView, GdkEventExpose *event)
 
 #pragma mark Initialisation
 
--(id)initWithDisplayProperties:(NSArray*)theDisplayProperties classes:(NSArray*)theClasses {
+-(id)initWithDisplayProperties:(NSArray*)theDisplayProperties classes:(NSArray*)theClasses hierarchyProperties:(NSArray*)theHierarchyProperties {
     if (self = [super init]) {
+        
+        hierarchyProperties = [theHierarchyProperties retain];
+        objects = [[NSMutableArray alloc] init];
         
 #ifdef GTK_PLATFORM
         static LTWGUIDataType booleanType = G_TYPE_BOOLEAN;
@@ -789,8 +949,12 @@ void LTWGUITextViewAdapter_exposed(GtkTextView *textView, GdkEventExpose *event)
     return self;
 }
 
--(void)setHierarchyProperties:(NSArray*)properties {
-    hierarchyProperties = [properties retain];
+-(void)addObjectsFromModel:(LTWGUITreeModel*)theModel {
+    if (self == theModel) return;
+    
+    for (id object in theModel->objects) {
+        [self addObject:object];
+    }
 }
 
 -(NSArray*)columnTypes {
@@ -803,7 +967,7 @@ void LTWGUITextViewAdapter_exposed(GtkTextView *textView, GdkEventExpose *event)
     if (!levels) {
         levels = [[NSMutableArray alloc] init];
         [levels addObject:[NSMutableDictionary dictionary]];
-        [[levels objectAtIndex:0] setObject:[NSIndexPath indexPathWithIndexes:NULL length:0] forKey:[NSArray array]];\
+        [[levels objectAtIndex:0] setObject:[NSIndexPath indexPathWithIndexes:NULL length:0] forKey:[NSArray array]];
     }
     while (levelNumber >= [levels count]) {
         [levels addObject:[NSMutableDictionary dictionary]];
@@ -979,8 +1143,7 @@ void LTWGUITextViewAdapter_exposed(GtkTextView *textView, GdkEventExpose *event)
     NSString *propertyName = [displayProperties objectAtIndex:columnIndex];
     if ([hierarchyPropertyName isEqual:propertyName]) propertyName = @"self";
     if (!propertyName) return @"";
-    if (![item respondsToSelector:NSSelectorFromString(propertyName)]) return @"";
-    id value = [item valueForKey:propertyName];
+    id value = [self valueIfExistsForProperty:propertyName ofObject:item];
     if (!value) return @"";
     return [value description];
 }
@@ -991,8 +1154,32 @@ void LTWGUITextViewAdapter_exposed(GtkTextView *textView, GdkEventExpose *event)
     return YES;
 }
 
+-(void)toggled:(id)sender {
+    id path = [sender itemAtRow:[sender clickedRow]];
+    id object = [path lastObject];
+    
+    NSString *propertyName = [displayProperties objectAtIndex:[sender clickedColumn]];
+    
+    id value = [self valueIfExistsForProperty:propertyName ofObject:object];
+    if (![value isKindOfClass:[NSNumber class]]) return;
+    [object setValue:[NSNumber numberWithBool:![value boolValue]] forKey:propertyName];
+    
+    [sender reloadData];
+}
+
 -(id)comboBox:(NSComboBox*)comboBox objectValueForItemAtIndex:(NSInteger)index {
     return [self pathOfChildAtIndex:index parentPath:[NSArray array]];
+}
+
+- (void)outlineView:(NSOutlineView *)outlineView willDisplayCell:(id)cell 
+     forTableColumn:(NSTableColumn *)tableColumn item:(id)item {
+    id object = [self outlineView:outlineView objectValueForTableColumn:tableColumn byItem:item];
+    
+    if ([cell isKindOfClass:[NSButtonCell class]]) {
+        [cell setState:[object boolValue]];
+    }else{
+        [cell setStringValue:[object description]];
+    }
 }
 
 -(NSInteger)numberOfItemsInComboBox:(NSComboBox*)comboBox {
@@ -1015,30 +1202,36 @@ void LTWGUITextViewAdapter_exposed(GtkTextView *textView, GdkEventExpose *event)
 
 #pragma mark General
 
+-(id)valueIfExistsForProperty:(NSString*)propertyName ofObject:(id)object {
+    id value = [object respondsToSelector:NSSelectorFromString(propertyName)] ? [object valueForKey:propertyName] : @"";
+    return value ? value : @"";
+}
+
 -(NSIndexPath*)addObject:(id)object {
+    if (!object) object = [NSNull null];
+    
+    [objects addObject:object];
+    
     NSMutableArray *path = [NSMutableArray array];
     
     NSIndexPath *indexPath = nil;
     
     for (NSString *propertyName in [hierarchyProperties arrayByAddingObject:@"self"]) {
-        id value = [object valueForKey:propertyName];
+        id value = [self valueIfExistsForProperty:propertyName ofObject:object];
         [path addObject:value];
         indexPath = [self rowReferenceForPath:path]; // creates the reference if it doesn't yet exist
         
-#ifdef GTK_PLATFORM
         NSUInteger columnIndex = 0;
         for (NSString *displayPropertyName in displayProperties) {
             if ([displayPropertyName isEqual:propertyName]) displayPropertyName = @"self";
             
-            if ([value respondsToSelector:NSSelectorFromString(displayPropertyName)]) {
-                id columnValue = [value valueForKey:displayPropertyName];
-                if (!columnValue) columnValue = @"";
-                [self setColumn:columnIndex indexPath:indexPath toValue:columnValue];
-            }
+#ifdef GTK_PLATFORM
+            [self setColumn:columnIndex indexPath:indexPath toValue:[self valueIfExistsForProperty:displayPropertyName ofObject:value]];
+#endif
+            [value addObserver:delegate forKeyPath:displayPropertyName options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) context:(void*)[path copy]];
             
             columnIndex++;
         }
-#endif
     }
     
     return indexPath;
@@ -1046,7 +1239,6 @@ void LTWGUITextViewAdapter_exposed(GtkTextView *textView, GdkEventExpose *event)
 
 -(void)moveObject:(id)object {
     // TEMP
-    NSLog(@"Skipping moveObject...");
     return;
 }
 
@@ -1055,7 +1247,7 @@ void LTWGUITextViewAdapter_exposed(GtkTextView *textView, GdkEventExpose *event)
     NSMutableArray *path = [NSMutableArray array];
     
     for (NSString *propertyName in [hierarchyProperties arrayByAddingObject:@"self"]) {
-        [path addObject:[object valueForKey:propertyName]];
+        [path addObject:[self valueIfExistsForProperty:propertyName ofObject:object]];
         [self rowReferenceForPath:path]; // creates the reference if it doesn't yet exist
     }
     
@@ -1064,10 +1256,12 @@ void LTWGUITextViewAdapter_exposed(GtkTextView *textView, GdkEventExpose *event)
 }
 
 -(void)removeObject:(id)object {
+    [objects removeObject:object];
+    
     NSMutableArray *path = [NSMutableArray array];
     
     for (NSString *propertyName in [hierarchyProperties arrayByAddingObject:@"self"]) {
-        [path addObject:[object valueForKey:propertyName]];
+        [path addObject:[self valueIfExistsForProperty:propertyName ofObject:object]];
     }
     
     [self setRowReference:nil forPath:path];
@@ -1076,7 +1270,6 @@ void LTWGUITextViewAdapter_exposed(GtkTextView *textView, GdkEventExpose *event)
 
 
 @end
-
 
 @implementation NSIndexPath (BugFixes)
 
@@ -1091,6 +1284,23 @@ void LTWGUITextViewAdapter_exposed(GtkTextView *textView, GdkEventExpose *event)
     NSIndexPath *newIndexPath = [NSIndexPath indexPathWithIndexes:indexes length:[self length]+1];
     free(indexes);
     return newIndexPath;
+}
+
+@end
+
+@implementation NSString (Presentation)
+
+-(NSString*)presentableString {
+    NSMutableString *result = [NSMutableString string];
+    for (NSUInteger index = 0; index < [self length]; index++) {
+        char c = (char)[self characterAtIndex:index];
+        if (isupper(c) || index == 0) {
+            [result appendFormat:((index == 0) ? @"%c" : @" %c"), toupper(c)];
+        }else{
+            [result appendFormat:@"%c", c];
+        }
+    }
+    return result;
 }
 
 @end

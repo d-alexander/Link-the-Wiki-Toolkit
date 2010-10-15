@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
     //return NSApplicationMain(argc,  (const char **) argv);
     printf("main\n");
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-    [[LTWGUIMediator alloc] init];
+    [[LTWGUIMediator alloc] initWithArguments:argv numArguments:argc];
     [pool drain];
 
 }

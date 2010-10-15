@@ -56,8 +56,25 @@
 	[self _addTag:tag fromIndex:0 toIndex:(endIndex-startIndex)];
 }
 
+-(void)_removeTag:(LTWTokenTag*)tag fromIndex:(NSUInteger)theStartIndex {
+    [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:LTWTokenTagsChangedNotification object:self]];
+    
+    if (propagateTags) {
+        [superTokens _removeTag:tag fromIndex:startIndex+theStartIndex];
+    }
+}
+
 -(NSString*)_text {
 	return [superTokens _text];
+}
+
+-(NSUInteger)startIndexInAncestor:(LTWTokens*)ancestor {
+    if (ancestor == self) return 0;
+    
+    NSUInteger index = [superTokens startIndexInAncestor:ancestor];
+    if (index == NSNotFound) return NSNotFound;
+    
+    return index + startIndex;
 }
 
 -(NSArray*)_tagsStartingAtTokenIndex:(NSUInteger)firstToken occurrence:(LTWTagOccurrence**)occurrencePtr {

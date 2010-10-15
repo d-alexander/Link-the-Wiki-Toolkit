@@ -22,6 +22,7 @@ typedef struct {
     sqlite3_stmt *insertRange;
     sqlite3_stmt *loadRanges;
     sqlite3_stmt *insertTag;
+    sqlite3_stmt *deleteTag;
     sqlite3_stmt *loadTag;
     sqlite3_stmt *insertArticle;
     sqlite3_stmt *insertField;
@@ -40,7 +41,8 @@ typedef struct {
 -(sqlite3_stmt*)initialiseStatement:(sqlite3_stmt**)statement withQuery:(const char *)query;
 
 -(id)initWithDataFile:(NSString*)dataFilename;
-+(void)stopAsynchronousThread;
++(void)enableAsynchronousWriting;
++(void)closeAllDatabases;
 
 -(void)beginTransaction;
 -(void)commit;
@@ -62,6 +64,8 @@ typedef struct {
 #pragma mark LTWTokenTag*
 
 -(void)insertTag:(LTWTokenTag*)tag withIndex:(NSUInteger)tagIndex fromTokenIndex:(NSUInteger)firstTokenIndex toTokenIndex:(NSUInteger)lastTokenIndex tokensID:(NSUInteger)tokensID;
+
+-(void)deleteTagWithIndex:(NSUInteger)tagIndex tokensID:(NSUInteger)tokensID;
 
 -(void)loadTag:(LTWTokenTag**)tag fromTokenIndex:(NSUInteger*)firstTokenIndex toTokenIndex:(NSUInteger*)lastTokenIndex tagIndex:(NSUInteger)tagIndex tokensID:(NSUInteger)tokensID;
 

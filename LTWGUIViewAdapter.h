@@ -21,6 +21,8 @@ typedef Class LTWGUIDataType;
 #define RELEASE_VIEW(view) ([view release])
 #endif
 
+#include "LTWTokens.h"
+
 @class LTWGUITreeBranch;
 
 @interface LTWGUIViewAdapter : NSObject {
@@ -89,6 +91,10 @@ typedef Class LTWGUIDataType;
 @interface LTWGUIGenericTreeViewAdapter : LTWGUIViewAdapter {
     LTWGUITreeModel *model;
     
+#ifdef GTK_PLATFORM
+    GtkTreeModelSort *sortableModel;
+#endif
+    
     // These are only here so that we can construct a new model when we want to get rid of an existing one.
     NSArray *storedDisplayProperties;
     NSArray *storedHierarchyProperties;
@@ -102,6 +108,7 @@ typedef struct {
 
 -(void)setDisplayProperties:(NSArray*)properties hierarchyProperties:(NSArray*)hierarchyProperties withClasses:(NSArray*)classes;
 -(LTWGUITreeModel*)model;
+-(void)expandNodes;
 
 @end
 
@@ -117,14 +124,17 @@ typedef struct {
 
 @end
 
+@class LTWGUITextModel;
+
 @interface LTWGUITextViewAdapter : LTWGUIViewAdapter {
-#ifdef GTK_PLATFORM
-    GtkTextBuffer *textBuffer;
-    GtkTextMark **tokenStartMarks, **tokenEndMarks;
-#else
-    
-#endif
+    NSMutableDictionary *models;
+    LTWGUITextModel *model;
+    LTWTokens *tokensBeingDisplayed;
 }
+
+-(NSString*)text;
+-(void)selectTokens:(LTWTokens*)theTokens;
+-(void)preCreateModelForObject:(id)object;
 
 @end
 
@@ -139,10 +149,32 @@ typedef struct {
 @end
 #endif
 
+@interface LTWGUITextModel : NSObject {
+    id object;
+#ifdef GTK_PLATFORM
+    GtkTextBuffer *textBuffer;
+    GtkTextMark **tokenStartMarks, **tokenEndMarks;
+#else
+    NSMutableAttributedString *textStorage;
+#endif
+}
+
+-(id)initWithObject:(id)object;
+-(NSString*)text;
+-(void)selectTokens:(LTWTokens*)tokens;
+
+#ifdef GTK_PLATFORM
+-(GtkTextBuffer*)buffer;
+#else
+-(NSMutableAttributedString*)buffer;
+#endif
+
+@end
+
 #ifdef GTK_PLATFORM
 @interface LTWGUITreeModel : NSObject {
 #else
-@interface LTWGUITreeModel : NSObject <NSOutlineViewDataSource, NSComboBoxDataSource> {
+@interface LTWGUITreeModel : NSObject <NSOutlineViewDataSource, NSOutlineViewDelegate, NSComboBoxDataSource, NSComboBoxDelegate> {
 #endif
 #ifdef GTK_PLATFORM
     GtkTreeModel *model;
@@ -154,10 +186,11 @@ typedef struct {
     NSMutableArray *displayProperties;
     NSMutableArray *hierarchyProperties;
     NSMutableArray *columnTypes;
+    NSMutableArray *objects;
 }
 
--(id)initWithDisplayProperties:(NSArray*)theDisplayProperties classes:(NSArray*)theClasses;
--(void)setHierarchyProperties:(NSArray*)hierarchyProperties;
+-(id)initWithDisplayProperties:(NSArray*)theDisplayProperties classes:(NSArray*)theClasses hierarchyProperties:(NSArray*)theHierarchyProperties;
+-(void)addObjectsFromModel:(LTWGUITreeModel*)theModel;
 -(NSArray*)columnTypes;
 -(NSIndexPath*)addObject:(id)object;
 -(void)moveObject:(id)object;
@@ -165,11 +198,14 @@ typedef struct {
 -(void)removeObject:(id)object;
     
 -(NSArray*)pathOfChildAtIndex:(NSUInteger)childIndex parentPath:(NSArray*)parentPath;
+-(NSIndexPath*)rowReferenceForPath:(NSArray*)path;
+-(id)valueIfExistsForProperty:(NSString*)propertyName ofObject:(id)object;
 
 #ifdef GTK_PLATFORM
 -(id)objectAtTreePath:(GtkTreePath*)treePath;
 -(GtkTreeModel*)model;
 -(GtkTreeIter)iteratorForIndexPath:(NSIndexPath*)indexPath;
+-(void)setColumn:(NSUInteger)columnIndex indexPath:(NSIndexPath*)indexPath toValue:(id)value;
 #endif
     
 @property (assign) id delegate;
@@ -178,6 +214,12 @@ typedef struct {
 
 @interface NSIndexPath (BugFix)
 
+@end
+    
+@interface NSString (Presentation)
+    
+-(NSString*)presentableString;
+    
 @end
 
 #ifndef GTK_PLATFORM

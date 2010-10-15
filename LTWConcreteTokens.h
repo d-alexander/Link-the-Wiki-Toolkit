@@ -21,6 +21,9 @@
     NSUInteger databaseID;
     BOOL inDatabase;
     BOOL inMemory;
+    
+    NSUInteger nextTagIndex;
+    BOOL writeThroughToDatabase;
 }
 
 -(void)loadFromDatabase;

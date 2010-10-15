@@ -24,6 +24,5 @@
 -(id)initWithName:(NSString*)theName value:(id)theValue;
 -(NSString*)tagName;
 -(id)tagValue;
--(void)remove;
 
 @end

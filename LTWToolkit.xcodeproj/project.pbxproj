@@ -14,7 +14,6 @@
 		631C6A561202A60600E821BD /* LTWConcreteTokens.m in Sources */ = {isa = PBXBuildFile; fileRef = 631C6A551202A60600E821BD /* LTWConcreteTokens.m */; };
 		631C6A591202A61600E821BD /* LTWConcreteSubTokens.m in Sources */ = {isa = PBXBuildFile; fileRef = 631C6A581202A61600E821BD /* LTWConcreteSubTokens.m */; };
 		6320C05A1220E63700461FD8 /* LTWSimpleAssessmentMode.m in Sources */ = {isa = PBXBuildFile; fileRef = 6326E79B12190DFB0031AA7C /* LTWSimpleAssessmentMode.m */; };
-		6320C05E1220F88300461FD8 /* SimpleAssessmentMode.glade in Resources */ = {isa = PBXBuildFile; fileRef = 6320C05D1220F88300461FD8 /* SimpleAssessmentMode.glade */; };
 		6320C0781221148C00461FD8 /* libglib-2.0.dll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6320C0771221148C00461FD8 /* libglib-2.0.dll.a */; };
 		632240C5120573460023CD84 /* LTWTokensView.m in Sources */ = {isa = PBXBuildFile; fileRef = 632240C4120573460023CD84 /* LTWTokensView.m */; };
 		632240CD120573E80023CD84 /* LTWTokenTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 632240CC120573E80023CD84 /* LTWTokenTag.m */; };
@@ -69,13 +68,11 @@
 		634021501216E7CC00E50C9D /* LTWOverlayTokensView.m in Sources */ = {isa = PBXBuildFile; fileRef = 632CC73E12166DF2002891F4 /* LTWOverlayTokensView.m */; };
 		634021511216E7CF00E50C9D /* LTWTokensView.m in Sources */ = {isa = PBXBuildFile; fileRef = 632240C4120573460023CD84 /* LTWTokensView.m */; };
 		634021521216E7D300E50C9D /* LTWDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D99AC812083B8400CEE18B /* LTWDatabase.m */; };
-		634021531216E7D600E50C9D /* LTWSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 6353EF231206C4180097FFF3 /* LTWSearch.m */; };
 		634021541216E7D900E50C9D /* LTWTokenTag.m in Sources */ = {isa = PBXBuildFile; fileRef = 632240CC120573E80023CD84 /* LTWTokenTag.m */; };
 		634021551216E7DC00E50C9D /* LTWTokens.m in Sources */ = {isa = PBXBuildFile; fileRef = 636D47A911FD2CD70099153C /* LTWTokens.m */; };
 		634021561216E7DE00E50C9D /* LTWConcreteTokens.m in Sources */ = {isa = PBXBuildFile; fileRef = 631C6A551202A60600E821BD /* LTWConcreteTokens.m */; };
 		634021571216E7EC00E50C9D /* LTWConcreteSubTokens.m in Sources */ = {isa = PBXBuildFile; fileRef = 631C6A581202A61600E821BD /* LTWConcreteSubTokens.m */; };
 		634021581216E80400E50C9D /* LTWConcreteCopiedTokens.m in Sources */ = {isa = PBXBuildFile; fileRef = 632427E712103606004ED16F /* LTWConcreteCopiedTokens.m */; };
-		634021591216E80B00E50C9D /* LTWPythonUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 636D47B311FD2EAB0099153C /* LTWPythonUtils.m */; };
 		6340215A1216E89900E50C9D /* LTWParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FE49DF11FD697700088F16 /* LTWParser.m */; };
 		6340215B1216E89B00E50C9D /* LTWArticle.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FA735A120047BE00A80269 /* LTWArticle.m */; };
 		6340215C1216E89D00E50C9D /* LTWTokenProcessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 6364ACE4120653A00042F942 /* LTWTokenProcessor.m */; };
@@ -96,7 +93,6 @@
 		6340216D1216EA5000E50C9D /* LTWCorpus.m in Sources */ = {isa = PBXBuildFile; fileRef = 636D47A611FD2CC60099153C /* LTWCorpus.m */; };
 		6340216E1216EA5300E50C9D /* LTWParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FE49DF11FD697700088F16 /* LTWParser.m */; };
 		6340216F1216EA5500E50C9D /* LTWArticle.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FA735A120047BE00A80269 /* LTWArticle.m */; };
-		634021711216EAD700E50C9D /* libpython31.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6383B13B120F845500703164 /* libpython31.a */; };
 		634021731216EAEF00E50C9D /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63D51D83120EC83D00FA40B8 /* AppKit.framework */; };
 		634021751216EBA000E50C9D /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = 634021741216EB9F00E50C9D /* sqlite3.c */; };
 		634021761216EBA000E50C9D /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = 634021741216EB9F00E50C9D /* sqlite3.c */; };
@@ -169,6 +165,8 @@
 		637AC88F121A7A0C00E4B060 /* LTWGTKPlatform.m in Sources */ = {isa = PBXBuildFile; fileRef = 637AC88E121A7A0C00E4B060 /* LTWGTKPlatform.m */; };
 		637AC890121A7A0C00E4B060 /* LTWGTKPlatform.m in Sources */ = {isa = PBXBuildFile; fileRef = 637AC88E121A7A0C00E4B060 /* LTWGTKPlatform.m */; };
 		637AC8A7121A932000E4B060 /* libgtk-win32-2.0.dll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 637AC8A6121A932000E4B060 /* libgtk-win32-2.0.dll.a */; };
+		6381F7921267EF9000BF4020 /* SimpleAssessmentMode.glade in Resources */ = {isa = PBXBuildFile; fileRef = 6320C05D1220F88300461FD8 /* SimpleAssessmentMode.glade */; };
+		6381F7931267EF9500BF4020 /* MainWindow.glade in Resources */ = {isa = PBXBuildFile; fileRef = 63B2AF3C121A9A6F002B8A67 /* MainWindow.glade */; };
 		6383B13C120F845500703164 /* libpython31.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6383B13B120F845500703164 /* libpython31.a */; };
 		6383B156120F8F9C00703164 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
 		6383B157120F8FFB00703164 /* LTWPythonDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 63C24E0F11FFAC4F002609A9 /* LTWPythonDocument.xib */; };
@@ -179,7 +177,6 @@
 		638F590F12224C2700E86D8B /* libgdk_pixbuf-2.0.dll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 638F590D12224C2700E86D8B /* libgdk_pixbuf-2.0.dll.a */; };
 		638F591012224C2700E86D8B /* libgdk-win32-2.0.dll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 638F590E12224C2700E86D8B /* libgdk-win32-2.0.dll.a */; };
 		63B2AF3D121A9A6F002B8A67 /* MainWindow.glade in Resources */ = {isa = PBXBuildFile; fileRef = 63B2AF3C121A9A6F002B8A67 /* MainWindow.glade */; };
-		63B2AF3E121A9A6F002B8A67 /* MainWindow.glade in Resources */ = {isa = PBXBuildFile; fileRef = 63B2AF3C121A9A6F002B8A67 /* MainWindow.glade */; };
 		63B2AF45121A9F4C002B8A67 /* libgobject-2.0.dll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63B2AF44121A9F4C002B8A67 /* libgobject-2.0.dll.a */; };
 		63B2AF46121A9F4C002B8A67 /* libgobject-2.0.dll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 63B2AF44121A9F4C002B8A67 /* libgobject-2.0.dll.a */; };
 		63BAE8EE121236B8008127C4 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 63BAE8EC121236B8008127C4 /* InfoPlist.strings */; };
@@ -448,7 +445,6 @@
 			files = (
 				634020DE1216E4EC00E50C9D /* Cocoa.framework in Frameworks */,
 				634021731216EAEF00E50C9D /* AppKit.framework in Frameworks */,
-				634021711216EAD700E50C9D /* libpython31.a in Frameworks */,
 				637AC885121A4DF700E4B060 /* libTDS.a in Frameworks */,
 				637AC888121A4E9000E4B060 /* libwsock32.a in Frameworks */,
 				637AC8A7121A932000E4B060 /* libgtk-win32-2.0.dll.a in Frameworks */,
@@ -1353,8 +1349,8 @@
 				6340214E1216E7A400E50C9D /* LTWTestAssessmentMode.xib in Resources */,
 				634F5C1F121700C000DFDF7B /* MainMenu.xib in Resources */,
 				6326E79F12190E700031AA7C /* LTWSimpleAssessmentMode.xib in Resources */,
-				63B2AF3E121A9A6F002B8A67 /* MainWindow.glade in Resources */,
-				6320C05E1220F88300461FD8 /* SimpleAssessmentMode.glade in Resources */,
+				6381F7921267EF9000BF4020 /* SimpleAssessmentMode.glade in Resources */,
+				6381F7931267EF9500BF4020 /* MainWindow.glade in Resources */,
 				634319D612214DB5004542C6 /* inex_icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1417,7 +1413,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd /Users/david/Library/Developer/Xcode/DerivedData/LTWToolkit-ewrgnwzwitofwpcgqktuanpsxjpr/Build/Products/Debug\ncp -r LTWAssessmentTool-Windows.app ~/Desktop/VMWare\\ Shared/\nmv /Users/david/Desktop/VMWare\\ Shared/LTWAssessmentTool-Windows.app/Contents/MacOS/LTWAssessmentTool-Windows ~/Desktop/VMWare\\ Shared/LTWAssessmentTool-Windows.app/Contents/MacOS/LTWAssessmentTool-Windows.exe\ncp /Users/david/Downloads/gtk+-bundle_2.20.0-20100406_win32/bin/*.dll ~/Desktop/VMWare\\ Shared/LTWAssessmentTool-Windows.app/Contents/MacOS/";
+			shellScript = "cp /Users/david/Dropbox/phd/code/LTWToolkit/*.[mh] ~/Desktop/VMWare\\ Shared\\assessment-tool-source/\ncd /Users/david/Library/Developer/Xcode/DerivedData/LTWToolkit-ewrgnwzwitofwpcgqktuanpsxjpr/Build/Products/Debug\ncp -r LTWAssessmentTool-Windows.app ~/Desktop/VMWare\\ Shared/\nmv /Users/david/Desktop/VMWare\\ Shared/LTWAssessmentTool-Windows.app/Contents/MacOS/LTWAssessmentTool-Windows ~/Desktop/VMWare\\ Shared/LTWAssessmentTool-Windows.app/Contents/MacOS/LTWAssessmentTool-Windows.exe\ncp /Users/david/Downloads/gtk+-bundle_2.20.0-20100406_win32/bin/*.dll ~/Desktop/VMWare\\ Shared/LTWAssessmentTool-Windows.app/Contents/MacOS/";
 		};
 		63B12877120F98F90006D729 /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1492,7 +1488,6 @@
 				63E6AA681223920B00B8D190 /* LTWGUIViewAdapter.m in Sources */,
 				632D66341228C1E8005B851E /* LTWGUIController.m in Sources */,
 				63E6AA691223920E00B8D190 /* LTWGUIMediator.m in Sources */,
-				634021531216E7D600E50C9D /* LTWSearch.m in Sources */,
 				634021551216E7DC00E50C9D /* LTWTokens.m in Sources */,
 				6372811D1224D49400451AFE /* LTWGUIRepresentedObjects.m in Sources */,
 				634021561216E7DE00E50C9D /* LTWConcreteTokens.m in Sources */,
@@ -1500,7 +1495,6 @@
 				634021581216E80400E50C9D /* LTWConcreteCopiedTokens.m in Sources */,
 				634021541216E7D900E50C9D /* LTWTokenTag.m in Sources */,
 				6340215E1216E8CD00E50C9D /* LTWCorpus.m in Sources */,
-				634021591216E80B00E50C9D /* LTWPythonUtils.m in Sources */,
 				6340215B1216E89B00E50C9D /* LTWArticle.m in Sources */,
 				6340215C1216E89D00E50C9D /* LTWTokenProcessor.m in Sources */,
 				6340215A1216E89900E50C9D /* LTWParser.m in Sources */,
@@ -1802,9 +1796,14 @@
 					"\"$(SRCROOT)/../../../../Downloads/gtk+-bundle_2.20.0-20100406_win32/lib\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = "";
-				OTHER_CFLAGS = "-mms-bitfields";
+				OTHER_CFLAGS = (
+					"-mms-bitfields",
+					"-Wl,-subsystem,windows",
+					"-static",
+				);
 				PRODUCT_NAME = "LTWAssessmentTool-Windows";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
+				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = dynamic;
 				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1836,9 +1835,14 @@
 					"\"$(SRCROOT)/../../../../Downloads/gtk+-bundle_2.20.0-20100406_win32/lib\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = "";
-				OTHER_CFLAGS = "-mms-bitfields";
+				OTHER_CFLAGS = (
+					"-mms-bitfields",
+					"-Wl,-subsystem,windows",
+					"-static",
+				);
 				PRODUCT_NAME = "LTWAssessmentTool-Windows";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
+				STANDARD_C_PLUS_PLUS_LIBRARY_TYPE = dynamic;
 				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
 			};

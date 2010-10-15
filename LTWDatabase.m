@@ -24,7 +24,11 @@ static NSMutableArray *databases = nil;
 -(id)initWithDataFile:(NSString*)dataFilename {
     if (self = [super init]) {
         sqlite3_open([dataFilename UTF8String], &database);
-        NSLog(@"Loading database from file %@", dataFilename);
+        if (!database) {
+            NSLog(@"Database file %@ couldn't be opened.", dataFilename);
+            return nil;
+        }
+        //NSLog(@"Loading database from file %@", dataFilename);
         numNestedTransactions = 0;
         [databases addObject:self];
     }
@@ -41,19 +45,27 @@ static NSMutableArray *databases = nil;
     sqlite3_close(database);
 }
 
-+(void)stopAsynchronousThread {
-    sqlite3async_control(SQLITEASYNC_HALT, SQLITEASYNC_HALT_IDLE);
-    [asynchronousThreadQuitLock lockWhenCondition:1];
-    [asynchronousThreadQuitLock unlock];
+static BOOL asynchronousWritingEnabled = NO;
+
++(void)closeAllDatabases {
+    if (asynchronousWritingEnabled) {
+        sqlite3async_control(SQLITEASYNC_HALT, SQLITEASYNC_HALT_IDLE);
+        [asynchronousThreadQuitLock lockWhenCondition:1];
+        [asynchronousThreadQuitLock unlock];
+    }
     for (LTWDatabase *database in databases) {
         [database close];
     }
-    sqlite3async_shutdown();
+    if (asynchronousWritingEnabled) sqlite3async_shutdown();
 }
 
 +(void)initialize {
-    asynchronousThreadQuitLock = [[NSConditionLock alloc] initWithCondition:0];
     databases = [[NSMutableArray alloc] init];
+}
+
++(void)enableAsynchronousWriting {
+    asynchronousWritingEnabled = YES;
+    asynchronousThreadQuitLock = [[NSConditionLock alloc] initWithCondition:0];
     sqlite3async_initialize(NULL, 1);
     [NSThread detachNewThreadSelector:@selector(asynchronousThread) toTarget:self withObject:nil];
 }
@@ -107,7 +119,7 @@ static NSMutableArray *databases = nil;
 }
 
 -(void)loadTokensWithText:(NSString**)text numTokens:(NSUInteger*)numTokens numTags:(NSUInteger*)numTags tokensID:(NSUInteger)tokensID {
-    sqlite3_stmt *statement = [self initialiseStatement:&statements.loadTokens withQuery:"SELECT text, (SELECT COUNT(*) FROM LTWTokens_ranges where tokens_id = id) AS num_tokens, (SELECT COUNT(*) FROM LTWTokens_tags where tokens_id = id) AS num_tags FROM LTWTokens WHERE id = ?;"];
+    sqlite3_stmt *statement = [self initialiseStatement:&statements.loadTokens withQuery:"SELECT text, (SELECT COUNT(*) FROM LTWTokens_ranges where tokens_id = id) AS num_tokens, (SELECT MAX(tag_index)+1 FROM LTWTokens_tags where tokens_id = id) AS num_tags FROM LTWTokens WHERE id = ?;"];
     sqlite3_bind_int(statement, 1, tokensID);
     if (sqlite3_step(statement) != SQLITE_ROW) {
         NSLog(@"Couldn't find LTWTokens with ID %u in database.", tokensID);
@@ -156,11 +168,22 @@ static NSMutableArray *databases = nil;
     sqlite3_step(statement);
 }
 
+-(void)deleteTagWithIndex:(NSUInteger)tagIndex tokensID:(NSUInteger)tokensID {
+    sqlite3_stmt *statement = [self initialiseStatement:&statements.deleteTag withQuery:"DELETE FROM LTWTokens_tags WHERE tokens_id = ? AND tag_index = ?;"];
+    sqlite3_bind_int(statement, 1, tokensID);
+    sqlite3_bind_int(statement, 2, tagIndex);
+    sqlite3_step(statement);
+}
+
 -(void)loadTag:(LTWTokenTag**)tag fromTokenIndex:(NSUInteger*)firstTokenIndex toTokenIndex:(NSUInteger*)lastTokenIndex tagIndex:(NSUInteger)tagIndex tokensID:(NSUInteger)tokensID {
     sqlite3_stmt *statement = [self initialiseStatement:&statements.loadTag withQuery:"SELECT first_token_index, last_token_index, tag_name, tag_value FROM LTWTokens_tags WHERE tokens_id = ? AND tag_index = ?;"];
     sqlite3_bind_int(statement, 1, tokensID);
     sqlite3_bind_int(statement, 2, tagIndex);
-    sqlite3_step(statement);
+    if (sqlite3_step(statement) != SQLITE_ROW) {
+        // Tag not found - must have been removed.
+        *tag = nil;
+        return;
+    }
     *firstTokenIndex = sqlite3_column_int(statement, 0);
     *lastTokenIndex = sqlite3_column_int(statement, 1);
     *tag = [[LTWTokenTag alloc] initWithName:[NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 2)] value:[NSString stringWithUTF8String:(const char*)sqlite3_column_text(statement, 3)]];
@@ -213,7 +236,7 @@ static NSMutableArray *databases = nil;
             [article release];
         }
         
-        [article addTokens:[[[LTWTokens alloc] initWithDatabase:self tokensID:tokensID] autorelease] forField:fieldName];
+        [article addTokens:[[[LTWTokens alloc] initWithDatabase:self tokensID:tokensID writeThrough:YES] autorelease] forField:fieldName];
         
         lastArticle = article;
         lastArticleID = articleID;

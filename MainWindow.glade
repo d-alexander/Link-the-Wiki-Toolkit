@@ -5,6 +5,7 @@
   <object class="GtkWindow" id="mainWindow">
     <property name="width_request">600</property>
     <property name="height_request">400</property>
+    <property name="title" translatable="yes">Link-the-Wiki Assessment Tool</property>
     <child>
       <object class="GtkVBox" id="vbox2">
         <property name="visible">True</property>
@@ -19,6 +20,7 @@
                 <child>
                   <object class="GtkComboBox" id="assessmentModeSelector">
                     <property name="visible">True</property>
+                    <property name="active">0</property>
                   </object>
                   <packing>
                     <property name="position">0</property>
@@ -26,11 +28,11 @@
                 </child>
                 <child>
                   <object class="GtkButton" id="undoButton">
-                    <property name="label">gtk-undo</property>
+                    <property name="label" translatable="yes">Undo</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
-                    <property name="use_stock">True</property>
+                    <accelerator key="z" signal="clicked" modifiers="GDK_CONTROL_MASK"/>
                   </object>
                   <packing>
                     <property name="position">1</property>
@@ -38,19 +40,19 @@
                 </child>
                 <child>
                   <object class="GtkButton" id="redoButton">
-                    <property name="label">gtk-redo</property>
+                    <property name="label" translatable="yes">Redo</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
-                    <property name="use_stock">True</property>
+                    <accelerator key="y" signal="clicked" modifiers="GDK_CONTROL_MASK"/>
                   </object>
                   <packing>
                     <property name="position">2</property>
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkButton" id="uploadButton">
-                    <property name="label" translatable="yes">Upload</property>
+                  <object class="GtkButton" id="selectAssessmentFileButton">
+                    <property name="label" translatable="yes">Choose Assessment File</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
@@ -60,14 +62,25 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkButton" id="selectAssessmentFileButton">
-                    <property name="label" translatable="yes">Assessment File</property>
+                  <object class="GtkButton" id="uploadButton">
+                    <property name="label" translatable="yes">Upload Results</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
                   </object>
                   <packing>
                     <property name="position">4</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="reportBugButton">
+                    <property name="label" translatable="yes">Report a Bug</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                  </object>
+                  <packing>
+                    <property name="position">5</property>
                   </packing>
                 </child>
               </object>
@@ -103,9 +116,14 @@
     </child>
   </object>
   <object class="GtkDialog" id="assessmentFileSelectorDialog">
+    <property name="width_request">500</property>
+    <property name="height_request">400</property>
     <property name="border_width">5</property>
+    <property name="title" translatable="yes">Choose Assessment File</property>
+    <property name="resizable">False</property>
     <property name="modal">True</property>
-    <property name="type_hint">normal</property>
+    <property name="type_hint">dialog</property>
+    <property name="transient_for">mainWindow</property>
     <property name="has_separator">False</property>
     <child internal-child="vbox">
       <object class="GtkVBox" id="dialog-vbox1">
@@ -190,5 +208,145 @@
       <action-widget response="0">revealAssessmentFilesButton</action-widget>
       <action-widget response="0">assessmentFileSelectorDialogCloseButton</action-widget>
     </action-widgets>
+  </object>
+  <object class="GtkDialog" id="reportBugDialog">
+    <property name="width_request">500</property>
+    <property name="height_request">400</property>
+    <property name="border_width">5</property>
+    <property name="title" translatable="yes">Report a Bug</property>
+    <property name="modal">True</property>
+    <property name="type_hint">dialog</property>
+    <property name="transient_for">mainWindow</property>
+    <property name="has_separator">False</property>
+    <child internal-child="vbox">
+      <object class="GtkVBox" id="dialog-vbox2">
+        <property name="visible">True</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">2</property>
+        <child>
+          <object class="GtkVBox" id="vbox1">
+            <property name="visible">True</property>
+            <property name="orientation">vertical</property>
+            <child>
+              <object class="GtkLabel" id="label2">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">Use the form below to report a bug in the Assessment Tool.
+During the pre-release testing phase, you may also make feature requests here.
+Please check the Known Issues first.</property>
+                <property name="justify">center</property>
+                <property name="ellipsize">end</property>
+                <attributes>
+                  <attribute name="weight" value="bold"/>
+                </attributes>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="padding">4</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkNotebook" id="notebook1">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="tab_vborder">0</property>
+                <child>
+                  <object class="GtkScrolledWindow" id="scrolledwindow2">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="hscrollbar_policy">automatic</property>
+                    <property name="vscrollbar_policy">automatic</property>
+                    <child>
+                      <object class="GtkTextView" id="knownIssues">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child type="tab">
+                  <object class="GtkLabel" id="label3">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">Known Issues</property>
+                  </object>
+                  <packing>
+                    <property name="tab_fill">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkVBox" id="vbox3">
+                    <property name="visible">True</property>
+                    <property name="orientation">vertical</property>
+                    <child>
+                      <object class="GtkTextView" id="bugReportText">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                      </object>
+                      <packing>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="submitBugReportButton">
+                        <property name="label" translatable="yes">Submit Bug Report</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child type="tab">
+                  <object class="GtkLabel" id="label4">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">Report a Bug</property>
+                  </object>
+                  <packing>
+                    <property name="position">1</property>
+                    <property name="tab_fill">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child type="tab">
+                  <placeholder/>
+                </child>
+              </object>
+              <packing>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child internal-child="action_area">
+          <object class="GtkHButtonBox" id="dialog-action_area2">
+            <property name="visible">True</property>
+            <property name="layout_style">end</property>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="pack_type">end</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+      </object>
+    </child>
   </object>
 </interface>

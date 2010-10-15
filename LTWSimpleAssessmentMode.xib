@@ -33,7 +33,7 @@
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="NSScrollView" id="759036578">
 						<reference key="NSNextResponder" ref="1005"/>
-						<int key="NSvFlags">274</int>
+						<int key="NSvFlags">307</int>
 						<array class="NSMutableArray" key="NSSubviews">
 							<object class="NSClipView" id="600171956">
 								<reference key="NSNextResponder" ref="759036578"/>
@@ -61,7 +61,7 @@
 											<string>WebURLsWithTitlesPboardType</string>
 											<string>public.url</string>
 										</set>
-										<string key="NSFrameSize">{228, 181}</string>
+										<string key="NSFrameSize">{287, 14}</string>
 										<reference key="NSSuperview" ref="600171956"/>
 										<reference key="NSNextKeyView" ref="354521587"/>
 										<object class="NSTextContainer" key="NSTextContainer" id="148419323">
@@ -79,7 +79,7 @@
 												<nil key="NSDelegate"/>
 											</object>
 											<reference key="NSTextView" ref="1007545297"/>
-											<double key="NSWidth">228</double>
+											<double key="NSWidth">287</double>
 											<int key="NSTCFlags">1</int>
 										</object>
 										<object class="NSTextViewSharedData" key="NSSharedData">
@@ -130,7 +130,7 @@
 										<nil key="NSDelegate"/>
 									</object>
 								</array>
-								<string key="NSFrame">{{1, 1}, {228, 348}}</string>
+								<string key="NSFrame">{{1, 1}, {287, 361}}</string>
 								<reference key="NSSuperview" ref="759036578"/>
 								<reference key="NSNextKeyView" ref="1007545297"/>
 								<reference key="NSDocView" ref="1007545297"/>
@@ -144,7 +144,7 @@
 							<object class="NSScroller" id="1033039548">
 								<reference key="NSNextResponder" ref="759036578"/>
 								<int key="NSvFlags">256</int>
-								<string key="NSFrame">{{229, 1}, {15, 348}}</string>
+								<string key="NSFrame">{{288, 1}, {15, 361}}</string>
 								<reference key="NSSuperview" ref="759036578"/>
 								<reference key="NSTarget" ref="759036578"/>
 								<string key="NSAction">_doScroller:</string>
@@ -164,7 +164,7 @@
 								<double key="NSPercent">0.94565218687057495</double>
 							</object>
 						</array>
-						<string key="NSFrame">{{623, 27}, {245, 350}}</string>
+						<string key="NSFrame">{{564, 27}, {304, 363}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSNextKeyView" ref="600171956"/>
 						<int key="NSsFlags">18</int>
@@ -174,7 +174,7 @@
 					</object>
 					<object class="NSScrollView" id="796016480">
 						<reference key="NSNextResponder" ref="1005"/>
-						<int key="NSvFlags">274</int>
+						<int key="NSvFlags">311</int>
 						<array class="NSMutableArray" key="NSSubviews">
 							<object class="NSClipView" id="278072782">
 								<reference key="NSNextResponder" ref="796016480"/>
@@ -183,14 +183,14 @@
 									<object class="NSTableView" id="395101330">
 										<reference key="NSNextResponder" ref="278072782"/>
 										<int key="NSvFlags">256</int>
-										<string key="NSFrameSize">{179, 332}</string>
+										<string key="NSFrameSize">{238, 352}</string>
 										<reference key="NSSuperview" ref="278072782"/>
 										<reference key="NSNextKeyView" ref="811577085"/>
 										<bool key="NSEnabled">YES</bool>
 										<object class="NSTableHeaderView" key="NSHeaderView" id="764592735">
 											<reference key="NSNextResponder" ref="811577085"/>
 											<int key="NSvFlags">256</int>
-											<string key="NSFrameSize">{179, 17}</string>
+											<string key="NSFrameSize">{238, 17}</string>
 											<reference key="NSSuperview" ref="811577085"/>
 											<reference key="NSNextKeyView" ref="879725920"/>
 											<reference key="NSTableView" ref="395101330"/>
@@ -269,17 +269,17 @@
 											</object>
 										</object>
 										<double key="NSRowHeight">17</double>
-										<int key="NSTvFlags">-692060160</int>
+										<int key="NSTvFlags">-694124544</int>
 										<reference key="NSDelegate"/>
 										<reference key="NSDataSource"/>
-										<int key="NSColumnAutoresizingStyle">0</int>
+										<int key="NSColumnAutoresizingStyle">1</int>
 										<int key="NSDraggingSourceMaskForLocal">15</int>
 										<int key="NSDraggingSourceMaskForNonLocal">0</int>
 										<bool key="NSAllowsTypeSelect">YES</bool>
 										<int key="NSTableViewDraggingDestinationStyle">0</int>
 									</object>
 								</array>
-								<string key="NSFrame">{{1, 17}, {179, 332}}</string>
+								<string key="NSFrame">{{1, 17}, {238, 352}}</string>
 								<reference key="NSSuperview" ref="796016480"/>
 								<reference key="NSNextKeyView" ref="395101330"/>
 								<reference key="NSDocView" ref="395101330"/>
@@ -314,7 +314,7 @@
 								<array class="NSMutableArray" key="NSSubviews">
 									<reference ref="764592735"/>
 								</array>
-								<string key="NSFrame">{{1, 0}, {179, 17}}</string>
+								<string key="NSFrame">{{1, 0}, {238, 17}}</string>
 								<reference key="NSSuperview" ref="796016480"/>
 								<reference key="NSNextKeyView" ref="764592735"/>
 								<reference key="NSDocView" ref="764592735"/>
@@ -323,7 +323,7 @@
 							</object>
 							<reference ref="879725920"/>
 						</array>
-						<string key="NSFrame">{{375, 27}, {181, 350}}</string>
+						<string key="NSFrame">{{316, 20}, {240, 370}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSNextKeyView" ref="278072782"/>
 						<int key="NSsFlags">562</int>
@@ -336,8 +336,8 @@
 					</object>
 					<object class="NSTextField" id="74657948">
 						<reference key="NSNextResponder" ref="1005"/>
-						<int key="NSvFlags">270</int>
-						<string key="NSFrame">{{17, 385}, {330, 39}}</string>
+						<int key="NSvFlags">266</int>
+						<string key="NSFrame">{{17, 398}, {854, 26}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSNextKeyView" ref="93829495"/>
 						<bool key="NSEnabled">YES</bool>
@@ -362,7 +362,7 @@
 					</object>
 					<object class="NSScrollView" id="93829495">
 						<reference key="NSNextResponder" ref="1005"/>
-						<int key="NSvFlags">274</int>
+						<int key="NSvFlags">310</int>
 						<array class="NSMutableArray" key="NSSubviews">
 							<object class="NSClipView" id="18101021">
 								<reference key="NSNextResponder" ref="93829495"/>
@@ -390,7 +390,7 @@
 											<string>WebURLsWithTitlesPboardType</string>
 											<string>public.url</string>
 										</set>
-										<string key="NSFrameSize">{271, 181}</string>
+										<string key="NSFrameSize">{271, 201}</string>
 										<reference key="NSSuperview" ref="18101021"/>
 										<reference key="NSNextKeyView" ref="52772673"/>
 										<object class="NSTextContainer" key="NSTextContainer" id="861555323">
@@ -434,7 +434,7 @@
 										<nil key="NSDelegate"/>
 									</object>
 								</array>
-								<string key="NSFrame">{{1, 1}, {271, 348}}</string>
+								<string key="NSFrame">{{1, 1}, {271, 368}}</string>
 								<reference key="NSSuperview" ref="93829495"/>
 								<reference key="NSNextKeyView" ref="136024135"/>
 								<reference key="NSDocView" ref="136024135"/>
@@ -445,7 +445,7 @@
 							<object class="NSScroller" id="781680574">
 								<reference key="NSNextResponder" ref="93829495"/>
 								<int key="NSvFlags">256</int>
-								<string key="NSFrame">{{272, 1}, {15, 348}}</string>
+								<string key="NSFrame">{{272, 1}, {15, 368}}</string>
 								<reference key="NSSuperview" ref="93829495"/>
 								<reference key="NSNextKeyView" ref="796016480"/>
 								<reference key="NSTarget" ref="93829495"/>
@@ -466,7 +466,7 @@
 								<double key="NSPercent">0.94565218687057495</double>
 							</object>
 						</array>
-						<string key="NSFrame">{{20, 27}, {288, 350}}</string>
+						<string key="NSFrame">{{20, 20}, {288, 370}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<reference key="NSNextKeyView" ref="18101021"/>
 						<int key="NSsFlags">18</int>
@@ -659,7 +659,7 @@
 						</array>
 					</object>
 				</object>
-				<string key="1.IBEditorWindowLastContentRect">{{65, 117}, {888, 444}}</string>
+				<string key="1.IBEditorWindowLastContentRect">{{64, 88}, {888, 444}}</string>
 				<string key="1.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1.WindowOrigin">{628, 654}</string>
 				<string key="1.editorWindowContentRectSynchronizationRect">{{357, 416}, {480, 272}}</string>
